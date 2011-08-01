@@ -30,6 +30,7 @@ The plugin also expands and enhances the Contact Info section of your user profi
 1. Customize and configure what information WP Biographia displays; From the Dashboard, navigate to the Settings / WP Biographia page.
 1. You can can control display settings, style settings and content settings for the Biography Box.
 1. Click on the "Save Changes" button to preserve your chosen settings and options.
+1. If you enable the display of the post author's image, make sure avatar support is turned on; from the Dashboard, navigate to Settings / Discussion and ensure that Show Avatars is enabled.
 
 == Frequently Asked Questions ==
 
