@@ -1,0 +1,4 @@
+*.git*
+*.DS_Store*
+*excludes.txt*
+*archive.txt*
