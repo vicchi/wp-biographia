@@ -1,7 +1,7 @@
 === WP Biographia ===
 Contributors: Vicchi
-Donate link: http://code.vicchi.org
-Tags: bio, biography, twitter, facebook, website, about, author, about author
+Donate link: http://www.vicchi.org/codeage/wp-biographia/
+Tags: bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, website, about, author, about author
 Requires at least: 3.2
 Tested up to: 3.2.1
 Stable tag: 1.0
@@ -33,6 +33,18 @@ The plugin also expands and enhances the Contact Info section of your user profi
 1. If you enable the display of the post author's image, make sure avatar support is turned on; from the Dashboard, navigate to Settings / Discussion and ensure that Show Avatars is enabled.
 
 == Frequently Asked Questions ==
+
+= Is there a web site for this plugin? =
+
+Absolutely. Go to http://www.vicchi.org/codeage/wp-biographia/ for the latest information. There's also the official WordPress plugin directory page at http://wordpress.org/extend/plugins/ and the source for the plugin is on GitHub as well at https://github.com/vicchi/wp-biographia.
+
+= This plugin looks very much like the WP About Author; what's the connection? =
+
+WP Biographia is inspired by and based on the WP About Author plugin (http://wordpress.org/extend/plugins/wp-about-author/) by Jon Bishop (http://www.jonbishop.com/). Thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place. Jon's written other WordPress plugins as well (http://profiles.wordpress.org/users/JonBishop/); you should take a look.
+
+= I want to amend/hack/augment this plugin; can I do the same? =
+
+Totally; like the original plugin by Jon, this plugin is licensed under the GNU General Public License v2 (GPLV2). See http://www.gnu.org/licenses/old-licenses/gpl-2.0.txt for the full license terms.
 
 = Where does the name WP Biographia come from? =
 
