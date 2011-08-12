@@ -215,9 +215,9 @@ function wp_biographia_display($for_feed = false) {
 	
 	if (!$for_feed) {
 		$wp_biographia_biography = '<div class="wp-biographia-container-'
-			. $wp_biographia_settings['wp_biographia_alert_border']
+			. $wp_biographia_settings['wp_biographia_style_border']
 			. '" style="background-color:'
-			. $wp_biographia_settings['wp_biographia_alert_bg']
+			. $wp_biographia_settings['wp_biographia_style_bg']
 			. ';">';
 
 		if (!empty ($wp_biographia_settings['wp_biographia_content_image']) &&
@@ -329,13 +329,13 @@ function add_defaults_wp_biographia() {
 		$wp_biographia_settings = array (
 			"wp_biographia_installed"=>"on",
 			"wp_biographia_version"=>"01",
-			"wp_biographia_alert_bg"=>"#FFEAA8",
+			"wp_biographia_style_bg"=>"#FFEAA8",
 			"wp_biographia_display_front"=>"on",
 			"wp_biographia_display_archives"=>"on",
 			"wp_biographia_display_posts"=>"on",
 			"wp_biographia_display_pages"=>"on",
 			"wp_biographia_display_feed"=>"",
-			"wp_biographia_alert_border"=>"top",
+			"wp_biographia_style_border"=>"top",
 			"wp_biographia_content_prefix" => "About",
 			"wp_biographia_content_name" => "first-last-name",
 			"wp_biographia_content_image" => "on",

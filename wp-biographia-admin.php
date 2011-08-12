@@ -58,76 +58,74 @@ function wp_biographia_general_settings() {
 	$wp_biographia_settings = wp_biographia_process_settings ();
 	
 	$wrapped_content = "";
-	$general_content = "";	
-	$box_content = "";
+	$display_settings = "";	
+	$style_settings = "";
 	$content_settings = "";
 	
 	if (function_exists ('wp_nonce_field')) {
-		$general_content .= wp_nonce_field ('wp-biographia-update-options','_wpnonce',true,false);
+		$display_settings .= wp_nonce_field ('wp-biographia-update-options','_wpnonce',true,false);
 	}
 	
 	/*
  	 * Biography Box Display Settings
  	 */
 	
-	$general_content .= '<p><strong>' . __("Display On Front Page") . '</strong><br /> 
+	$display_settings .= '<p><strong>' . __("Display On Front Page") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_front" ' .checked($wp_biographia_settings['wp_biographia_display_front'], 'on', false) . ' />
 				<small>Display a biography box on the front page at the end of each  post.</small></p>';			
-	$general_content .= '<p><strong>' . __("Display In Archives") . '</strong><br /> 
+	$display_settings .= '<p><strong>' . __("Display In Archives") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_archives" ' .checked($wp_biographia_settings['wp_biographia_display_archives'], 'on', false) . ' />
 				<small>Display a biography box on archive pages at the end of each post.</small></p>';	
-	$general_content .= '<p><strong>' . __("Display On Individual Posts") . '</strong><br /> 
+	$display_settings .= '<p><strong>' . __("Display On Individual Posts") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_posts" ' .checked($wp_biographia_settings['wp_biographia_display_posts'], 'on', false) . ' />
 				<small>Display a biography box on individual posts at the end of the post.</small></p>';	
-	$general_content .= '<p><strong>' . __("Display On Individual Pages") . '</strong><br /> 
+	$display_settings .= '<p><strong>' . __("Display On Individual Pages") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_pages" ' .checked($wp_biographia_settings['wp_biographia_display_pages'], 'on', false) . ' />
 				<small>Display a biography box on individual pages at the top of the entry.</small></p>';
-        $general_content .= '<p><strong>' . __("Display In RSS Feeds") . '</strong><br />
+	$display_settings .= '<p><strong>' . __("Display In RSS Feeds") . '</strong><br />
 				<input type="checkbox" name="wp_biographia_display_feed" ' .checked($wp_biographia_settings['wp_biographia_display_feed'], 'on', false) . ' />
 				<small>Display a biography box in feeds at the top of each entry.</small></p>';
-	$wrapped_content .= wp_biographia_postbox('wp-biographia-settings-general', 'Biography Box Display Settings', $general_content);
 
 	/*
 	 * Biography Box Style Settings
 	 */
 	
-	$box_content .= '<p><strong>' . __("Box Background Color") . '</strong><br /> 
-				<input type="text" name="wp_biographia_alert_bg" id="background-color" value="' . $wp_biographia_settings['wp_biographia_alert_bg'] . '" />
+	$style_settings .= '<p><strong>' . __("Box Background Color") . '</strong><br /> 
+				<input type="text" name="wp_biographia_style_bg" id="background-color" value="' . $wp_biographia_settings['wp_biographia_style_bg'] . '" />
 				<a class="hide-if-no-js" href="#" id="pickcolor">' . __('Select a Color') . '</a>
 				<div id="colorPickerDiv" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div>
 				<small>By default, the background color of the box is a yellowish tone.</small></p>';
-	$box_content .= '<p><strong>' . __("Box Border") . '</strong><br /> 
-                <select name="wp_biographia_alert_border">
-                  <option value="top" ' .selected($wp_biographia_settings['wp_biographia_alert_border'], 'top', false) . '>Thick Top Border</option>
-                  <option value="around" ' .selected($wp_biographia_settings['wp_biographia_alert_border'], 'around', false) . '>Thin Surrounding Border</option>
-                  <option value="none" ' .selected($wp_biographia_settings['wp_biographia_alert_border'], 'none', false) . '>No Border</option>
+	$style_settings .= '<p><strong>' . __("Box Border") . '</strong><br /> 
+                <select name="wp_biographia_style_border">
+                  <option value="top" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'top', false) . '>Thick Top Border</option>
+                  <option value="around" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'around', false) . '>Thin Surrounding Border</option>
+                  <option value="none" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'none', false) . '>No Border</option>
                 </select><br /><small>By default, a thick black line is displayed above the author bio.</small></p>';
-	$wrapped_content .= wp_biographia_postbox('wp-biographia-settings-alert', 'Biography Box Style Settings', $box_content);
 
 	/*
 	 * Biography Box Content Settings
 	 */
 	
 	$content_settings .= '<p><strong>' . __("Biography Prefix") . '</strong><br />
-		<input type="text" name="wp_biographia_content_prefix" id="background-color" value="'
+		<input type="text" name="wp_biographia_content_prefix" id="wp-biographia-content-name" value="'
 		. $wp_biographia_settings["wp_biographia_content_prefix"]
 		. '" /><br />
 		<small>Prefix text to be prepended to the author\'s name</small></p>';
 
 	$content_settings .= '<p><strong>' . __("Author's Name") . '</strong><br />
-		<input type="radio" name="wp_biographia_content_name" id="background-color" value="first-last-name" '
+		<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="first-last-name" '
 		. checked ($wp_biographia_settings['wp_biographia_content_name'], 'first-last-name', false)
 		.' />&nbsp;First/Last Name<br />
-		<input type="radio" name="wp_biographia_content_name" id="background-color" value="account-name" '
+		<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="account-name" '
 		. checked ($wp_biographia_settings['wp_biographia_content_name'], 'account-name', false)
 		. ' />&nbsp;Account Name<br />
-		<input type="radio" name="wp_biographia_content_name" id="background-color" value="nickname" '
+		<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="nickname" '
 		. checked ($wp_biographia_settings['wp_biographia_content_name'], 'nickname', false)
 		. ' />&nbsp;Nickname<br />
-		<input type="radio" name="wp_biographia_content_name" id="background-color" value="display-name" '
+		<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="display-name" '
 		. checked ($wp_biographia_settings['wp_biographia_content_name'], 'display-name', false)
 		. ' />&nbsp;Display Name<br />
-		<input type="radio" name="wp_biographia_content_name" id="background-color" value="none" '
+		<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="none" '
 		. checked ($wp_biographia_settings['wp_biographia_content_name'], 'none', false)
 		. ' />&nbsp;Don\'t Show The Name<br />
 		<small>How you want to see the author\'s name displayed (if at all)</small></p>';
@@ -175,17 +173,21 @@ function wp_biographia_general_settings() {
 		<small>Display the author\'s Google+ details?</small></p>';
 	
 	$content_settings .= '<p><strong>' . __("Show More Posts Link") . '</strong><br />
-		<input type="radio" name="wp_biographia_content_posts" id="background-color" value="basic" '
+		<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="basic" '
 		. checked ($wp_biographia_settings['wp_biographia_content_posts'], 'basic', false)
 		. ' />&nbsp;Basic More Posts Link<br />
-		<input type="radio" name="wp_biographia_content_posts" id="background-color" value="extended" '
+		<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="extended" '
 		. checked ($wp_biographia_settings['wp_biographia_content_posts'], 'extended', false)
 		. ' />&nbsp;Extended More Posts Link<br />
-		<input type="radio" name="wp_biographia_content_posts" id="background-color" value="none" '
+		<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="none" '
 		. checked ($wp_biographia_settings['wp_biographia_content_posts'], 'none', false)
 		. ' />&nbsp;Don\'t Show The More Posts Link<br />
 		<small>How you want to display and format the <em>More Posts By This Author</em> link</small></p>';
 	
+	$wrapped_content .= wp_biographia_postbox('wp-biographia-settings-general', 'Biography Box Display Settings', $display_settings);
+
+	$wrapped_content .= wp_biographia_postbox('wp-biographia-style-settings', 'Biography Box Style Settings', $style_settings);
+
 	$wrapped_content .= wp_biographia_postbox('wp-biographia-settings-content', 'Biography Box Content Settings', $content_settings);
 	
 	wp_biographia_admin_wrap ('WP Biographia Settings And Options', $wrapped_content);
@@ -236,16 +238,16 @@ function wp_biographia_process_settings() {
 			 * Biography Box Style Settings
 			 */
 
-			$color = preg_replace('/[^0-9a-fA-F]/', '', $_POST['wp_biographia_alert_bg']);
+			$color = preg_replace('/[^0-9a-fA-F]/', '', $_POST['wp_biographia_style_bg']);
 
 			if ((strlen ($color) == 6 || strlen ($color) == 3) &&
- 				isset($_POST['wp_biographia_alert_bg'])) {
-				$wp_biographia_settings['wp_biographia_alert_bg']=$_POST['wp_biographia_alert_bg'];
+ 				isset($_POST['wp_biographia_style_bg'])) {
+				$wp_biographia_settings['wp_biographia_style_bg']=$_POST['wp_biographia_style_bg'];
 			}
 
-			if (isset ($_POST['wp_biographia_alert_border'])) {
-				$wp_biographia_settings['wp_biographia_alert_border'] = 
-					$_POST['wp_biographia_alert_border'];
+			if (isset ($_POST['wp_biographia_style_border'])) {
+				$wp_biographia_settings['wp_biographia_style_border'] = 
+					$_POST['wp_biographia_style_border'];
 			}
 
 			/*
