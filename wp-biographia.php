@@ -3,8 +3,8 @@
 Plugin Name: WP Biographia
 Plugin URI: http://www.garygale.com
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page.
-Version: 0.1
-Author: Gary Gale
+Version: 0.2
+Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
 */
@@ -17,6 +17,15 @@ require_once (WPBIOGRAPHIAURL_PATH."/wp-biographia-admin.php");
 /*
  * Produce and format the Biography Box according to the currently defined options
  */
+
+add_shortcode( 'wp_biographia' , 'wp_biographia_shortcode' );
+function wp_biographia_shortcode($atts) {
+	extract(shortcode_atts(array(
+	      //coming soon
+     ), $atts));
+	 wp_biographia_display();
+}
+
 
 function wp_biographia_display($for_feed = false) {
 	//global $post;
@@ -47,8 +56,11 @@ function wp_biographia_display($for_feed = false) {
 
 	$wp_biographia_author['posts'] = (int)get_the_author_posts ();
   	$wp_biographia_author['posts_url'] = get_author_posts_url (get_the_author_meta ('ID'));
-  	
-	$wp_biographia_author_pic = get_avatar (get_the_author_email (), '100');
+  	/**************************************************************************************************/
+	// Add Image Size Output
+	$wp_biographia_author_pic_size = (isset($wp_biographia_settings['wp_biographia_content_image_size'])) ? $wp_biographia_settings['wp_biographia_content_image_size'] : '100';
+	$wp_biographia_author_pic = get_avatar (get_the_author_email (), $wp_biographia_author_pic_size);
+	/**************************************************************************************************/
 
 	if (!empty ($wp_biographia_settings['wp_biographia_content_prefix']) ||
 		!empty ($wp_biographia_settings['wp_biographia_content_name'])) {
@@ -248,40 +260,108 @@ function wp_biographia_display($for_feed = false) {
  */
 
 function insert_wp_biographia($content) {
+	global $post;
 	$wp_biographia_settings = array ();
 	$wp_biographia_settings = get_option ('wp_biographia_settings');
-
+	$new_content = $content;
+	/**************************************************************************************************/
+	// Add pattern to determine output at top/bottom
+	// changed all $content .= wp_biographia_display (); to $content = sprintf( $pattern , $content , $bio_content );
+	//defaults to top
+	if ( (isset ($wp_biographia_settings['wp_biographia_display_location'])) && ($wp_biographia_settings['wp_biographia_display_location'] == 'top') )
+		$pattern = apply_filters( 'wp_biographia_pattern' , '%2$s %1$s' ); 
+	else
+		$pattern = apply_filters( 'wp_biographia_pattern' , '%1$s %2$s' );
+	/**************************************************************************************************/
+	
+	// allow short circuit
+	if ( ( $pattern == '' ) || ( $pattern == '%1s' ) )
+		return $content;
+	$bio_content = wp_biographia_display ();
 	if (is_front_page () &&
 			isset ($wp_biographia_settings['wp_biographia_display_front']) &&
 			$wp_biographia_settings['wp_biographia_display_front']) {
-		$content .= wp_biographia_display ();
+		$new_content = sprintf( $pattern , $content , $bio_content );
+		//$content .= wp_biographia_display ();
 	}
 	
-	else if (is_archive() &&
+	elseif (is_archive() &&
 			isset($wp_biographia_settings['wp_biographia_display_archives']) &&
 			$wp_biographia_settings['wp_biographia_display_archives']) {
-		$content .= wp_biographia_display ();
+		$new_content = sprintf( $pattern , $content , $bio_content );
+		//$content .= wp_biographia_display ();
 	}
 	
-	else if (is_page() &&
+	elseif (is_page() &&
 			isset($wp_biographia_settings['wp_biographia_display_pages']) &&
 			$wp_biographia_settings['wp_biographia_display_pages']) {
-		$content .= wp_biographia_display ();
+			$new_content = 'test true' . $content;
+			if ( isset($wp_biographia_settings['wp_biographia_page_exclusions']) ) {
+				$exclusions = explode(',',$wp_biographia_settings['wp_biographia_page_exclusions']);
+				if ( ! in_array( $post->ID , $exclusions) ) {
+					$new_content = sprintf( $pattern , $content , $bio_content );
+					//$content .= wp_biographia_display ();
+				}
+				else
+					$new_content = $content;
+			}
+			else
+				$new_content = sprintf( $pattern , $content , $bio_content );
+					//$content .= wp_biographia_display ();
+			
+		
 	}
 	
-	else if (is_single () &&
-			isset ($wp_biographia_settings['wp_biographia_display_posts']) &&
-			$wp_biographia_settings['wp_biographia_display_posts']) {
-		$content .= wp_biographia_display ();
+	elseif (is_single ()) {
+		/**************************************************************************************************/	
+		// Cycle through Custom Post Types
+
+		$pts = get_post_types( array() , 'objects');
+		
+		foreach ( $pts as $pt => $data ) {
+			//print_r($data);
+			if ( ( $data->_builtin ) && ( $pt != 'post' ) ) {
+				continue;
+			}
+			
+			//Adjust post to posts
+			if ( $pt == 'post' )
+				$pt_name = 'posts';
+			else
+				$pt_name = $pt;
+
+			if ( $post->post_type == $pt ) {
+				if ( isset ($wp_biographia_settings['wp_biographia_display_'.$pt_name]) ) {
+					// check exclusions
+					if ( isset($wp_biographia_settings['wp_biographia_'.$pt.'_exclusions']) ) {
+						$exclusions = explode(',',$wp_biographia_settings['wp_biographia_'.$pt.'_exclusions']);
+						
+						if ( ! in_array( $post->ID , $exclusions) ) {
+							$new_content = sprintf( $pattern , $content , $bio_content );
+							break;
+							//$content .= wp_biographia_display ();
+						}
+						else
+							$new_content = $content;
+					}
+					else
+						$new_content = sprintf( $pattern , $content , $bio_content );
+							//$content .= wp_biographia_display ();
+					}
+			}
+		}
 	}
 
-	else if (is_feed () &&
+	elseif (is_feed () &&
 			isset($wp_biographia_settings['wp_biographia_display_feed']) &&
 			$wp_biographia_settings['wp_biographia_display_feed']) {
-		$content .= wp_biographia_display (true);
+		$new_content = sprintf( $pattern , $content , $bio_content );
+		//$content .= wp_biographia_display (true);
 	}
+	else
+		$new_content = $content;
 	
-	return $content;
+	return $new_content;
 }
 
 /*
