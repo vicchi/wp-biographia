@@ -395,13 +395,13 @@ function wp_biographia_filter_contact($contactmethods) {
 
 }
 
-register_activation_hook(__FILE__, 'add_defaults_wp_biographia');
+register_activation_hook(__FILE__, 'wp_biographia_add_defaults');
 
 /*
  * Define and set up the default settings and options for formatting the Biography Box
  */
 
-function add_defaults_wp_biographia() {
+function wp_biographia_add_defaults() {
 	$wp_biographia_settings = NULL;
 
 	$wp_biographia_settings = get_option ('wp_biographia_settings');
