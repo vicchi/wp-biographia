@@ -1,9 +1,9 @@
 <?php
 /*
 Plugin Name: WP Biographia
-Plugin URI: http://www.garygale.com
+Plugin URI: http://www.vicchi.org/codeage/wp-biographia/
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page.
-Version: 1.1
+Version: 2.0
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
@@ -12,7 +12,7 @@ License: GPL2
 define ('WPBIOGRAPHIAURL_URL', plugin_dir_url(__FILE__));
 define ('WPBIOGRAPHIAURL_PATH', plugin_dir_path(__FILE__));
 
-require_once (WPBIOGRAPHIAURL_PATH."/wp-biographia-admin.php");
+require_once (WPBIOGRAPHIAURL_PATH."includes/wp-biographia-admin.php");
 
 /*
  * Produce and format the Biography Box according to the currently defined options
@@ -369,7 +369,7 @@ function wp_biographia_insert($content) {
  */
 
 function wp_biographia_style() {
-	wp_enqueue_style ('wp-biographia-bio', WPBIOGRAPHIAURL_URL . 'wp-biographia.css');	
+	wp_enqueue_style ('wp-biographia-bio', WPBIOGRAPHIAURL_URL . 'css/wp-biographia.css');	
 }
 
 /*
