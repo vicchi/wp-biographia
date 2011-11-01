@@ -58,49 +58,95 @@ function wp_biographia_general_settings() {
 	$wp_biographia_settings = wp_biographia_process_settings ();
 	
 	$wrapped_content = "";
-	$display_settings = "";	
-	$style_settings = "";
+	$general_content = "";	
+	$box_content = "";
 	$content_settings = "";
 	
 	if (function_exists ('wp_nonce_field')) {
-		$display_settings .= wp_nonce_field ('wp-biographia-update-options','_wpnonce',true,false);
+		$general_content .= wp_nonce_field ('wp-biographia-update-options','_wpnonce',true,false);
 	}
 	
 	/*
  	 * Biography Box Display Settings
  	 */
 	
-	$display_settings .= '<p><strong>' . __("Display On Front Page") . '</strong><br /> 
+	$general_content .= '<p><strong>' . __("Display On Front Page") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_front" ' .checked($wp_biographia_settings['wp_biographia_display_front'], 'on', false) . ' />
-				<small>Display a biography box on the front page at the end of each  post.</small></p>';			
-	$display_settings .= '<p><strong>' . __("Display In Archives") . '</strong><br /> 
+				<small>Display a biography box on the front page at the end of each  post.</small></p>';
+
+	// Archives -> Post Archives
+	$general_content .= '<p><strong>' . __("Display In Post Archives") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_archives" ' .checked($wp_biographia_settings['wp_biographia_display_archives'], 'on', false) . ' />
 				<small>Display a biography box on archive pages at the end of each post.</small></p>';	
-	$display_settings .= '<p><strong>' . __("Display On Individual Posts") . '</strong><br /> 
+	
+	$general_content .= '<p><strong>' . __("Display On Individual Posts") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_posts" ' .checked($wp_biographia_settings['wp_biographia_display_posts'], 'on', false) . ' />
-				<small>Display a biography box on individual posts at the end of the post.</small></p>';	
-	$display_settings .= '<p><strong>' . __("Display On Individual Pages") . '</strong><br /> 
+				<small>Display a biography box on individual Posts at the end of the post.</small></p>';
+	// Add Post ID Exclusion
+	$general_content .= '<p><strong>' . __("Exclude Posts (via Post ID)") . '</strong><br />
+			<input type="text" name="wp_biographia_post_exclusions" id="wp_biographia_post_exclusions" value="'.$wp_biographia_settings['wp_biographia_post_exclusions'].'" /><br />
+			<small>Enter Page IDs comma separated with no spaces, e.g. 54,33,55</small></p>';				
+	$general_content .= '<p><strong>' . __("Display On Individual Pages") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_pages" ' .checked($wp_biographia_settings['wp_biographia_display_pages'], 'on', false) . ' />
-				<small>Display a biography box on individual pages at the top of the entry.</small></p>';
-	$display_settings .= '<p><strong>' . __("Display In RSS Feeds") . '</strong><br />
+				<small>Display a biography box on individual Pages at the top of the entry.</small></p>';
+	// Add Page ID Exclusion
+	$general_content .= '<p><strong>' . __("Exclude Pages (via Page ID)") . '</strong><br />
+		<input type="text" name="wp_biographia_page_exclusions" id="wp_biographia_page_exclusions" value="'.$wp_biographia_settings['wp_biographia_page_exclusions'].'" /><br />
+		<small>Enter Page IDs comma separated with no spaces, e.g. 54,33,55</small></p>';
+	
+	/**************************************************************************************************/	
+	// Add Custom Post Types for Single & Archives
+	//'wp_biographia_display_archives_'.$pt->name
+	$args = array(
+		'public' => true,
+		'_builtin' => false
+	);
+	$pts = get_post_types($args , 'objects');
+	foreach ( $pts as $pt ) {
+	
+		$general_content .= '<p><strong>' . __("Display On Individual ".$pt->labels->name) . '</strong><br /> 
+					<input type="checkbox" name="wp_biographia_display_'.$pt->name.'" ' .checked($wp_biographia_settings['wp_biographia_display_'.$pt->name], 'on', false) . ' />
+					<small>Display a biography box on individual '.$pt->labels->name.' at the top of the entry.</small></p>';
+		$general_content .= '<p><strong>' . __("Display In ".$pt->labels->name." Archives") . '</strong><br /> 
+					<input type="checkbox" name="wp_biographia_display_archives_'.$pt->name.'" ' .checked($wp_biographia_settings['wp_biographia_display_archives_'.$pt->name], 'on', false) . ' />
+					<small>Display a biography box on archive pages at the end of each '.$pt->name.'.</small></p>';	
+		$general_content .= '<p><strong>' . __("Exclude {$pt->labels->name} (via {$pt->labels->name} ID)") . '</strong><br />
+			<input type="text" name="wp_biographia_'.$pt->name.'_exclusions" id="wp_biographia_'.$pt->name.'_exclusions" value="'.$wp_biographia_settings['wp_biographia_'.$pt->name.'_exclusions'].'" /><br />
+			<small>Enter Page IDs comma separated with no spaces, e.g. 54,33,55</small></p>';
+	}
+	$wp_biographia_settings['wp_biographia_display_location'] = ( isset($wp_biographia_settings['wp_biographia_display_location']) ) ? $wp_biographia_settings['wp_biographia_display_location'] : 'bottom';
+	// Add Display Location: Top/Bottom
+	$general_content .= '<p><strong>' . __("Display Location") . '</strong><br />
+		<input type="radio" name="wp_biographia_display_location" id="background-color" value="top" '
+		. checked ($wp_biographia_settings['wp_biographia_display_location'], 'top', false)
+		.' />&nbsp;Display before the Content<br />
+		<input type="radio" name="wp_biographia_display_location" id="background-color" value="bottom" '
+		. checked ($wp_biographia_settings['wp_biographia_display_location'], 'bottom', false)
+		. ' />&nbsp;Display after the Content<br />';
+    
+	/**************************************************************************************************/
+	
+	$general_content .= '<p><strong>' . __("Display In RSS Feeds") . '</strong><br />
 				<input type="checkbox" name="wp_biographia_display_feed" ' .checked($wp_biographia_settings['wp_biographia_display_feed'], 'on', false) . ' />
 				<small>Display a biography box in feeds at the top of each entry.</small></p>';
+	$wrapped_content .= wp_biographia_postbox('wp-biographia-settings-general', 'Biography Box Display Settings', $general_content);
 
 	/*
 	 * Biography Box Style Settings
 	 */
 	
-	$style_settings .= '<p><strong>' . __("Box Background Color") . '</strong><br /> 
-				<input type="text" name="wp_biographia_style_bg" id="background-color" value="' . $wp_biographia_settings['wp_biographia_style_bg'] . '" />
+	$box_content .= '<p><strong>' . __("Box Background Color") . '</strong><br /> 
+				<input type="text" name="wp_biographia_alert_bg" id="background-color" value="' . $wp_biographia_settings['wp_biographia_alert_bg'] . '" />
 				<a class="hide-if-no-js" href="#" id="pickcolor">' . __('Select a Color') . '</a>
 				<div id="colorPickerDiv" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div>
 				<small>By default, the background color of the box is a yellowish tone.</small></p>';
-	$style_settings .= '<p><strong>' . __("Box Border") . '</strong><br /> 
-                <select name="wp_biographia_style_border">
-                  <option value="top" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'top', false) . '>Thick Top Border</option>
-                  <option value="around" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'around', false) . '>Thin Surrounding Border</option>
-                  <option value="none" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'none', false) . '>No Border</option>
+	$box_content .= '<p><strong>' . __("Box Border") . '</strong><br /> 
+                <select name="wp_biographia_alert_border">
+                  <option value="top" ' .selected($wp_biographia_settings['wp_biographia_alert_border'], 'top', false) . '>Thick Top Border</option>
+                  <option value="around" ' .selected($wp_biographia_settings['wp_biographia_alert_border'], 'around', false) . '>Thin Surrounding Border</option>
+                  <option value="none" ' .selected($wp_biographia_settings['wp_biographia_alert_border'], 'none', false) . '>No Border</option>
                 </select><br /><small>By default, a thick black line is displayed above the author bio.</small></p>';
+	$wrapped_content .= wp_biographia_postbox('wp-biographia-settings-alert', 'Biography Box Style Settings', $box_content);
 
 	/*
 	 * Biography Box Content Settings
@@ -135,6 +181,10 @@ function wp_biographia_general_settings() {
 		. checked ($wp_biographia_settings['wp_biographia_content_image'], 'on', false)
 		. '/>
 		<small>Display the author\'s image?</small></p>';
+	$image_size = ( ( $wp_biographia_settings['wp_biographia_content_image_size'] = '' ) || ($wp_biographia_settings['wp_biographia_content_image_size'] = 0) ) ? $wp_biographia_settings['wp_biographia_content_image_size'] : '100';
+	$content_settings .= '<p><strong>' . __("Image Size") . '</strong><br />
+		<input type="text" name="wp_biographia_content_image_size" id="wp_biographia_content_image_size" value="'. $image_size .'" /><br />
+		<small>Enter size 32 for 32x32 or 70 for 70x70, etc. Defaults to 100x100.</small></p>';
 
 	$content_settings .= '<p><strong>' . __("Show Author's Biography") . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_bio" '
@@ -213,11 +263,34 @@ function wp_biographia_process_settings() {
 				$wp_biographia_settings['wp_biographia_display_front'] =
 					$_POST['wp_biographia_display_front'];
 			}
-
+				
 			if (isset ($_POST['wp_biographia_display_archives'])) {
 				$wp_biographia_settings['wp_biographia_display_archives'] = 
 					$_POST['wp_biographia_display_archives'];
 			}
+			
+			/**************************************************************************************************/	
+			// Add Custom Post Types for Archives & Single
+			$args = array(
+				'public' => true,
+				'_builtin' => false
+			);
+			$pts = get_post_types($args , 'objects');
+			foreach ( $pts as $pt ) {
+				if (isset ($_POST['wp_biographia_display_archives_'.$pt->name])) {
+				$wp_biographia_settings['wp_biographia_display_archives_'.$pt->name] =
+					$_POST['wp_biographia_display_archives_'.$pt->name];
+				}
+				if (isset ($_POST['wp_biographia_display_'.$pt->name])) {
+				$wp_biographia_settings['wp_biographia_display_'.$pt->name] =
+					$_POST['wp_biographia_display_'.$pt->name];
+				}
+				if (isset ($_POST['wp_biographia_'.$pt->name.'_exclusions'])) {
+				$wp_biographia_settings['wp_biographia_'.$pt->name.'_exclusions'] =
+					$_POST['wp_biographia_'.$pt->name.'_exclusions'];
+			}
+			}
+			/**************************************************************************************************/	
 
 			if (isset ($_POST['wp_biographia_display_posts'])) {
 				$wp_biographia_settings['wp_biographia_display_posts'] =
@@ -233,6 +306,25 @@ function wp_biographia_process_settings() {
 				$wp_biographia_settings['wp_biographia_display_feed'] =
 					$_POST['wp_biographia_display_feed'];
 			}
+			/**************************************************************************************************/
+			// Add my additions: location-top/bottom
+			if (isset ($_POST['wp_biographia_display_location'])) {
+				$wp_biographia_settings['wp_biographia_display_location'] =
+					$_POST['wp_biographia_display_location'];
+			}
+			
+			// Page exclusions 
+			if (isset ($_POST['wp_biographia_page_exclusions'])) {
+				$wp_biographia_settings['wp_biographia_page_exclusions'] =
+					$_POST['wp_biographia_page_exclusions'];
+			}
+			
+			// Post exclusions 
+			if (isset ($_POST['wp_biographia_post_exclusions'])) {
+				$wp_biographia_settings['wp_biographia_post_exclusions'] =
+					$_POST['wp_biographia_post_exclusions'];
+			}
+			/**************************************************************************************************/
 
 			/*
 			 * Biography Box Style Settings
@@ -268,6 +360,14 @@ function wp_biographia_process_settings() {
 				$wp_biographia_settings['wp_biographia_content_image'] =
 					$_POST['wp_biographia_content_image'];
 			}
+			
+			/**************************************************************************************************/
+			// Add Image Size
+			if (isset ($_POST['wp_biographia_content_image_size'])) {
+				$wp_biographia_settings['wp_biographia_content_image_size'] =
+					intval($_POST['wp_biographia_content_image_size']);
+			}
+			/**************************************************************************************************/
 
 			if (isset ($_POST['wp_biographia_content_bio'])) {
 				$wp_biographia_settings['wp_biographia_content_bio'] =

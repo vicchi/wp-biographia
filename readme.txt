@@ -1,12 +1,12 @@
 === WP Biographia ===
-Contributors: Vicchi
+Contributors: Vicchi, wpsmith
 Donate link: http://www.vicchi.org/codeage/wp-biographia/
-Tags: bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, website, about, author, about author
+Tags: bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, website, about, author, about author, author box
 Requires at least: 3.2
 Tested up to: 3.2.1
 Stable tag: 1.0.0
 
-Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page.
+Add and display a customizable author biography for all single post types (posts, pages, etc), in RSS feeds, in archives and on each entry on the landing page.
 
 == Description ==
 
@@ -14,11 +14,15 @@ This plugin allows you to add a customizable biography to posts, to RSS feeds to
 
 Settings and options include:
 
-1. Choose when to display a Biography Box; on the front page, in archives, on individual posts, on individual pages and in RSS feeds.
+1. Choose when to display a Biography Box; on the front page, in archives, on individual posts, pages, or any other custom post type and in RSS feeds.
 1. Choose the border style and background color of the Biography Box
 1. Choose the amount of user profile information displayed in the Biography Box
+1. Choose the gravatar image size
+1. Choose to display the bio at the top or the bottom (universally)
 
 The plugin also expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn and Google+ profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles.
+
+The plugin also has an added filter and shortcode ([wp_biographia]) to add further customization. For example, if you use page templates to display custom post types or your blog, you can simply use filter ('wp_biographia_pattern') to decide how you'd like to customize. Or, if you want the bios to appear at the bottom but on archive pages, you want them at the top, then the filter can do that as well. Or use the shortcode to control where it appears in a post of any post type.
 
 == Installation ==
 
@@ -37,6 +41,32 @@ The plugin also expands and enhances the Contact Info section of your user profi
 = Is there a web site for this plugin? =
 
 Absolutely. Go to http://www.vicchi.org/codeage/wp-biographia/ for the latest information. There's also the official WordPress plugin directory page at http://wordpress.org/extend/plugins/ and the source for the plugin is on GitHub as well at https://github.com/vicchi/wp-biographia.
+
+= How do I add HTML to the description? =
+Add this code in your functions.php file:
+<code>remove_filter( 'pre_user_description' , 'wp_filter_kses' );</code>
+
+= How do I remove the bio on pages using page templates? =
+Add this code in your functions.php file:
+<code>add_action( 'wp_head' , 'remove_author_box_page_template' );
+function remove_author_box_page_template() {
+  if ( is_page_template ( 'page_blog.php' ) )
+		add_filter( 'wp_biographia_pattern' , 'content_only_pattern' );
+}
+function content_only_pattern( $pattern ) {
+	return '%1s';
+}</code>
+
+= How do I remove the bio on pages using page templates? =
+Add this code in your functions.php file:
+<code>add_action( 'wp_head' , 'remove_author_box_page_template' );
+function remove_author_box_page_template() {
+	if ( is_archive() )
+		add_filter( 'wp_biographia_pattern' , 'content_only_pattern' );
+}
+function content_only_pattern( $pattern ) {
+	return '%2s %1s';
+}</code>
 
 = This plugin looks very much like the WP About Author; what's the connection? =
 
@@ -60,7 +90,15 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 1.0 (2011.8.1)
+The current version is 1.1 (2011.10.19)
+
+= 1.1 =
+* Added the ability to set image size
+* Added a simple shortcode
+* Fixed CSS issue for gravatar
+* Added Custom Post Types support with the ability to exclude based on post IDs
+* Added ability to set the bio at the top or the bottom
+* Add a filter to short circuit for further customization
 
 = 1.0 =
 * First version of WP Biographia released
