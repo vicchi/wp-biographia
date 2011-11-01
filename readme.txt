@@ -6,7 +6,7 @@ Requires at least: 3.2
 Tested up to: 3.2.1
 Stable tag: 2.0.0
 
-Add and display a customizable author biography for all single post types (posts, pages, etc), in RSS feeds, in archives and on each entry on the landing page.
+Add and display a customizable author biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
 
 == Description ==
 
@@ -90,20 +90,23 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 1.1 (2011.10.19)
+The current version is 2.0 (2011.11.01)
 
-= 1.1 =
+= 2.0 =
 * Added the ability to set image size
 * Added a simple shortcode
 * Fixed CSS issue for gravatar
 * Added Custom Post Types support with the ability to exclude based on post IDs
 * Added ability to set the bio at the top or the bottom
 * Add a filter to short circuit for further customization
+* Refactored plugin file locations in line with WordPress plugin development recommendations
 
 = 1.0 =
 * First version of WP Biographia released
 
 == Upgrade Notice ==
+= 2.0 =
+* This is the second version of WP Biographia and incorporates new features and bug fixes as well as some under-the-hood plumbing changes; in particular the plugin file locations have changed.
 
 = 1.0 =
 * This is the first version of WP Biographia
