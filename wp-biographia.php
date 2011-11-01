@@ -3,7 +3,7 @@
 Plugin Name: WP Biographia
 Plugin URI: http://www.garygale.com
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page.
-Version: 0.2
+Version: 1.1
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
@@ -259,7 +259,7 @@ function wp_biographia_display($for_feed = false) {
  * Add in the formatted Biography Box for the defined page types, via the the_content filter hook
  */
 
-function insert_wp_biographia($content) {
+function wp_biographia_insert($content) {
 	global $post;
 	$wp_biographia_settings = array ();
 	$wp_biographia_settings = get_option ('wp_biographia_settings');
@@ -445,9 +445,9 @@ function add_defaults_wp_biographia() {
  * 4) Add in our CSS for the generated page
  */
 
-add_action ('admin_menu','add_wp_biographia_options_subpanel');
-add_action ('admin_print_scripts', 'add_wp_biographia_admin_scripts');
-add_action ('admin_print_styles', 'add_wp_biographia_admin_styles');
+add_action ('admin_menu','wp_biographia_add_options_subpanel');
+add_action ('admin_print_scripts', 'wp_biographia_add_admin_scripts');
+add_action ('admin_print_styles', 'wp_biographia_add_admin_styles');
 add_action ('wp_print_styles', 'wp_biographia_style' );
 
 /*
@@ -458,6 +458,6 @@ add_action ('wp_print_styles', 'wp_biographia_style' );
  */
 
 add_filter ('user_contactmethods', 'wp_biographia_filter_contact');
-add_filter ('the_content', 'insert_wp_biographia');
+add_filter ('the_content', 'wp_biographia_insert');
 
 ?>

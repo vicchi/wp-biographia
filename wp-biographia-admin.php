@@ -3,7 +3,7 @@
  * Add in our CSS for the admin panel, via the admin_print_styles action hook
  */
 
-function add_wp_biographia_admin_styles() {
+function wp_biographia_add_admin_styles() {
 	global $pagenow;
 
 	if ($pagenow == 'options-general.php' &&
@@ -20,7 +20,7 @@ function add_wp_biographia_admin_styles() {
  * Add in our scripts for the admin panel, via the admin_print_scripts action hook
  */
 
-function add_wp_biographia_admin_scripts() {
+function wp_biographia_add_admin_scripts() {
 	global $pagenow;
 
 	if ($pagenow == 'options-general.php' &&
@@ -420,7 +420,7 @@ function wp_biographia_process_settings() {
  * Add in our admin panel, via the admin_menu action hook
  */
 
-function add_wp_biographia_options_subpanel() {
+function wp_biographia_add_options_subpanel() {
 	if (function_exists ('add_options_page')) {
 		add_options_page ('WP Biographia', 'WP Biographia', 'manage_options', __FILE__,
 			'wp_biographia_general_settings');
