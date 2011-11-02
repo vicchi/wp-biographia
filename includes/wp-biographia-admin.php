@@ -87,7 +87,7 @@ function wp_biographia_general_settings() {
 	// Add Post ID Exclusion
 	$display_settings .= '<p><strong>' . __("Exclude Posts (via Post ID)") . '</strong><br />
 			<input type="text" name="wp_biographia_post_exclusions" id="wp_biographia_post_exclusions" value="'.$wp_biographia_settings['wp_biographia_post_exclusions'].'" /><br />
-			<small>Enter Page IDs comma separated with no spaces, e.g. 54,33,55</small></p>';				
+			<small>Enter Page IDs, comma separated with no spaces, e.g. 54,33,55</small></p>';				
 	$display_settings .= '<p><strong>' . __("Display On Individual Pages") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_pages" ' .checked($wp_biographia_settings['wp_biographia_display_pages'], 'on', false) . ' />
 				<small>Display a biography box on individual Pages at the top of the entry.</small></p>';
@@ -97,9 +97,9 @@ function wp_biographia_general_settings() {
 		<input type="text" name="wp_biographia_page_exclusions" id="wp_biographia_page_exclusions" value="'.$wp_biographia_settings['wp_biographia_page_exclusions'].'" /><br />
 		<small>Enter Page IDs comma separated with no spaces, e.g. 54,33,55</small></p>';
 	
-	/**************************************************************************************************/	
 	// Add Custom Post Types for Single & Archives
 	//'wp_biographia_display_archives_'.$pt->name
+
 	$args = array (
 		'public' => true,
 		'_builtin' => false
@@ -202,6 +202,13 @@ function wp_biographia_general_settings() {
 		. '/>
 		<small>Display the author\'s biography?</small></p>';
 
+	$content_settings .= '<p><strong>' . __("Show Author's Email Address") . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_email" '
+		. checked ($wp_biographia_settings['wp_biographia_content_email'], 'on', false)
+		. '/>
+		<small>Display the author\'s email address?</small></p>';
+
+
 	$content_settings .= '<p><strong>' . __("Show Author's Website Link") . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_web" '
 		. checked ($wp_biographia_settings['wp_biographia_content_web'], 'on', false)
@@ -287,7 +294,6 @@ function wp_biographia_process_settings() {
 					$_POST['wp_biographia_display_archives'];
 			}
 			
-			/**************************************************************************************************/	
 			// Add Custom Post Types for Archives & Single
 			$args = array (
 				'public' => true,
@@ -311,7 +317,6 @@ function wp_biographia_process_settings() {
 					$_POST['wp_biographia_'.$pt->name.'_exclusions'];
 				}
 			}
-			/**************************************************************************************************/	
 
 			if (isset ($_POST['wp_biographia_display_posts'])) {
 				$wp_biographia_settings['wp_biographia_display_posts'] =
@@ -327,7 +332,7 @@ function wp_biographia_process_settings() {
 				$wp_biographia_settings['wp_biographia_display_feed'] =
 					$_POST['wp_biographia_display_feed'];
 			}
-			/**************************************************************************************************/
+
 			// Add my additions: location-top/bottom
 			if (isset ($_POST['wp_biographia_display_location'])) {
 				$wp_biographia_settings['wp_biographia_display_location'] =
@@ -345,8 +350,7 @@ function wp_biographia_process_settings() {
 				$wp_biographia_settings['wp_biographia_post_exclusions'] =
 					$_POST['wp_biographia_post_exclusions'];
 			}
-			/**************************************************************************************************/
-
+			
 			/*
 			 * Biography Box Style Settings
 			 */
@@ -382,17 +386,20 @@ function wp_biographia_process_settings() {
 					$_POST['wp_biographia_content_image'];
 			}
 			
-			/**************************************************************************************************/
 			// Add Image Size
 			if (isset ($_POST['wp_biographia_content_image_size'])) {
 				$wp_biographia_settings['wp_biographia_content_image_size'] =
 					intval ($_POST['wp_biographia_content_image_size']);
 			}
-			/**************************************************************************************************/
 
 			if (isset ($_POST['wp_biographia_content_bio'])) {
 				$wp_biographia_settings['wp_biographia_content_bio'] =
 					$_POST['wp_biographia_content_bio'];
+			}
+
+			if (isset ($_POST['wp_biographia_content_email'])) {
+				$wp_biographia_settings['wp_biographia_content_email'] =
+					$_POST['wp_biographia_content_email'];
 			}
 
 			if (isset ($_POST['wp_biographia_content_web'])) {
