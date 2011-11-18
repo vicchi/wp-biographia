@@ -8,21 +8,21 @@
   <style type="text/css">
     body {
       margin-top: 1.0em;
-      background-color: #3b5c1e;
+      background-color: #FFFFFF;
       font-family: Helvetica, Arial, FreeSans, san-serif;
-      color: #ffffff;
+      color: #000000;
     }
     #container {
       margin: 0 auto;
       width: 700px;
     }
-    h1 { font-size: 3.8em; color: #c4a3e1; margin-bottom: 3px; }
+    h1 { font-size: 3.8em; color: #51518C; margin-bottom: 3px; }
     h1 .small { font-size: 0.4em; }
     h1 a { text-decoration: none }
-    h2 { font-size: 1.5em; color: #c4a3e1; }
-    h3 { text-align: center; color: #c4a3e1; }
-    a { color: #c4a3e1; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
+    h2 { font-size: 1.5em; color: #51518C; }
+    h3 { text-align: center; color: #51518C; }
+    a { color: #51518C; }
+    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; }
     .download { float: right; }
     pre { background: #000; color: #fff; padding: 15px;}
     hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
@@ -34,6 +34,40 @@
   <a href="https://github.com/vicchi/wp-biographia"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
   <div id="container">
+	<h1><a href="https://github.com/vicchi/wp-biographia">WP Biographia</a></h1>
+
+	<div class="description">
+		<p>WP Biographia is a <a href="http://wordpress.org">WordPress</a> plugin that allows you to add a customizable biography to posts, to RSS feeds to pages, to archives and to each post on your blog's landing page. It integrates out of the box with the information that can be provided in each user's profile.</p>
+	</div>
+	
+	<img src="biography-wiki.jpg" width="640" height="273" class="splash" />
+
+	<ul class="features">
+		<li>Choose when to display a Biography Box; on the front page, in archives, on individual posts, on individual pages and in RSS feeds.</li>
+		<li>Choose the border style and background color of the Biography Box</li>
+		<li>Choose the amount of user profile information displayed in the Biography Box</li>
+		<li>Choose the avatar/gravatar image size</li>
+		<li>Choose to display the Biography Box at the top or the bottom of the page/post content (universally)</li>
+	</ul>
+
+
+	<div class="description">
+		<p>The plugin expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn and Google+ profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles.</p>
+
+		<p>The plugin also has an added filter and shortcode (<code>&#91;wp_biographia&#93;</code>) to add further customization. For example, if you use page templates to display custom post types on your blog, you can simply use <code>filter ('wp_biographia_pattern')</code> to decide how you’d like to customize. Or, if you want the Biography Box to appear at the bottom but on archive pages, you want them at the top, then the filter can do that as well. Or use the shortcode to control where it appears in a post of any post type.</p>
+	</div>
+
+	<img src="biography-box.jpg" width="628" height="683" class="splash" />
+	
+	<h2>Authors</h2>
+		<p>WP Biographia is written, produced and hacked by <a href="http://www.vicchi.org">Gary Gale</a>, aided and abetted by <a href="http://wpsmith.net">Travis Smith</a></p>
+
+    <h2>Download</h2>
+    <p>
+      You can download this project in either
+      <a href="https://github.com/vicchi/wp-biographia/zipball/master">zip</a> or
+      <a href="https://github.com/vicchi/wp-biographia/tarball/master">tar formats.
+    </p>
 
     <div class="download">
       <a href="https://github.com/vicchi/wp-biographia/zipball/master">
@@ -42,47 +76,16 @@
         <img border="0" width="90" src="https://github.com/images/modules/download/tar.png"></a>
     </div>
 
-    <h1><a href="https://github.com/vicchi/wp-biographia">wp-biographia</a>
-      <span class="small">by <a href="https://github.com/vicchi">vicchi</a></span></h1>
-
-    <div class="description">
-      WordPress plugin to add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page.
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-      <h2>Authors</h2>
-      <p>vicchi (gary@vicchi.org)<br/>wpsmith (travis@wpsmith.net)<br/>      </p>
-    
-
-    
-      <h2>Contact</h2>
-      <p>Gary Gale (gary@vicchi.org)<br/>      </p>
-    
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="https://github.com/vicchi/wp-biographia/zipball/master">zip</a> or
-      <a href="https://github.com/vicchi/wp-biographia/tarball/master">tar formats.
-    </p>
     <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
       by running:
       <pre>$ git clone git://github.com/vicchi/wp-biographia</pre>
     </p>
 
+	<h2>WordPress Installation</h2>
+	<p>You can install this plugin from the Plugins Dashboard on a self hosted Wordpress.org install or on WordPress.com, or from the <a href="http://wordpress.org/extend/plugins/wp-biographia/">official WordPress plugins repository</a>.</p>
     <div class="footer">
-      get the source code on GitHub : <a href="https://github.com/vicchi/wp-biographia">vicchi/wp-biographia</a>
+      <p>Get the source code on GitHub : <a href="https://github.com/vicchi/wp-biographia">vicchi/wp-biographia</a></p>
+		<p>"I want the biography of my life" image by <a href="http://www.flickr.com/photos/jacobmartinez/2784645343/">Jacob Martinez on Flickr</a></p>
     </div>
-
-  </div>
-
 </body>
 </html>
