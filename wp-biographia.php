@@ -9,6 +9,7 @@ Author URI: http://www.garygale.com/
 License: GPL2
 */
 
+define ('WPBIOGRAPHIA_VERSION', '21');
 define ('WPBIOGRAPHIAURL_URL', plugin_dir_url(__FILE__));
 define ('WPBIOGRAPHIAURL_PATH', plugin_dir_path(__FILE__));
 
@@ -18,18 +19,7 @@ require_once (WPBIOGRAPHIAURL_PATH."includes/wp-biographia-admin.php");
  * Produce and format the Biography Box according to the currently defined options
  */
 
-add_shortcode( 'wp_biographia' , 'wp_biographia_shortcode' );
-function wp_biographia_shortcode($atts) {
-	extract(shortcode_atts(array(
-	      //coming soon
-     ), $atts));
-	 wp_biographia_display();
-}
-
-
 function wp_biographia_display($for_feed = false) {
-	//global $post;
-
   	$wp_biographia_settings = array ();
 	$wp_biographia_settings = get_option ('wp_biographia_settings');
 	
@@ -416,8 +406,6 @@ function wp_biographia_filter_contact($contactmethods) {
 
 }
 
-register_activation_hook(__FILE__, 'wp_biographia_add_defaults');
-
 /*
  * Define and set up the default settings and options for formatting the Biography Box
  */
@@ -431,12 +419,12 @@ function wp_biographia_add_defaults() {
 			"wp_biographia_installed" => "on",
 			"wp_biographia_version" => "20",
 			"wp_biographia_style_bg" => "#FFEAA8",
+			"wp_biographia_style_border" => "top",
 			"wp_biographia_display_front" => "on",
 			"wp_biographia_display_archives" => "on",
 			"wp_biographia_display_posts" => "on",
 			"wp_biographia_display_pages" => "on",
 			"wp_biographia_display_feed" => "",
-			"wp_biographia_style_border" => "top",
 			"wp_biographia_content_prefix" => "About",
 			"wp_biographia_content_name" => "first-last-name",
 			"wp_biographia_content_image" => "on",
@@ -459,18 +447,37 @@ function wp_biographia_add_defaults() {
 }
 
 /*
+ * Display the biography box when the [wp_biographia] short-code is detected
+ */
+
+function wp_biographia_shortcode($atts) {
+	extract (shortcode_atts (array(
+	      //coming soon
+     ), $atts));
+	 wp_biographia_display ();
+}
+
+/*
+ * Define plugin activation hook
+ */
+
+register_activation_hook(__FILE__, 'wp_biographia_add_defaults');
+
+/*
  * Define plugin specific core action hooks
  *
  * 1) Add in our admin panel
  * 2) Add in our scripts for the admin panel
  * 3) Add in our CSS for the admin panel
  * 4) Add in our CSS for the generated page
+ * 5) Add in checking for updating the configuration options after a plugin upgrade
  */
 
 add_action ('admin_menu','wp_biographia_add_options_subpanel');
 add_action ('admin_print_scripts', 'wp_biographia_add_admin_scripts');
 add_action ('admin_print_styles', 'wp_biographia_add_admin_styles');
 add_action ('wp_print_styles', 'wp_biographia_style' );
+add_action ('admin_init', 'wp_biographia_admin_init');
 
 /*
  * Define plugin specific core filter hooks
@@ -481,5 +488,14 @@ add_action ('wp_print_styles', 'wp_biographia_style' );
 
 add_filter ('user_contactmethods', 'wp_biographia_filter_contact');
 add_filter ('the_content', 'wp_biographia_insert');
+
+/*
+ * Define plugin specific short-code hooks
+ *
+ * 1) [wp_biographia] short-code
+ */
+
+add_shortcode ('wp_biographia', 'wp_biographia_shortcode');
+
 
 ?>

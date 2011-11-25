@@ -22,13 +22,220 @@ function wp_biographia_add_admin_styles() {
 
 function wp_biographia_add_admin_scripts() {
 	global $pagenow;
-
+	
 	if ($pagenow == 'options-general.php' &&
 			isset ($_GET['page']) &&
 			strstr ($_GET['page'],"wp-biographia")) {
 		wp_enqueue_script ('postbox');
 		wp_enqueue_script ('dashboard');
 		wp_enqueue_script ('custom-background');
+	}
+}
+
+/*
+ * Check for updating the configuration options after a plugin upgrade
+ */
+
+function wp_biographia_admin_init() {
+	/*
+	 * Check, and if needed, upgrade the plugin's configuration settings ...
+	 */
+	
+	wp_biographia_upgrade ();
+}
+
+function wp_biographia_upgrade() {
+	$wp_biographia_settings = NULL;
+	$upgrade_settings = false;
+	$current_plugin_version = NULL;
+	
+	/*
+	 * Even if the plugin has only just been installed, the activation hook should have
+	 * fired *before* the admin_init action so therefore we /should/ already have the
+	 * plugin's configuration options defined in the database, but there's no harm in checking
+	 * just to make sure ...
+	 */
+	
+	$wp_biographia_settings = get_option ('wp_biographia_settings');
+
+	/*
+	 * Bale out early if there's no need to check for the need to upgrade the configuration
+	 * settings ...
+	 */
+	
+	if (is_array ($wp_biographia_settings) &&
+			isset ($wp_biographia_settings['wp_biographia_version']) &&
+			$wp_biographia_settings['wp_biographia_version'] == WPBIOGRAPHIA_VERSION) {
+		return;
+	}
+
+	if (!is_array ($wp_biographia_settings)) {
+		/*
+		 * Something odd is going on, so define the default set of config settings ...
+		 */
+		wp_biographia_add_defaults ();
+	}
+	
+	else {
+		/*
+		 * Versions of WP Biographia prior to v2.1 had a bug where some configuration
+		 * settings that were created at initial installation of the plugin were not
+		 * persisted after the configuration settings were updated; one of these is
+		 * 'wp_biographia_version'. In this case, the "special" 00 version captures
+		 * and remedies this.
+		 */
+		
+		if (isset ($wp_biographia_settings['wp_biographia_version'])) {
+			$current_plugin_version = $wp_biographia_settings['wp_biographia_version'];
+		}
+		else {
+			$current_plugin_version = '00';
+		}
+
+		/*
+		 * V1.0 configuration settings ...
+		 *
+		 * wp_biographia_installed
+		 * wp_biographia_version = "01"
+		 * wp_biographia_alert_bg
+		 * wp_biographia_display_front
+		 * wp_biographia_display_archives
+		 * wp_biographia_display_posts
+		 * wp_biographia_display_pages
+		 * wp_biographia_display_feed
+		 * wp_biographia_alert_border
+		 * wp_biographia_content_prefix
+		 * wp_biographia_content_name
+		 * wp_biographia_content_image
+		 * wp_biographia_content_bio
+		 * wp_biographia_content_web
+		 * wp_biographia_content_twitter
+		 * wp_biographia_content_facebook
+		 * wp_biographia_content_linkedin
+		 * wp_biographia_content_googleplus
+		 * wp_biographia_content_posts
+		 *
+		 * v2.0 added configuration settings ...
+		 *
+		 * wp_biographia_content_email = "on"
+		 * wp_biographia_content_image_size = "100"
+		 * wp_biographia_style_border (was wp_biographia_alert_border) = "top"
+		 * wp_biographia_style_bg (was wp_biographia_alert_bg) = "#FFEAA8"
+		 * wp_biographia_display_location = "bottom"
+		 * wp_biographia_page_exclusions (no default value)
+		 * wp_biographia_post_exclusions (no default value)
+		 *
+		 * v2.0 removed configuration settings
+		 *
+		 * wp_biographia_alert_border (replaced by wp_biographia_style_border)
+		 * wp_biographia_alert_bg (replaced by wp_biographia_style_bg)
+		 * 
+		 * v2.0 changed default configuration settings ...
+		 *
+		 * wp_biographia_version = "20"
+		 *
+		 * v2.1 changed default configuration settings ...
+		 *
+		 * wp_biographia_version = "21"
+		 */
+
+		switch ($current_plugin_version) {
+			case '00':
+				if (!isset ($wp_biographia_settings['wp_biographia_installed'])) {
+					$wp_biographia_settings['wp_biographia_installed'] = "on";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_style_bg'])) {
+					$wp_biographia_settings['wp_biographia_style_bg'] = "#FFEAA8";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_style_border'])) {
+					$wp_biographia_settings['wp_biographia_style_border'] = "top";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_display_front'])) {
+					$wp_biographia_settings['wp_biographia_display_front'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_display_archives'])) {
+					$wp_biographia_settings['wp_biographia_display_archives'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_display_posts'])) {
+					$wp_biographia_settings['wp_biographia_display_posts'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_display_pages'])) {
+					$wp_biographia_settings['wp_biographia_display_pages'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_display_feed'])) {
+					$wp_biographia_settings['wp_biographia_display_feed'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_prefix'])) {
+					$wp_biographia_settings['wp_biographia_content_prefix'] = "About";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_name'])) {
+					$wp_biographia_settings['wp_biographia_content_name'] = "none";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_image'])) {
+					$wp_biographia_settings['wp_biographia_content_image'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_bio'])) {
+					$wp_biographia_settings['wp_biographia_content_bio'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_web'])) {
+					$wp_biographia_settings['wp_biographia_content_web'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_twitter'])) {
+					$wp_biographia_settings['wp_biographia_content_twitter'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_facebook'])) {
+					$wp_biographia_settings['wp_biographia_content_facebook'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_linkedin'])) {
+					$wp_biographia_settings['wp_biographia_content_linkedin'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_googleplus'])) {
+					$wp_biographia_settings['wp_biographia_content_googleplus'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_posts'])) {
+					$wp_biographia_settings['wp_biographia_content_posts'] = "none";
+				}
+				
+			case '01':
+				if (!isset ($wp_biographia_settings['wp_biographia_content_email'])) {
+					$wp_biographia_settings["wp_biographia_content_email"] = "";
+				}
+
+				if (!isset ($wp_biographia_settings['wp_biographia_content_image_size'])) {
+					$wp_biographia_settings["wp_biographia_content_image_size"] = "100";
+				}
+
+				if (isset ($wp_biographia_settings['wp_biographia_alert_border'])) {
+					if (!isset ($wp_biographia_settings['wp_biographia_style_border'])) {
+						$wp_biographia_settings['wp_biographia_style_border'] = $wp_biographia_settings['wp_biographia_alert_border'];
+					}
+					unset ($wp_biographia_settings['wp_biographia_alert_border']);
+				}
+
+				if (isset ($wp_biographia_settings['wp_biographia_alert_bg'])) {
+					if (!isset ($wp_biographia_settings['wp_biographia_style_bg'])) {
+						$wp_biographia_settings['wp_biographia_style_bg'] = $wp_biographia_settings['wp_biographia_alert_bg'];
+					}
+					unset ($wp_biographia_settings['wp_biographia_alert_bg']);
+				}
+
+				if (!isset ($wp_biographia_settings['wp_biographia_display_location'])) {
+					$wp_biographia_settings["wp_biographia_display_location"] = "bottom";
+				}
+
+				$upgrade_settings = true;
+
+			case '20':
+				$wp_biographia_settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
+				$upgrade_settings = true;
+			case '21':
+			default:
+				break;
+		}	// end-switch
+
+		if ($upgrade_settings) {
+			update_option ('wp_biographia_settings', $wp_biographia_settings);
+		}
 	}
 }
 
@@ -273,9 +480,9 @@ function wp_biographia_general_settings() {
  */
 
 function wp_biographia_process_settings() {
+	$wp_biographia_settings = get_option ('wp_biographia_settings');
+	
 	if (!empty ($_POST['wp_biographia_option_submitted'])) {
-		$wp_biographia_settings = array ();
-		
 		if (strstr ($_GET['page'], "wp-biographia") &&
 		 		check_admin_referer ('wp-biographia-update-options')) {
 
