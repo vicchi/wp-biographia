@@ -1,10 +1,12 @@
 @charset "utf-8";
 /* CSS Document */
-.wp-biographia-container h3, .wp-biographia-container p{
+
+.wp-biographia-container h3, .wp-biographia-container p {
 	margin:0 0 10px 0;
 	padding:0;
 }
-.wp-biographia-container-top{
+
+.wp-biographia-container-top {
 	background: #f2f7fc;
 	border-top: 4px solid #000;
 	clear: both;
@@ -12,7 +14,8 @@
 	overflow: hidden;
 	padding: 20px;
 }
-.wp-biographia-container-around{
+
+.wp-biographia-container-around {
 	background: #f2f7fc;
 	border: 1px solid #000;
 	clear: both;
@@ -20,7 +23,8 @@
 	overflow: hidden;
 	padding: 20px;
 }
-.wp-biographia-container-none{
+
+.wp-biographia-container-none {
 	background: #f2f7fc;
 	border-top:none;
 	clear: both;
@@ -28,7 +32,8 @@
 	overflow: hidden;
 	padding: 20px;
 }
-.wp-biographia-pic{
+
+.wp-biographia-pic {
 	background: #fff;
 	border: 1px solid #e7e7e7;
 	float: left;
@@ -37,10 +42,11 @@
 	margin: 0 -122px 0 0;
 	padding: 10px;
 }
-.wp-biographia-pic img{
+
+.wp-biographia-pic img {
 }
-.wp-biographia-text{
+
+.wp-biographia-text {
 	float: left;
 	margin: 0 0 0 140px;
 }
-

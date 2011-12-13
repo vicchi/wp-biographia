@@ -1,0 +1,37 @@
+@charset "utf-8";
+
+.wp-biographia-success {
+	border: 1px solid #8ACEFF;
+	padding: 3px 15px 4px 27px;
+	display: block;
+	margin-bottom: 5px;
+	font-size: 11px;
+	line-height: 15px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background: #E2F5FE url(../images/success.png) no-repeat 5px center;
+}
+
+.wp-biographia-warning {
+	border: 1px solid #F8C44F;
+	padding: 3px 15px 4px 27px;
+	display: block;
+	margin-bottom: 5px;
+	font-size: 11px;
+	line-height: 15px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background: #FEE8B9 url(../images/warning.png) no-repeat 5px center;
+}
+
+.wp-biographia-error {
+	border: 1px solid #F96764;
+	padding: 3px 15px 4px 27px;
+	display: block;
+	margin-bottom: 5px;
+	font-size: 11px;
+	line-height: 15px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background: #FCB2B5 url(../images/error.png) no-repeat 5px center;
+}

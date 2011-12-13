@@ -436,6 +436,9 @@ function wp_biographia_add_defaults() {
 			"wp_biographia_content_linkedin" => "on",
 			"wp_biographia_content_googleplus" => "on",
 			"wp_biographia_content_posts" => "extended"
+/*
+ *			"wp_biographia_beta_enabled" => ""
+ */
 		);
 		update_option ('wp_biographia_settings', $wp_biographia_settings);
 	}
