@@ -35,3 +35,27 @@
 	-webkit-border-radius: 3px;
 	background: #FCB2B5 url(../images/error.png) no-repeat 5px center;
 }
+
+.wp-biographia-users {
+	float: left;
+	text-align: center;
+	margin: 10px;
+}
+
+.wp-biographia-users a {
+	display: block;
+	border: 1px solid #AAAAAA;
+	text-decoration: none;
+	background-color: #FAFAFA;
+	color: #000000;
+	margin: 2px;
+	/*clear: both;*/
+}
+
+#wp-biographia-enabled-post-users,
+#wp-biographia-suppressed-post-users, 
+#wp-biographia-enabled-page-users,
+#wp-biographia-suppressed-page-users {
+	width: 100px;
+	height: 80px;
+}

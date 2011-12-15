@@ -276,6 +276,7 @@ function wp_biographia_insert($content) {
 	$wp_biographia_settings = array ();
 	$wp_biographia_settings = get_option ('wp_biographia_settings');
 	$new_content = $content;
+	$user_id = get_the_author_meta ('ID');
 
 	// Add pattern to determine output at top/bottom
 	// changed all $content .= wp_biographia_display (); to $content = sprintf( $pattern , $content , $bio_content );
@@ -291,10 +292,12 @@ function wp_biographia_insert($content) {
 	if (($pattern == '') || ($pattern == '%1s'))
 		return $content;
 
-	$bio_content = wp_biographia_display ();
+//	$bio_content = wp_biographia_display ();
+
 	if (is_front_page () &&
 			isset ($wp_biographia_settings['wp_biographia_display_front']) &&
 			$wp_biographia_settings['wp_biographia_display_front']) {
+		$bio_content = wp_biographia_display ();
 		$new_content = sprintf ($pattern, $content, $bio_content);
 		//$content .= wp_biographia_display ();
 	}
@@ -302,63 +305,68 @@ function wp_biographia_insert($content) {
 	elseif (is_archive () &&
 			isset ($wp_biographia_settings['wp_biographia_display_archives']) &&
 			$wp_biographia_settings['wp_biographia_display_archives']) {
+		$bio_content = wp_biographia_display ();
 		$new_content = sprintf ($pattern, $content, $bio_content);
 		//$content .= wp_biographia_display ();
 	}
 	
 	elseif (is_page () &&
 			isset($wp_biographia_settings['wp_biographia_display_pages']) &&
-			$wp_biographia_settings['wp_biographia_display_pages']) {
-			$new_content = 'test true' . $content;
-			if (isset ($wp_biographia_settings['wp_biographia_page_exclusions'])) {
-				$exclusions = explode(',',$wp_biographia_settings['wp_biographia_page_exclusions']);
-				if (! in_array ($post->ID, $exclusions)) {
-					$new_content = sprintf ($pattern, $content, $bio_content);
-					//$content .= wp_biographia_display ();
-				}
-				else
-					$new_content = $content;
+			$wp_biographia_settings['wp_biographia_display_pages'] &&
+			get_user_meta ($user_id, 'wp_biographia_suppress_pages', true) !== 'on') {
+		$bio_content = wp_biographia_display ();
+		$new_content = 'test true' . $content;
+		if (isset ($wp_biographia_settings['wp_biographia_page_exclusions'])) {
+			$exclusions = explode(',',$wp_biographia_settings['wp_biographia_page_exclusions']);
+			if (! in_array ($post->ID, $exclusions)) {
+				$new_content = sprintf ($pattern, $content, $bio_content);
+				//$content .= wp_biographia_display ();
 			}
 			else
-				$new_content = sprintf ($pattern, $content, $bio_content );
-					//$content .= wp_biographia_display ();
+				$new_content = $content;
+		}
+		else
+			$new_content = sprintf ($pattern, $content, $bio_content );
+			//$content .= wp_biographia_display ();
 	}
 	
 	elseif (is_single ()) {
-		// Cycle through Custom Post Types
-
-		$pts = get_post_types (array (), 'objects');
+		if (get_user_meta ($user_id, 'wp_biographia_suppress_posts', true) !== 'on') {
+			// Cycle through Custom Post Types
+			$bio_content = wp_biographia_display ();
+			$pts = get_post_types (array (), 'objects');
 		
-		foreach ($pts as $pt => $data) {
-			if (($data->_builtin) && ($pt != 'post')) {
-				continue;
-			}
+			foreach ($pts as $pt => $data) {
+				if (($data->_builtin) && ($pt != 'post')) {
+					continue;
+				}
 			
-			//Adjust post to posts
-			if ($pt == 'post')
-				$pt_name = 'posts';
-			else
-				$pt_name = $pt;
+				//Adjust post to posts
+				if ($pt == 'post')
+					$pt_name = 'posts';
+				else
+					$pt_name = $pt;
 
-			if ($post->post_type == $pt) {
-				if (isset ($wp_biographia_settings['wp_biographia_display_'.$pt_name])) {
-					// check exclusions
-					if (isset ($wp_biographia_settings['wp_biographia_'.$pt.'_exclusions'])) {
-						$exclusions = explode (',',
+				if ($post->post_type == $pt) {
+					if (isset ($wp_biographia_settings['wp_biographia_display_'.$pt_name])) {
+						// check exclusions
+						if (isset ($wp_biographia_settings['wp_biographia_'.$pt.'_exclusions'])) {
+							$exclusions = explode (',',
 							$wp_biographia_settings['wp_biographia_'.$pt.'_exclusions']);
 						
-						if (! in_array ($post->ID , $exclusions)) {
-							$new_content = sprintf ($pattern, $content, $bio_content);
-							break;
-							//$content .= wp_biographia_display ();
+							if (! in_array ($post->ID , $exclusions)) {
+								$new_content = sprintf ($pattern, $content, $bio_content);
+								break;
+								//$content .= wp_biographia_display ();
+							}
+							else
+								$new_content = $content;
 						}
 						else
-							$new_content = $content;
-					}
-					else
-						$new_content = sprintf ($pattern, $content, $bio_content);
+							$new_content = sprintf ($pattern, $content, $bio_content);
 							//$content .= wp_biographia_display ();
 					}
+				}
 			}
 		}
 	}
@@ -366,6 +374,7 @@ function wp_biographia_insert($content) {
 	elseif (is_feed () &&
 			isset($wp_biographia_settings['wp_biographia_display_feed']) &&
 			$wp_biographia_settings['wp_biographia_display_feed']) {
+		$bio_content = wp_biographia_display ();
 		$new_content = sprintf ($pattern, $content, $bio_content);
 		//$content .= wp_biographia_display (true);
 	}
@@ -460,6 +469,37 @@ function wp_biographia_shortcode($atts) {
 	 wp_biographia_display ();
 }
 
+function wp_biographia_add_profile_extensions($user) {
+	?>
+	<h3>Biography Box</h3>
+	<table class="form-table">
+		<tr>
+			<th scope="row">Exclude From Posts</th>
+			<td>
+				<label for="wp_biographia_suppress_posts">
+					<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> /> Don't show the Biography Box on your posts
+				</label>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">Exclude From Pages</th>
+			<td>
+				<label for="wp_biographia_suppress_pages">
+					<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> /> Don't show the Biography Box on your pages
+				</label>
+			</td>
+		</tr>
+	</table>
+	<?php
+}
+
+function wp_biographia_save_profile_extensions($user_id) {
+	update_user_meta ($user_id, 'wp_biographia_suppress_posts',
+		wp_biographia_option ('wp_biographia_suppress_posts'));
+	update_user_meta ($user_id, 'wp_biographia_suppress_pages',
+		wp_biographia_option ('wp_biographia_suppress_pages'));
+}
+
 /*
  * Define plugin activation hook
  */
@@ -474,6 +514,8 @@ register_activation_hook(__FILE__, 'wp_biographia_add_defaults');
  * 3) Add in our CSS for the admin panel
  * 4) Add in our CSS for the generated page
  * 5) Add in checking for updating the configuration options after a plugin upgrade
+ * 6/7) Add in user profile extensions for excluding the Biography Box
+ * 8/9) Save user profile extensions for exclusing the Biography Box
  */
 
 add_action ('admin_menu','wp_biographia_add_options_subpanel');
@@ -481,6 +523,11 @@ add_action ('admin_print_scripts', 'wp_biographia_add_admin_scripts');
 add_action ('admin_print_styles', 'wp_biographia_add_admin_styles');
 add_action ('wp_print_styles', 'wp_biographia_style' );
 add_action ('admin_init', 'wp_biographia_admin_init');
+
+add_action ('show_user_profile', 'wp_biographia_add_profile_extensions');
+add_action ('edit_user_profile', 'wp_biographia_add_profile_extensions');
+add_action ('personal_options_update', 'wp_biographia_save_profile_extensions');
+add_action ('edit_user_profile_update', 'wp_biographia_save_profile_extensions');
 
 /*
  * Define plugin specific core filter hooks
