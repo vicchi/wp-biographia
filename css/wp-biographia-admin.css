@@ -1,5 +1,15 @@
 @charset "utf-8";
 
+.wp-biographia-postbox-settings {
+	width: 60%;
+	padding: 0 0 0 0;
+}
+
+.wp-biographia-postbox-sidebar {
+	width: 30%;
+	padding: 0 0 0 10px;
+}
+
 .wp-biographia-success {
 	border: 1px solid #8ACEFF;
 	padding: 3px 15px 4px 27px;
