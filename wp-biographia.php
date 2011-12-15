@@ -500,6 +500,11 @@ function wp_biographia_save_profile_extensions($user_id) {
 		wp_biographia_option ('wp_biographia_suppress_pages'));
 }
 
+function wp_biographia_settings_link($links) {
+	$settings_link = '<a href="options-general.php?page=wp-biographia/includes/wp-biographia-admin.php">Settings</a>';
+	array_unshift ($links, $settings_link);
+	return $links;
+}
 /*
  * Define plugin activation hook
  */
@@ -534,10 +539,12 @@ add_action ('edit_user_profile_update', 'wp_biographia_save_profile_extensions')
  *
  * 1) Sanitize/filter the author's profile contact info
  * 2) Add in post processing to add the Biography Box to the page content
+ * 3) Add in plugin settings link
  */
 
 add_filter ('user_contactmethods', 'wp_biographia_filter_contact');
 add_filter ('the_content', 'wp_biographia_insert');
+add_filter ('plugin_action_links_' . plugin_basename (__FILE__), 'wp_biographia_settings_link');
 
 /*
  * Define plugin specific short-code hooks
