@@ -308,16 +308,16 @@ function wp_biographia_general_settings() {
 	
 	$display_settings .= '<p><strong>' . __("Display On Front Page") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_front" ' .checked($wp_biographia_settings['wp_biographia_display_front'], 'on', false) . ' />
-				<small>Display a biography box on the front page at the end of each  post.</small></p>';
+				<small>Displays the Biography Box for each post on the front page.</small></p>';
 
 	// Archives -> Post Archives
 	$display_settings .= '<p><strong>' . __("Display In Post Archives") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_archives" ' .checked($wp_biographia_settings['wp_biographia_display_archives'], 'on', false) . ' />
-				<small>Display a biography box on archive pages at the end of each post.</small></p>';	
+				<small>Displays the Biography Box for each post on archive pages.</small></p>';	
 	
 	$display_settings .= '<p><strong>' . __("Display On Individual Posts") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_posts" ' .checked($wp_biographia_settings['wp_biographia_display_posts'], 'on', false) . ' />
-				<small>Display a biography box on individual Posts at the end of the post.</small></p>';
+				<small>Displays the Biography Box for individual posts.</small></p>';
 
 	// Add Post ID Exclusion
 	$display_settings .= '<p><strong>' . __("Exclude Posts (via Post ID)") . '</strong><br />
@@ -326,7 +326,7 @@ function wp_biographia_general_settings() {
 
 	$display_settings .= '<p><strong>' . __("Display On Individual Pages") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_pages" ' .checked($wp_biographia_settings['wp_biographia_display_pages'], 'on', false) . ' />
-				<small>Display a biography box on individual Pages at the top of the entry.</small></p>';
+				<small>Displays the Biography Box for individual pages.</small></p>';
 
 	// Add Page ID Exclusion
 	$display_settings .= '<p><strong>' . __("Exclude Pages (via Page ID)") . '</strong><br />
@@ -414,27 +414,6 @@ function wp_biographia_general_settings() {
 	$display_settings .= '<br />';
 	$display_settings .= '<div style="clear: both";><small>Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.</small></div></p>';
 
-/*
-	$display_settings .= '<p><strong>Exclude Authors (via User ID)</strong><br />';
-	$display_settings .= '<span class="wp-biographia-authors">';
-	$display_settings .= '<select multiple name="wp_biographia_author_list[]" id="wp-biographia-author-list-source">';
-
-	foreach ($authors as $author) {
-		$display_settings .= '<option value="' . $author->ID . '">'
-			. $author->user_login . '</option>';
-	}
-	$display_settings .= '</select>';
-	$display_settings .= '<a href="#" id="wp_biographia_author_add">Add &gt;&gt;</a>';
-	$display_settings .= '</span>';
-	$display_settings .= '<span class="wp-biographia-authors">';
-	$display_settings .= '<select multiple name="wp_biographia_author_exclusions[]" id="wp-biographia-author-list-selected">';
-	$display_settings .= '</select>';
-	$display_settings .= '<a href="#" id="wp_biographia_author_remove">&lt;&lt Remove</a>';
-	$display_settings .= '</span>';
-	$display_settings .= '<br />
-	<div style="clear:both;"><small>Select those authors who should not display a Biography Box on their posts or pages</small></div></p>';
-*/
-	
 	// Add Custom Post Types for Single & Archives
 	//'wp_biographia_display_archives_'.$pt->name
 
@@ -448,11 +427,11 @@ function wp_biographia_general_settings() {
 	foreach ($pts as $pt) {
 		$display_settings .= '<p><strong>' . __("Display On Individual ".$pt->labels->name) . '</strong><br /> 
 					<input type="checkbox" name="wp_biographia_display_'.$pt->name.'" ' .checked($wp_biographia_settings['wp_biographia_display_'.$pt->name], 'on', false) . ' />
-					<small>Display a biography box on individual '.$pt->labels->name.' at the top of the entry.</small></p>';
+					<small>Displays the Biography Box on individual posts for post type '.$pt->labels->name.'.</small></p>';
 
 		$display_settings .= '<p><strong>' . __("Display In ".$pt->labels->name." Archives") . '</strong><br /> 
 					<input type="checkbox" name="wp_biographia_display_archives_'.$pt->name.'" ' .checked($wp_biographia_settings['wp_biographia_display_archives_'.$pt->name], 'on', false) . ' />
-					<small>Display a biography box on archive pages at the end of each '.$pt->name.'.</small></p>';	
+					<small>Displays the Biography Box on archive pages for post type '.$pt->name.'.</small></p>';	
 
 		$display_settings .= '<p><strong>' . __("Exclude {$pt->labels->name} (via {$pt->labels->name} ID)") . '</strong><br />
 			<input type="text" name="wp_biographia_'.$pt->name.'_exclusions" id="wp_biographia_'.$pt->name.'_exclusions" value="'.$wp_biographia_settings['wp_biographia_'.$pt->name.'_exclusions'].'" /><br />
@@ -467,14 +446,14 @@ function wp_biographia_general_settings() {
 	$display_settings .= '<p><strong>' . __("Display Location") . '</strong><br />
 		<input type="radio" name="wp_biographia_display_location" id="wp-biographia-content-name" value="top" '
 		. checked ($wp_biographia_settings['wp_biographia_display_location'], 'top', false)
-		.' />&nbsp;Display before the Content<br />
+		.' />&nbsp;Display the Biography Box before the post or page content<br />
 		<input type="radio" name="wp_biographia_display_location" id="wp-biographia-content-name" value="bottom" '
 		. checked ($wp_biographia_settings['wp_biographia_display_location'], 'bottom', false)
-		. ' />&nbsp;Display after the Content<br />';
+		. ' />&nbsp;Display the Biography Box after the post or page content<br />';
     
 	$display_settings .= '<p><strong>' . __("Display In RSS Feeds") . '</strong><br />
 				<input type="checkbox" name="wp_biographia_display_feed" ' .checked($wp_biographia_settings['wp_biographia_display_feed'], 'on', false) . ' />
-				<small>Display a biography box in feeds at the top of each entry.</small></p>';
+				<small>Displays the Biography Box in feeds for each entry.</small></p>';
 
 	/*
 	 * Biography Box Style Settings
@@ -484,13 +463,13 @@ function wp_biographia_general_settings() {
 				<input type="text" name="wp_biographia_style_bg" id="background-color" value="' . $wp_biographia_settings['wp_biographia_style_bg'] . '" />
 				<a class="hide-if-no-js" href="#" id="pickcolor">' . __('Select a Color') . '</a>
 				<div id="colorPickerDiv" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div>
-				<small>By default, the background color of the box is a yellowish tone.</small></p>';
+				<small>By default, the background color of the Biography Box is a yellowish tone.</small></p>';
 	$style_settings .= '<p><strong>' . __("Box Border") . '</strong><br /> 
                 <select name="wp_biographia_style_border">
                   <option value="top" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'top', false) . '>Thick Top Border</option>
                   <option value="around" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'around', false) . '>Thin Surrounding Border</option>
                   <option value="none" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'none', false) . '>No Border</option>
-                </select><br /><small>By default, a thick black line is displayed above the author bio.</small></p>';
+                </select><br /><small>By default, a thick black line is displayed above the Biography Box.</small></p>';
 
 	/*
 	 * Biography Box Content Settings
@@ -856,7 +835,7 @@ function wp_biographia_admin_wrap($title, $content) {
     <div class="wrap">
         <h2><?php echo $title; ?></h2>
         <form method="post" action="">
-            <div class="postbox-container" style="width:60%;">
+            <div class="postbox-container wp-biographia-postbox-settings">
                 <div class="metabox-holder">	
                     <div class="meta-box-sortables">
                     <?php
@@ -869,7 +848,7 @@ function wp_biographia_admin_wrap($title, $content) {
                     </div>
                   </div>
                 </div>
-                <div class="postbox-container" style="width:30%;">
+                <div class="postbox-container wp-biographia-postbox-sidebar">
                   <div class="metabox-holder">	
                     <div class="meta-box-sortables">
                     <?php
