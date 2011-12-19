@@ -10,6 +10,11 @@
 	padding: 0 0 0 10px;
 }
 
+.wp-biographia-postbox-sidebar ul {
+	list-style: square;
+	padding: 1em;
+}
+
 .wp-biographia-success {
 	border: 1px solid #8ACEFF;
 	padding: 3px 15px 4px 27px;
