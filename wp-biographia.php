@@ -412,7 +412,6 @@ function wp_biographia_filter_contact($contactmethods) {
 	$contactmethods['jabber'] = 'Jabber / Google Talk';
 
 	return $contactmethods;
-
 }
 
 /*
@@ -469,42 +468,6 @@ function wp_biographia_shortcode($atts) {
 	 wp_biographia_display ();
 }
 
-function wp_biographia_add_profile_extensions($user) {
-	?>
-	<h3>Biography Box</h3>
-	<table class="form-table">
-		<tr>
-			<th scope="row">Exclude From Posts</th>
-			<td>
-				<label for="wp_biographia_suppress_posts">
-					<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> /> Don't show the Biography Box on your posts
-				</label>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">Exclude From Pages</th>
-			<td>
-				<label for="wp_biographia_suppress_pages">
-					<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> /> Don't show the Biography Box on your pages
-				</label>
-			</td>
-		</tr>
-	</table>
-	<?php
-}
-
-function wp_biographia_save_profile_extensions($user_id) {
-	update_user_meta ($user_id, 'wp_biographia_suppress_posts',
-		wp_biographia_option ('wp_biographia_suppress_posts'));
-	update_user_meta ($user_id, 'wp_biographia_suppress_pages',
-		wp_biographia_option ('wp_biographia_suppress_pages'));
-}
-
-function wp_biographia_settings_link($links) {
-	$settings_link = '<a href="options-general.php?page=wp-biographia/includes/wp-biographia-admin.php">Settings</a>';
-	array_unshift ($links, $settings_link);
-	return $links;
-}
 /*
  * Define plugin activation hook
  */
