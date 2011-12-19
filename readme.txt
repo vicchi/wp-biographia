@@ -42,6 +42,10 @@ The plugin also has an added filter and shortcode (`[wp_biographia]`) to add fur
 
 == Frequently Asked Questions ==
 
+= How do I get help or support for this plugin? =
+
+In order of preference, you can ask a question on the [WordPress support forum](http://wordpress.org/tags/wp-biographia?forum_id=10); this is by far the best way so that other users can follow the conversation. You can ask me a question on Twitter; I'm [@vicchi](http://twitter.com/vicchi). Or you can drop me an email instead. I can't promise to answer your question but I do promise to answer and do my best to help.
+
 = Is there a web site for this plugin? =
 
 Absolutely. Go to the [WP Biographia home page](http://www.vicchi.org/codeage/wp-biographia/) for the latest information. There's also the official [WordPress plugin directory page](http://wordpress.org/extend/plugins/) and the [source for the plugin is on GitHub](http://vicchi.github.com/wp-biographia/) as well.
@@ -57,6 +61,10 @@ Author profile pictures, or avatars, are part of the WordPress core but enabling
 = I want to upload my author's images, host them on my web server and not use Gravatars; how do I do this? =
 
 WP Biographia uses the `get_avatar` [pluggable function](http://codex.wordpress.org/Pluggable_Functions) to output the author's avatar image. Theoretically, any plugin that supports locally hosted avatar images and which overrides the default WordPress implementation of `get_avatar` should be able to be used. In practice, whether this approach will work for you or not depends on the combination of the theme you're using and the interactions that the other plugins that you're using has with the WordPress core and with your theme. The [Simple Local Avatars](http://wordpress.org/extend/plugins/simple-local-avatars/) plugin plugs `get_avatar` and cooperates nicely with WP Biographia, at least in my local testing environment; your mileage may vary.
+
+= I only want to show the Biography Box for certain users and not for others; can I do this? =
+
+As of v2.1, WP Biographia allows you to suppress the Biography Box being displayed on a per user basis. You can suppress for posts only, for pages only or for both posts and pages. There's two ways of configuring this. If your user has the `manage_options` capability, you can choose the degree of suppression, if any, from your user profile or for any other user's profile; from the Dashboard, navigate to Users and check the Suppress From Posts and/or Suppress From Pages checkbox options. You can also configure this easily from the plugin's Settings And Options; from the Dashboard, navigate to the Settings / WP Biographia page and under Biography Box Per User Settings, add and/or remove the users to fit your model of who should have the Biography Box displayed.
 
 = How do I add HTML to the Biographical Info section of a user's profile? =
 
@@ -98,9 +106,10 @@ WP Biographia is named after the etymology of the modern English word biography.
 == Screenshots ==
 
 1. WP Biographia Settings And Options: Biography Box Display Settings
+1. WP Biographia Settings And Options: Biography Box Per User Settings
 1. WP Biographia Settings And Options: Biography Box Style Settings
 1. WP Biographia Settings And Options: Biography Box Content Settings
-1. Sample biography, shown below an individual post
+1. Sample Biography Box, shown below an individual post
 
 
 == Changelog ==
