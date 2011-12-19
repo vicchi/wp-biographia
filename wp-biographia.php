@@ -3,7 +3,7 @@
 Plugin Name: WP Biographia
 Plugin URI: http://www.vicchi.org/codeage/wp-biographia/
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page.
-Version: 2.0
+Version: 2.1
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
