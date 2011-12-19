@@ -292,7 +292,7 @@ function wp_biographia_show_colophon() {
  */
 
 function wp_biographia_show_help_and_support() {
-	$content = '<p>For help and support with WP Biographia, here\'s what you can do:</p>
+	$content = '<p>For help and support with WP Biographia, here\'s what you can do:
 <ul>
 <li>Ask a question on the <a href="http://wordpress.org/tags/wp-biographia?forum_id=10">WordPress support forum</a>; this is by far the best way so that other users can follow the conversation.</li>
 <li>Ask me a question on Twitter; I\'m <a href="http://twitter.com/vicchi">@vicchi</a>.</li>
@@ -300,14 +300,16 @@ function wp_biographia_show_help_and_support() {
 	$content .= antispambot("gary@vicchi.org");
 	$content .= '">email</a> instead.</li>
 </ul>
-<p>But help and support is a two way street; here\'s what you might want to do:</p>
+</p>
+<p>But help and support is a two way street; here\'s what you might want to do:
 <ul>
 <li>If you like this plugin and use it on your WordPress site, or if you write about it online, <a href="http://www.vicchi.org/codeage/wp-biographia/">link to plugin</a> and drop me an <a href="mailto:';
 	$content .= antispambot("gary@vicchi.org");
 	$content .= '">email</a> telling me about this.</li>
 <li>Rate the plugin on the <a href="http://wordpress.org/extend/plugins/wp-biographia/">WordPress plugin repository</a>.</li>
-<li>No donations are required; <a href="http://www.vicchi.org/codeage/donate/">here\'s why</a>.</li>
-</ul>';
+<li>WP Biographia is both free as in speech and free as in beer. No donations are required; <a href="http://www.vicchi.org/codeage/donate/">here\'s why</a>.</li>
+</ul>
+</p>';
 
 	return wp_biographia_postbox ('wp-biographia-support', 'Help &amp; Support', $content);
 }
@@ -332,6 +334,7 @@ function wp_biographia_general_settings() {
 	$wrapped_content = "";
 
 	$display_settings = "";
+	$user_settings = "";
 	$style_settings = "";
 	$content_settings = "";
 /*
@@ -375,86 +378,6 @@ function wp_biographia_general_settings() {
 		<input type="text" name="wp_biographia_page_exclusions" id="wp_biographia_page_exclusions" value="'.$wp_biographia_settings['wp_biographia_page_exclusions'].'" /><br />
 		<small>Enter Page IDs comma separated with no spaces, e.g. 54,33,55</small></p>';
 	
-	// Add per user suppression of the Biography Box on posts and on pages
-	
-	global $wpdb;
-	
-	$users = $wpdb->get_results ("SELECT ID, user_login from $wpdb->users ORDER BY user_login");
-	
-	$post_enabled = array ();
-	$post_suppressed = array ();
-	$page_enabled = array ();
-	$page_suppressed = array ();
-	
-	foreach ($users as $user) {
-		if (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true) === 'on') {
-			$post_suppressed[$user->ID] = $user->user_login;
-		}
-		
-		else {
-			$post_enabled[$user->ID] = $user->user_login;
-		}
-		
-		if (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true) === 'on') {
- 			$page_suppressed[$user->ID] = $user->user_login;
-		}
-		
-		else {
-			$page_enabled[$user->ID] = $user->user_login;
-		}
-	}
-	
-	$display_settings .= '<p><strong>Per User Suppression Of The Biography Box On Posts</strong><br />';
-	$display_settings .= '<span class="wp-biographia-users">';
-	$display_settings .= '<strong>Enabled Users</strong><br />';
-	$display_settings .= '<select multiple id="wp-biographia-enabled-post-users" name="wp-biographia-enabled-post-users[]">';
-
-	foreach ($post_enabled as $user_id => $user_login) {
-		$display_settings .= '<option value="' . $user_id . '">' . $user_login . '</option>';
-	}
-
-	$display_settings .= '</select>';
-	$display_settings .= '<a href="#" id="wp-biographia-user-post-add">Add &raquo;</a>';
-	$display_settings .= '</span>';
-	$display_settings .= '<span class="wp-biographia-users">';
-	$display_settings .= '<strong>Suppressed Users</strong><br />';
-	$display_settings .= '<select multiple id="wp-biographia-suppressed-post-users" name="wp-biographia-suppressed-post-users[]">';
-
-	foreach ($post_suppressed as $user_id => $user_login) {
-		$display_settings .= '<option value="' . $user_id . '">' . $user_login . '</option>';
-	}
-
-	$display_settings .= '</select>';
-	$display_settings .= '<a href="#" id="wp-biographia-user-post-rem">&laquo; Remove</a>';
-	$display_settings .= '</span>';
-	$display_settings .= '<br />';
-	$display_settings .= '<div style="clear: both";><small>Select the users who should not display the Biography Box on their authored posts. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.</small></div></p>';
-
-	$display_settings .= '<p><strong>Per User Suppression Of The Biography Box On Pages</strong><br />';
-	$display_settings .= '<span class="wp-biographia-users">';
-	$display_settings .= '<strong>Enabled Users</strong><br />';
-	$display_settings .= '<select multiple id="wp-biographia-enabled-page-users" name="wp-biographia-enabled-page-users[]">';
-
-	foreach ($page_enabled as $user_id => $user_login) {
-		$display_settings .= '<option value="' . $user_id . '">' . $user_login . '</option>';
-	}
-
-	$display_settings .= '</select>';
-	$display_settings .= '<a href="#" id="wp-biographia-user-page-add">Add &raquo;</a>';
-	$display_settings .= '</span>';
-	$display_settings .= '<span class="wp-biographia-users">';
-	$display_settings .= '<strong>Suppressed Users</strong><br />';
-	$display_settings .= '<select multiple id="wp-biographia-suppressed-page-users" name="wp-biographia-suppressed-page-users[]">';
-
-	foreach ($page_suppressed as $user_id => $user_login) {
-		$display_settings .= '<option value="' . $user_id . '">' . $user_login . '</option>';
-	}
-
-	$display_settings .= '</select>';
-	$display_settings .= '<a href="#" id="wp-biographia-user-page-rem">&laquo; Remove</a>
-</span>';
-	$display_settings .= '<br />';
-	$display_settings .= '<div style="clear: both";><small>Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.</small></div></p>';
 
 	// Add Custom Post Types for Single & Archives
 	//'wp_biographia_display_archives_'.$pt->name
@@ -497,6 +420,91 @@ function wp_biographia_general_settings() {
 				<input type="checkbox" name="wp_biographia_display_feed" ' .checked($wp_biographia_settings['wp_biographia_display_feed'], 'on', false) . ' />
 				<small>Displays the Biography Box in feeds for each entry.</small></p>';
 
+	/*
+	 * Biography Box User Settings
+	 */
+
+	// Add per user suppression of the Biography Box on posts and on pages
+
+	global $wpdb;
+
+	$users = $wpdb->get_results ("SELECT ID, user_login from $wpdb->users ORDER BY user_login");
+
+	$post_enabled = array ();
+	$post_suppressed = array ();
+	$page_enabled = array ();
+	$page_suppressed = array ();
+
+	foreach ($users as $user) {
+		if (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true) === 'on') {
+			$post_suppressed[$user->ID] = $user->user_login;
+		}
+
+		else {
+			$post_enabled[$user->ID] = $user->user_login;
+		}
+
+		if (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true) === 'on') {
+ 			$page_suppressed[$user->ID] = $user->user_login;
+		}
+
+		else {
+			$page_enabled[$user->ID] = $user->user_login;
+		}
+	}
+
+	$user_settings .= '<p><strong>Per User Suppression Of The Biography Box On Posts</strong><br />';
+	$user_settings .= '<span class="wp-biographia-users">';
+	$user_settings .= '<strong>Enabled Users</strong><br />';
+	$user_settings .= '<select multiple id="wp-biographia-enabled-post-users" name="wp-biographia-enabled-post-users[]">';
+
+	foreach ($post_enabled as $user_id => $user_login) {
+		$user_settings .= '<option value="' . $user_id . '">' . $user_login . '</option>';
+	}
+
+	$user_settings .= '</select>';
+	$user_settings .= '<a href="#" id="wp-biographia-user-post-add">Add &raquo;</a>';
+	$user_settings .= '</span>';
+	$user_settings .= '<span class="wp-biographia-users">';
+	$user_settings .= '<strong>Suppressed Users</strong><br />';
+	$user_settings .= '<select multiple id="wp-biographia-suppressed-post-users" name="wp-biographia-suppressed-post-users[]">';
+
+	foreach ($post_suppressed as $user_id => $user_login) {
+		$user_settings .= '<option value="' . $user_id . '">' . $user_login . '</option>';
+	}
+
+	$user_settings .= '</select>';
+	$user_settings .= '<a href="#" id="wp-biographia-user-post-rem">&laquo; Remove</a>';
+	$user_settings .= '</span>';
+	$user_settings .= '<br />';
+	$user_settings .= '<div style="clear: both";><small>Select the users who should not display the Biography Box on their authored posts. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.</small></div></p>';
+
+	$user_settings .= '<p><strong>Per User Suppression Of The Biography Box On Pages</strong><br />';
+	$user_settings .= '<span class="wp-biographia-users">';
+	$user_settings .= '<strong>Enabled Users</strong><br />';
+	$user_settings .= '<select multiple id="wp-biographia-enabled-page-users" name="wp-biographia-enabled-page-users[]">';
+
+	foreach ($page_enabled as $user_id => $user_login) {
+		$user_settings .= '<option value="' . $user_id . '">' . $user_login . '</option>';
+	}
+
+	$user_settings .= '</select>';
+	$user_settings .= '<a href="#" id="wp-biographia-user-page-add">Add &raquo;</a>';
+	$user_settings .= '</span>';
+	$user_settings .= '<span class="wp-biographia-users">';
+	$user_settings .= '<strong>Suppressed Users</strong><br />';
+	$user_settings .= '<select multiple id="wp-biographia-suppressed-page-users" name="wp-biographia-suppressed-page-users[]">';
+
+	foreach ($page_suppressed as $user_id => $user_login) {
+		$user_settings .= '<option value="' . $user_id . '">' . $user_login . '</option>';
+	}
+
+	$user_settings .= '</select>';
+	$user_settings .= '<a href="#" id="wp-biographia-user-page-rem">&laquo; Remove</a>
+</span>';
+	$user_settings .= '<br />';
+	$user_settings .= '<div style="clear: both";><small>Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.</small></div></p>';
+	
 	/*
 	 * Biography Box Style Settings
 	 */
@@ -654,11 +662,13 @@ function wp_biographia_general_settings() {
 			false);
 	}
 
-	$wrapped_content .= wp_biographia_postbox('wp-biographia-settings-general', 'Biography Box Display Settings', $display_settings);
+	$wrapped_content .= wp_biographia_postbox ('wp-biographia-display-settings', 'Biography Box Display Settings', $display_settings);
 
-	$wrapped_content .= wp_biographia_postbox('wp-biographia-style-settings', 'Biography Box Style Settings', $style_settings);
+	$wrapped_content .= wp_biographia_postbox ('wp-biographia-user-settings', 'Biography Box Per User Settings', $user_settings);
+	
+	$wrapped_content .= wp_biographia_postbox ('wp-biographia-style-settings', 'Biography Box Style Settings', $style_settings);
 
-	$wrapped_content .= wp_biographia_postbox('wp-biographia-settings-content', 'Biography Box Content Settings', $content_settings);
+	$wrapped_content .= wp_biographia_postbox ('wp-biographia-settings-content', 'Biography Box Content Settings', $content_settings);
 
 /*
  *	$wrapped_content .= wp_biographia_postbox ('wp-biographia-settings-beta', 'Biography Box Experimental Settings', $beta_settings);
