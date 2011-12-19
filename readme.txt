@@ -130,6 +130,9 @@ The current version is 2.1 (2011.11.01)
 * First version of WP Biographia released
 
 == Upgrade Notice ==
+= 2.1 =
+* This is the third version of WP Biographia; adds support for per user suppression of displaying the Biography Box on posts, on pages and on posts and pages, plus bug fixes and minor UI changes.
+
 = 2.0 =
 * This is the second version of WP Biographia and incorporates new features and bug fixes as well as some under-the-hood plumbing changes; in particular the plugin file locations have changed to reflect WordPress plugin development recommendations
 
