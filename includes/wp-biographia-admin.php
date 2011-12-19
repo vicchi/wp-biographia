@@ -139,6 +139,8 @@ function wp_biographia_upgrade() {
          * v2.1 added configuration settings ...
 		 *
          * wp_biographia_beta_enabled = ""
+         * wp_biographia_suppress_posts = "" (user profile extension)
+         * wp_biographia_suppress_pages = "" (user profile extension)
 		 *
 		 * v2.1 changed default configuration settings ...
 		 *
@@ -239,6 +241,21 @@ function wp_biographia_upgrade() {
  *					$wp_biographia_settings['wp_biographia_beta_enabled'] = "";
  *				}
  */
+
+				global $wpdb;
+
+				$users = $wpdb->get_results ("SELECT ID from $wpdb->users ORDER BY ID");
+	
+				foreach ($users as $user) {
+					if (!get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true)) {
+						update_user_meta ($user->ID, 'wp_biographia_suppress_posts', '');
+					}
+		
+					if (!get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true)) {
+						update_user_meta ($user->ID, 'wp_biographia_suppress_pages', '');
+					}
+				}
+
 				$upgrade_settings = true;
 
 			case '21':
@@ -268,6 +285,31 @@ function wp_biographia_show_colophon() {
 	$content .= '<p><small>Dictionary.com, "biography," in <em>Online Etymology Dictionary</em>. Source location: Douglas Harper, Historian. <a href="http://dictionary.reference.com/browse/biography">http://dictionary.reference.com/browse/biography</a>. Available: <a href="http://dictionary.reference.com">http://dictionary.reference.com</a>. Accessed: July 27, 2011.</small></p>';
 
 	return wp_biographia_postbox ('wp-biographia-colophon', 'Colophon', $content);
+}
+
+/*
+ * Define the Help and Support side box
+ */
+
+function wp_biographia_show_help_and_support() {
+	$content = '<p>For help and support with WP Biographia, here\'s what you can do:</p>
+<ul>
+<li>Ask a question on the <a href="http://wordpress.org/tags/wp-biographia?forum_id=10">WordPress support forum</a>; this is by far the best way so that other users can follow the conversation.</li>
+<li>Ask me a question on Twitter; I\'m <a href="http://twitter.com/vicchi">@vicchi</a>.</li>
+<li>Drop me an <a href="mailto:';
+	$content .= antispambot("gary@vicchi.org");
+	$content .= '">email</a> instead.</li>
+</ul>
+<p>But help and support is a two way street; here\'s what you might want to do:</p>
+<ul>
+<li>If you like this plugin and use it on your WordPress site, or if you write about it online, <a href="http://www.vicchi.org/codeage/wp-biographia/">link to plugin</a> and drop me an <a href="mailto:';
+	$content .= antispambot("gary@vicchi.org");
+	$content .= '">email</a> telling me about this.</li>
+<li>Rate the plugin on the <a href="http://wordpress.org/extend/plugins/wp-biographia/">WordPress plugin repository</a>.</li>
+<li>No donations are required; <a href="http://www.vicchi.org/codeage/donate/">here\'s why</a>.</li>
+</ul>';
+
+	return wp_biographia_postbox ('wp-biographia-support', 'Help &amp; Support', $content);
 }
 
 /*
@@ -852,6 +894,7 @@ function wp_biographia_admin_wrap($title, $content) {
                   <div class="metabox-holder">	
                     <div class="meta-box-sortables">
                     <?php
+						echo wp_biographia_show_help_and_support ();
 						echo wp_biographia_show_colophon ();
 						echo wp_biographia_show_acknowledgements ();
                     ?>
