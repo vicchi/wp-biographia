@@ -10,8 +10,8 @@ if (defined('WP_UNINSTALL_PLUGIN')) {
 	$users = $wpdb->get_results ("SELECT ID from $wpdb->users ORDER BY ID");
 
 	foreach ($users as $user) {
-		delete_user_meta ($user->ID, 'wp_biopgraphia_suppress_posts');
-		delete_user_meta ($user->ID, 'wp_biopgraphia_suppress_pages');
+		delete_user_meta ($user->ID, 'wp_biographia_suppress_posts');
+		delete_user_meta ($user->ID, 'wp_biographia_suppress_pages');
 		delete_user_meta ($user->ID, 'twitter');
 		delete_user_meta ($user->ID, 'facebook');
 		delete_user_meta ($user->ID, 'linkedin');
