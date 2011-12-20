@@ -48,7 +48,7 @@ In order of preference, you can ask a question on the [WordPress support forum](
 
 = Is there a web site for this plugin? =
 
-Absolutely. Go to the [WP Biographia home page](http://www.vicchi.org/codeage/wp-biographia/) for the latest information. There's also the official [WordPress plugin directory page](http://wordpress.org/extend/plugins/) and the [source for the plugin is on GitHub](http://vicchi.github.com/wp-biographia/) as well.
+Absolutely. Go to the [WP Biographia home page](http://www.vicchi.org/codeage/wp-biographia/) for the latest information. There's also the official [WordPress plugin repository page](http://wordpress.org/extend/plugins/wp-biographia/) and the [source for the plugin is on GitHub](http://vicchi.github.com/wp-biographia/) as well.
 
 = I've configured WP Biographia to display on post archives but it's not working; what's happening here? =
 
