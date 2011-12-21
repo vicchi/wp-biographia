@@ -234,8 +234,6 @@ function wp_biographia_upgrade() {
 				$upgrade_settings = true;
 
 			case '20':
-				$wp_biographia_settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
-
 /*
  *				if (!isset ($wp_biographia_settings['wp_biographia_beta_enabled'])) {
  *					$wp_biographia_settings['wp_biographia_beta_enabled'] = "";
@@ -259,6 +257,10 @@ function wp_biographia_upgrade() {
 				$upgrade_settings = true;
 
 			case '21':
+				$wp_biographia_settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
+				$upgrade_settings = true;
+			
+			case '211':
 			default:
 				break;
 		}	// end-switch
@@ -686,17 +688,10 @@ function wp_biographia_option($field) {
 }
 
 function wp_biographia_meta_option($user_array, $meta_key, $meta_value) {
-	global $wplogger;
-	
 	if ($user_array) {
 		foreach ($user_array as $id) {
 			update_user_meta ($id, $meta_key, $meta_value);
-			$wplogger->log ('id: ' . $id . ', key: ' . $meta_key . ', value: ' . $meta_value);
 		}
-	}
-	
-	else {
-		$wplogger->log ('Array empty for key: ' . $meta_key . ', value: ' . $meta_value);
 	}
 }
 
