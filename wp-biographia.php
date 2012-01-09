@@ -258,7 +258,13 @@ function wp_biographia_display($for_feed = false) {
 
 		if (!empty ($wp_biographia_settings['wp_biographia_content_image']) &&
 				($wp_biographia_settings['wp_biographia_content_image'] == 'on')) {
-					$wp_biographia_biography .= '<div class="wp-biographia-pic">'.$wp_biographia_author_pic.'</div>';
+			$wp_biographia_biography .= '<div class="wp-biographia-pic" style="height:'
+				. $wp_biographia_author_pic_size
+				. 'px; width:'
+				. $wp_biographia_author_pic_size
+				. 'px;">'
+				. $wp_biographia_author_pic
+				. '</div>';
 		}
 
 		$wp_biographia_biography .= '<div class="wp-biographia-text">'

@@ -1,4 +1,4 @@
-<?PHP
+<?php
 /*
  * Add in our CSS for the admin panel, via the admin_print_styles action hook
  */
@@ -568,9 +568,15 @@ function wp_biographia_general_settings() {
 		. '/>
 		<small>Display the author\'s image?</small></p>';
 
-	$image_size = (($wp_biographia_settings['wp_biographia_content_image_size'] = '') ||
-	 ($wp_biographia_settings['wp_biographia_content_image_size'] = 0)) ?
-	 	$wp_biographia_settings['wp_biographia_content_image_size'] : '100';
+	if (!isset ($wp_biographia_settings['wp_biographia_content_image_size']) ||
+			$wp_biographia_settings['wp_biographia_content_image_size'] === '' ||
+			$wp_biographia_settings['wp_biographia_content_image_size'] === 0) {
+		$image_size = '100';
+	}
+
+	else {
+		$image_size = $wp_biographia_settings['wp_biographia_content_image_size'];
+	}
 
 	$content_settings .= '<p><strong>' . __("Image Size") . '</strong><br />
 		<input type="text" name="wp_biographia_content_image_size" id="wp_biographia_content_image_size" value="'. $image_size .'"'
