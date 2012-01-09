@@ -15,6 +15,18 @@ define ('WPBIOGRAPHIAURL_PATH', plugin_dir_path(__FILE__));
 
 require_once (WPBIOGRAPHIAURL_PATH."includes/wp-biographia-admin.php");
 
+function wp_biographia_is_last_page() {
+	global$page;
+	global $numpages;
+	global $multipage;
+	
+	if ($multipage) {
+		return ($page == $numpages) ? true : false;
+	}
+	
+	return true;
+}
+
 /*
  * Produce and format the Biography Box according to the currently defined options
  */
@@ -348,23 +360,29 @@ function wp_biographia_insert($content) {
 					$pt_name = $pt;
 
 				if ($post->post_type == $pt) {
-					if (isset ($wp_biographia_settings['wp_biographia_display_'.$pt_name])) {
+					if (isset ($wp_biographia_settings['wp_biographia_display_' . $pt_name]) &&
+					$wp_biographia_settings['wp_biographia_display_' . $pt_name]) {
 						// check exclusions
 						if (isset ($wp_biographia_settings['wp_biographia_'.$pt.'_exclusions'])) {
 							$exclusions = explode (',',
 							$wp_biographia_settings['wp_biographia_'.$pt.'_exclusions']);
 						
 							if (! in_array ($post->ID , $exclusions)) {
-								$new_content = sprintf ($pattern, $content, $bio_content);
+								if (wp_biographia_is_last_page ()) {
+									$new_content = sprintf ($pattern, $content, $bio_content);
+								}
 								break;
 								//$content .= wp_biographia_display ();
 							}
 							else
 								$new_content = $content;
 						}
-						else
-							$new_content = sprintf ($pattern, $content, $bio_content);
-							//$content .= wp_biographia_display ();
+						else {
+							if (wp_biographia_is_last_page ()) {
+								$new_content = sprintf ($pattern, $content, $bio_content);
+								//$content .= wp_biographia_display ();
+							}
+						}
 					}
 				}
 			}
@@ -374,7 +392,7 @@ function wp_biographia_insert($content) {
 	elseif (is_feed () &&
 			isset($wp_biographia_settings['wp_biographia_display_feed']) &&
 			$wp_biographia_settings['wp_biographia_display_feed']) {
-		$bio_content = wp_biographia_display ();
+		$bio_content = wp_biographia_display (true);
 		$new_content = sprintf ($pattern, $content, $bio_content);
 		//$content .= wp_biographia_display (true);
 	}
