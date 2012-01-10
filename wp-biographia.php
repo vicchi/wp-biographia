@@ -513,7 +513,11 @@ register_activation_hook(__FILE__, 'wp_biographia_add_defaults');
 add_action ('admin_menu','wp_biographia_add_options_subpanel');
 add_action ('admin_print_scripts', 'wp_biographia_add_admin_scripts');
 add_action ('admin_print_styles', 'wp_biographia_add_admin_styles');
-add_action ('wp_print_styles', 'wp_biographia_style' );
+
+// Move to using wp_enqueue_scripts rather than wp_print_styles; see
+// http://wpdevel.wordpress.com/2011/12/12/use-wp_enqueue_scripts-not-wp_print_styles-to-enqueue-scripts-and-styles-for-the-frontend/
+// add_action ('wp_print_styles', 'wp_biographia_style' );
+add_action ('wp_enqueue_scripts', 'wp_biographia_style' );
 add_action ('admin_init', 'wp_biographia_admin_init');
 
 add_action ('show_user_profile', 'wp_biographia_add_profile_extensions');
