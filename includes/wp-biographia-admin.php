@@ -357,14 +357,15 @@ function wp_biographia_general_settings() {
 				<input type="checkbox" name="wp_biographia_display_front" ' .checked($wp_biographia_settings['wp_biographia_display_front'], 'on', false) . ' />
 				<small>Displays the Biography Box for each post on the front page.</small></p>';
 
-	// Archives -> Post Archives
-	$display_settings .= '<p><strong>' . __("Display In Post Archives") . '</strong><br /> 
-				<input type="checkbox" name="wp_biographia_display_archives" ' .checked($wp_biographia_settings['wp_biographia_display_archives'], 'on', false) . ' />
-				<small>Displays the Biography Box for each post on archive pages.</small></p>';	
 	
 	$display_settings .= '<p><strong>' . __("Display On Individual Posts") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_posts" ' .checked($wp_biographia_settings['wp_biographia_display_posts'], 'on', false) . ' />
 				<small>Displays the Biography Box for individual posts.</small></p>';
+
+	// Archives -> Post Archives
+	$display_settings .= '<p><strong>' . __("Display In Post Archives") . '</strong><br /> 
+				<input type="checkbox" name="wp_biographia_display_archives" ' .checked($wp_biographia_settings['wp_biographia_display_archives'], 'on', false) . ' />
+				<small>Displays the Biography Box for each post on archive pages.</small></p>';	
 
 	// Add Post ID Exclusion
 	$display_settings .= '<p><strong>' . __("Exclude Posts (via Post ID)") . '</strong><br />
@@ -394,15 +395,15 @@ function wp_biographia_general_settings() {
 	foreach ($pts as $pt) {
 		$display_settings .= '<p><strong>' . __("Display On Individual ".$pt->labels->name) . '</strong><br /> 
 					<input type="checkbox" name="wp_biographia_display_'.$pt->name.'" ' .checked($wp_biographia_settings['wp_biographia_display_'.$pt->name], 'on', false) . ' />
-					<small>Displays the Biography Box on individual posts for post type '.$pt->labels->name.'.</small></p>';
+					<small>Displays the Biography Box on individual instances of custom post type '.$pt->labels->name.'.</small></p>';
 
-		$display_settings .= '<p><strong>' . __("Display In ".$pt->labels->name." Archives") . '</strong><br /> 
+		$display_settings .= '<p><strong>' . __("Display In ".$pt->labels->singular_name." Archives") . '</strong><br /> 
 					<input type="checkbox" name="wp_biographia_display_archives_'.$pt->name.'" ' .checked($wp_biographia_settings['wp_biographia_display_archives_'.$pt->name], 'on', false) . ' />
-					<small>Displays the Biography Box on archive pages for post type '.$pt->name.'.</small></p>';	
+					<small>Displays the Biography Box on archive pages for custom post type '.$pt->labels->name.'.</small></p>';	
 
-		$display_settings .= '<p><strong>' . __("Exclude {$pt->labels->name} (via {$pt->labels->name} ID)") . '</strong><br />
+		$display_settings .= '<p><strong>' . __("Exclude {$pt->labels->name} (via {$pt->labels->singular_name} ID)") . '</strong><br />
 			<input type="text" name="wp_biographia_'.$pt->name.'_exclusions" id="wp_biographia_'.$pt->name.'_exclusions" value="'.$wp_biographia_settings['wp_biographia_'.$pt->name.'_exclusions'].'" /><br />
-			<small>Enter Page IDs comma separated with no spaces, e.g. 54,33,55</small></p>';
+			<small>Enter ' . $pt->labels->singular_name . ' IDs comma separated with no spaces, e.g. 54,33,55</small></p>';
 	}
 
 	$wp_biographia_settings['wp_biographia_display_location'] = (
