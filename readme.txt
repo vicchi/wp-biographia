@@ -3,8 +3,8 @@ Contributors: vicchi, wpsmith
 Donate link: http://www.vicchi.org/codeage/donate/
 Tags: bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, website, about, author, about author, author box
 Requires at least: 3.3
-Tested up to: 3.3
-Stable tag: 2.1.1
+Tested up to: 3.3.1
+Stable tag: 2.2
 
 Add and display a customizable author biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
 

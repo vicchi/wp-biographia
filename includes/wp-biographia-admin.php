@@ -145,6 +145,14 @@ function wp_biographia_upgrade() {
 		 * v2.1 changed default configuration settings ...
 		 *
 		 * wp_biographia_version = "21"
+		 *
+		 * v2.1.1 changed default configuration settings ...
+		 *
+		 * wp_biographia_version = "211"
+		 *
+		 * v2.2 changed default configuration settings ...
+		 *
+		 * wp_biographia_version = "22"
 		 */
 
 		switch ($current_plugin_version) {
@@ -257,10 +265,10 @@ function wp_biographia_upgrade() {
 				$upgrade_settings = true;
 
 			case '21':
+			case '211':
+			case '22':
 				$wp_biographia_settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
 				$upgrade_settings = true;
-			
-			case '211':
 			default:
 				break;
 		}	// end-switch
