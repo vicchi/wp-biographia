@@ -150,6 +150,14 @@ function wp_biographia_upgrade() {
 		 *
 		 * wp_biographia_version = "211"
 		 *
+		 * v2.2 added configuration settings ...
+		 * wp_biographia_content_delicious = ""
+		 * wp_biographia_content_flickr = ""
+		 * wp_biographia_content_picasa = ""
+		 * wp_biograpia_content_vimeo = ""
+		 * wp_biographia_content_youtube = ""
+		 * wp_biographia_content_reddit = ""
+		 *
 		 * v2.2 changed default configuration settings ...
 		 *
 		 * wp_biographia_version = "22"
@@ -261,14 +269,33 @@ function wp_biographia_upgrade() {
 						update_user_meta ($user->ID, 'wp_biographia_suppress_pages', '');
 					}
 				}
-
 				$upgrade_settings = true;
 
 			case '21':
 			case '211':
 			case '22':
+				if (!isset ($wp_biographia_settings['wp_biographia_content_delicious'])) {
+					$wp_biographia_settings["wp_biographia_content_delicious"] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_flickr'])) {
+					$wp_biographia_settings["wp_biographia_content_flickr"] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_picasa'])) {
+					$wp_biographia_settings["wp_biographia_content_picasa"] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_vimeo'])) {
+					$wp_biographia_settings["wp_biographia_content_vimeo"] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_youtube'])) {
+					$wp_biographia_settings["wp_biographia_content_youtube"] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_reddit'])) {
+					$wp_biographia_settings["wp_biographia_content_reddit"] = "";
+				}
+
 				$wp_biographia_settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
 				$upgrade_settings = true;
+				
 			default:
 				break;
 		}	// end-switch
@@ -634,6 +661,43 @@ function wp_biographia_general_settings() {
 		. checked ($wp_biographia_settings['wp_biographia_content_googleplus'], 'on', false)
 		. '/>
 		<small>Display the author\'s Google+ details?</small></p>';
+
+	$content_settings .= '<p><strong>' . __("Show Author's Delicious Link") . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_delicious" '
+		. checked ($wp_biographia_settings['wp_biographia_content_delicious'], 'on', false)
+		. '/>
+		<small>Display the author\'s Delicious details?</small></p>';
+
+	$content_settings .= '<p><strong>' . __("Show Author's Flickr Link") . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_flickr" '
+		. checked ($wp_biographia_settings['wp_biographia_content_flickr'], 'on', false)
+		. '/>
+		<small>Display the author\'s Flickr details?</small></p>';
+
+	$content_settings .= '<p><strong>' . __("Show Author's Picasa Link") . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_picasa" '
+		. checked ($wp_biographia_settings['wp_biographia_content_picasa'], 'on', false)
+		. '/>
+		<small>Display the author\'s Picasa details?</small></p>';
+
+	$content_settings .= '<p><strong>' . __("Show Author's Vimeo Link") . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_vimeo" '
+		. checked ($wp_biographia_settings['wp_biographia_content_vimeo'], 'on', false)
+		. '/>
+		<small>Display the author\'s Vimeo details?</small></p>';
+
+	$content_settings .= '<p><strong>' . __("Show Author's YouTube Link") . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_youtube" '
+		. checked ($wp_biographia_settings['wp_biographia_content_youtube'], 'on', false)
+		. '/>
+		<small>Display the author\'s YouTube details?</small></p>';
+
+	$content_settings .= '<p><strong>' . __("Show Author's Reddit Link") . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_reddit" '
+		. checked ($wp_biographia_settings['wp_biographia_content_reddit'], 'on', false)
+		. '/>
+		<small>Display the author\'s Reddit details?</small></p>';
+
 	
 	$content_settings .= '<p><strong>' . __("Show More Posts Link") . '</strong><br />
 		<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="basic" '
@@ -837,6 +901,24 @@ function wp_biographia_process_settings() {
 
 			$wp_biographia_settings['wp_biographia_content_googleplus'] = 
 				wp_biographia_option ('wp_biographia_content_googleplus');
+
+			$wp_biographia_settings['wp_biographia_content_delicious'] =
+				wp_biographia_option ('wp_biographia_content_delicious');
+
+			$wp_biographia_settings['wp_biographia_content_flickr'] =
+				wp_biographia_option ('wp_biographia_content_flickr');
+
+			$wp_biographia_settings['wp_biographia_content_picasa'] =
+				wp_biographia_option ('wp_biographia_content_picasa');
+
+			$wp_biographia_settings['wp_biograpia_content_vimeo'] =
+				wp_biographia_option ('wp_biograpia_content_vimeo');
+
+			$wp_biographia_settings['wp_biographia_content_youtube'] =
+				wp_biographia_option ('wp_biographia_content_youtube');
+
+			$wp_biographia_settings['wp_biographia_content_reddit'] =
+				wp_biographia_option ('wp_biographia_content_reddit');
 
 			$wp_biographia_settings['wp_biographia_content_posts'] = 
 				wp_biographia_option ('wp_biographia_content_posts');
