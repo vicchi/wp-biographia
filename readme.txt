@@ -21,23 +21,27 @@ Settings and options include:
 1. Choose to display the Biography Box at the top or the bottom of content (universally)
 1. Choose to suppress the display of the Biography Box for pages, posts and posts/pages on a per user basis
 
-The plugin expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn and Google+ profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles.
+The plugin expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn, Google+, Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles.
 
-The plugin also has an added filter and shortcode (`[wp_biographia]`) to add further customization. For example, if you use page templates to display custom post types on your blog, you can simply use `filter ('wp_biographia_pattern')` to decide how you'd like to customize. If you want the Biography Box to appear at the bottom but on archive pages, you want them at the top, then the filter can do that as well, or simply use the shortcode to control where it appears in a post of any post type.
+The plugin also has an added filter and two shortcode variants (`[wp_biographia]`) to add further customization. For example, if you use page templates to display custom post types on your blog, you can simply use `filter ('wp_biographia_pattern')` to decide how you'd like to customize. If you want the Biography Box to appear at the bottom but on archive pages, you want them at the top, then the filter can do that as well, or simply use the shortcode to control where it appears in a post of any post type.
+
+The `[wp_biographia]` shortcode can work in one of two ways, specified by the `mode` parameter. In `raw` mode, which is the default (specified as `[wp_biographia mode="raw"]` or simply as `[wp_biographia]`), the plugin inserts the Biography Box in *you've asked for it, you've got it* mode. Or to put it another way, the plugin will honour the settings that you specify under *Dashboard / Settings/ WP Biographia* for *Biography Box Style Settings* and for *Biography Box Content Settings* but will ignore the *Biography Box Display Settings* and *Biography Box Per User Settings*.
+
+In `configured` mode, specified as `[wp_biographia mode="configured"]`, the plugin inserts the Biography Box and will honour all the settings under *Dashboard / Settings / WP Biographia* with the exception of *Display On Front Page*, *Display On Individual Post*, *Display On Post Archives* and *Display On Individual Pages*, as well as their equivalents for any custom post types you may have created. The thinking behind this is that you probably want to honour post or page exclusions and per user exclusions, but by using the shortcode in your theme templates, you want to be in control of how and where the Biography Box is displayed.
 
 == Installation ==
 
-1. You can install WP Biographia automatically from the WordPress admin panel. From the Dashboard, navigate to the Plugins / Add New page and search for "WP Biographia" and click on the "Install Now" link.
+1. You can install WP Biographia automatically from the WordPress admin panel. From the Dashboard, navigate to the *Plugins / Add New* page and search for *"WP Biographia"* and click on the *"Install Now"* link.
 1. Or you can install WP Biographia manually. Download the plugin Zip archive and uncompress it. Copy or upload the `wp-biographia` folder to the `wp-content/plugins` folder on your web server.
-1. Activate the plugin. From the Dashboard, navigate to Plugins and click on the "Activate" link under the entry for WP Biographia.
+1. Activate the plugin. From the Dashboard, navigate to Plugins and click on the *"Activate"* link under the entry for WP Biographia.
 1. Enhance your WordPress user profile. From the Dashboard, navigate to Users and click on the "Edit" link under your profile.
-1. Edit your WordPress user profile. Add your biography to the "Biographical Info" text box. WP Biographia also adds to the list of Contact Info you can associate with your profile, adding support for Twitter, Facebook, LinkedIn and Google+. Click on the "Update Profile" link to save your changes.
-1. Customize and configure what information WP Biographia displays; From the Dashboard, navigate to the Settings / WP Biographia page or click on the "Settings" link from the Plugins page on the Dashboard.
+1. Edit your WordPress user profile. Add your biography to the *"Biographical Info"* text box. WP Biographia also adds to the list of Contact Info you can associate with your profile, adding support for Twitter, Facebook, LinkedIn and Google+ and other contact profiles. Click on the *"Update Profile"* link to save your changes.
+1. Customize and configure what information WP Biographia displays; From the Dashboard, navigate to the *Settings / WP Biographia* page or click on the *"Settings"* link from the Plugins page on the Dashboard.
 1. You can can control display settings, style settings and content settings for the Biography Box.
-1. Click on the "Save Changes" button to preserve your chosen settings and options.
-1. If you enable the display of the post author's image, make sure avatar support is turned on; from the Dashboard, navigate to Settings / Discussion and ensure that Show Avatars is enabled.
-1. Users with the `manage_options` capability can edit their profile via Users / Your Profile from the Dashboard to suppress the display of the Biography Box on posts and/or on pages and also the profiles of other users via the Users / All Users / Edit from the Dashboard.
-1. Suppression of the display of the Biography Box on posts and/or on pages can also be configured from the Dashboard; navigate to Settings / WP Biographia / Biography Box Display Settings.
+1. Click on the *"Save Changes"* button to preserve your chosen settings and options.
+1. If you enable the display of the post author's image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled. Don't forget to save your changes.
+1. Users with the `manage_options` capability can edit their profile via *Users / Your Profile* from the Dashboard to suppress the display of the Biography Box on posts and/or on pages and also the profiles of other users via the *Users / All Users / Edit* from the Dashboard.
+1. Suppression of the display of the Biography Box on posts and/or on pages can also be configured from the Dashboard; navigate to *Settings / WP Biographia / Biography Box Display Settings*.
 
 
 == Frequently Asked Questions ==
@@ -56,15 +60,23 @@ Some themes display the Biography Box for post archives, but for other themes th
 
 = I've configured WP Biographia to display the author's image but it's not working; what's happening here? =
 
-Author profile pictures, or avatars, are part of the WordPress core but enabling them isn't done at the level of the user profile, instead it's part of the way in which comments are configured. If you enable the display of the post author’s image, make sure avatar support is turned on; from the Dashboard, navigate to Settings / Discussion and ensure that Show Avatars is enabled.
+Author profile pictures, or avatars, are part of the WordPress core but enabling them isn't done at the level of the user profile, instead it's part of the way in which comments are configured. If you enable the display of the post author’s image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled.
 
 = I want to upload my author's images, host them on my web server and not use Gravatars; how do I do this? =
 
 WP Biographia uses the `get_avatar` [pluggable function](http://codex.wordpress.org/Pluggable_Functions) to output the author's avatar image. Theoretically, any plugin that supports locally hosted avatar images and which overrides the default WordPress implementation of `get_avatar` should be able to be used. In practice, whether this approach will work for you or not depends on the combination of the theme you're using and the interactions that the other plugins that you're using has with the WordPress core and with your theme. The [Simple Local Avatars](http://wordpress.org/extend/plugins/simple-local-avatars/) plugin plugs `get_avatar` and cooperates nicely with WP Biographia, at least in my local testing environment; your mileage may vary.
 
+= I've configured WP Biographia to show my website/Twitter/Facebook/etc links but I don't see them in the Biography Box; where do I define these links? =
+
+WP Biographia adds a number of social media and web link fields to your WordPress user profile; from the Dashboard, navigate to *Users / Your Profile* and enter the links you want displayed to the fields in the Contact Info section.
+
+= I've installed and configured WP Biographia and now I see not one but two differing Biography Boxes; what's going on? =
+
+There's probably one of two things going on here. Firstly, you've already got another plugin that makes a Biography Box installed and active and this plugin, as well as WP Biographia, are doing their job properly. Secondly, the theme you're using hard codes a Biography Box into the theme templates. Both the TwentyTen and TwentyEleven themes supplied as part of a standard WordPress install do this.
+
 = I only want to show the Biography Box for certain users and not for others; can I do this? =
 
-As of v2.1, WP Biographia allows you to suppress the Biography Box being displayed on a per user basis. You can suppress for posts only, for pages only or for both posts and pages. There's two ways of configuring this. If your user has the `manage_options` capability, you can choose the degree of suppression, if any, from your user profile or for any other user's profile; from the Dashboard, navigate to Users and check the Suppress From Posts and/or Suppress From Pages checkbox options. You can also configure this easily from the plugin's Settings And Options; from the Dashboard, navigate to the Settings / WP Biographia page and under Biography Box Per User Settings, add and/or remove the users to fit your model of who should have the Biography Box displayed.
+As of v2.1, WP Biographia allows you to suppress the Biography Box being displayed on a per user basis. You can suppress for posts only, for pages only or for both posts and pages. There's two ways of configuring this. If your user has the `manage_options` capability, you can choose the degree of suppression, if any, from your user profile or for any other user's profile; from the Dashboard, navigate to Users and check the *Suppress From Posts* and/or *Suppress From Pages* checkbox options. You can also configure this easily from the plugin's Settings And Options; from the Dashboard, navigate to the *Settings / WP Biographia* page and under *Biography Box Per User Settings*, add and/or remove the users to fit your model of who should have the Biography Box displayed.
 
 = How do I add HTML to the Biographical Info section of a user's profile? =
 
@@ -109,12 +121,22 @@ WP Biographia is named after the etymology of the modern English word biography.
 1. WP Biographia Settings And Options: Biography Box Per User Settings
 1. WP Biographia Settings And Options: Biography Box Style Settings
 1. WP Biographia Settings And Options: Biography Box Content Settings
+1. WP Biographia Settings And Options: Biography Box Content Settings, continued
 1. Sample Biography Box, shown below an individual post
 
 
 == Changelog ==
 
-The current version is 2.1.1 (2011.12.21)
+The current version is 2.2 (2012.01.16)
+
+= 2.2 =
+* Add enhanced short code support (raw and configured modes)
+* Add support for displaying the Biography Box on archive pages that use excerpts
+* Enhance contact information and Biography Box links to support Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit
+* Fixed bug that caused the Biography Box to be displayed for every page of a multiple page post
+* Fixed bugs in avatar image size handling; non-default avatar image size was not persisted across settings changes; avatar image container div was not resized to new non-default avatar image size
+* Migrate use of wp_print_styles to wp_enqueue_scripts; see (http://wpdevel.wordpress.com/2011/12/12/use-wp_enqueue_scripts-not-wp_print_styles-to-enqueue-scripts-and-styles-for-the-frontend/)
+* Made terminology and control ordering for custom post types consistent in admin pages
 
 = 2.1.1 =
 * Fixed bug in per user suppression due to debug code being left in the release
@@ -142,6 +164,9 @@ The current version is 2.1.1 (2011.12.21)
 * First version of WP Biographia released
 
 == Upgrade Notice ==
+= 2.2 =
+* This is the fifth version of WP Biographia; adds support for enhanced shortcode usage, excerpt support on archive pages and additional social media profiles and links as well as several bug fixes.
+
 = 2.1.1 =
 * This is the fourth version of WP Biographia which fixes a fatal bug in v2.1; please upgrade to this version and skip v2.0.
 
