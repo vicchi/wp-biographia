@@ -402,18 +402,20 @@ function wp_biographia_insert($content, $is_shortcode=false) {
 	$wp_biographia_settings = get_option ('wp_biographia_settings');
 	$new_content = $content;
 
-	if ((isset ($wp_biographia_settings['wp_biographia_display_location'])) &&
-	 		($wp_biographia_settings['wp_biographia_display_location'] == 'top')) {
-		$pattern = apply_filters ('wp_biographia_pattern', '%2$s %1$s');
-	}
+	if (!$is_shortcode) {
+		if ((isset ($wp_biographia_settings['wp_biographia_display_location'])) &&
+	 			($wp_biographia_settings['wp_biographia_display_location'] == 'top')) {
+			$pattern = apply_filters ('wp_biographia_pattern', '%2$s %1$s');
+		}
 
-	else {
-		$pattern = apply_filters ('wp_biographia_pattern', '%1$s %2$s');
-	}
+		else {
+			$pattern = apply_filters ('wp_biographia_pattern', '%1$s %2$s');
+		}
 	
-	// allow short circuit
-	if (($pattern == '') || ($pattern == '%1s')) {
-		return $content;
+		// allow short circuit
+		if (($pattern == '') || ($pattern == '%1s')) {
+			return $content;
+		}
 	}
 
 	if (is_front_page ()) {
@@ -757,11 +759,13 @@ add_action ('edit_user_profile_update', 'wp_biographia_save_profile_extensions')
  *
  * 1) Sanitize/filter the author's profile contact info
  * 2) Add in post processing to add the Biography Box to the page content
- * 3) Add in plugin settings link
+ * 3) Add in post processing to add the Biography Box to archive pages using excerpts
+ * 4) Add in plugin settings link
  */
 
 add_filter ('user_contactmethods', 'wp_biographia_filter_contact');
 add_filter ('the_content', 'wp_biographia_insert');
+add_filter ('the_excerpt', 'wp_biographia_insert');
 add_filter ('plugin_action_links_' . plugin_basename (__FILE__), 'wp_biographia_settings_link');
 
 /*
