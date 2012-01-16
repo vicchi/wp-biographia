@@ -54,10 +54,6 @@ In order of preference, you can ask a question on the [WordPress support forum](
 
 Absolutely. Go to the [WP Biographia home page](http://www.vicchi.org/codeage/wp-biographia/) for the latest information. There's also the official [WordPress plugin repository page](http://wordpress.org/extend/plugins/wp-biographia/) and the [source for the plugin is on GitHub](http://vicchi.github.com/wp-biographia/) as well.
 
-= I've configured WP Biographia to display on post archives but it's not working; what's happening here? =
-
-Some themes display the Biography Box for post archives, but for other themes the Biography Box never appears. This often turns out to be down to the way in which the theme renders the archive page. If the theme’s <code>archive.php</code> uses <code>the_content()</code> as part of the WordPress Loop then the Biography Box appears as it should, but if the theme uses <code>the_excerpt()</code> as part of the Loop, then either the first 55 characters of the post or the post’s specific excerpt will be displayed. As WP Biographia appends the Biography Box to the end of each post’s content, themes which use <code>the_excerpt()</code> will, sadly, never display as intended when used with WP Biographia. Thankfully, this is less a shortcoming of the plugin or of the theme, it’s simply the way in which WordPress handles post excerpts.
-
 = I've configured WP Biographia to display the author's image but it's not working; what's happening here? =
 
 Author profile pictures, or avatars, are part of the WordPress core but enabling them isn't done at the level of the user profile, instead it's part of the way in which comments are configured. If you enable the display of the post author’s image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled.
@@ -127,7 +123,7 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 2.2 (2012.01.16)
+The current version is 2.2 (2012.01.17)
 
 = 2.2 =
 * Add enhanced short code support (raw and configured modes)
