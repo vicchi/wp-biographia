@@ -76,9 +76,20 @@ As of v2.1, WP Biographia allows you to suppress the Biography Box being display
 
 = How do I add HTML to the Biographical Info section of a user's profile? =
 
-Add this code to your theme's <code>functions.php</code> file:
+In previous releases of the plugin, I've recommended that you add this code to your theme's <code>functions.php</code> file:
 
 <code>remove_filter('pre_user_description', 'wp_filter_kses');</code>
+
+But as [WebEndev](http://wordpress.org/support/profile/munman) helpfully pointed out on the [WordPress forums](http://wordpress.org/support/topic/plugin-wp-biographia-biographical-info-formatting-issue-avatar-exclude-posts?replies=7#post-2562773), this allows *all* HTML to be added to the Biography Info section of a user's profile, which may be going *too* far. The following code, in your theme's `functions.php`, will allow line breaks to be honoured but filter out any HTML tags and attributes which are not allowed by the `$allowedposttags` WordPress global.
+
+<code>
+remove_filter('pre_user_description', 'wp_filter_kses');
+add_filter('pre_user_description', 'wp_filter_post_kses');
+add_filter('pre_user_description', 'wptexturize');
+add_filter('pre_user_description', 'wpautop');
+add_filter('pre_user_description', 'convert_chars');
+add_filter('pre_user_description', 'balanceTags', 50);
+</code>
 
 This may be a configurable setting in a future version of the plugin to avoid the need to hack your theme's <code>functions.php</code> file.
 
