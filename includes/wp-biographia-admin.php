@@ -161,6 +161,16 @@ function wp_biographia_upgrade() {
 		 * v2.2 changed default configuration settings ...
 		 *
 		 * wp_biographia_version = "22"
+		 *
+		 * v2.2.1 changed default configuration settings ...
+		 * Note: v2.2.1 was a private beta and never formally released.
+		 *
+		 * wp_biographia_version = "221"
+		 *
+		 * v2.3 changed default configuration settings ...
+		 *
+		 * wp_biographia_version = "23"
+		 *
 		 */
 
 		switch ($current_plugin_version) {
@@ -294,6 +304,7 @@ function wp_biographia_upgrade() {
 				}
 
 			case '221':
+			case '23':
 				$wp_biographia_settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
 				$upgrade_settings = true;
 				

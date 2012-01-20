@@ -4,7 +4,7 @@ Donate link: http://www.vicchi.org/codeage/donate/
 Tags: bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, website, about, author, about author, author box
 Requires at least: 3.3
 Tested up to: 3.3.1
-Stable tag: 2.2.1
+Stable tag: 2.3
 
 Add and display a customizable author biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
 
@@ -28,6 +28,8 @@ The plugin also has an added filter and two shortcode variants (`[wp_biographia]
 The `[wp_biographia]` shortcode can work in one of two ways, specified by the `mode` parameter. In `raw` mode, which is the default (specified as `[wp_biographia mode="raw"]` or simply as `[wp_biographia]`), the plugin inserts the Biography Box in *you've asked for it, you've got it* mode. Or to put it another way, the plugin will honour the settings that you specify under *Dashboard / Settings/ WP Biographia* for *Biography Box Style Settings* and for *Biography Box Content Settings* but will ignore the *Biography Box Display Settings* and *Biography Box Per User Settings*.
 
 In `configured` mode, specified as `[wp_biographia mode="configured"]`, the plugin inserts the Biography Box and will honour all the settings under *Dashboard / Settings / WP Biographia* with the exception of *Display On Front Page*, *Display On Individual Post*, *Display On Post Archives* and *Display On Individual Pages*, as well as their equivalents for any custom post types you may have created. The thinking behind this is that you probably want to honour post or page exclusions and per user exclusions, but by using the shortcode in your theme templates, you want to be in control of how and where the Biography Box is displayed.
+
+The `[wp_biographia]` shortcode also takes an `author` parameter which can be used in conjunction with the `mode` parameter. If the `author` parameter is omitted, the shortcode assumes it's being used within the [WordPress Loop](http://codex.wordpress.org/The_Loop) and will display the Biography Box for the current post's, page's or custom post type's author. Specifying a user's login name as the `author` parameter overrides this behaviour and allows multi-user sites to use the plugin to create a *contributors* page, specifying `[wp_biographia user="login-name"]` once for each of your site's authors.
 
 == Installation ==
 
@@ -134,7 +136,12 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 2.2 (2012.01.17)
+The current version is 2.3 (2012.01.17)
+
+= 2.3 =
+* Add `author` parameter short code support support.
+* Add support for global (across single, archive and front page templates) post exclusions in built-in post types and custom post types.
+* Tightened wording in admin screen around post exclusions.
 
 = 2.2 =
 * Add enhanced short code support (raw and configured modes)
