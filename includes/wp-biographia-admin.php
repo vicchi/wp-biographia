@@ -403,10 +403,14 @@ function wp_biographia_general_settings() {
 				<small>Displays the Biography Box for each post on archive pages.</small></p>';	
 
 	// Add Post ID Exclusion
-	$display_settings .= '<p><strong>' . __("Exclude Posts (via Post ID)") . '</strong><br />
+	$display_settings .= '<p><strong>' . __("Exclude From Single Posts (via Post ID)") . '</strong><br />
 			<input type="text" name="wp_biographia_post_exclusions" id="wp_biographia_post_exclusions" value="'.$wp_biographia_settings['wp_biographia_post_exclusions'].'" /><br />
-			<small>Enter Page IDs, comma separated with no spaces, e.g. 54,33,55</small></p>';				
+			<small>Suppresses the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to suppress, comma separated with no spaces, e.g. 54,33,55</small></p>';
 
+	$display_settings .= '<p><strong>' . __("Globally Exclude From Posts (via Post ID)") . '</strong><br />
+		<input type="text" name="wp_biographia_global_post_exclusions" id="wp_biographia_global_post_exclusions" value="' . $wp_biographia_settings['wp_biographia_global_post_exclusions'] . '" /><br />
+		<small>Suppresses the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.</small></p>';
+		
 	$display_settings .= '<p><strong>' . __("Display On Individual Pages") . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_pages" ' .checked($wp_biographia_settings['wp_biographia_display_pages'], 'on', false) . ' />
 				<small>Displays the Biography Box for individual pages.</small></p>';
@@ -414,7 +418,7 @@ function wp_biographia_general_settings() {
 	// Add Page ID Exclusion
 	$display_settings .= '<p><strong>' . __("Exclude Pages (via Page ID)") . '</strong><br />
 		<input type="text" name="wp_biographia_page_exclusions" id="wp_biographia_page_exclusions" value="'.$wp_biographia_settings['wp_biographia_page_exclusions'].'" /><br />
-		<small>Enter Page IDs comma separated with no spaces, e.g. 54,33,55</small></p>';
+		<small>Suppresses the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to suppress, comma separated with no spaces, e.g. 54,33,55.</small></p>';
 	
 
 	// Add Custom Post Types for Single & Archives
@@ -436,9 +440,13 @@ function wp_biographia_general_settings() {
 					<input type="checkbox" name="wp_biographia_display_archives_'.$pt->name.'" ' .checked($wp_biographia_settings['wp_biographia_display_archives_'.$pt->name], 'on', false) . ' />
 					<small>Displays the Biography Box on archive pages for custom post type '.$pt->labels->name.'.</small></p>';	
 
-		$display_settings .= '<p><strong>' . __("Exclude {$pt->labels->name} (via {$pt->labels->singular_name} ID)") . '</strong><br />
+		$display_settings .= '<p><strong>' . __("Exclude From Single {$pt->labels->name} (via {$pt->labels->singular_name} ID)") . '</strong><br />
 			<input type="text" name="wp_biographia_'.$pt->name.'_exclusions" id="wp_biographia_'.$pt->name.'_exclusions" value="'.$wp_biographia_settings['wp_biographia_'.$pt->name.'_exclusions'].'" /><br />
-			<small>Enter ' . $pt->labels->singular_name . ' IDs comma separated with no spaces, e.g. 54,33,55</small></p>';
+			<small>Suppresses the Biography Box whenever a '. $pt->labels->singular_name . ' is displayed; singly, on archive pages or on the front page. Enter the ' . $pt->labels->singular_name . ' IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.</small></p>';
+
+		$display_settings .= '<p><strong>' . __("Globally Exclude From {$pt->labels->name} (via {$pt->labels->singular_name} ID)") . '</strong><br />
+			<input type="text" name="wp_biographia_global_' . $pt->name . '_exclusions" id="wp_biographia_global_' . $pt->name . '_exclusions" value="' . $wp_biographia_settings['wp_biographia_global_' . $pt->name . '_exclusions'] . '" /><br />
+			<small>Suppresses the Biography Box whenever a ' . $pt->labels->singular_name . ' is displayed. Enter the ' . $pt->labels->singular_name . ' IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.</small></p>';
 	}
 
 	$wp_biographia_settings['wp_biographia_display_location'] = (
@@ -515,7 +523,7 @@ function wp_biographia_general_settings() {
 	$user_settings .= '<a href="#" id="wp-biographia-user-post-rem">&laquo; Remove</a>';
 	$user_settings .= '</span>';
 	$user_settings .= '<br />';
-	$user_settings .= '<div style="clear: both";><small>Select the users who should not display the Biography Box on their authored posts. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.</small></div></p>';
+	$user_settings .= '<div style="clear: both";><small>Select the users who should not display the Biography Box on their authored posts. Selecting a user for suppression of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.</small></div></p>';
 
 	$user_settings .= '<p><strong>Per User Suppression Of The Biography Box On Pages</strong><br />';
 	$user_settings .= '<span class="wp-biographia-users">';
@@ -811,11 +819,17 @@ function wp_biographia_process_settings() {
 
 				$wp_biographia_settings['wp_biographia_' . $pt->name . '_exclusions'] =
 					wp_biographia_option ('wp_biographia_' . $pt->name . '_exclusions');
+
+				$wp_biographia_settings['wp_biographia_global_' . $pt->name . '_exclusions'] =
+					wp_biographia_option ('wp_biographia_global_' . $pt->name . '_exclusions');
 			}
 
 			// Post exclusions 
 			$wp_biographia_settings['wp_biographia_post_exclusions'] =
 				wp_biographia_option ('wp_biographia_post_exclusions');
+
+			$wp_biographia_settings['wp_biographia_global_post_exclusions'] =
+				wp_biographia_option ('wp_biographia_global_post_exclusions');
 
 			$wp_biographia_settings['wp_biographia_display_pages'] =
 					wp_biographia_option ('wp_biographia_display_pages');

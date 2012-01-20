@@ -458,42 +458,115 @@ function wp_biographia_insert($content, $is_shortcode=false) {
 }
 
 function wp_biographia_insert_frontpage ($content, $pattern, $options, $is_shortcode) {
+	global $post;
 	$display_bio = false;
+	$user_id = get_the_author_meta ('ID');
 	$new_content = $content;
 	
-	if (isset ($options['wp_biographia_display_front']) &&
-			$options['wp_biographia_display_front']) {
-		$display_bio = true;
-	}
+	if (get_user_meta ($user_id, 'wp_biographia_suppress_posts', true) !== 'on') {
+		if (isset ($options['wp_biographia_display_front']) &&
+				$options['wp_biographia_display_front']) {
+			$display_bio = true;
+		}
 	
-	else {
-		$display_bio = $is_shortcode;
-	}
+		else {
+			$display_bio = $is_shortcode;
+		}
 	
-	if ($display_bio) {
-		$bio_content = wp_biographia_display ();
-		$new_content = sprintf ($pattern, $content, $bio_content);
+		if ($display_bio) {
+			$bio_content = wp_biographia_display ();
+			$post_types = get_post_types (array (), 'objects');
+
+			foreach ($post_types as $post_type => $post_data) {
+				if (($post_data->_builtin) && ($post_type != 'post')) {
+					continue;
+				}
+				
+				if ($post_type == 'post') {
+					$post_type_name = 'posts';
+				}
+				else {
+					$post_type_name = $post_type;
+				}
+
+				if ($post->post_type == $post_type) {
+					$option = 'wp_biographia_global_' . $post_type . '_exclusions';
+					if (isset ($options[$option])) {
+						$exclusions = explode (',',	$options[$option]);
+						if (!in_array ($post->ID, $exclusions)) {
+							$new_content = sprintf ($pattern, $content, $bio_content);
+							break;
+						}
+					
+						else {
+							$new_content = $content;
+							break;
+						}
+					}
+				
+					else {
+						$new_content = sprintf ($pattern, $content, $bio_content);
+					}
+				}
+			}	// end-foreach ()
+		}
 	}
-	
+
 	return $new_content;
 }
 
 function wp_biographia_insert_archive ($content, $pattern, $options, $is_shortcode) {
+	global $post;
 	$display_bio = false;
+	$user_id = get_the_author_meta ('ID');
 	$new_content = $content;
 	
-	if (isset ($options['wp_biographia_display_archives']) &&
-			$options['wp_biographia_display_archives']) {
-		$display_bio = true;
-	}
+	if (get_user_meta ($user_id, 'wp_biographia_suppress_posts', true) !== 'on') {
+		if (isset ($options['wp_biographia_display_archives']) &&
+				$options['wp_biographia_display_archives']) {
+			$display_bio = true;
+		}
 	
-	else {
-		$display_bio = $is_shortcode;
-	}
+		else {
+			$display_bio = $is_shortcode;
+		}
 	
-	if ($display_bio) {
-		$bio_content = wp_biographia_display ();
-		$new_content = sprintf ($pattern, $content, $bio_content);
+		if ($display_bio) {
+			$bio_content = wp_biographia_display ();
+			$post_types = get_post_types (array (), 'objects');
+
+			foreach ($post_types as $post_type => $post_data) {
+				if (($post_data->_builtin) && ($post_type != 'post')) {
+					continue;
+				}
+				
+				if ($post_type == 'post') {
+					$post_type_name = 'posts';
+				}
+				else {
+					$post_type_name = $post_type;
+				}
+				
+				if ($post->post_type == $post_type) {
+					$option = 'wp_biographia_global_' . $post_type . '_exclusions';
+					if (isset ($options[$option])) {
+						$exclusions = explode (',', $options[$option]);
+						if (!in_array ($post->ID, $exclusions)) {
+							$new_content = sprintf ($pattern, $content, $bio_content);
+							break;
+						}
+					
+						else {
+							$new_content = $content;
+						}
+					}
+				
+					else {
+						$new_content = sprintf ($pattern, $content, $bio_content);
+					}
+				}
+			}	// end-foreach ()
+		}
 	}
 	
 	return $new_content;
@@ -561,16 +634,28 @@ function wp_biographia_insert_single ($content, $pattern, $options, $is_shortcod
 						$options['wp_biographia_display_' . $post_type_name])) || 
 						$is_shortcode) {
 					// check exclusions
-					if (isset ($options['wp_biographia_' . $post_type . '_exclusions'])) {
-						$exclusions = explode (',',
-								$options['wp_biographia_' . $post_type . '_exclusions']);
+					$post_option = 'wp_biographia_' . $post_type . '_exclusions';
+					$global_option = 'wp_biographia_global_' . $post_type . '_exclusions';
 					
-						if (! in_array ($post->ID , $exclusions)) {
+					if (isset ($options[$post_option]) || isset ($options[$global_option])) {
+						$post_exclusions = array ();
+						$global_exclusions = array ();
+						
+						if (isset ($options[$post_option])) {
+							$post_exclusions = explode (',', $options[$post_option]);
+						}
+						if (isset ($options[$global_option])) {
+							$global_exclusions = explode (',', $options[$global_option]);
+						}
+						
+						if (!in_array ($post->ID, $post_exclusions) &&
+								!in_array ($post->ID, $global_exclusions)) {
 							if (wp_biographia_is_last_page ()) {
 								$new_content = sprintf ($pattern, $content, $bio_content);
 								break;
 							}
 						}
+						
 						else {
 							$new_content = $content;
 						}
@@ -658,7 +743,7 @@ function wp_biographia_add_defaults() {
     if(!is_array ($wp_biographia_settings)) {
 		$wp_biographia_settings = array (
 			"wp_biographia_installed" => "on",
-			"wp_biographia_version" => "20",
+			"wp_biographia_version" => WPBIOGRAPHIA_VERSION,
 			"wp_biographia_style_bg" => "#FFEAA8",
 			"wp_biographia_style_border" => "top",
 			"wp_biographia_display_front" => "on",
