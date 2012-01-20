@@ -293,6 +293,7 @@ function wp_biographia_upgrade() {
 					$wp_biographia_settings["wp_biographia_content_reddit"] = "";
 				}
 
+			case '221':
 				$wp_biographia_settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
 				$upgrade_settings = true;
 				
