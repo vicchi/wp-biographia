@@ -31,7 +31,7 @@ function wp_biographia_is_last_page() {
  * Produce and format the Biography Box according to the currently defined options
  */
 
-function wp_biographia_display($for_feed=false, $author_id=NULL) {
+function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL) {
 	if (!isset ($author_id)) {
 		$author_id = get_the_author_meta ('ID');
 	}
@@ -78,14 +78,31 @@ function wp_biographia_display($for_feed=false, $author_id=NULL) {
 	if (!empty ($wp_biographia_settings['wp_biographia_content_prefix']) ||
 		!empty ($wp_biographia_settings['wp_biographia_content_name'])) {
 		$wp_biographia_content .= '<h3>';
-		if (!empty ($wp_biographia_settings['wp_biographia_content_prefix'])) {
-			$wp_biographia_content .= $wp_biographia_settings['wp_biographia_content_prefix']
-				. ' ';
-		}
-		if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
-			($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
 
-			switch($wp_biographia_settings['wp_biographia_content_name']) {
+		$name_prefix = "";
+		if ((!empty ($override)) && (!empty($override['prefix']))) {
+			$name_prefix = $override['prefix'];
+		}
+
+		elseif (!empty ($wp_biographia_settings['wp_biographia_content_prefix'])) {
+			$name_prefix = $wp_biographia_settings['wp_biographia_content_prefix'];
+		}
+		
+		if (!empty ($name_prefix)) {
+			$wp_biographia_content .= $name_prefix . ' ';
+		}
+
+		$display_name = "";
+		if ((!empty ($override)) && (!empty($override['name']))) {
+			$display_name = $override['name'];
+		}
+
+		elseif (!empty ($wp_biographia_settings['wp_biographia_content_name'])) {
+			$display_name = $wp_biographia_settings['wp_biographia_content_name'];
+		}
+
+		if (!empty ($display_name) && $display_name != 'none') {
+			switch ($display_name) {
 				case 'first-last-name':
 					$wp_biographia_formatted_name .= $wp_biographia_author['first-last-name'];
 					break;
@@ -399,7 +416,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL) {
  * Add in the formatted Biography Box for the defined page types, via the the_content filter hook
  */
 
-function wp_biographia_insert($content, $is_shortcode=false, $author_id=NULL) {
+function wp_biographia_insert($content, $is_shortcode=false, $author_id=NULL, $override=NULL) {
 	global $post;
 
 	$wp_biographia_settings = array ();
@@ -431,7 +448,8 @@ function wp_biographia_insert($content, $is_shortcode=false, $author_id=NULL) {
 													   $pattern,
 													   $wp_biographia_settings,
 													   $is_shortcode,
-													   $author_id);
+													   $author_id,
+													   $override);
 	}
 	
 	elseif (is_archive ()) {
@@ -439,7 +457,8 @@ function wp_biographia_insert($content, $is_shortcode=false, $author_id=NULL) {
 												     $pattern,
 												     $wp_biographia_settings,
 												     $is_shortcode,
-												     $author_id);
+												     $author_id,
+													 $override);
 	}
 	
 	elseif (is_page ()) {
@@ -447,7 +466,8 @@ function wp_biographia_insert($content, $is_shortcode=false, $author_id=NULL) {
 												  $pattern,
 											      $wp_biographia_settings,
 											      $is_shortcode,
-											      $author_id);
+											      $author_id,
+												  $override);
 	}
 	
 	elseif (is_single ()) {
@@ -455,7 +475,8 @@ function wp_biographia_insert($content, $is_shortcode=false, $author_id=NULL) {
 												    $pattern,
 											        $wp_biographia_settings,
 											        $is_shortcode,
-													$author_id);
+													$author_id,
+													$override);
 	}
 	
 	elseif (is_feed ()) {
@@ -468,13 +489,17 @@ function wp_biographia_insert($content, $is_shortcode=false, $author_id=NULL) {
 	return $new_content;
 }
 
-function wp_biographia_insert_frontpage ($content, $pattern, $options, $is_shortcode, $author_id) {
+function wp_biographia_insert_frontpage ($content, $pattern, $options, $is_shortcode, $author_id, $override=NULL) {
 	global $post;
 	$display_bio = false;
-	$user_id = get_the_author_meta ('ID');
+	$for_feed = false;
 	$new_content = $content;
+
+	if (!isset ($author_id)) {
+		$author_id = get_the_author_meta ('ID');
+	}
 	
-	if (get_user_meta ($user_id, 'wp_biographia_suppress_posts', true) !== 'on') {
+	if (get_user_meta ($author_id, 'wp_biographia_suppress_posts', true) !== 'on') {
 		if (isset ($options['wp_biographia_display_front']) &&
 				$options['wp_biographia_display_front']) {
 			$display_bio = true;
@@ -485,7 +510,7 @@ function wp_biographia_insert_frontpage ($content, $pattern, $options, $is_short
 		}
 	
 		if ($display_bio) {
-			$bio_content = wp_biographia_display ();
+			$bio_content = wp_biographia_display ($for_feed, $author_id, $override);
 			$post_types = get_post_types (array (), 'objects');
 
 			foreach ($post_types as $post_type => $post_data) {
@@ -526,13 +551,17 @@ function wp_biographia_insert_frontpage ($content, $pattern, $options, $is_short
 	return $new_content;
 }
 
-function wp_biographia_insert_archive ($content, $pattern, $options, $is_shortcode, $author_id) {
+function wp_biographia_insert_archive ($content, $pattern, $options, $is_shortcode, $author_id, $override=NULL) {
 	global $post;
 	$display_bio = false;
-	$user_id = get_the_author_meta ('ID');
+	$for_feed = false;
 	$new_content = $content;
+
+	if (!isset ($author_id)) {
+		$author_id = get_the_author_meta ('ID');
+	}
 	
-	if (get_user_meta ($user_id, 'wp_biographia_suppress_posts', true) !== 'on') {
+	if (get_user_meta ($author_id, 'wp_biographia_suppress_posts', true) !== 'on') {
 		if (isset ($options['wp_biographia_display_archives']) &&
 				$options['wp_biographia_display_archives']) {
 			$display_bio = true;
@@ -543,7 +572,7 @@ function wp_biographia_insert_archive ($content, $pattern, $options, $is_shortco
 		}
 	
 		if ($display_bio) {
-			$bio_content = wp_biographia_display ();
+			$bio_content = wp_biographia_display ($for_feed, $author_id, $override);
 			$post_types = get_post_types (array (), 'objects');
 
 			foreach ($post_types as $post_type => $post_data) {
@@ -583,20 +612,24 @@ function wp_biographia_insert_archive ($content, $pattern, $options, $is_shortco
 	return $new_content;
 }
 
-function wp_biographia_insert_page ($content, $pattern, $options, $is_shortcode, $author_id) {
+function wp_biographia_insert_page ($content, $pattern, $options, $is_shortcode, $author_id, $override=NULL) {
 	global $post;
 	$display_bio = false;
-	$user_id = get_the_author_meta ('ID');
+	$for_feed = false;
 	$new_content = $content;
+
+	if (!isset ($author_id)) {
+		$author_id = get_the_author_meta ('ID');
+	}
 	
 	if (isset ($options['wp_biographia_display_pages']) &&
 			$options['wp_biographia_display_pages'] &&
-			get_user_meta ($user_id, 'wp_biographia_suppress_pages', true) !== 'on') {
+			get_user_meta ($author_id, 'wp_biographia_suppress_pages', true) !== 'on') {
 		$display_bio = true;
 	}
 	
 	elseif ($is_shortcode &&
-			get_user_meta ($user_id, 'wp_biographia_suppress_pages', true) !== 'on') {
+			get_user_meta ($author_id, 'wp_biographia_suppress_pages', true) !== 'on') {
 		$display_bio = true;
 	}
 	
@@ -608,22 +641,26 @@ function wp_biographia_insert_page ($content, $pattern, $options, $is_shortcode,
 	}
 
 	if ($display_bio) {
-		$bio_content = wp_biographia_display ();
+		$bio_content = wp_biographia_display ($for_feed, $author_id, $override);
 		$new_content = sprintf ($pattern, $content, $bio_content);
 	}
 
 	return $new_content;
 }
 
-function wp_biographia_insert_single ($content, $pattern, $options, $is_shortcode, $author_id) {
+function wp_biographia_insert_single ($content, $pattern, $options, $is_shortcode, $author_id, $override=NULL) {
 	global $post;
 	$display_bio = false;
-	$user_id = get_the_author_meta ('ID');
+	$for_feed = false;
 	$new_content = $content;
 
-	if (get_user_meta ($user_id, 'wp_biographia_suppress_posts', true) !== 'on') {
+	if (!isset ($author_id)) {
+		$author_id = get_the_author_meta ('ID');
+	}
+
+	if (get_user_meta ($author_id, 'wp_biographia_suppress_posts', true) !== 'on') {
 		// Cycle through Custom Post Types
-		$bio_content = wp_biographia_display ();
+		$bio_content = wp_biographia_display ($for_feed, $author_id, $override);
 		$post_types = get_post_types (array (), 'objects');
 	
 		foreach ($post_types as $post_type => $post_data) {
@@ -797,42 +834,89 @@ function wp_biographia_add_defaults() {
  */
 
 function wp_biographia_shortcode($atts) {
+	global $wpdb;
 	$content = "";
 	$is_feed = false;
 	
 	extract (shortcode_atts (array (
 		'mode' => 'raw',
-		'author' => ''
+		'author' => '',
+		'prefix' => '',
+		'name' => ''
      ), $atts));
 
+	$override = array ();
+	if (!empty ($prefix)) {
+		$override['prefix'] = $prefix;
+	}
+	if (!empty ($name)) {
+		switch ($name) {
+			case 'account-name':
+			case 'first-last-name':
+			case 'nickname':
+			case 'display-name':
+				$override['name'] = $name;
+				break;
+			default:
+				break;
+		}
+	}
+
 	if (!empty ($author)) {
-		$user_obj = get_user_by ('login', $author);
-		if ($user_obj) {
-			if ($mode == 'raw') {
-				$content = wp_biographia_display ($is_feed, $user_obj->ID);
+		if ($author === "*") {
+			$contributors = $wpdb->get_results ("SELECT ID, user_login from $wpdb->users ORDER BY user_login");
+			$content = '<div class="wp-biographia-contributors">';
+			foreach ($contributors as $user_obj) {
+				if ($mode == 'raw') {
+					$content .= wp_biographia_display ($is_feed, $user_obj->ID, $override);
+				}
+
+				elseif ($mode == 'configured') {
+					$placeholder_content = "";
+					$is_shortcode = true;
+
+					$content .= wp_biographia_insert ($placeholder_content,
+												 	$is_shortcode,
+												 	$user_obj->ID,
+													$override);
+				}
 			}
+			$content .= '</div>';
+		}
+		
+		else {
+			$user_obj = get_user_by ('login', $author);
+			if ($user_obj) {
+				if ($mode == 'raw') {
+					$content = wp_biographia_display ($is_feed, $user_obj->ID, $override);
+				}
 
-			elseif ($mode == 'configured') {
-				$placeholder_content = "";
-				$is_shortcode = true;
+				elseif ($mode == 'configured') {
+					$placeholder_content = "";
+					$is_shortcode = true;
 
-				$content = wp_biographia_insert ($placeholder_content,
-												 $is_shortcode,
-												 $user_obj->ID);
+					$content = wp_biographia_insert ($placeholder_content,
+												 	$is_shortcode,
+												 	$user_obj->ID,
+													$override);
+				}
 			}
 		}
 	}
 	
 	else {	
 		if ($mode == 'raw') {
-			$content = wp_biographia_display ();
+			$content = wp_biographia_display ($is_feed, NULL, $override);
 		}
 	
 		elseif ($mode == 'configured') {
 			$placeholder_content = "";
 			$is_shortcode = true;
 		
-			$content = wp_biographia_insert ($placeholder_content, $is_shortcode);
+			$content = wp_biographia_insert ($placeholder_content,
+											 $is_shortcode,
+											 NULL,
+											 $override);
 		}
 	}	
 
