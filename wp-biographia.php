@@ -340,7 +340,8 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 	}
 
 	if (!empty ($wp_biographia_settings['wp_biographia_content_posts']) &&
-			($wp_biographia_settings['wp_biographia_content_posts'] != 'none')) {
+			($wp_biographia_settings['wp_biographia_content_posts'] != 'none') &&
+			($wp_biographia_author['posts'] > 0)) {
 		$wp_biographia_link_item = '<a href="'
 			. $wp_biographia_author['posts_url'] 
 			. '"';
