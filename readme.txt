@@ -1,16 +1,16 @@
 === WP Biographia ===
 Contributors: vicchi, wpsmith
 Donate link: http://www.vicchi.org/codeage/donate/
-Tags: bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, website, about, author, about author, author box
+Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, about author, author box, contributors
 Requires at least: 3.3
 Tested up to: 3.3.1
 Stable tag: 2.3
 
-Add and display a customizable author biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
+Add and display a customisable author biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
 
 == Description ==
 
-This plugin allows you to add a customizable biography to posts, to RSS feeds, to pages, to archives and to each post on your blog's landing page. It integrates out of the box with the information that can be provided in each user's profile. Display of the Biography Box can be suppressed on a per user basis for posts and for pages.
+This plugin allows you to add a customisable biography to posts, to RSS feeds, to pages, to archives and to each post on your blog's landing page. It integrates out of the box with the information that can be provided in each user's profile and supports custom post types. Display of the Biography Box can be suppressed on a global or per user basis for posts, pages and custom post types.
 
 Settings and options include:
 
@@ -23,13 +23,7 @@ Settings and options include:
 
 The plugin expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn, Google+, Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles.
 
-The plugin also has an added filter and two shortcode variants (`[wp_biographia]`) to add further customization. For example, if you use page templates to display custom post types on your blog, you can simply use `filter ('wp_biographia_pattern')` to decide how you'd like to customize. If you want the Biography Box to appear at the bottom but on archive pages, you want them at the top, then the filter can do that as well, or simply use the shortcode to control where it appears in a post of any post type.
-
-The `[wp_biographia]` shortcode can work in one of two ways, specified by the `mode` parameter. In `raw` mode, which is the default (specified as `[wp_biographia mode="raw"]` or simply as `[wp_biographia]`), the plugin inserts the Biography Box in *you've asked for it, you've got it* mode. Or to put it another way, the plugin will honour the settings that you specify under *Dashboard / Settings/ WP Biographia* for *Biography Box Style Settings* and for *Biography Box Content Settings* but will ignore the *Biography Box Display Settings* and *Biography Box Per User Settings*.
-
-In `configured` mode, specified as `[wp_biographia mode="configured"]`, the plugin inserts the Biography Box and will honour all the settings under *Dashboard / Settings / WP Biographia* with the exception of *Display On Front Page*, *Display On Individual Post*, *Display On Post Archives* and *Display On Individual Pages*, as well as their equivalents for any custom post types you may have created. The thinking behind this is that you probably want to honour post or page exclusions and per user exclusions, but by using the shortcode in your theme templates, you want to be in control of how and where the Biography Box is displayed.
-
-The `[wp_biographia]` shortcode also takes an `author` parameter which can be used in conjunction with the `mode` parameter. If the `author` parameter is omitted, the shortcode assumes it's being used within the [WordPress Loop](http://codex.wordpress.org/The_Loop) and will display the Biography Box for the current post's, page's or custom post type's author. Specifying a user's login name as the `author` parameter overrides this behaviour and allows multi-user sites to use the plugin to create a *contributors* page, specifying `[wp_biographia user="login-name"]` once for each of your site's authors.
+The plugin also has an added filter and shortcode (`[wp_biographia]`) to add further customisation. For example, if you use page templates to display custom post types on your blog, you can simply use `filter ('wp_biographia_pattern')` to decide how you'd like to customise. If you want the Biography Box to appear at the bottom but on archive pages, you want them at the top, then the filter can do that as well, or simply use the shortcode to control where it appears in a post of any post type. For more information on how to use the `[wp_biographia]` shortcode, see the *Shortcode Support And Usage* section.
 
 == Installation ==
 
@@ -38,13 +32,12 @@ The `[wp_biographia]` shortcode also takes an `author` parameter which can be us
 1. Activate the plugin. From the Dashboard, navigate to Plugins and click on the *"Activate"* link under the entry for WP Biographia.
 1. Enhance your WordPress user profile. From the Dashboard, navigate to Users and click on the "Edit" link under your profile.
 1. Edit your WordPress user profile. Add your biography to the *"Biographical Info"* text box. WP Biographia also adds to the list of Contact Info you can associate with your profile, adding support for Twitter, Facebook, LinkedIn and Google+ and other contact profiles. Click on the *"Update Profile"* link to save your changes.
-1. Customize and configure what information WP Biographia displays; From the Dashboard, navigate to the *Settings / WP Biographia* page or click on the *"Settings"* link from the Plugins page on the Dashboard.
+1. Customise and configure what information WP Biographia displays; From the Dashboard, navigate to the *Settings / WP Biographia* page or click on the *"Settings"* link from the Plugins page on the Dashboard.
 1. You can can control display settings, style settings and content settings for the Biography Box.
 1. Click on the *"Save Changes"* button to preserve your chosen settings and options.
 1. If you enable the display of the post author's image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled. Don't forget to save your changes.
 1. Users with the `manage_options` capability can edit their profile via *Users / Your Profile* from the Dashboard to suppress the display of the Biography Box on posts and/or on pages and also the profiles of other users via the *Users / All Users / Edit* from the Dashboard.
 1. Suppression of the display of the Biography Box on posts and/or on pages can also be configured from the Dashboard; navigate to *Settings / WP Biographia / Biography Box Display Settings*.
-
 
 == Frequently Asked Questions ==
 
@@ -133,18 +126,18 @@ WP Biographia is named after the etymology of the modern English word biography.
 1. WP Biographia Settings And Options: Biography Box Content Settings, continued
 1. Sample Biography Box, shown below an individual post
 
-
 == Changelog ==
 
-The current version is 2.3 (2012.01.17)
+The current version is 2.3 (2012.01.26)
 
 = 2.3 =
-* Add `author` parameter short code support support.
+* Suppress display of "More Posts" link in the Biography Box (if configured) if the user/author has no posts.
+* Add `author`, `prefix` and `name` short code attribute support.
 * Add support for global (across single, archive and front page templates) post exclusions in built-in post types and custom post types.
 * Tightened wording in admin screen around post exclusions.
 
 = 2.2 =
-* Add enhanced short code support (raw and configured modes)
+* Add enhanced short code support (`raw` and `configured` modes)
 * Add support for displaying the Biography Box on archive pages that use excerpts
 * Enhance contact information and Biography Box links to support Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit
 * Fixed bug that caused the Biography Box to be displayed for every page of a multiple page post
@@ -178,6 +171,7 @@ The current version is 2.3 (2012.01.17)
 * First version of WP Biographia released
 
 == Upgrade Notice ==
+
 = 2.2 =
 * This is the fifth version of WP Biographia; adds support for enhanced shortcode usage, excerpt support on archive pages and additional social media profiles and links as well as several bug fixes.
 
@@ -192,3 +186,49 @@ The current version is 2.3 (2012.01.17)
 
 = 1.0 =
 * This is the first version of WP Biographia
+
+== Shortcode Support And Usage ==
+
+WP Biographia supports a single shortcode, `[wp_biographia]`. Adding this shortcode to the content of a post or page or into a theme template as content, expands the shortcode and replaces it with a Biography Box.
+
+The shortcode also supports multiple *attributes* which allow you to customise the way in which the shortcode is expanded into the Biography Box:
+
+* the `mode` attribute
+* the `author` attribute
+* the `prefix` attribute
+* the `name` attribute
+
+= The "mode" Attribute =
+
+In `raw` mode, which is the default (specified as `[wp_biographia mode="raw"]` or simply as `[wp_biographia]`), the plugin inserts the Biography Box in *you've asked for it, you've got it* mode.
+
+Or to put it another way, the plugin will honour the settings that you specify under *Dashboard / Settings/ WP Biographia* for *Biography Box Style Settings* and for *Biography Box Content Settings* but will ignore the *Biography Box Display Settings* and *Biography Box Per User Settings*.
+
+In `configured` mode, specified as `[wp_biographia mode="configured"]`, the plugin inserts the Biography Box and will honour all the settings under *Dashboard / Settings / WP Biographia* with the exception of *Display On Front Page*, *Display On Individual Post*, *Display On Post Archives* and *Display On Individual Pages*, as well as their equivalents for any custom post types you may have created.
+
+The thinking behind this is that you probably want to honour post or page exclusions and per user exclusions, but by using the shortcode in your theme templates, you want to be in control of how and where the Biography Box is displayed.
+
+= The "author" Attribute =
+
+If the `author` attribute is omitted, which is the default, the shortcode assumes it's being used within the [WordPress Loop](http://codex.wordpress.org/The_Loop) and will display the Biography Box once for the current post's, page's or custom post type's author.
+
+Specifying a user's login name as the `author` attribute overrides this behaviour and allows multi-user sites to use the plugin to create a *contributors* page, where you use the shortcode as `[wp_biographia user="login-name"]` once for each of your site's authors that you want to appear, replacing `"login-name"` with a valid login name for one of your authors.
+
+You call also use the `author` attribute in *wildcard* mode, specifying the author's login name as `*` as `[wp_biographia author="*"]`; this will then loop over all of the authors that have logins on your site, displaying the Biography Box once for each author, ordered alphabetically by login name.
+
+Specifying an invalid login name (`[wp_biographia author="idontexist"]`) will result in no Biography Box being displayed. Specifying an empty login name (`[wp_biographia author=""]`) will cause the `author` parameter to be ignored and may result in undefined behaviour, such as a partially populated Biography Box being displayed as the shortcode is being used outside of the Loop and thus no author information is made available to the plugin by WordPress.
+
+= The "prefix" Attribute =
+
+If the `prefix` attribute is omitted, which is the default, the Biography Box will be displayed with *Biography Prefix* text configured in *Settings/ WP Biographuia / Biography Box Content Settings* before the author's name. This can be overridden by using the `prefix` attribute, along the lines of `[wp_biographia prefix="All About"]`.
+
+= The "name" Attribute =
+
+If the `name` attribute is omitted, which is the default, the Biography Box will be displayed with the author's name as configured by *Author's Name* in *Settings / WP Biographia /Biography Box Content Settings*. This can be overriden by supplying one of the following for the `name` attribute's argument:
+
+* `account-name`
+* `first-last-name`
+* `nickname`
+* `display-name`
+* `none`
+
