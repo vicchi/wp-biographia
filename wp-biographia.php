@@ -7,6 +7,7 @@ Version: 2.3
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
+Text Domain: wp-biographia
 */
 
 define ('WPBIOGRAPHIA_VERSION', '23');
@@ -983,6 +984,11 @@ function wp_biographia_shortcode($atts) {
 	return $content;
 }
 
+function wp_biographia_init() {
+	$lang_dir = basename (dirname (__FILE__)) . DIRECTORY_SEPARATOR . 'lang';
+	load_plugin_textdomain ('wp-biographia', false, $lang_dir);
+}
+
 /*
  * Define plugin activation hook
  */
@@ -996,7 +1002,7 @@ register_activation_hook(__FILE__, 'wp_biographia_add_defaults');
  * 2) Add in our scripts for the admin panel
  * 3) Add in our CSS for the admin panel
  * 4) Add in our CSS for the generated page
- * 5) Add in checking for updating the configuration options after a plugin upgrade
+ * 5) Add in checking for updating the configuration options after a plugin upgrade and load the i18n text domain
  * 6/7) Add in user profile extensions for excluding the Biography Box
  * 8/9) Save user profile extensions for exclusing the Biography Box
  */
@@ -1010,6 +1016,7 @@ add_action ('admin_print_styles', 'wp_biographia_add_admin_styles');
 // add_action ('wp_print_styles', 'wp_biographia_style' );
 add_action ('wp_enqueue_scripts', 'wp_biographia_style' );
 add_action ('admin_init', 'wp_biographia_admin_init');
+add_action ('init', 'wp_biographia_init');
 
 add_action ('show_user_profile', 'wp_biographia_add_profile_extensions');
 add_action ('edit_user_profile', 'wp_biographia_add_profile_extensions');
