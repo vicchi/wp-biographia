@@ -140,10 +140,10 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['email'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('Send %s Mail'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('Send %s Mail', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('Send Mail');
+				$link_title = __('Send Mail', 'wp-biographia');
 			}
 
 			$wp_biographia_link_item = '<a href="mailto:'
@@ -151,7 +151,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('Mail')
+				. __('Mail', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -162,10 +162,10 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['website'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('%s On The Web'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('%s On The Web', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('On The Web');
+				$link_title = __('On The Web', 'wp-biographia');
 			}
 
 			$wp_biographia_link_item = '<a href="'
@@ -173,7 +173,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('Web')
+				. __('Web', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -184,10 +184,10 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['twitter'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('%s On Twitter'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('%s On Twitter', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('On Twitter');
+				$link_title = __('On Twitter', 'wp-biographia');
 			}
 
 			$wp_biographia_link_item = '<a href="'
@@ -195,7 +195,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('Twitter')
+				. __('Twitter', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -206,10 +206,10 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['facebook'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('%s On Facebook'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('%s On Facebook', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('On Facebook');
+				$link_title = __('On Facebook', 'wp-biographia');
 			}
 
 			$wp_biographia_link_item = '<a href="'
@@ -217,7 +217,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('Facebook')
+				. __('Facebook', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -228,10 +228,10 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['linkedin'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('%s On LinkedIn'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('%s On LinkedIn', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('On LinkedIn');
+				$link_title = __('On LinkedIn', 'wp-biographia');
 			}
 
 			$wp_biographia_link_item = '<a href="'
@@ -239,7 +239,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('LinkedIn')
+				. __('LinkedIn', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -250,10 +250,10 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['googleplus'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('%s On Google+'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('%s On Google+', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('On Google+');
+				$link_title = __('On Google+', 'wp-biographia');
 			}
 
 			$wp_biographia_link_item = '<a href="'
@@ -261,7 +261,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('Google+')
+				. __('Google+', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -272,10 +272,10 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['delicious'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('%s On Delicious'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('%s On Delicious', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('On Delicious');
+				$link_title = __('On Delicious', 'wp-biographia');
 			}
 
 			$wp_biographia_link_item = '<a href="'
@@ -283,7 +283,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('Delicious')
+				. __('Delicious', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -294,10 +294,10 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['flickr'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('%s On Flickr'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('%s On Flickr', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('On Flickr');
+				$link_title = __('On Flickr', 'wp-biographia');
 			}
 			
 			$wp_biographia_link_item = '<a href="'
@@ -305,7 +305,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('Flickr')
+				. __('Flickr', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -316,17 +316,17 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['picasa'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('%s On Picasa'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('%s On Picasa', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('On Picasa');
+				$link_title = __('On Picasa', 'wp-biographia');
 			}
 			$wp_biographia_link_item = '<a href="'
 				. $wp_biographia_author['picasa']
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('Picasa')
+				. __('Picasa', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -337,10 +337,10 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['vimeo'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('%s On Vimeo'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('%s On Vimeo', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('On Vimeo');
+				$link_title = __('On Vimeo', 'wp-biographia');
 			}
 
 			$wp_biographia_link_item = '<a href="'
@@ -348,7 +348,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('Vimeo')
+				. __('Vimeo', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -359,10 +359,10 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['youtube'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('%s On YouTube'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('%s On YouTube', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('On YouTube');
+				$link_title = __('On YouTube', 'wp-biographia');
 			}
 
 			$wp_biographia_link_item = '<a href="'
@@ -370,7 +370,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('YouTube')
+				. __('YouTube', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -381,17 +381,17 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		if (!empty ($wp_biographia_author['reddit'])) {
 			if (!empty ($wp_biographia_settings['wp_biographia_content_name']) &&
 					($wp_biographia_settings['wp_biographia_content_name'] != 'none')) {
-				$link_title = sprintf (__('%s On Reddit'), $wp_biographia_formatted_name);
+				$link_title = sprintf (__('%s On Reddit', 'wp-biographia'), $wp_biographia_formatted_name);
 			}
 			else {
-				$link_title = __('On Reddit');
+				$link_title = __('On Reddit', 'wp-biographia');
 			}
 			$wp_biographia_link_item = '<a href="'
 				. $wp_biographia_author['reddit']
 				. '" title="'
 				. $link_title
 				. '">'
-				. __('Reddit')
+				. __('Reddit', 'wp-biographia')
 				. '</a>';
 			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
@@ -415,10 +415,10 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		
 		switch ($wp_biographia_settings['wp_biographia_content_posts']) {
 			case 'basic':
-				$wp_biographia_link_item .= __('More Posts');
+				$wp_biographia_link_item .= __('More Posts', 'wp-biographia');
 				break;
 			case 'extended':
-				$wp_biographia_link_item .= __('More Posts') . ' ('
+				$wp_biographia_link_item .= __('More Posts', 'wp-biographia') . ' ('
 					. $wp_biographia_author['posts']
 					. ')';
 				break;
@@ -821,20 +821,20 @@ function wp_biographia_filter_contact($contactmethods) {
 	unset ($contactmethods['aim']);
 	unset ($contactmethods['jabber']);
 	
-	$contactmethods['twitter'] = __('Twitter');
-	$contactmethods['facebook'] = __('Facebook');
-	$contactmethods['linkedin'] = __('LinkedIn');
-	$contactmethods['googleplus'] = __('Google+');
-	$contactmethods['delicious'] = __('Delicious');
-	$contactmethods['flickr'] = __('Flickr');
-	$contactmethods['picasa'] = __('Picasa');
-	$contactmethods['vimeo'] = __('Vimeo');
-	$contactmethods['youtube'] = __('YouTube');
-	$contactmethods['reddit'] = __('Reddit');
-	$contactmethods['yim'] = __('Yahoo IM');
-	$contactmethods['aim'] = __('AIM');
-	$contactmethods['msn'] = __('Windows Live Messenger');
-	$contactmethods['jabber'] = __('Jabber / Google Talk');
+	$contactmethods['twitter'] = __('Twitter', 'wp-biographia');
+	$contactmethods['facebook'] = __('Facebook', 'wp-biographia');
+	$contactmethods['linkedin'] = __('LinkedIn', 'wp-biographia');
+	$contactmethods['googleplus'] = __('Google+', 'wp-biographia');
+	$contactmethods['delicious'] = __('Delicious', 'wp-biographia');
+	$contactmethods['flickr'] = __('Flickr', 'wp-biographia');
+	$contactmethods['picasa'] = __('Picasa', 'wp-biographia');
+	$contactmethods['vimeo'] = __('Vimeo', 'wp-biographia');
+	$contactmethods['youtube'] = __('YouTube', 'wp-biographia');
+	$contactmethods['reddit'] = __('Reddit', 'wp-biographia');
+	$contactmethods['yim'] = __('Yahoo IM', 'wp-biographia');
+	$contactmethods['aim'] = __('AIM', 'wp-biographia');
+	$contactmethods['msn'] = __('Windows Live Messenger', 'wp-biographia');
+	$contactmethods['jabber'] = __('Jabber / Google Talk', 'wp-biographia');
 
 	return $contactmethods;
 }
@@ -858,7 +858,7 @@ function wp_biographia_add_defaults() {
 			"wp_biographia_display_posts" => "on",
 			"wp_biographia_display_pages" => "on",
 			"wp_biographia_display_feed" => "",
-			"wp_biographia_content_prefix" => __('About'),
+			"wp_biographia_content_prefix" => __('About', 'wp-biographia'),
 			"wp_biographia_content_name" => "first-last-name",
 			"wp_biographia_content_image" => "on",
 			"wp_biographia_content_bio" => "on",

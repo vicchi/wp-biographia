@@ -326,20 +326,20 @@ function wp_biographia_show_colophon() {
 	$content = '<p><em>"When it comes to software, I much prefer free software, because I have very seldom seen a program that has worked well enough for my needs and having sources available can be a life-saver"</em>&nbsp;&hellip;&nbsp;Linus Torvalds</p>';
 
 	$content .= '<p>'
-		. __('For the inner nerd in you, the latest version of WP Biographia was written using <a href="http://macromates.com/">TextMate</a> on a MacBook Pro running OS X 10.7.2 Lion and tested on the same machine running <a href="http://mamp.info/en/index.html">MAMP</a> (Mac/Apache/MySQL/PHP) before being let loose on the author\'s <a href="http://www.vicchi.org/">blog</a>.')
+		. __('For the inner nerd in you, the latest version of WP Biographia was written using <a href="http://macromates.com/">TextMate</a> on a MacBook Pro running OS X 10.7.2 Lion and tested on the same machine running <a href="http://mamp.info/en/index.html">MAMP</a> (Mac/Apache/MySQL/PHP) before being let loose on the author\'s <a href="http://www.vicchi.org/">blog</a>.', 'wp-biographia')
 		. '<p>';
 
 	$content .= '<p>'
-		. __('The official home for WP Biographia is on <a href="http://www.vicchi.org/codeage/wp-biographia/">Gary\'s Codeage</a>; it\'s also available from the official <a href="http://wordpress.org/extend/plugins/wp-biographia/">WordPress plugins repository</a>. If you\'re interested in what lies under the hood, the code is also on <a href="https://github.com/vicchi/wp-biographia">GitHub</a> to download, fork and otherwise hack around.')
+		. __('The official home for WP Biographia is on <a href="http://www.vicchi.org/codeage/wp-biographia/">Gary\'s Codeage</a>; it\'s also available from the official <a href="http://wordpress.org/extend/plugins/wp-biographia/">WordPress plugins repository</a>. If you\'re interested in what lies under the hood, the code is also on <a href="https://github.com/vicchi/wp-biographia">GitHub</a> to download, fork and otherwise hack around.', 'wp-biographia')
 		. '<p>';
 	
 	$content .= '<p>'
-		. __('WP Biographia is named after the etymology of the modern English word <em>biography</em>. The word first appeared in the 1680s, probably from the latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, meaning "life" and <em>graphia</em>, meaning "record" or "account" which derived from <em>graphein</em>, "to write".')
+		. __('WP Biographia is named after the etymology of the modern English word <em>biography</em>. The word first appeared in the 1680s, probably from the latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, meaning "life" and <em>graphia</em>, meaning "record" or "account" which derived from <em>graphein</em>, "to write".', 'wp-biographia')
 		. '</p>';
 	
 	$content .= '<p><small>Dictionary.com, "biography," in <em>Online Etymology Dictionary</em>. Source location: Douglas Harper, Historian. <a href="http://dictionary.reference.com/browse/biography">http://dictionary.reference.com/browse/biography</a>. Available: <a href="http://dictionary.reference.com">http://dictionary.reference.com</a>. Accessed: July 27, 2011.</small></p>';
 
-	return wp_biographia_postbox ('wp-biographia-colophon', __('Colophon'), $content);
+	return wp_biographia_postbox ('wp-biographia-colophon', __('Colophon', 'wp-biographia'), $content);
 }
 
 /*
@@ -350,36 +350,36 @@ function wp_biographia_show_help_and_support() {
 	$email_address = antispambot ("gary@vicchi.org");
 	
 	$content = '<p>'
-		. __('For help and support with WP Biographia, here\'s what you can do:')
+		. __('For help and support with WP Biographia, here\'s what you can do:', 'wp-biographia')
 		. '<ul>'
 		. '<li>'
-		. __('Ask a question on the <a href="http://wordpress.org/tags/wp-biographia?forum_id=10">WordPress support forum</a>; this is by far the best way so that other users can follow the conversation.')
+		. __('Ask a question on the <a href="http://wordpress.org/tags/wp-biographia?forum_id=10">WordPress support forum</a>; this is by far the best way so that other users can follow the conversation.', 'wp-biographia')
 		. '</li>'
 		. '<li>'
-		. __('Ask me a question on Twitter; I\'m <a href="http://twitter.com/vicchi">@vicchi</a>.')
+		. __('Ask me a question on Twitter; I\'m <a href="http://twitter.com/vicchi">@vicchi</a>.', 'wp-biographia')
 		. '</li>'
 		. '<li>'
-		. sprintf (__('Drop me an <a href="mailto:%s">email </a>instead.'), $email_address)
+		. sprintf (__('Drop me an <a href="mailto:%s">email </a>instead.', 'wp-biographia'), $email_address)
 		. '</li>'
 		. '</ul>'
 		. '</p>'
 		. '<p>'
-		. __('But help and support is a two way street; here\'s what you might want to do:')
+		. __('But help and support is a two way street; here\'s what you might want to do:', 'wp-biographia')
 		. '<ul>'
 		. '<li>'
-		. sprintf (__('If you like this plugin and use it on your WordPress site, or if you write about it online, <a href="http://www.vicchi.org/codeage/wp-biographia/">link to the plugin</a> and drop me an <a href="mailto:%s">email</a> telling me about this.'), $email_address)
+		. sprintf (__('If you like this plugin and use it on your WordPress site, or if you write about it online, <a href="http://www.vicchi.org/codeage/wp-biographia/">link to the plugin</a> and drop me an <a href="mailto:%s">email</a> telling me about this.', 'wp-biographia'), $email_address)
 		. '</li>'
 		. '<li>'
-		. __('Rate the plugin on the <a href="http://wordpress.org/extend/plugins/wp-biographia/">WordPress plugin repository</a>.')
+		. __('Rate the plugin on the <a href="http://wordpress.org/extend/plugins/wp-biographia/">WordPress plugin repository</a>.', 'wp-biographia')
 		. '</li>'
 		. '<li>'
-		. __('WP Biographia is both free as in speech and free as in beer. No donations are required; <a href="http://www.vicchi.org/codeage/donate/">here\'s why</a>.')
+		. __('WP Biographia is both free as in speech and free as in beer. No donations are required; <a href="http://www.vicchi.org/codeage/donate/">here\'s why</a>.', 'wp-biographia')
 		. '</li>'
 		. '</ul>'
 		. '</p>';
 
 	return wp_biographia_postbox ('wp-biographia-support',
-		__('Help &amp; Support'), $content);
+		__('Help &amp; Support', 'wp-biographia'), $content);
 }
 
 /*
@@ -388,11 +388,11 @@ function wp_biographia_show_help_and_support() {
 
 function wp_biographia_show_acknowledgements() {
 	$content = '<p>'
-		. __('WP Biographia is inspired by and based on <a href="http://www.jonbishop.com">Jon Bishop\'s</a> <a href="http://wordpress.org/extend/plugins/wp-about-author/">WP About Author</a> plugin. Thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place. Jon\'s written other <a href="http://profiles.wordpress.org/users/JonBishop/">WordPress plugins</a> as well; you should take a look.')
+		. __('WP Biographia is inspired by and based on <a href="http://www.jonbishop.com">Jon Bishop\'s</a> <a href="http://wordpress.org/extend/plugins/wp-about-author/">WP About Author</a> plugin. Thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place. Jon\'s written other <a href="http://profiles.wordpress.org/users/JonBishop/">WordPress plugins</a> as well; you should take a look.', 'wp-biographia')
 		. '</p>';
 
 	return wp_biographia_postbox ('wo-biographia-acknowledgements',
-		__('Acknowledgements'), $content);
+		__('Acknowledgements', 'wp-biographia'), $content);
 }
 
 /*
@@ -422,37 +422,37 @@ function wp_biographia_general_settings() {
  	 * Biography Box Display Settings
  	 */
 	
-	$display_settings .= '<p><strong>' . __("Display On Front Page") . '</strong><br /> 
+	$display_settings .= '<p><strong>' . __("Display On Front Page", 'wp-biographia') . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_front" ' .checked($wp_biographia_settings['wp_biographia_display_front'], 'on', false) . ' />
-				<small>' . __('Displays the Biography Box for each post on the front page.') . '</small></p>';
+				<small>' . __('Displays the Biography Box for each post on the front page.', 'wp-biographia') . '</small></p>';
 
 	
-	$display_settings .= '<p><strong>' . __("Display On Individual Posts") . '</strong><br /> 
+	$display_settings .= '<p><strong>' . __("Display On Individual Posts", 'wp-biographia') . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_posts" ' .checked($wp_biographia_settings['wp_biographia_display_posts'], 'on', false) . ' />
-				<small>' . __('Displays the Biography Box for individual posts.') . '</small></p>';
+				<small>' . __('Displays the Biography Box for individual posts.', 'wp-biographia') . '</small></p>';
 
 	// Archives -> Post Archives
-	$display_settings .= '<p><strong>' . __("Display In Post Archives") . '</strong><br /> 
+	$display_settings .= '<p><strong>' . __("Display In Post Archives", 'wp-biographia') . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_archives" ' .checked($wp_biographia_settings['wp_biographia_display_archives'], 'on', false) . ' />
-				<small>' . __('Displays the Biography Box for each post on archive pages.') . '</small></p>';	
+				<small>' . __('Displays the Biography Box for each post on archive pages.', 'wp-biographia') . '</small></p>';	
 
 	// Add Post ID Exclusion
-	$display_settings .= '<p><strong>' . __("Exclude From Single Posts (via Post ID)") . '</strong><br />
+	$display_settings .= '<p><strong>' . __("Exclude From Single Posts (via Post ID)", 'wp-biographia') . '</strong><br />
 			<input type="text" name="wp_biographia_post_exclusions" id="wp_biographia_post_exclusions" value="'.$wp_biographia_settings['wp_biographia_post_exclusions'].'" /><br />
-			<small>' . __('Suppresses the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to suppress, comma separated with no spaces, e.g. 54,33,55') . '</small></p>';
+			<small>' . __('Suppresses the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to suppress, comma separated with no spaces, e.g. 54,33,55', 'wp-biographia') . '</small></p>';
 
-	$display_settings .= '<p><strong>' . __("Globally Exclude From Posts (via Post ID)") . '</strong><br />
+	$display_settings .= '<p><strong>' . __("Globally Exclude From Posts (via Post ID)", 'wp-biographia') . '</strong><br />
 		<input type="text" name="wp_biographia_global_post_exclusions" id="wp_biographia_global_post_exclusions" value="' . $wp_biographia_settings['wp_biographia_global_post_exclusions'] . '" /><br />
-		<small>' . __('Suppresses the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.') . '</small></p>';
+		<small>' . __('Suppresses the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
 		
-	$display_settings .= '<p><strong>' . __("Display On Individual Pages") . '</strong><br /> 
+	$display_settings .= '<p><strong>' . __("Display On Individual Pages", 'wp-biographia') . '</strong><br /> 
 				<input type="checkbox" name="wp_biographia_display_pages" ' .checked($wp_biographia_settings['wp_biographia_display_pages'], 'on', false) . ' />
-				<small>' . __('Displays the Biography Box for individual pages.') . '</small></p>';
+				<small>' . __('Displays the Biography Box for individual pages.', 'wp-biographia') . '</small></p>';
 
 	// Add Page ID Exclusion
-	$display_settings .= '<p><strong>' . __("Exclude Pages (via Page ID)") . '</strong><br />
+	$display_settings .= '<p><strong>' . __("Exclude Pages (via Page ID)", 'wp-biographia') . '</strong><br />
 		<input type="text" name="wp_biographia_page_exclusions" id="wp_biographia_page_exclusions" value="'.$wp_biographia_settings['wp_biographia_page_exclusions'].'" /><br />
-		<small>' . __('Suppresses the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to suppress, comma separated with no spaces, e.g. 54,33,55.') . '</small></p>';
+		<small>' . __('Suppresses the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
 	
 
 	// Add Custom Post Types for Single & Archives
@@ -466,22 +466,22 @@ function wp_biographia_general_settings() {
 	$pts = get_post_types ($args, 'objects');
 
 	foreach ($pts as $pt) {
-		$display_settings .= '<p><strong>' . sprintf (__('Display On Individual %s'), $pt->labels->name) . '</strong><br /> 
+		$display_settings .= '<p><strong>' . sprintf (__('Display On Individual %s', 'wp-biographia'), $pt->labels->name) . '</strong><br /> 
 					<input type="checkbox" name="wp_biographia_display_'.$pt->name.'" ' .checked($wp_biographia_settings['wp_biographia_display_'.$pt->name], 'on', false) . ' />
-					<small>' . sprintf (__('Displays the Biography Box on individual instances of custom post type %s.'), $pt->labels->name) . '</small></p>';
+					<small>' . sprintf (__('Displays the Biography Box on individual instances of custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';
 
-		$display_settings .= '<p><strong>' . sprintf (__('Display In %s Archives'), $pt->labels->singular_name) . '</strong><br /> 
+		$display_settings .= '<p><strong>' . sprintf (__('Display In %s Archives', 'wp-biographia'), $pt->labels->singular_name) . '</strong><br /> 
 					<input type="checkbox" name="wp_biographia_display_archives_'.$pt->name.'" ' .checked($wp_biographia_settings['wp_biographia_display_archives_'.$pt->name], 'on', false) . ' />
-					<small>' . sprintf (__('Displays the Biography Box on archive pages for custom post type %s.'), $pt->labels->name) . '</small></p>';	
+					<small>' . sprintf (__('Displays the Biography Box on archive pages for custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';	
 
-		$display_settings .= '<p><strong>' . sprintf (__('Exclude From Single %1$s (via %2$s ID)'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
+		$display_settings .= '<p><strong>' . sprintf (__('Exclude From Single %1$s (via %2$s ID)', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
 			<input type="text" name="wp_biographia_'.$pt->name.'_exclusions" id="wp_biographia_'.$pt->name.'_exclusions" value="'.$wp_biographia_settings['wp_biographia_'.$pt->name.'_exclusions'].'" /><br />
-			<small>' . sprintf (__('Suppresses the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.'), $pt->labels->singular_name, $pt->labels->singular_name) . '</small></p>';
+			<small>' . sprintf (__('Suppresses the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name) . '</small></p>';
 
 
-		$display_settings .= '<p><strong>' . sprintf (__('Globally Exclude From %1$s (via %2$s ID).'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
+		$display_settings .= '<p><strong>' . sprintf (__('Globally Exclude From %1$s (via %2$s ID).', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
 			<input type="text" name="wp_biographia_global_' . $pt->name . '_exclusions" id="wp_biographia_global_' . $pt->name . '_exclusions" value="' . $wp_biographia_settings['wp_biographia_global_' . $pt->name . '_exclusions'] . '" /><br />
-			<small>' . sprintf (__('Suppresses the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.'), $pt->labels->singular_name, $pt->labels->singular_name)  . '</small></p>';
+			<small>' . sprintf (__('Suppresses the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name)  . '</small></p>';
 	}
 
 	$wp_biographia_settings['wp_biographia_display_location'] = (
@@ -489,17 +489,17 @@ function wp_biographia_general_settings() {
 		 $wp_biographia_settings['wp_biographia_display_location'] : 'bottom';
 
 	// Add Display Location: Top/Bottom
-	$display_settings .= '<p><strong>' . __("Display Location") . '</strong><br />
+	$display_settings .= '<p><strong>' . __("Display Location", 'wp-biographia') . '</strong><br />
 		<input type="radio" name="wp_biographia_display_location" id="wp-biographia-content-name" value="top" '
 		. checked ($wp_biographia_settings['wp_biographia_display_location'], 'top', false)
-		.' />&nbsp;' . __('Display the Biography Box before the post or page content') . '<br />
+		.' />&nbsp;' . __('Display the Biography Box before the post or page content', 'wp-biographia') . '<br />
 		<input type="radio" name="wp_biographia_display_location" id="wp-biographia-content-name" value="bottom" '
 		. checked ($wp_biographia_settings['wp_biographia_display_location'], 'bottom', false)
-		. ' />&nbsp;' . __('Display the Biography Box after the post or page content') . '<br />';
+		. ' />&nbsp;' . __('Display the Biography Box after the post or page content', 'wp-biographia') . '<br />';
     
-	$display_settings .= '<p><strong>' . __("Display In RSS Feeds") . '</strong><br />
+	$display_settings .= '<p><strong>' . __("Display In RSS Feeds", 'wp-biographia') . '</strong><br />
 				<input type="checkbox" name="wp_biographia_display_feed" ' .checked($wp_biographia_settings['wp_biographia_display_feed'], 'on', false) . ' />
-				<small>' . __('Displays the Biography Box in feeds for each entry.') . '</small></p>';
+				<small>' . __('Displays the Biography Box in feeds for each entry.', 'wp-biographia') . '</small></p>';
 
 	/*
 	 * Biography Box User Settings
@@ -534,9 +534,9 @@ function wp_biographia_general_settings() {
 		}
 	}
 
-	$user_settings .= '<p><strong>' . __('Per User Suppression Of The Biography Box On Posts') . '</strong><br />';
+	$user_settings .= '<p><strong>' . __('Per User Suppression Of The Biography Box On Posts', 'wp-biographia') . '</strong><br />';
 	$user_settings .= '<span class="wp-biographia-users">';
-	$user_settings .= '<strong>' . __('Enabled Users') . '</strong><br />';
+	$user_settings .= '<strong>' . __('Enabled Users', 'wp-biographia') . '</strong><br />';
 	$user_settings .= '<select multiple id="wp-biographia-enabled-post-users" name="wp-biographia-enabled-post-users[]">';
 
 	foreach ($post_enabled as $user_id => $user_login) {
@@ -544,10 +544,10 @@ function wp_biographia_general_settings() {
 	}
 
 	$user_settings .= '</select>';
-	$user_settings .= '<a href="#" id="wp-biographia-user-post-add">' . __('Add') . ' &raquo;</a>';
+	$user_settings .= '<a href="#" id="wp-biographia-user-post-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
 	$user_settings .= '</span>';
 	$user_settings .= '<span class="wp-biographia-users">';
-	$user_settings .= '<strong>' . __('Suppressed Users') . '</strong><br />';
+	$user_settings .= '<strong>' . __('Suppressed Users', 'wp-biographia') . '</strong><br />';
 	$user_settings .= '<select multiple id="wp-biographia-suppressed-post-users" name="wp-biographia-suppressed-post-users[]">';
 
 	foreach ($post_suppressed as $user_id => $user_login) {
@@ -555,14 +555,14 @@ function wp_biographia_general_settings() {
 	}
 
 	$user_settings .= '</select>';
-	$user_settings .= '<a href="#" id="wp-biographia-user-post-rem">&laquo; ' . __('Remove') . '</a>';
+	$user_settings .= '<a href="#" id="wp-biographia-user-post-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>';
 	$user_settings .= '</span>';
 	$user_settings .= '<br />';
-	$user_settings .= '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored posts. Selecting a user for suppression of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.') . '</small></div></p>';
+	$user_settings .= '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored posts. Selecting a user for suppression of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
 
-	$user_settings .= '<p><strong>' . __('Per User Suppression Of The Biography Box On Pages') . '</strong><br />';
+	$user_settings .= '<p><strong>' . __('Per User Suppression Of The Biography Box On Pages', 'wp-biographia') . '</strong><br />';
 	$user_settings .= '<span class="wp-biographia-users">';
-	$user_settings .= '<strong>' . __('Enabled Users') . '</strong><br />';
+	$user_settings .= '<strong>' . __('Enabled Users', 'wp-biographia') . '</strong><br />';
 	$user_settings .= '<select multiple id="wp-biographia-enabled-page-users" name="wp-biographia-enabled-page-users[]">';
 
 	foreach ($page_enabled as $user_id => $user_login) {
@@ -570,10 +570,10 @@ function wp_biographia_general_settings() {
 	}
 
 	$user_settings .= '</select>';
-	$user_settings .= '<a href="#" id="wp-biographia-user-page-add">' . __('Add') . ' &raquo;</a>';
+	$user_settings .= '<a href="#" id="wp-biographia-user-page-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
 	$user_settings .= '</span>';
 	$user_settings .= '<span class="wp-biographia-users">';
-	$user_settings .= '<strong>' . __('Suppressed Users') . '</strong><br />';
+	$user_settings .= '<strong>' . __('Suppressed Users', 'wp-biographia') . '</strong><br />';
 	$user_settings .= '<select multiple id="wp-biographia-suppressed-page-users" name="wp-biographia-suppressed-page-users[]">';
 
 	foreach ($page_suppressed as $user_id => $user_login) {
@@ -581,66 +581,66 @@ function wp_biographia_general_settings() {
 	}
 
 	$user_settings .= '</select>';
-	$user_settings .= '<a href="#" id="wp-biographia-user-page-rem">&laquo; ' . __('Remove') . '</a>
+	$user_settings .= '<a href="#" id="wp-biographia-user-page-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>
 </span>';
 	$user_settings .= '<br />';
-	$user_settings .= '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.') . '</small></div></p>';
+	$user_settings .= '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
 	
 	/*
 	 * Biography Box Style Settings
 	 */
 	
-	$style_settings .= '<p><strong>' . __("Box Background Color") . '</strong><br /> 
+	$style_settings .= '<p><strong>' . __("Box Background Color", 'wp-biographia') . '</strong><br /> 
 				<input type="text" name="wp_biographia_style_bg" id="background-color" value="' . $wp_biographia_settings['wp_biographia_style_bg'] . '" />
-				<a class="hide-if-no-js" href="#" id="pickcolor">' . __('Select a Color') . '</a>
+				<a class="hide-if-no-js" href="#" id="pickcolor">' . __('Select a Color', 'wp-biographia') . '</a>
 				<div id="colorPickerDiv" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div>
-				<small>' . __('By default, the background color of the Biography Box is a yellowish tone.') . '</small></p>';
-	$style_settings .= '<p><strong>' . __("Box Border") . '</strong><br /> 
+				<small>' . __('By default, the background color of the Biography Box is a yellowish tone.', 'wp-biographia') . '</small></p>';
+	$style_settings .= '<p><strong>' . __("Box Border", 'wp-biographia') . '</strong><br /> 
                 <select name="wp_biographia_style_border">
-                  <option value="top" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'top', false) . '>' . __('Thick Top Border') . '</option>
-                  <option value="around" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'around', false) . '>' . __('Thin Surrounding Border') . '</option>
-                  <option value="none" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'none', false) . '>' . __('No Border') . '</option>
-                </select><br /><small>' . __('By default, a thick black line is displayed above the Biography Box.') . '</small></p>';
+                  <option value="top" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'top', false) . '>' . __('Thick Top Border', 'wp-biographia') . '</option>
+                  <option value="around" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'around', false) . '>' . __('Thin Surrounding Border', 'wp-biographia') . '</option>
+                  <option value="none" ' .selected($wp_biographia_settings['wp_biographia_style_border'], 'none', false) . '>' . __('No Border', 'wp-biographia') . '</option>
+                </select><br /><small>' . __('By default, a thick black line is displayed above the Biography Box.', 'wp-biographia') . '</small></p>';
 
 	/*
 	 * Biography Box Content Settings
 	 */
 	
-	$content_settings .= '<p><strong>' . __("Biography Prefix") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Biography Prefix", 'wp-biographia') . '</strong><br />
 		<input type="text" name="wp_biographia_content_prefix" id="wp-biographia-content-name" value="'
 		. $wp_biographia_settings["wp_biographia_content_prefix"]
 		. '" /><br />
-		<small>' . __('Prefix text to be prepended to the author\'s name') . '</small></p>';
+		<small>' . __('Prefix text to be prepended to the author\'s name', 'wp-biographia') . '</small></p>';
 
-	$content_settings .= '<p><strong>' . __("Author's Name") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Author's Name", 'wp-biographia') . '</strong><br />
 		<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="first-last-name" '
 		. checked ($wp_biographia_settings['wp_biographia_content_name'], 'first-last-name', false)
-		.' />&nbsp;' . __('First/Last Name') . '<br />
+		.' />&nbsp;' . __('First/Last Name', 'wp-biographia') . '<br />
 		<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="account-name" '
 		. checked ($wp_biographia_settings['wp_biographia_content_name'], 'account-name', false)
-		. ' />&nbsp;' . __('Account Name') . '<br />
+		. ' />&nbsp;' . __('Account Name', 'wp-biographia') . '<br />
 		<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="nickname" '
 		. checked ($wp_biographia_settings['wp_biographia_content_name'], 'nickname', false)
-		. ' />&nbsp;' . __('Nickname') . '<br />
+		. ' />&nbsp;' . __('Nickname', 'wp-biographia') . '<br />
 		<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="display-name" '
 		. checked ($wp_biographia_settings['wp_biographia_content_name'], 'display-name', false)
-		. ' />&nbsp;' . __('Display Name') . '<br />
+		. ' />&nbsp;' . __('Display Name', 'wp-biographia') . '<br />
 		<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="none" '
 		. checked ($wp_biographia_settings['wp_biographia_content_name'], 'none', false)
-		. ' />&nbsp;' . __('Don\'t Show The Name') . '<br />
-		<small>' . __('How you want to see the author\'s name displayed (if at all)') . '</small></p>';
+		. ' />&nbsp;' . __('Don\'t Show The Name', 'wp-biographia') . '<br />
+		<small>' . __('How you want to see the author\'s name displayed (if at all)', 'wp-biographia') . '</small></p>';
 
 	if (!$avatars_enabled) {
 		$content_settings .= '<div class="wp-biographia-warning">'
-			. sprintf (__('It looks like Avatars are not currently enabled; this means that the author\'s image won\'t be able to be displayed. If you want this to happen then go to <a href="%s">Settings &rsaquo; Discussions</a> and set Avatar Display to Show Avatars.'), admin_url('options-discussion.php')) . '</div>';
+			. sprintf (__('It looks like Avatars are not currently enabled; this means that the author\'s image won\'t be able to be displayed. If you want this to happen then go to <a href="%s">Settings &rsaquo; Discussions</a> and set Avatar Display to Show Avatars.', 'wp-biographia'), admin_url('options-discussion.php')) . '</div>';
 	}
 	
-	$content_settings .= '<p><strong>' . __("Author's Image") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Author's Image", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_image" '
 		. checked ($wp_biographia_settings['wp_biographia_content_image'], 'on', false)
 		. disabled ($avatars_enabled, false, false)
 		. '/>
-		<small>' . __('Display the author\'s image?') . '</small></p>';
+		<small>' . __('Display the author\'s image?', 'wp-biographia') . '</small></p>';
 
 	if (!isset ($wp_biographia_settings['wp_biographia_content_image_size']) ||
 			$wp_biographia_settings['wp_biographia_content_image_size'] === '' ||
@@ -652,102 +652,102 @@ function wp_biographia_general_settings() {
 		$image_size = $wp_biographia_settings['wp_biographia_content_image_size'];
 	}
 
-	$content_settings .= '<p><strong>' . __("Image Size") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Image Size", 'wp-biographia') . '</strong><br />
 		<input type="text" name="wp_biographia_content_image_size" id="wp_biographia_content_image_size" value="'. $image_size .'"'
 		. disabled ($avatars_enabled, false, false)
 		. '/><br />'
-		. '<small>' . __('Enter image size, e.g. 32 for a 32x32 image, 70 for a 70x70 image, etc. Defaults to a 100x100 size image.') . '</small></p>';
-	$content_settings .= '<p><strong>' . __("Show Author's Biography") . '</strong><br />
+		. '<small>' . __('Enter image size, e.g. 32 for a 32x32 image, 70 for a 70x70 image, etc. Defaults to a 100x100 size image.', 'wp-biographia') . '</small></p>';
+	$content_settings .= '<p><strong>' . __("Show Author's Biography", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_bio" '
 		. checked ($wp_biographia_settings['wp_biographia_content_bio'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s biography?') . '</small></p>';
+		<small>' . __('Display the author\'s biography?', 'wp-biographia') . '</small></p>';
 
-	$content_settings .= '<p><strong>' . __("Show Author's Email Address") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's Email Address", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_email" '
 		. checked ($wp_biographia_settings['wp_biographia_content_email'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s email address?') . '</small></p>';
+		<small>' . __('Display the author\'s email address?', 'wp-biographia') . '</small></p>';
 
 
-	$content_settings .= '<p><strong>' . __("Show Author's Website Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's Website Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_web" '
 		. checked ($wp_biographia_settings['wp_biographia_content_web'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s website details?') . '</small></p>';
+		<small>' . __('Display the author\'s website details?', 'wp-biographia') . '</small></p>';
 
-	$content_settings .= '<p><strong>' . __("Show Author's Twitter Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's Twitter Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_twitter" '
 		. checked ($wp_biographia_settings['wp_biographia_content_twitter'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s Twitter details?') . '</small></p>';
+		<small>' . __('Display the author\'s Twitter details?', 'wp-biographia') . '</small></p>';
 	
-	$content_settings .= '<p><strong>' . __("Show Author's Facebook Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's Facebook Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_facebook" '
 		. checked ($wp_biographia_settings['wp_biographia_content_facebook'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s Facebook details?') . '</small></p>';
+		<small>' . __('Display the author\'s Facebook details?', 'wp-biographia') . '</small></p>';
 
-	$content_settings .= '<p><strong>' . __("Show Author's LinkedIn Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's LinkedIn Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_linkedin" '
 		. checked ($wp_biographia_settings['wp_biographia_content_linkedin'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s LinkedIn details?') . '</small></p>';
+		<small>' . __('Display the author\'s LinkedIn details?', 'wp-biographia') . '</small></p>';
 
-	$content_settings .= '<p><strong>' . __("Show Author's Google+ Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's Google+ Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_googleplus" '
 		. checked ($wp_biographia_settings['wp_biographia_content_googleplus'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s Google+ details?') . '</small></p>';
+		<small>' . __('Display the author\'s Google+ details?', 'wp-biographia') . '</small></p>';
 
-	$content_settings .= '<p><strong>' . __("Show Author's Delicious Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's Delicious Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_delicious" '
 		. checked ($wp_biographia_settings['wp_biographia_content_delicious'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s Delicious details?') . '</small></p>';
+		<small>' . __('Display the author\'s Delicious details?', 'wp-biographia') . '</small></p>';
 
-	$content_settings .= '<p><strong>' . __("Show Author's Flickr Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's Flickr Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_flickr" '
 		. checked ($wp_biographia_settings['wp_biographia_content_flickr'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s Flickr details?') . '</small></p>';
+		<small>' . __('Display the author\'s Flickr details?', 'wp-biographia') . '</small></p>';
 
-	$content_settings .= '<p><strong>' . __("Show Author's Picasa Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's Picasa Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_picasa" '
 		. checked ($wp_biographia_settings['wp_biographia_content_picasa'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s Picasa details?') . '</small></p>';
+		<small>' . __('Display the author\'s Picasa details?', 'wp-biographia') . '</small></p>';
 
-	$content_settings .= '<p><strong>' . __("Show Author's Vimeo Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's Vimeo Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_vimeo" '
 		. checked ($wp_biographia_settings['wp_biographia_content_vimeo'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s Vimeo details?' ) . '</small></p>';
+		<small>' . __('Display the author\'s Vimeo details?' , 'wp-biographia') . '</small></p>';
 
-	$content_settings .= '<p><strong>' . __("Show Author's YouTube Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's YouTube Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_youtube" '
 		. checked ($wp_biographia_settings['wp_biographia_content_youtube'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s YouTube details?') . '</small></p>';
+		<small>' . __('Display the author\'s YouTube details?', 'wp-biographia') . '</small></p>';
 
-	$content_settings .= '<p><strong>' . __("Show Author's Reddit Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show Author's Reddit Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_reddit" '
 		. checked ($wp_biographia_settings['wp_biographia_content_reddit'], 'on', false)
 		. '/>
-		<small>' . __('Display the author\'s Reddit details?') . '</small></p>';
+		<small>' . __('Display the author\'s Reddit details?', 'wp-biographia') . '</small></p>';
 
 	
-	$content_settings .= '<p><strong>' . __("Show More Posts Link") . '</strong><br />
+	$content_settings .= '<p><strong>' . __("Show More Posts Link", 'wp-biographia') . '</strong><br />
 		<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="basic" '
 		. checked ($wp_biographia_settings['wp_biographia_content_posts'], 'basic', false)
-		. ' />&nbsp;' . __('Basic More Posts Link') . '<br />
+		. ' />&nbsp;' . __('Basic More Posts Link', 'wp-biographia') . '<br />
 		<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="extended" '
 		. checked ($wp_biographia_settings['wp_biographia_content_posts'], 'extended', false)
-		. ' />&nbsp;' . __('Extended More Posts Link') . '<br />
+		. ' />&nbsp;' . __('Extended More Posts Link', 'wp-biographia') . '<br />
 		<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="none" '
 		. checked ($wp_biographia_settings['wp_biographia_content_posts'], 'none', false)
-		. ' />&nbsp;' . __('Don\'t Show The More Posts Link') . '<br />
-		<small>' . __('How you want to display and format the <em>More Posts By This Author</em> link') . '</small></p>';
+		. ' />&nbsp;' . __('Don\'t Show The More Posts Link', 'wp-biographia') . '<br />
+		<small>' . __('How you want to display and format the <em>More Posts By This Author</em> link', 'wp-biographia') . '</small></p>';
 
 	/*
 	 * Biography Box Experimental Settings
@@ -782,22 +782,22 @@ function wp_biographia_general_settings() {
 	}
 
 	$wrapped_content .= wp_biographia_postbox ('wp-biographia-display-settings',
-		__('Biography Box Display Settings'), $display_settings);
+		__('Biography Box Display Settings', 'wp-biographia'), $display_settings);
 
 	$wrapped_content .= wp_biographia_postbox ('wp-biographia-user-settings',
-		__('Biography Box Per User Settings'), $user_settings);
+		__('Biography Box Per User Settings', 'wp-biographia'), $user_settings);
 	
 	$wrapped_content .= wp_biographia_postbox ('wp-biographia-style-settings',
-		__('Biography Box Style Settings'), $style_settings);
+		__('Biography Box Style Settings', 'wp-biographia'), $style_settings);
 
 	$wrapped_content .= wp_biographia_postbox ('wp-biographia-settings-content',
-		__('Biography Box Content Settings'), $content_settings);
+		__('Biography Box Content Settings', 'wp-biographia'), $content_settings);
 
 /*
  *	$wrapped_content .= wp_biographia_postbox ('wp-biographia-settings-beta', 'Biography Box Experimental Settings', $beta_settings);
  */	
 
-	wp_biographia_admin_wrap (__('WP Biographia Settings And Options'), $wrapped_content);
+	wp_biographia_admin_wrap (__('WP Biographia Settings And Options', 'wp-biographia'), $wrapped_content);
 }
 
 /*
@@ -981,7 +981,7 @@ function wp_biographia_process_settings() {
 			*/
 			
 			echo "<div id=\"updatemessage\" class=\"updated fade\"><p>";
-			_e('WP Biographia Settings And Options Updated.');
+			_e('WP Biographia Settings And Options Updated.', 'wp-biographia');
 			echo "</p></div>\n";
 			echo "<script type=\"text/javascript\">setTimeout(function(){jQuery('#updatemessage').hide('slow');}, 3000);</script>";	
 			
@@ -1000,8 +1000,8 @@ function wp_biographia_process_settings() {
 
 function wp_biographia_add_options_subpanel() {
 	if (function_exists ('add_options_page')) {
-		$page_title = __('WP Biographia');
-		$menu_title = __('WP Biographia');
+		$page_title = __('WP Biographia', 'wp-biographia');
+		$menu_title = __('WP Biographia', 'wp-biographia');
 		add_options_page ($page_title, $menu_title, 'manage_options', __FILE__,
 			'wp_biographia_general_settings');
 	}
@@ -1012,7 +1012,7 @@ function wp_biographia_add_options_subpanel() {
  */
 
 function wp_biographia_postbox($id, $title, $content) {
-	$handle_title = __('Click to toggle');
+	$handle_title = __('Click to toggle', 'wp-biographia');
 	
 	$postbox_wrap = "";
 	$postbox_wrap .= '<div id="' . $id . '" class="postbox">';
@@ -1042,7 +1042,7 @@ function wp_biographia_admin_wrap($title, $content) {
                         echo $content;
                     ?>
                     <p class="submit"> 
-                        <input type="submit" name="wp_biographia_option_submitted" class="button-primary" value="Save Changes" /> 
+                        <input type="submit" name="wp_biographia_option_submitted" class="button-primary" value="<?php __('Save Changes', 'wp-biographia')?>" /> 
                     </p> 
                     <br /><br />
                     </div>
@@ -1069,18 +1069,18 @@ function wp_biographia_add_profile_extensions($user) {
 	<h3>Biography Box</h3>
 	<table class="form-table">
 		<tr>
-			<th scope="row"><?php __('Suppress From Posts')?></th>
+			<th scope="row"><?php __('Suppress From Posts', 'wp-biographia')?></th>
 			<td>
 				<label for="wp_biographia_suppress_posts">
-					<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php __('Don\'t show the Biography Box on your posts')?>
+					<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php __('Don\'t show the Biography Box on your posts', 'wp-biographia')?>
 				</label>
 			</td>
 		</tr>
 		<tr>
-			<th scope="row"><?php __('Suppress From Pages')?></th>
+			<th scope="row"><?php __('Suppress From Pages', 'wp-biographia')?></th>
 			<td>
 				<label for="wp_biographia_suppress_pages">
-					<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php __('Don\'t show the Biography Box on your pages')?>
+					<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php __('Don\'t show the Biography Box on your pages', 'wp-biographia')?>
 				</label>
 			</td>
 		</tr>
@@ -1097,7 +1097,7 @@ function wp_biographia_save_profile_extensions($user_id) {
 
 function wp_biographia_settings_link($links) {
 	$settings_link = '<a href="options-general.php?page=wp-biographia/includes/wp-biographia-admin.php">'
-		. __('Settings')
+		. __('Settings', 'wp-biographia')
 		. '</a>';
 	array_unshift ($links, $settings_link);
 	return $links;
