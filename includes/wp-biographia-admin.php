@@ -305,6 +305,10 @@ function wp_biographia_upgrade() {
 
 			case '221':
 			case '23':
+			case '24':
+				if (!isset ($wp_biographia_settings['wp_biographia_content_authorpage'])) {
+					$wp_biographia_settings["wp_biographia_content_authorpage"] = "on";
+				}
 				$wp_biographia_settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
 				$upgrade_settings = true;
 				
@@ -629,6 +633,12 @@ function wp_biographia_general_settings() {
 		. checked ($wp_biographia_settings['wp_biographia_content_name'], 'none', false)
 		. ' />&nbsp;' . __('Don\'t Show The Name', 'wp-biographia') . '<br />
 		<small>' . __('How you want to see the author\'s name displayed (if at all)', 'wp-biographia') . '</small></p>';
+		
+	$content_settings .= '<p><strong>' . __('Author\'s Name Link', 'wp-biographia') . '</strong><br/>
+		<input type="checkbox" name="wp_biographia_content_authorpage" '
+		.checked ($wp_biographia_settings['wp_biographia_content_authorpage'], 'on', false)
+		. '/>
+		<small>' . __('Make author\'s name link to <em>More Posts By This Author</em>', 'wp_biographia') . '</small></p>';
 
 	if (!$avatars_enabled) {
 		$content_settings .= '<div class="wp-biographia-warning">'
@@ -921,6 +931,9 @@ function wp_biographia_process_settings() {
 
 			$wp_biographia_settings['wp_biographia_content_name'] = 
 				wp_biographia_option ('wp_biographia_content_name');
+				
+			$wp_biographia_settings['wp_biographia_content_authorpage'] =
+				wp_biographia_option ('wp_biographia_content_authorpage');
 
 			$wp_biographia_settings['wp_biographia_content_image'] = 
 				wp_biographia_option ('wp_biographia_content_image');
@@ -1042,7 +1055,7 @@ function wp_biographia_admin_wrap($title, $content) {
                         echo $content;
                     ?>
                     <p class="submit"> 
-                        <input type="submit" name="wp_biographia_option_submitted" class="button-primary" value="<?php __('Save Changes', 'wp-biographia')?>" /> 
+                        <input type="submit" name="wp_biographia_option_submitted" class="button-primary" value="<?php _e('Save Changes', 'wp-biographia')?>" /> 
                     </p> 
                     <br /><br />
                     </div>

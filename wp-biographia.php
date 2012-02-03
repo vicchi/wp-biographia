@@ -3,14 +3,14 @@
 Plugin Name: WP Biographia
 Plugin URI: http://www.vicchi.org/codeage/wp-biographia/
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page and much more.
-Version: 2.3
+Version: 2.4
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
 Text Domain: wp-biographia
 */
 
-define ('WPBIOGRAPHIA_VERSION', '23');
+define ('WPBIOGRAPHIA_VERSION', '24');
 define ('WPBIOGRAPHIAURL_URL', plugin_dir_url(__FILE__));
 define ('WPBIOGRAPHIAURL_PATH', plugin_dir_path(__FILE__));
 
@@ -118,13 +118,20 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 					break;
 			}
 			
-			$wp_biographia_content .= '<a href="' .
-				$wp_biographia_author['posts_url'] .
-				'" title="' .
-				$wp_biographia_formatted_name .
-				'">' .
-				$wp_biographia_formatted_name .
-				'</a>';
+			if (!empty ($wp_biographia_settings['wp_biographia_content_authorpage']) &&
+					($wp_biographia_settings['wp_biographia_content_authorpage'] == 'on')) {
+				$wp_biographia_content .= '<a href="'
+					. $wp_biographia_author['posts_url']
+					. '" title="'
+					. $wp_biographia_formatted_name
+					. '">'
+					. $wp_biographia_formatted_name
+					. '</a>';
+			}
+			
+			else {
+				$wp_biographia_content .= $wp_biographia_formatted_name;	
+			}
 		}
 		$wp_biographia_content .= '</h3>';
 	}
@@ -861,6 +868,7 @@ function wp_biographia_add_defaults() {
 			"wp_biographia_display_feed" => "",
 			"wp_biographia_content_prefix" => __('About', 'wp-biographia'),
 			"wp_biographia_content_name" => "first-last-name",
+			"wp_biographia_content_authorpage" => "on",
 			"wp_biographia_content_image" => "on",
 			"wp_biographia_content_bio" => "on",
 			"wp_biographia_content_email" => "on",

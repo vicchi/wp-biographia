@@ -4,7 +4,7 @@ Donate link: http://www.vicchi.org/codeage/donate/
 Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, about author, author box, contributors
 Requires at least: 3.3
 Tested up to: 3.3.1
-Stable tag: 2.3
+Stable tag: 2.4
 
 Add and display a customisable author biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
 
