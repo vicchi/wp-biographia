@@ -21,7 +21,7 @@ Settings and options include:
 1. Choose to display the Biography Box at the top or the bottom of content (universally)
 1. Choose to suppress the display of the Biography Box for pages, posts and posts/pages on a per user basis
 
-The plugin expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn, Google+, Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles.
+The plugin expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn, Google+, Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles. Your Contact Info links can then be displayed as part of the Biography Box, either as plain text links or as icon links.
 
 The plugin also has an added filter and shortcode (`[wp_biographia]`) to add further customisation. For example, if you use page templates to display custom post types on your blog, you can simply use `filter ('wp_biographia_pattern')` to decide how you'd like to customise. If you want the Biography Box to appear at the bottom but on archive pages, you want them at the top, then the filter can do that as well, or simply use the shortcode to control where it appears in a post of any post type. For more information on how to use the `[wp_biographia]` shortcode, see the *Shortcode Support And Usage* section.
 
@@ -105,6 +105,14 @@ function content_only_pattern($pattern) {
 
 This may be a configurable setting in a future version of the plugin to avoid the need to hack your theme's <code>functions.php</code> file.
 
+= I want to use my own icon set for my author's contact links; how do I do this? =
+
+Firstly select the icon set you want to use. You'll need to ensure that the icon files are in `.png` format and are named to match the icon set that WP Biographia ships with; take a look in `wp-biographia/images` to see the naming convention. Upload your icon set to your web server and note the URL (not the local path) to where your icons will live. Navigate to *Settings / WP Biographia / Biography Box Content Settings*, ensure that the *Use Alternate Icon Set* option is checked and the URL to your alternate icons is specified in the *Alternate Icon Set URL* text box. By default, WP Biographia sizes the contact link icons at 32x32 pixels; you can override this in your local CSS file by redefining the `.wp-biographia-item-icon` CSS class (see `wp-biographia/css/wp-biographia.css`).
+
+= WP Biographia isn't available in my language; can I submit a translation? =
+
+WordPress and this plugin use the gettext tools to support internationalisation. The source file containing each string that needs to be translated ships with the plugin in `wp-biographia/lang/src/wp-biographia.pot`. See the [I18n for WordPress Developers](http://codex.wordpress.org/I18n_for_WordPress_Developers) page for more information or get in touch for help and hand-holding.
+
 = This plugin looks very much like the WP About Author; what's the connection? =
 
 WP Biographia is inspired by and based on the [WP About Author](http://wordpress.org/extend/plugins/wp-about-author/) plugin by [Jon Bishop](http://www.jonbishop.com/). Thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place. Jon's written [other WordPress plugins](http://profiles.wordpress.org/users/JonBishop/) as well; you should take a look.
@@ -128,7 +136,13 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 2.3 (2012.01.26)
+The current version is 2.4 (2012.02.07)
+
+= 2.4 =
+* Add internationalisation support; add Spanish and Turkish language files.
+* Add configuration setting to control the author's name in the Biography Box as a link to "More Posts By This Author".
+* Add support for displaying the author's contact links as icons as well as plain text links.
+* Add support for using an alternate link icon set.
 
 = 2.3 =
 * Suppress display of "More Posts" link in the Biography Box (if configured) if the user/author has no posts.
@@ -171,6 +185,12 @@ The current version is 2.3 (2012.01.26)
 * First version of WP Biographia released
 
 == Upgrade Notice ==
+
+= 2.4 =
+This is the 7th version of WP Biographia; adds internationalisation support plus Spanish and Turkish translations; adds support for displaying the author's contact links as icons and for using an alternate icon set.
+
+= 2.3 =
+This is the 6th version of WP Biographia; adds support for global post exclusions, enhanced shortcode options and suppression of the "More Posts" link if the author has no posts.
 
 = 2.2 =
 * This is the fifth version of WP Biographia; adds support for enhanced shortcode usage, excerpt support on archive pages and additional social media profiles and links as well as several bug fixes.
