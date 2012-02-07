@@ -171,6 +171,16 @@ function wp_biographia_upgrade() {
 		 *
 		 * wp_biographia_version = "23"
 		 *
+		 * v2.4 added configuration settings ...
+		 *
+		 * wp_biographia_content_authorpage = "on"
+		 * wp_biographia_content_icons = ""
+		 * wp_biographia_content_alt_icons = ""
+		 * wp_biographia_content_icon_url = ""
+		 *
+		 * v2.4 changed default configuration settings ...
+		 *
+		 * wp_biographia_version = "23"
 		 */
 
 		switch ($current_plugin_version) {
@@ -309,6 +319,16 @@ function wp_biographia_upgrade() {
 				if (!isset ($wp_biographia_settings['wp_biographia_content_authorpage'])) {
 					$wp_biographia_settings["wp_biographia_content_authorpage"] = "on";
 				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_icons'])) {
+					$wp_biographia_settings['wp_biographia_content_icons'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_alt_icons'])) {
+					$wp_biographia_settings['wp_biographia_content_alt_icons'] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_icon_url'])) {
+					$wp_biographia_settings['wp_biographia_content_icon_url'] = "";
+				}
+				
 				$wp_biographia_settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
 				$upgrade_settings = true;
 				
@@ -418,6 +438,9 @@ function wp_biographia_general_settings() {
 	
 	$image_size = "";
 	$avatars_enabled = (get_option ('show_avatars') == 1 ? true : false);
+	$icons_enabled = ($wp_biographia_settings['wp_biographia_content_icons'] == 'on' ? true : false);
+	$alt_icons = ($wp_biographia_settings['wp_biographia_content_alt_icons'] == 'on' ? true : false);
+
 /*
  *	$beta_enabled = ($wp_biographia_settings['wp_biographia_beta_enabled'] == "on" ? true : false);
  */
@@ -673,12 +696,34 @@ function wp_biographia_general_settings() {
 		. '/>
 		<small>' . __('Display the author\'s biography?', 'wp-biographia') . '</small></p>';
 
+	$content_settings .= '<p><strong>' . __("Show Contact Links As Icons", 'wp-biographia') . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_icons" id="wp-biographia-content-icons" '
+		. checked ($wp_biographia_settings['wp_biographia_content_icons'], 'on', false)
+		. '/>
+		<small>' . __('Show the author\'s contact links as icons?', 'wp-biographia') . '</small></p>';
+
+	$content_settings .= '<div id="wp-biographia-icon-container"';
+	if (!$icons_enabled) {
+		$content_settings .= ' style="display:none"';
+	}
+	$content_settings .= '><p><strong>' . __("Use Alternate Icon Set", 'wp-biographia') . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_alt_icons" id="wp-biographia-content-alt-icons" '
+		. checked ($wp_biographia_settings['wp_biographia_content_alt_icons'], 'on', false)
+		. '/>
+		<small>' . __('Use an alternative icon set for contact links?', 'wp-biographia') . '</small></p>'
+		. '<p><strong>' . __("Alternate Icon Set URL", 'wp-biographia') . '</strong><br />
+		<input type="text" name="wp_biographia_content_icon_url" id="wp-biographia-content-icon-url" value="'
+		. $wp_biographia_settings["wp_biographia_content_icon_url"]
+		. '" '
+		. disabled ($alt_icons, false, false)
+		. '/><br />
+		<small>' . __('Enter the URL where the alternate contact links icon set is located', 'wp-biographia') . '</small></p></div>';
+
 	$content_settings .= '<p><strong>' . __("Show Author's Email Address", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_email" '
 		. checked ($wp_biographia_settings['wp_biographia_content_email'], 'on', false)
 		. '/>
 		<small>' . __('Display the author\'s email address?', 'wp-biographia') . '</small></p>';
-
 
 	$content_settings .= '<p><strong>' . __("Show Author's Website Link", 'wp-biographia') . '</strong><br />
 		<input type="checkbox" name="wp_biographia_content_web" '
@@ -944,6 +989,15 @@ function wp_biographia_process_settings() {
 
 			$wp_biographia_settings['wp_biographia_content_bio'] = 
 				wp_biographia_option ('wp_biographia_content_bio');
+				
+			$wp_biographia_settings['wp_biographia_content_icons'] = 
+				wp_biographia_option ('wp_biographia_content_icons');
+				
+			$wp_biographia_settings['wp_biographia_content_alt_icons'] = 
+				wp_biographia_option ('wp_biographia_content_alt_icons');
+				
+			$wp_biographia_settings['wp_biographia_content_icon_url'] =
+				wp_biographia_option ('wp_biographia_content_icon_url');
 
 			$wp_biographia_settings['wp_biographia_content_email'] = 
 				wp_biographia_option ('wp_biographia_content_email');

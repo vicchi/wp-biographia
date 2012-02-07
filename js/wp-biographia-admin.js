@@ -16,6 +16,19 @@
 	  		return !$('#wp-biographia-suppressed-page-users option:selected').remove().appendTo('#wp-biographia-enabled-page-users');  
 	 	});  
 
+		$('#wp-biographia-content-icons').click(function() {
+			$('#wp-biographia-icon-container').toggle(this.checked);
+		});
+
+		$('#wp-biographia-content-alt-icons').click(function () {
+			if (this.checked) {
+				$('#wp-biographia-content-icon-url').removeAttr('disabled');
+			}
+			else {
+				$('#wp-biographia-content-icon-url').attr('disabled', true);
+			}
+		});
+		
 		$('form').submit(function() {
 			$('#wp-biographia-enabled-post-users option').each(function(i) {  
 				$(this).attr("selected", "selected");  
