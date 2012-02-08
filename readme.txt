@@ -132,7 +132,8 @@ WP Biographia is named after the etymology of the modern English word biography.
 1. WP Biographia Settings And Options: Biography Box Style Settings
 1. WP Biographia Settings And Options: Biography Box Content Settings
 1. WP Biographia Settings And Options: Biography Box Content Settings, continued
-1. Sample Biography Box, shown below an individual post
+1. Sample Biography Box; contact links shown as text
+1. Sample Biography Box; contact links shown as icons
 
 == Changelog ==
 
