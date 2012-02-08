@@ -177,7 +177,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 	$wp_biographia_link_item = "";
 
 	$link_items = array (
-		"website" => array (
+		"web" => array (
 			"link_title" => __('The Web', 'wp-biographia'),
 			"link_text" => __('Web', 'wp-biographia'),
 			"link_icon" => $icon_dir_url . 'web.png'
@@ -274,33 +274,37 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 	// Now deal with the other links that follow the same format and can be "templatised" ...
 
 	foreach ($link_items as $link_key => $link_attrs) {
-		if (!empty ($wp_biographia_formatted_name)) {
-			$link_title = sprintf ($title_name_stub, $wp_biographia_formatted_name, $link_attrs['link_title']);
-		}
-		else {
-			$link_title = sprintf ($title_noname_stub, $link_attrs['link_title']);
-		}
+		$option_name = 'wp_biographia_content_' . $link_key;
+		if (!empty ($wp_biographia_settings[$option_name]) &&
+				($wp_biographia_settings[$option_name] == 'on')) {
+			if (!empty ($wp_biographia_formatted_name)) {
+				$link_title = sprintf ($title_name_stub, $wp_biographia_formatted_name, $link_attrs['link_title']);
+			}
+			else {
+				$link_title = sprintf ($title_noname_stub, $link_attrs['link_title']);
+			}
 
-		if ($display_icons) {
-			$wp_biographia_link_item = sprintf ($item_stub,
-				$wp_biographia_author[$link_key],
-				$link_title,
-				$link_class,
-				$link_attrs['link_icon'],
-				$item_class
-				);
+			if ($display_icons) {
+				$wp_biographia_link_item = sprintf ($item_stub,
+					$wp_biographia_author[$link_key],
+					$link_title,
+					$link_class,
+					$link_attrs['link_icon'],
+					$item_class
+					);
+			}
+		
+			else {
+				$wp_biographia_link_item = sprintf ($item_stub,
+					$wp_biographia_author[$link_key],
+					$link_title,
+					$link_class,
+					$link_attrs['link_text']
+					);
+			}	
+		
+			$wp_biographia_links[] = $wp_biographia_link_item;
 		}
-		
-		else {
-			$wp_biographia_link_item = sprintf ($item_stub,
-				$wp_biographia_author[$link_key],
-				$link_title,
-				$link_class,
-				$link_attrs['link_text']
-				);
-		}	
-		
-		$wp_biographia_links[] = $wp_biographia_link_item;
 	}
 
 	// Finally, deal with the "More Posts" link
