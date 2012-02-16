@@ -1149,7 +1149,7 @@ function wp_biographia_add_profile_extensions($user) {
 			<th scope="row"><?php __('Suppress From Posts', 'wp-biographia')?></th>
 			<td>
 				<label for="wp_biographia_suppress_posts">
-					<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php __('Don\'t show the Biography Box on your posts', 'wp-biographia')?>
+					<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php _e('Don\'t show the Biography Box on your posts', 'wp-biographia')?>
 				</label>
 			</td>
 		</tr>
@@ -1157,7 +1157,7 @@ function wp_biographia_add_profile_extensions($user) {
 			<th scope="row"><?php __('Suppress From Pages', 'wp-biographia')?></th>
 			<td>
 				<label for="wp_biographia_suppress_pages">
-					<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php __('Don\'t show the Biography Box on your pages', 'wp-biographia')?>
+					<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php _e('Don\'t show the Biography Box on your pages', 'wp-biographia')?>
 				</label>
 			</td>
 		</tr>
