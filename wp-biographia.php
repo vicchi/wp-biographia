@@ -54,7 +54,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 	$wp_biographia_author['display-name'] = get_the_author_meta ('display_name', $author_id);
 	
 	$wp_biographia_author['bio'] = get_the_author_meta ('description', $author_id);
-	$wp_biographia_author['website'] = get_the_author_meta ('url', $author_id);
+	$wp_biographia_author['web'] = get_the_author_meta ('url', $author_id);
 	$wp_biographia_author['email'] = get_the_author_meta ('user_email', $author_id);
 	$wp_biographia_author['twitter'] = get_the_author_meta ('twitter', $author_id);
 	$wp_biographia_author['facebook'] = get_the_author_meta ('facebook', $author_id);
@@ -276,6 +276,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 	foreach ($link_items as $link_key => $link_attrs) {
 		$option_name = 'wp_biographia_content_' . $link_key;
 		if (!empty ($wp_biographia_settings[$option_name]) &&
+				!empty($wp_biographia_author[$link_key]) &&
 				($wp_biographia_settings[$option_name] == 'on')) {
 			if (!empty ($wp_biographia_formatted_name)) {
 				$link_title = sprintf ($title_name_stub, $wp_biographia_formatted_name, $link_attrs['link_title']);
