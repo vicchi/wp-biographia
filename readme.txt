@@ -4,7 +4,7 @@ Donate link: http://www.vicchi.org/codeage/donate/
 Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, about author, author box, contributors
 Requires at least: 3.3
 Tested up to: 3.3.1
-Stable tag: 2.4.1
+Stable tag: 2.4.2
 
 Add and display a customisable author biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
 
@@ -137,7 +137,10 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 2.4.1 (2012.02.16)
+The current version is 2.4.2 (2012.02.16)
+
+= 2.4.2 =
+* Correct version number in plugin header.
 
 = 2.4.1 =
 * Fixed regression bug in v2.4 where a contact link items displayed as an empty link if enabled in WP Biographia but if the corresponding link in the user's profile was empty.
@@ -191,6 +194,9 @@ The current version is 2.4.1 (2012.02.16)
 * First version of WP Biographia released
 
 == Upgrade Notice ==
+
+= 2.4.2 =
+This is the 8th version of WP Biographia and is a bug fix release, clearing up several regression bugs that appeared in v2.4.
 
 = 2.4.1 =
 This is the 8th version of WP Biographia and is a bug fix release, clearing up several regression bugs that appeared in v2.4.
