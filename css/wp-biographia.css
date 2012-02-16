@@ -51,11 +51,20 @@
 	margin: 0 0 0 140px;
 }
 
+ul.wp-biographia-list-text li, ul.wp-biographia-list-icon li {
+	display: inline-block;
+	list-style-type: none;
+	background: none;
+	margin: 0;
+}
+
+/*
 .wp-biographia-list-text li, .wp-biographia-list-icon li {
 	display: inline-block;
 	list-style-type: none;
 	padding-right: 5px;
 }
+*/
 
 .wp-biographia-list-icon a:link, .wp-biographia-list-icon a:visited {
         text-decoration: none;
