@@ -180,7 +180,7 @@ function wp_biographia_upgrade() {
 		 *
 		 * v2.4 changed default configuration settings ...
 		 *
-		 * wp_biographia_version = "23"
+		 * wp_biographia_version = "24"
 		 */
 
 		switch ($current_plugin_version) {
@@ -411,10 +411,20 @@ function wp_biographia_show_help_and_support() {
  */
 
 function wp_biographia_show_acknowledgements() {
+	$email_address = antispambot ("gary@vicchi.org");
+
 	$content = '<p>'
 		. __('WP Biographia is inspired by and based on <a href="http://www.jonbishop.com">Jon Bishop\'s</a> <a href="http://wordpress.org/extend/plugins/wp-about-author/">WP About Author</a> plugin. Thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place. Jon\'s written other <a href="http://profiles.wordpress.org/users/JonBishop/">WordPress plugins</a> as well; you should take a look.', 'wp-biographia')
 		. '</p>';
 
+	$content .= '<p>'
+		. __('WP Biographia is now internationalised. Turkish language translation and support is thanks to <a href="https://twitter.com/#!/KazancExpert">Hakan Er</a>.', 'wp-biographia')
+		. '</p>';
+		
+	$content .= '<p>'
+		. sprintf (__('If you\'d like to see WP Biographia translated into your language and want to help with the process, then please drop me an <a href="mailto:%s">email</a>.', 'wp-biographia'), $email_address)
+		. '</p>';
+		
 	return wp_biographia_postbox ('wo-biographia-acknowledgements',
 		__('Acknowledgements', 'wp-biographia'), $content);
 }
