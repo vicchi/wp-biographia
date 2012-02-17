@@ -934,8 +934,8 @@ function wp_biographia_process_settings() {
 					wp_biographia_option ('wp_biographia_display_pages');
 
 			// Page exclusions 
-			$wp_biographia_settings['wp_biographia_display_exclusions'] =
-				wp_biographia_option ('wp_biographia_display_exclusions');
+			$wp_biographia_settings['wp_biographia_page_exclusions'] =
+				wp_biographia_option ('wp_biographia_page_exclusions');
 
 			// Per user suppression of the Biography Box on posts and on pages
 
