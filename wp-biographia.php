@@ -3,14 +3,14 @@
 Plugin Name: WP Biographia
 Plugin URI: http://www.vicchi.org/codeage/wp-biographia/
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page and much more.
-Version: 2.4.3
+Version: 2.4.4
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
 Text Domain: wp-biographia
 */
 
-define ('WPBIOGRAPHIA_VERSION', '24');
+define ('WPBIOGRAPHIA_VERSION', '244');
 define ('WPBIOGRAPHIAURL_URL', plugin_dir_url(__FILE__));
 define ('WPBIOGRAPHIAURL_PATH', plugin_dir_path(__FILE__));
 
@@ -33,6 +33,7 @@ function wp_biographia_is_last_page() {
  */
 
 function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL) {
+	
 	if (!isset ($author_id)) {
 		$author_id = get_the_author_meta ('ID');
 	}
@@ -247,10 +248,11 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 			}
 
 			$link_text = __('Mail', 'wp-biographia');
+			$email_address = antispambot ($wp_biographia_author['email']);
 			
 			if ($display_icons) {
 				$wp_biographia_link_item = sprintf ($item_stub,
-					'mailto:' . antispambot ($wp_biographia_author['email']),
+					'mailto:' . $email_address,
 					$link_title,
 					$link_class,
 					$icon_dir_url . 'mail.png',
@@ -260,7 +262,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 			
 			else {
 				$wp_biographia_link_item = sprintf ($item_stub,
-					'mailto:' . antispambot ($wp_biographia_author['email']),
+					'mailto:' . $email_address,
 					$link_title,
 					$link_class,
 					$link_text
@@ -343,7 +345,7 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 		
 		else {
 			$wp_biographia_link_item = sprintf ($item_stub,
-				$wp_biographia_author['posts_utl'],
+				$wp_biographia_author['posts_url'],
 				$link_title,
 				$link_class,
 				$link_text
