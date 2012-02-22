@@ -154,7 +154,7 @@ function wp_biographia_upgrade() {
 		 * wp_biographia_content_delicious = ""
 		 * wp_biographia_content_flickr = ""
 		 * wp_biographia_content_picasa = ""
-		 * wp_biograpia_content_vimeo = ""
+		 * wp_biographia_content_vimeo = ""
 		 * wp_biographia_content_youtube = ""
 		 * wp_biographia_content_reddit = ""
 		 *
@@ -181,6 +181,22 @@ function wp_biographia_upgrade() {
 		 * v2.4 changed default configuration settings ...
 		 *
 		 * wp_biographia_version = "24"
+		 *
+		 * v2.4.1 changed default configuration settings ...
+		 *
+		 * wp_biographia_version = "241"
+		 *
+		 * v2.4.2 changed default configuration settings ...
+		 *
+		 * wp_biographia_version = "242"
+		 *
+		 * v2.4.3 changed default configuration settings ...
+		 *
+		 * wp_biographia_version = "243"
+		 *
+		 * v2.4.4 changed default configuration settings ...
+		 *
+		 * wp_biographia_version = "244"
 		 */
 
 		switch ($current_plugin_version) {
@@ -329,6 +345,10 @@ function wp_biographia_upgrade() {
 					$wp_biographia_settings['wp_biographia_content_icon_url'] = "";
 				}
 				
+			case '241':
+			case '242':
+			case '243':
+			case '244':
 				$wp_biographia_settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
 				$upgrade_settings = true;
 				
@@ -1036,8 +1056,8 @@ function wp_biographia_process_settings() {
 			$wp_biographia_settings['wp_biographia_content_picasa'] =
 				wp_biographia_option ('wp_biographia_content_picasa');
 
-			$wp_biographia_settings['wp_biograpia_content_vimeo'] =
-				wp_biographia_option ('wp_biograpia_content_vimeo');
+			$wp_biographia_settings['wp_biographia_content_vimeo'] =
+				wp_biographia_option ('wp_biographia_content_vimeo');
 
 			$wp_biographia_settings['wp_biographia_content_youtube'] =
 				wp_biographia_option ('wp_biographia_content_youtube');
