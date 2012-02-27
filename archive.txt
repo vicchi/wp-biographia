@@ -1,1 +1,0 @@
-cd ..; zip -vr wp-biographia-1.0.zip wp-biographia -x@wp-biographia/excludes.txt

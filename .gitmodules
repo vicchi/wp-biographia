@@ -1,0 +1,3 @@
+[submodule "wp-plugin-base"]
+	path = wp-plugin-base
+	url = git://github.com/vicchi/wp-plugin-base.git
