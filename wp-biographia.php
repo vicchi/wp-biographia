@@ -14,12 +14,11 @@ define ('WPBIOGRAPHIA_PATH', plugin_dir_path (__FILE__));
 
 require_once (WPBIOGRAPHIA_PATH . '/wp-plugin-base/wp-plugin-base.php');
 
-class WP_Biographia extends WP_PluginBase { 
+class WP_Biographia extends WPPluginBase { 
 
 	static $instance;
 	public $author_id;
 	public $override;
-	public $wp_biographia_settings = array();
 	public $display_bio = false;
 	public $for_feed = false;
 	public $is_shortcode = false;
@@ -91,7 +90,7 @@ class WP_Biographia extends WP_PluginBase {
 	 * @author Travis Smith
 	 * @return array output
 	 */
-	function wps_get_users( $role = '' , $args = array( 0 => 'ID' , 1 => 'user_login') ) {
+	function get_users( $role = '' , $args = array( 0 => 'ID' , 1 => 'user_login') ) {
 		$wp_user_search = new WP_User_Query( array( 'role' => $role, 'fields' => $args ) );
 		$roles = $wp_user_search->get_results();
 		return $roles;
@@ -114,10 +113,10 @@ class WP_Biographia extends WP_PluginBase {
 	 * Define and set up the default settings and options for formatting the Biography Box
 	 */
 	function add_settings() {
-		$this->wp_biographia_settings = $this->get_option();
+		$settings = $this->get_option ();
 		
-		if( ! is_array( $this->wp_biographia_settings ) ) {
-			$this->wp_biographia_settings = apply_filters( 'wp_biographia_default_settings' , 
+		if( ! is_array( $settings ) ) {
+			$settings = apply_filters( 'wp_biographia_default_settings' , 
 				array (
 					'wp_biographia_installed' => 'on',
 					'wp_biographia_version' => WPBIOGRAPHIA_VERSION,
@@ -152,10 +151,10 @@ class WP_Biographia extends WP_PluginBase {
 					'wp_biographia_beta_enabled' => '',
 				) 
 			);
-			update_option ( 'wp_biographia_settings', $this->wp_biographia_settings );
+			update_option (self::OPTIONS, $settings );
 		}
 
-		if ( ! $this->wp_biographia_settings['wp_biographia_display_feed'] )
+		if ( ! $settings['wp_biographia_display_feed'] )
 			$this->set_option( 'wp_biographia_display_feed' , '' );
 	}
 	
@@ -459,7 +458,7 @@ class WP_Biographia extends WP_PluginBase {
 	function insert_biographia( $context, $content, $pattern ) {
 		global $post;
 
-		$wp_biographia_settings = $this->get_option();
+		$settings = $this->get_option();
 		if ( ! $this->author_id || $this->author_id == 0 )
 			$this->author_id = get_the_author_meta( 'ID' );
 			
@@ -621,7 +620,7 @@ class WP_Biographia extends WP_PluginBase {
 	 * Produce and format the Biography Box according to the currently defined options
 	 */
 	function display() {
-		$wp_biographia_settings = $this->get_option();
+		$settings = $this->get_option();
 		
 		if ( ! $this->author_id || $this->author_id == 0 )
 			$this->author_id = get_the_author_meta( 'ID' );
@@ -639,19 +638,19 @@ class WP_Biographia extends WP_PluginBase {
 
 		// Add Image Size Output
 		$wp_biographia_author_pic_size =
-			( isset( $wp_biographia_settings['wp_biographia_content_image_size'] ) ) ?
+			( isset( $settings['wp_biographia_content_image_size'] ) ) ?
 				$this->get_option( 'wp_biographia_content_image_size' ) : '100';
 		$wp_biographia_author_pic = get_avatar ( $wp_biographia_author['email'], $wp_biographia_author_pic_size );
 
-		if ( ! empty( $wp_biographia_settings['wp_biographia_content_prefix']) ||
-			!empty ($wp_biographia_settings['wp_biographia_content_name'])) {
+		if ( ! empty( $settings['wp_biographia_content_prefix']) ||
+			!empty ($settings['wp_biographia_content_name'])) {
 			$wp_biographia_content[] = '<h3>';
 
 			$name_prefix = "";
 			if ( ( ! empty( $this->override ) ) && ( ! empty( $this->override['prefix'] ) ) )
 				$name_prefix = $this->override['prefix'];
-			elseif ( ! empty( $wp_biographia_settings['wp_biographia_content_prefix'] ) )
-				$name_prefix = $wp_biographia_settings['wp_biographia_content_prefix'];
+			elseif ( ! empty( $settings['wp_biographia_content_prefix'] ) )
+				$name_prefix = $settings['wp_biographia_content_prefix'];
 			
 			if ( ! empty( $name_prefix ) )
 				$wp_biographia_content[] = $name_prefix . ' ';
@@ -659,8 +658,8 @@ class WP_Biographia extends WP_PluginBase {
 			$display_name = "";
 			if ( ( ! empty( $this->override ) ) && ( ! empty( $this->override['name'] ) ) )
 				$display_name = $this->override['name'];
-			elseif ( ! empty( $wp_biographia_settings['wp_biographia_content_name'] ) )
-				$display_name = $wp_biographia_settings['wp_biographia_content_name'];
+			elseif ( ! empty( $settings['wp_biographia_content_name'] ) )
+				$display_name = $settings['wp_biographia_content_name'];
 
 			if ( ! empty( $display_name ) && $display_name != 'none' ) {
 				switch ( $display_name ) {
@@ -678,7 +677,7 @@ class WP_Biographia extends WP_PluginBase {
 						break;
 				}
 				
-				if ( ! empty( $wp_biographia_settings['wp_biographia_content_authorpage'] ) && ( $wp_biographia_settings['wp_biographia_content_authorpage'] == 'on' ) )
+				if ( ! empty( $settings['wp_biographia_content_authorpage'] ) && ( $settings['wp_biographia_content_authorpage'] == 'on' ) )
 						$wp_biographia_content[] = '<a href="' . $wp_biographia_author['posts_url']	. '" title="' . $wp_biographia_formatted_name . '">' . $wp_biographia_formatted_name . '</a>';
 				else
 					$wp_biographia_content[] = $wp_biographia_formatted_name;	
@@ -686,15 +685,15 @@ class WP_Biographia extends WP_PluginBase {
 			$wp_biographia_content[] = '</h3>';
 		}
 
-		if ( ! empty( $wp_biographia_settings['wp_biographia_content_bio'] ) ) {
+		if ( ! empty( $settings['wp_biographia_content_bio'] ) ) {
 			$wp_biographia_content[] = "<p>" . $wp_biographia_author['bio'] . "</p>";
 		}
 
-		$display_icons = ( ! empty( $wp_biographia_settings['wp_biographia_content_icons'] ) &&
-			( $wp_biographia_settings['wp_biographia_content_icons'] == 'on' ) ) ? 'icon' : 'text';
+		$display_icons = ( ! empty( $settings['wp_biographia_content_icons'] ) &&
+			( $settings['wp_biographia_content_icons'] == 'on' ) ) ? 'icon' : 'text';
 
-		if ( ( $display_icons ) && ( ! empty( $wp_biographia_settings['wp_biographia_content_alt_icons'] ) && $wp_biographia_settings['wp_biographia_content_alt_icons'] == 'on' && ! empty( $wp_biographia_settings['wp_biographia_content_icon_url'] ) ) )
-				$this->icon_dir_url = $wp_biographia_settings['wp_biographia_content_icon_url'];
+		if ( ( $display_icons ) && ( ! empty( $settings['wp_biographia_content_alt_icons'] ) && $settings['wp_biographia_content_alt_icons'] == 'on' && ! empty( $settings['wp_biographia_content_icon_url'] ) ) )
+				$this->icon_dir_url = $settings['wp_biographia_content_icon_url'];
 				
 		$link_items = $this->link_items();
 		$item_stub = ( $display_icons == "icon" ) ? '<li><a href="%s" title="%s" class="%s"><img src="%s" class="%s" /></a></li>' : '<li><a href="%s" title="%s" class="%s">%s</a></li>';
@@ -702,7 +701,7 @@ class WP_Biographia extends WP_PluginBase {
 		$title_noname_stub = __( 'On %s', 'wp-biographia' );
 		
 		// Deal with the email link first as a special case ...
-		if ( ( ! empty( $wp_biographia_settings['wp_biographia_content_email'] ) && ( $wp_biographia_settings['wp_biographia_content_email'] == 'on' ) ) && ( ! empty( $wp_biographia_author['email'] ) ) ) {
+		if ( ( ! empty( $settings['wp_biographia_content_email'] ) && ( $settings['wp_biographia_content_email'] == 'on' ) ) && ( ! empty( $wp_biographia_author['email'] ) ) ) {
 			if ( ! empty( $wp_biographia_formatted_name ) )
 				$link_title = sprintf (__( 'Send %s Mail', 'wp-biographia' ), $wp_biographia_formatted_name);
 			else
@@ -718,7 +717,7 @@ class WP_Biographia extends WP_PluginBase {
 		// Now deal with the other links that follow the same format and can be "templatised" ...
 		foreach( $link_items as $link_key => $link_attrs ) {
 			$option_name = 'wp_biographia_content_' . $link_key;
-			if ( ! empty( $wp_biographia_settings[$option_name] ) && ( $wp_biographia_settings[$option_name] == 'on' ) && ( ! empty( $wp_biographia_author[$link_key] ) || ( $link_key == 'web' ) ) ) {
+			if ( ! empty( $settings[$option_name] ) && ( $settings[$option_name] == 'on' ) && ( ! empty( $wp_biographia_author[$link_key] ) || ( $link_key == 'web' ) ) ) {
 
 				if ( ! empty( $wp_biographia_formatted_name ) )
 					$link_title = sprintf( $title_name_stub, $wp_biographia_formatted_name, $link_attrs['link_title']);
@@ -733,13 +732,13 @@ class WP_Biographia extends WP_PluginBase {
 		}
 
 		// Finally, deal with the "More Posts" link
-		if ( ! empty( $wp_biographia_settings['wp_biographia_content_posts'] ) && ( $wp_biographia_settings['wp_biographia_content_posts'] != 'none' ) && ( $wp_biographia_author['posts'] > 0 ) ) {
+		if ( ! empty( $settings['wp_biographia_content_posts'] ) && ( $settings['wp_biographia_content_posts'] != 'none' ) && ( $wp_biographia_author['posts'] > 0 ) ) {
 			if ( ! empty( $wp_biographia_formatted_name ) )
 				$link_title = sprintf (__( 'More Posts By %s', 'wp-biographia' ), $wp_biographia_formatted_name);
 			else
 				$link_title = __( 'More Posts', 'wp-biographia' );
 
-			switch( $wp_biographia_settings['wp_biographia_content_posts'] ) {
+			switch( $settings['wp_biographia_content_posts'] ) {
 				case 'extended':
 					$link_text = __( 'More Posts', 'wp-biographia' ) . ' ('
 						. $wp_biographia_author['posts']
@@ -767,13 +766,13 @@ class WP_Biographia extends WP_PluginBase {
 		
 		if ( ! $this->for_feed ) {
 			$wp_biographia_biography[] = '<div class="wp-biographia-container-'
-				. $wp_biographia_settings['wp_biographia_style_border']
+				. $settings['wp_biographia_style_border']
 				. '" style="background-color:'
-				. $wp_biographia_settings['wp_biographia_style_bg']
+				. $settings['wp_biographia_style_bg']
 				. ';">';
 
-			if ( ! empty( $wp_biographia_settings['wp_biographia_content_image'] ) &&
-					( $wp_biographia_settings['wp_biographia_content_image'] == 'on' ) ) {
+			if ( ! empty( $settings['wp_biographia_content_image'] ) &&
+					( $settings['wp_biographia_content_image'] == 'on' ) ) {
 				$wp_biographia_biography[] = '<div class="wp-biographia-pic" style="height:'
 					. $wp_biographia_author_pic_size
 					. 'px; width:'
@@ -785,11 +784,11 @@ class WP_Biographia extends WP_PluginBase {
 
 			$wp_biographia_biography[] = apply_filters( 'wp_biographia_feed' , '<div class="wp-biographia-text">'
 				. implode ( '', $wp_biographia_content )
-				. '</div></div>' , $wp_biographia_content , $wp_biographia_settings );
+				. '</div></div>' , $wp_biographia_content , $settings );
 		}
 		
-		elseif ( ! empty( $wp_biographia_settings['wp_biographia_content_image'] ) &&
-					( $wp_biographia_settings['wp_biographia_content_image'] == 'on' ) ) {
+		elseif ( ! empty( $settings['wp_biographia_content_image'] ) &&
+					( $settings['wp_biographia_content_image'] == 'on' ) ) {
 						$wp_biographia_biography[] = '<p>';
 						$wp_biographia_biography[] = '<div style="float:left; text-align:left;>'.$wp_biographia_author_pic.'</div>';
 						$wp_biographia_biography[] = $wp_biographia_content.'</p>';	
@@ -824,7 +823,7 @@ class WP_Biographia extends WP_PluginBase {
 			$page_title = __('WP Biographia', 'wp-biographia');
 			$menu_title = __('WP Biographia', 'wp-biographia');
 			add_options_page ($page_title, $menu_title, 'manage_options', __FILE__,
-				'wp_biographia_general_settings');
+				array ($this, 'admin_display_settings'));
 		}
 	}
 	
@@ -856,11 +855,7 @@ class WP_Biographia extends WP_PluginBase {
 	}
 	
 	function admin_init () {
-		/*
-		 * Check, and if needed, upgrade the plugin's configuration settings ...
-		 */
-
-		wp_biographia_upgrade ();
+		$this->admin_upgrade ();
 	}
 
 	function admin_add_profile_extensions ($user) {
@@ -889,9 +884,9 @@ class WP_Biographia extends WP_PluginBase {
 
 	function admin_save_profile_extensions ($user_id) {
 		update_user_meta ($user_id, 'wp_biographia_suppress_posts',
-			wp_biographia_option ('wp_biographia_suppress_posts'));
+			$this->admin_option ('wp_biographia_suppress_posts'));
 		update_user_meta ($user_id, 'wp_biographia_suppress_pages',
-			wp_biographia_option ('wp_biographia_suppress_pages'));
+			$this->admin_option ('wp_biographia_suppress_pages'));
 	}
 	
 	function admin_settings_link($links) {
@@ -901,7 +896,1087 @@ class WP_Biographia extends WP_PluginBase {
 		array_unshift ($links, $settings_link);
 		return $links;
 	}
+
+	function admin_upgrade () {
+		$settings = NULL;
+		$upgrade_settings = false;
+		$current_plugin_version = NULL;
+
+		/*
+		 * Even if the plugin has only just been installed, the activation hook should have
+		 * fired *before* the admin_init action so therefore we /should/ already have the
+		 * plugin's configuration options defined in the database, but there's no harm in checking
+		 * just to make sure ...
+		 */
+
+		$settings = $this->get_option ();
+
+		/*
+		 * Bale out early if there's no need to check for the need to upgrade the configuration
+		 * settings ...
+		 */
+
+		if (is_array ($settings) &&
+				isset ($settings['wp_biographia_version']) &&
+				$settings['wp_biographia_version'] == WPBIOGRAPHIA_VERSION) {
+			return;
+		}
+
+		if (!is_array ($settings)) {
+			/*
+			 * Something odd is going on, so define the default set of config settings ...
+			 */
+			$this->add_settings ();
+		}
+
+		else {
+			/*
+			 * Versions of WP Biographia prior to v2.1 had a bug where some configuration
+			 * settings that were created at initial installation of the plugin were not
+			 * persisted after the configuration settings were updated; one of these is
+			 * 'wp_biographia_version'. In this case, the "special" 00 version captures
+			 * and remedies this.
+			 */
+
+			if (isset ($settings['wp_biographia_version'])) {
+				$current_plugin_version = $settings['wp_biographia_version'];
+			}
+			else {
+				$current_plugin_version = '00';
+			}
+
+			/*
+			 * V1.0 configuration settings ...
+			 *
+			 * wp_biographia_installed
+			 * wp_biographia_version = "01"
+			 * wp_biographia_alert_bg
+			 * wp_biographia_display_front
+			 * wp_biographia_display_archives
+			 * wp_biographia_display_posts
+			 * wp_biographia_display_pages
+			 * wp_biographia_display_feed
+			 * wp_biographia_alert_border
+			 * wp_biographia_content_prefix
+			 * wp_biographia_content_name
+			 * wp_biographia_content_image
+			 * wp_biographia_content_bio
+			 * wp_biographia_content_web
+			 * wp_biographia_content_twitter
+			 * wp_biographia_content_facebook
+			 * wp_biographia_content_linkedin
+			 * wp_biographia_content_googleplus
+			 * wp_biographia_content_posts
+			 *
+			 * v2.0 added configuration settings ...
+			 *
+			 * wp_biographia_content_email = "on"
+			 * wp_biographia_content_image_size = "100"
+			 * wp_biographia_style_border (was wp_biographia_alert_border) = "top"
+			 * wp_biographia_style_bg (was wp_biographia_alert_bg) = "#FFEAA8"
+			 * wp_biographia_display_location = "bottom"
+			 * wp_biographia_page_exclusions (no default value)
+			 * wp_biographia_post_exclusions (no default value)
+			 *
+			 * v2.0 removed configuration settings
+			 *
+			 * wp_biographia_alert_border (replaced by wp_biographia_style_border)
+			 * wp_biographia_alert_bg (replaced by wp_biographia_style_bg)
+			 * 
+			 * v2.0 changed default configuration settings ...
+			 *
+			 * wp_biographia_version = "20"
+			 *
+	         * v2.1 added configuration settings ...
+			 *
+	         * wp_biographia_beta_enabled = ""
+	         * wp_biographia_suppress_posts = "" (user profile extension)
+	         * wp_biographia_suppress_pages = "" (user profile extension)
+			 *
+			 * v2.1 changed default configuration settings ...
+			 *
+			 * wp_biographia_version = "21"
+			 *
+			 * v2.1.1 changed default configuration settings ...
+			 *
+			 * wp_biographia_version = "211"
+			 *
+			 * v2.2 added configuration settings ...
+			 * wp_biographia_content_delicious = ""
+			 * wp_biographia_content_flickr = ""
+			 * wp_biographia_content_picasa = ""
+			 * wp_biographia_content_vimeo = ""
+			 * wp_biographia_content_youtube = ""
+			 * wp_biographia_content_reddit = ""
+			 *
+			 * v2.2 changed default configuration settings ...
+			 *
+			 * wp_biographia_version = "22"
+			 *
+			 * v2.2.1 changed default configuration settings ...
+			 * Note: v2.2.1 was a private beta and never formally released.
+			 *
+			 * wp_biographia_version = "221"
+			 *
+			 * v2.3 changed default configuration settings ...
+			 *
+			 * wp_biographia_version = "23"
+			 *
+			 * v2.4 added configuration settings ...
+			 *
+			 * wp_biographia_content_authorpage = "on"
+			 * wp_biographia_content_icons = ""
+			 * wp_biographia_content_alt_icons = ""
+			 * wp_biographia_content_icon_url = ""
+			 *
+			 * v2.4 changed default configuration settings ...
+			 *
+			 * wp_biographia_version = "24"
+			 *
+			 * v2.4.1 changed default configuration settings ...
+			 *
+			 * wp_biographia_version = "241"
+			 *
+			 * v2.4.2 changed default configuration settings ...
+			 *
+			 * wp_biographia_version = "242"
+			 *
+			 * v2.4.3 changed default configuration settings ...
+			 *
+			 * wp_biographia_version = "243"
+			 *
+			 * v2.4.4 changed default configuration settings ...
+			 *
+			 * wp_biographia_version = "244"
+			 */
+
+			switch ($current_plugin_version) {
+				case '00':
+					if (!isset ($settings['wp_biographia_installed'])) {
+						$settings['wp_biographia_installed'] = "on";
+					}
+					if (!isset ($settings['wp_biographia_style_bg'])) {
+						$settings['wp_biographia_style_bg'] = "#FFEAA8";
+					}
+					if (!isset ($settings['wp_biographia_style_border'])) {
+						$settings['wp_biographia_style_border'] = "top";
+					}
+					if (!isset ($settings['wp_biographia_display_front'])) {
+						$settings['wp_biographia_display_front'] = "";
+					}
+					if (!isset ($settings['wp_biographia_display_archives'])) {
+						$settings['wp_biographia_display_archives'] = "";
+					}
+					if (!isset ($settings['wp_biographia_display_posts'])) {
+						$settings['wp_biographia_display_posts'] = "";
+					}
+					if (!isset ($settings['wp_biographia_display_pages'])) {
+						$settings['wp_biographia_display_pages'] = "";
+					}
+					if (!isset ($settings['wp_biographia_display_feed'])) {
+						$settings['wp_biographia_display_feed'] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_prefix'])) {
+						$settings['wp_biographia_content_prefix'] = "About";
+					}
+					if (!isset ($settings['wp_biographia_content_name'])) {
+						$settings['wp_biographia_content_name'] = "none";
+					}
+					if (!isset ($settings['wp_biographia_content_image'])) {
+						$settings['wp_biographia_content_image'] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_bio'])) {
+						$settings['wp_biographia_content_bio'] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_web'])) {
+						$settings['wp_biographia_content_web'] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_twitter'])) {
+						$settings['wp_biographia_content_twitter'] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_facebook'])) {
+						$settings['wp_biographia_content_facebook'] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_linkedin'])) {
+						$settings['wp_biographia_content_linkedin'] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_googleplus'])) {
+						$settings['wp_biographia_content_googleplus'] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_posts'])) {
+						$settings['wp_biographia_content_posts'] = "none";
+					}
+
+				case '01':
+					if (!isset ($settings['wp_biographia_content_email'])) {
+						$settings["wp_biographia_content_email"] = "";
+					}
+
+					if (!isset ($settings['wp_biographia_content_image_size'])) {
+						$settings["wp_biographia_content_image_size"] = "100";
+					}
+
+					if (isset ($settings['wp_biographia_alert_border'])) {
+						if (!isset ($settings['wp_biographia_style_border'])) {
+							$settings['wp_biographia_style_border'] = $settings['wp_biographia_alert_border'];
+						}
+						unset ($settings['wp_biographia_alert_border']);
+					}
+
+					if (isset ($settings['wp_biographia_alert_bg'])) {
+						if (!isset ($settings['wp_biographia_style_bg'])) {
+							$settings['wp_biographia_style_bg'] = $settings['wp_biographia_alert_bg'];
+						}
+						unset ($settings['wp_biographia_alert_bg']);
+					}
+
+					if (!isset ($settings['wp_biographia_display_location'])) {
+						$settings["wp_biographia_display_location"] = "bottom";
+					}
+
+					$upgrade_settings = true;
+
+				case '20':
+	/*
+	 *				if (!isset ($settings['wp_biographia_beta_enabled'])) {
+	 *					$settings['wp_biographia_beta_enabled'] = "";
+	 *				}
+	 */
+
+					$users = $this->get_users ();
+					foreach ($users as $user) {
+						if (!get_user_meta ($user->ID,
+								'wp_biographia_suppress_posts',
+								true)) {
+							update_user_meta ($user->ID, 'wp_biographia_suppress_posts', '');
+						}
+
+						if (!get_user_meta ($user->ID,
+							'wp_biographia_suppress_pages',
+							true)) {
+							update_user_meta ($user->ID, 'wp_biographia_suppress_pages', '');
+						}
+					}
+					$upgrade_settings = true;
+
+				case '21':
+				case '211':
+				case '22':
+					if (!isset ($settings['wp_biographia_content_delicious'])) {
+						$settings["wp_biographia_content_delicious"] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_flickr'])) {
+						$settings["wp_biographia_content_flickr"] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_picasa'])) {
+						$settings["wp_biographia_content_picasa"] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_vimeo'])) {
+						$settings["wp_biographia_content_vimeo"] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_youtube'])) {
+						$settings["wp_biographia_content_youtube"] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_reddit'])) {
+						$settings["wp_biographia_content_reddit"] = "";
+					}
+
+				case '221':
+				case '23':
+				case '24':
+					if (!isset ($settings['wp_biographia_content_authorpage'])) {
+						$settings["wp_biographia_content_authorpage"] = "on";
+					}
+					if (!isset ($settings['wp_biographia_content_icons'])) {
+						$settings['wp_biographia_content_icons'] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_alt_icons'])) {
+						$settings['wp_biographia_content_alt_icons'] = "";
+					}
+					if (!isset ($settings['wp_biographia_content_icon_url'])) {
+						$settings['wp_biographia_content_icon_url'] = "";
+					}
+
+				case '241':
+				case '242':
+				case '243':
+				case '244':
+				case '30':
+					$settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
+					$upgrade_settings = true;
+
+				default:
+					break;
+			}	// end-switch
+
+			if ($upgrade_settings) {
+				update_option (self::OPTIONS, $settings);
+			}
+		}
+	}
+
+	function admin_display_settings () {
+		$settings = $this->admin_save_settings ();
+
+		$wrapped_content = array ();
+		$display_settings = array ();
+		$user_settings = array ();
+		$style_settings = array ();
+		$content_settings = array ();
+	/*
+	 *	$beta_settings = "";
+	 */
+
+		$image_size = "";
+		$avatars_enabled = (get_option ('show_avatars') == 1 ? true : false);
+		$icons_enabled = ($settings['wp_biographia_content_icons'] == 'on' ? true : false);
+		$alt_icons = ($settings['wp_biographia_content_alt_icons'] == 'on' ? true : false);
+
+	/*
+	 *	$beta_enabled = ($settings['wp_biographia_beta_enabled'] == "on" ? true : false);
+	 */
+
+		/*
+	 	 * Biography Box Display Settings
+	 	 */
+
+		$display_settings[] = '<p><strong>' . __("Display On Front Page", 'wp-biographia') . '</strong><br /> 
+					<input type="checkbox" name="wp_biographia_display_front" ' . checked ($settings['wp_biographia_display_front'], 'on', false) . ' />
+					<small>' . __('Displays the Biography Box for each post on the front page.', 'wp-biographia') . '</small></p>';
+
+
+		$display_settings[] = '<p><strong>' . __("Display On Individual Posts", 'wp-biographia') . '</strong><br /> 
+					<input type="checkbox" name="wp_biographia_display_posts" ' . checked ($settings['wp_biographia_display_posts'], 'on', false) . ' />
+					<small>' . __('Displays the Biography Box for individual posts.', 'wp-biographia') . '</small></p>';
+
+		// Archives -> Post Archives
+		$display_settings[] = '<p><strong>' . __("Display In Post Archives", 'wp-biographia') . '</strong><br /> 
+					<input type="checkbox" name="wp_biographia_display_archives" ' . checked ($settings['wp_biographia_display_archives'], 'on', false) . ' />
+					<small>' . __('Displays the Biography Box for each post on archive pages.', 'wp-biographia') . '</small></p>';	
+
+		// Add Post ID Exclusion
+		$display_settings[] = '<p><strong>' . __("Exclude From Single Posts (via Post ID)", 'wp-biographia') . '</strong><br />
+				<input type="text" name="wp_biographia_post_exclusions" id="wp_biographia_post_exclusions" value="' . $settings['wp_biographia_post_exclusions'] . '" /><br />
+				<small>' . __('Suppresses the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to suppress, comma separated with no spaces, e.g. 54,33,55', 'wp-biographia') . '</small></p>';
+
+		$display_settings[] = '<p><strong>' . __("Globally Exclude From Posts (via Post ID)", 'wp-biographia') . '</strong><br />
+			<input type="text" name="wp_biographia_global_post_exclusions" id="wp_biographia_global_post_exclusions" value="' . $settings['wp_biographia_global_post_exclusions'] . '" /><br />
+			<small>' . __('Suppresses the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
+
+		$display_settings[] = '<p><strong>' . __("Display On Individual Pages", 'wp-biographia') . '</strong><br /> 
+					<input type="checkbox" name="wp_biographia_display_pages" ' . checked ($settings['wp_biographia_display_pages'], 'on', false) . ' />
+					<small>' . __('Displays the Biography Box for individual pages.', 'wp-biographia') . '</small></p>';
+
+		// Add Page ID Exclusion
+		$display_settings[] = '<p><strong>' . __("Exclude Pages (via Page ID)", 'wp-biographia') . '</strong><br />
+			<input type="text" name="wp_biographia_page_exclusions" id="wp_biographia_page_exclusions" value="' . $settings['wp_biographia_page_exclusions'] . '" /><br />
+			<small>' . __('Suppresses the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
+
+		// Add Custom Post Types for Single & Archives
+		//'wp_biographia_display_archives_'.$pt->name
+
+		$args = array (
+			'public' => true,
+			'_builtin' => false
+		);
+
+		$pts = get_post_types ($args, 'objects');
+
+		foreach ($pts as $pt) {
+			$display_settings[] = '<p><strong>' . sprintf (__('Display On Individual %s', 'wp-biographia'), $pt->labels->name) . '</strong><br /> 
+						<input type="checkbox" name="wp_biographia_display_' . $pt->name . '" ' . checked ($settings['wp_biographia_display_' . $pt->name], 'on', false) . ' />
+						<small>' . sprintf (__('Displays the Biography Box on individual instances of custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';
+
+			$display_settings[] = '<p><strong>' . sprintf (__('Display In %s Archives', 'wp-biographia'), $pt->labels->singular_name) . '</strong><br /> 
+						<input type="checkbox" name="wp_biographia_display_archives_' . $pt->name . '" ' . checked ($settings['wp_biographia_display_archives_'.$pt->name], 'on', false) . ' />
+						<small>' . sprintf (__('Displays the Biography Box on archive pages for custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';	
+
+			$display_settings[] = '<p><strong>' . sprintf (__('Exclude From Single %1$s (via %2$s ID)', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
+				<input type="text" name="wp_biographia_' . $pt->name .'_exclusions" id="wp_biographia_'. $pt->name .'_exclusions" value="' . $settings['wp_biographia_' . $pt->name . '_exclusions'] . '" /><br />
+				<small>' . sprintf (__('Suppresses the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name) . '</small></p>';
+
+			$display_settings[] = '<p><strong>' . sprintf (__('Globally Exclude From %1$s (via %2$s ID).', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
+				<input type="text" name="wp_biographia_global_' . $pt->name . '_exclusions" id="wp_biographia_global_' . $pt->name . '_exclusions" value="' . $settings['wp_biographia_global_' . $pt->name . '_exclusions'] . '" /><br />
+				<small>' . sprintf (__('Suppresses the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name)  . '</small></p>';
+		}
+
+		$settings['wp_biographia_display_location'] = (
+			 isset($settings['wp_biographia_display_location']) ) ?
+			 $settings['wp_biographia_display_location'] : 'bottom';
+
+		// Add Display Location: Top/Bottom
+		$display_settings[] = '<p><strong>' . __("Display Location", 'wp-biographia') . '</strong><br />
+			<input type="radio" name="wp_biographia_display_location" id="wp-biographia-content-name" value="top" '
+			. checked ($settings['wp_biographia_display_location'], 'top', false)
+			.' />&nbsp;' . __('Display the Biography Box before the post or page content', 'wp-biographia') . '<br />
+			<input type="radio" name="wp_biographia_display_location" id="wp-biographia-content-name" value="bottom" '
+			. checked ($settings['wp_biographia_display_location'], 'bottom', false)
+			. ' />&nbsp;' . __('Display the Biography Box after the post or page content', 'wp-biographia') . '<br />';
+
+		$display_settings[] = '<p><strong>' . __("Display In RSS Feeds", 'wp-biographia') . '</strong><br />
+					<input type="checkbox" name="wp_biographia_display_feed" ' . checked ($settings['wp_biographia_display_feed'], 'on', false) . ' />
+					<small>' . __('Displays the Biography Box in feeds for each entry.', 'wp-biographia') . '</small></p>';
+
+		/*
+		 * Biography Box User Settings
+		 */
+
+		// Add per user suppression of the Biography Box on posts and on pages
+
+		$users = $this->get_users ();
+
+		$post_enabled = array ();
+		$post_suppressed = array ();
+		$page_enabled = array ();
+		$page_suppressed = array ();
+
+		foreach ($users as $user) {
+			if (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true) === 'on') {
+				$post_suppressed[$user->ID] = $user->user_login;
+			}
+
+			else {
+				$post_enabled[$user->ID] = $user->user_login;
+			}
+
+			if (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true) === 'on') {
+	 			$page_suppressed[$user->ID] = $user->user_login;
+			}
+
+			else {
+				$page_enabled[$user->ID] = $user->user_login;
+			}
+		}
+
+		$user_settings[] = '<p><strong>' . __('Per User Suppression Of The Biography Box On Posts', 'wp-biographia') . '</strong><br />';
+		$user_settings[] = '<span class="wp-biographia-users">';
+		$user_settings[] = '<strong>' . __('Enabled Users', 'wp-biographia') . '</strong><br />';
+		$user_settings[] = '<select multiple id="wp-biographia-enabled-post-users" name="wp-biographia-enabled-post-users[]">';
+
+		foreach ($post_enabled as $user_id => $user_login) {
+			$user_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
+		}
+
+		$user_settings[] = '</select>';
+		$user_settings[] = '<a href="#" id="wp-biographia-user-post-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
+		$user_settings[] = '</span>';
+		$user_settings[] = '<span class="wp-biographia-users">';
+		$user_settings[] = '<strong>' . __('Suppressed Users', 'wp-biographia') . '</strong><br />';
+		$user_settings[] = '<select multiple id="wp-biographia-suppressed-post-users" name="wp-biographia-suppressed-post-users[]">';
+
+		foreach ($post_suppressed as $user_id => $user_login) {
+			$user_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
+		}
+
+		$user_settings[] = '</select>';
+		$user_settings[] = '<a href="#" id="wp-biographia-user-post-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>';
+		$user_settings[] = '</span>';
+		$user_settings[] = '<br />';
+		$user_settings[] = '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored posts. Selecting a user for suppression of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
+
+		$user_settings[] = '<p><strong>' . __('Per User Suppression Of The Biography Box On Pages', 'wp-biographia') . '</strong><br />';
+		$user_settings[] = '<span class="wp-biographia-users">';
+		$user_settings[] = '<strong>' . __('Enabled Users', 'wp-biographia') . '</strong><br />';
+		$user_settings[] = '<select multiple id="wp-biographia-enabled-page-users" name="wp-biographia-enabled-page-users[]">';
+
+		foreach ($page_enabled as $user_id => $user_login) {
+			$user_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
+		}
+
+		$user_settings[] = '</select>';
+		$user_settings[] = '<a href="#" id="wp-biographia-user-page-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
+		$user_settings[] = '</span>';
+		$user_settings[] = '<span class="wp-biographia-users">';
+		$user_settings[] = '<strong>' . __('Suppressed Users', 'wp-biographia') . '</strong><br />';
+		$user_settings[] = '<select multiple id="wp-biographia-suppressed-page-users" name="wp-biographia-suppressed-page-users[]">';
+
+		foreach ($page_suppressed as $user_id => $user_login) {
+			$user_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
+		}
+
+		$user_settings[] = '</select>';
+		$user_settings[] = '<a href="#" id="wp-biographia-user-page-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>
+	</span>';
+		$user_settings[] = '<br />';
+		$user_settings[] = '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
+
+		/*
+		 * Biography Box Style Settings
+		 */
+
+		$style_settings[] = '<p><strong>' . __("Box Background Color", 'wp-biographia') . '</strong><br /> 
+					<input type="text" name="wp_biographia_style_bg" id="background-color" value="' . $settings['wp_biographia_style_bg'] . '" />
+					<a class="hide-if-no-js" href="#" id="pickcolor">' . __('Select a Color', 'wp-biographia') . '</a>
+					<div id="colorPickerDiv" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div>
+					<small>' . __('By default, the background color of the Biography Box is a yellowish tone.', 'wp-biographia') . '</small></p>';
+		$style_settings[] = '<p><strong>' . __("Box Border", 'wp-biographia') . '</strong><br /> 
+	                <select name="wp_biographia_style_border">
+	                  <option value="top" ' .selected($settings['wp_biographia_style_border'], 'top', false) . '>' . __('Thick Top Border', 'wp-biographia') . '</option>
+	                  <option value="around" ' .selected($settings['wp_biographia_style_border'], 'around', false) . '>' . __('Thin Surrounding Border', 'wp-biographia') . '</option>
+	                  <option value="none" ' .selected($settings['wp_biographia_style_border'], 'none', false) . '>' . __('No Border', 'wp-biographia') . '</option>
+	                </select><br /><small>' . __('By default, a thick black line is displayed above the Biography Box.', 'wp-biographia') . '</small></p>';
+
+		/*
+		 * Biography Box Content Settings
+		 */
+
+		$content_settings[] = '<p><strong>' . __("Biography Prefix", 'wp-biographia') . '</strong><br />
+			<input type="text" name="wp_biographia_content_prefix" id="wp-biographia-content-name" value="'
+			. $settings["wp_biographia_content_prefix"]
+			. '" /><br />
+			<small>' . __('Prefix text to be prepended to the author\'s name', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Author's Name", 'wp-biographia') . '</strong><br />
+			<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="first-last-name" '
+			. checked ($settings['wp_biographia_content_name'], 'first-last-name', false)
+			.' />&nbsp;' . __('First/Last Name', 'wp-biographia') . '<br />
+			<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="account-name" '
+			. checked ($settings['wp_biographia_content_name'], 'account-name', false)
+			. ' />&nbsp;' . __('Account Name', 'wp-biographia') . '<br />
+			<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="nickname" '
+			. checked ($settings['wp_biographia_content_name'], 'nickname', false)
+			. ' />&nbsp;' . __('Nickname', 'wp-biographia') . '<br />
+			<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="display-name" '
+			. checked ($settings['wp_biographia_content_name'], 'display-name', false)
+			. ' />&nbsp;' . __('Display Name', 'wp-biographia') . '<br />
+			<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="none" '
+			. checked ($settings['wp_biographia_content_name'], 'none', false)
+			. ' />&nbsp;' . __('Don\'t Show The Name', 'wp-biographia') . '<br />
+			<small>' . __('How you want to see the author\'s name displayed (if at all)', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __('Author\'s Name Link', 'wp-biographia') . '</strong><br/>
+			<input type="checkbox" name="wp_biographia_content_authorpage" '
+			.checked ($settings['wp_biographia_content_authorpage'], 'on', false)
+			. '/>
+			<small>' . __('Make author\'s name link to <em>More Posts By This Author</em>', 'wp_biographia') . '</small></p>';
+
+		if (!$avatars_enabled) {
+			$content_settings[] = '<div class="wp-biographia-warning">'
+				. sprintf (__('It looks like Avatars are not currently enabled; this means that the author\'s image won\'t be able to be displayed. If you want this to happen then go to <a href="%s">Settings &rsaquo; Discussions</a> and set Avatar Display to Show Avatars.', 'wp-biographia'), admin_url('options-discussion.php')) . '</div>';
+		}
+
+		$content_settings[] = '<p><strong>' . __("Author's Image", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_image" '
+			. checked ($settings['wp_biographia_content_image'], 'on', false)
+			. disabled ($avatars_enabled, false, false)
+			. '/>
+			<small>' . __('Display the author\'s image?', 'wp-biographia') . '</small></p>';
+
+		if (!isset ($settings['wp_biographia_content_image_size']) ||
+				$settings['wp_biographia_content_image_size'] === '' ||
+				$settings['wp_biographia_content_image_size'] === 0) {
+			$image_size = '100';
+		}
+
+		else {
+			$image_size = $settings['wp_biographia_content_image_size'];
+		}
+
+		$content_settings[] = '<p><strong>' . __("Image Size", 'wp-biographia') . '</strong><br />
+			<input type="text" name="wp_biographia_content_image_size" id="wp_biographia_content_image_size" value="'. $image_size .'"'
+			. disabled ($avatars_enabled, false, false)
+			. '/><br />'
+			. '<small>' . __('Enter image size, e.g. 32 for a 32x32 image, 70 for a 70x70 image, etc. Defaults to a 100x100 size image.', 'wp-biographia') . '</small></p>';
+		$content_settings[] = '<p><strong>' . __("Show Author's Biography", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_bio" '
+			. checked ($settings['wp_biographia_content_bio'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s biography?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Contact Links As Icons", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_icons" id="wp-biographia-content-icons" '
+			. checked ($settings['wp_biographia_content_icons'], 'on', false)
+			. '/>
+			<small>' . __('Show the author\'s contact links as icons?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<div id="wp-biographia-icon-container"';
+		if (!$icons_enabled) {
+			$content_settings[] = ' style="display:none"';
+		}
+		$content_settings[] = '><p><strong>' . __("Use Alternate Icon Set", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_alt_icons" id="wp-biographia-content-alt-icons" '
+			. checked ($settings['wp_biographia_content_alt_icons'], 'on', false)
+			. '/>
+			<small>' . __('Use an alternative icon set for contact links?', 'wp-biographia') . '</small></p>'
+			. '<p><strong>' . __("Alternate Icon Set URL", 'wp-biographia') . '</strong><br />
+			<input type="text" name="wp_biographia_content_icon_url" id="wp-biographia-content-icon-url" value="'
+			. $settings["wp_biographia_content_icon_url"]
+			. '" '
+			. disabled ($alt_icons, false, false)
+			. '/><br />
+			<small>' . __('Enter the URL where the alternate contact links icon set is located', 'wp-biographia') . '</small></p></div>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's Email Address", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_email" '
+			. checked ($settings['wp_biographia_content_email'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s email address?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's Website Link", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_web" '
+			. checked ($settings['wp_biographia_content_web'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s website details?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's Twitter Link", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_twitter" '
+			. checked ($settings['wp_biographia_content_twitter'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s Twitter details?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's Facebook Link", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_facebook" '
+			. checked ($settings['wp_biographia_content_facebook'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s Facebook details?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's LinkedIn Link", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_linkedin" '
+			. checked ($settings['wp_biographia_content_linkedin'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s LinkedIn details?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's Google+ Link", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_googleplus" '
+			. checked ($settings['wp_biographia_content_googleplus'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s Google+ details?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's Delicious Link", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_delicious" '
+			. checked ($settings['wp_biographia_content_delicious'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s Delicious details?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's Flickr Link", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_flickr" '
+			. checked ($settings['wp_biographia_content_flickr'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s Flickr details?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's Picasa Link", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_picasa" '
+			. checked ($settings['wp_biographia_content_picasa'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s Picasa details?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's Vimeo Link", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_vimeo" '
+			. checked ($settings['wp_biographia_content_vimeo'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s Vimeo details?' , 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's YouTube Link", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_youtube" '
+			. checked ($settings['wp_biographia_content_youtube'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s YouTube details?', 'wp-biographia') . '</small></p>';
+
+		$content_settings[] = '<p><strong>' . __("Show Author's Reddit Link", 'wp-biographia') . '</strong><br />
+			<input type="checkbox" name="wp_biographia_content_reddit" '
+			. checked ($settings['wp_biographia_content_reddit'], 'on', false)
+			. '/>
+			<small>' . __('Display the author\'s Reddit details?', 'wp-biographia') . '</small></p>';
+
+
+		$content_settings[] = '<p><strong>' . __("Show More Posts Link", 'wp-biographia') . '</strong><br />
+			<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="basic" '
+			. checked ($settings['wp_biographia_content_posts'], 'basic', false)
+			. ' />&nbsp;' . __('Basic More Posts Link', 'wp-biographia') . '<br />
+			<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="extended" '
+			. checked ($settings['wp_biographia_content_posts'], 'extended', false)
+			. ' />&nbsp;' . __('Extended More Posts Link', 'wp-biographia') . '<br />
+			<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="none" '
+			. checked ($settings['wp_biographia_content_posts'], 'none', false)
+			. ' />&nbsp;' . __('Don\'t Show The More Posts Link', 'wp-biographia') . '<br />
+			<small>' . __('How you want to display and format the <em>More Posts By This Author</em> link', 'wp-biographia') . '</small></p>';
+
+		/*
+		 * Biography Box Experimental Settings
+		 */
+
+	/*
+		$beta_settings[] = '<div class="wp-biographia-warning">'
+			. '<em>Here be dragons.</em>These are new and/or experimental features. '
+			. 'While they\'ve been requested by WP Biographia users and have '
+			. 'been tested, a WordPress install is a complex beast and these settings may break other '
+			. 'plugins, do strange and unexpected things or generally make you scratch your head and '
+			. 'go <em>Huh?</em>. So if you enable these settings and odd things happen, then '
+			. 'please disable them and <a href="http://wordpress.org/tags/wp-biographia?forum_id=10">'
+			. 'let me know</a>. If you enable them and they do just what they\'re supposed to do, '
+			. 'then <a href="http://wordpress.org/tags/wp-biographia?forum_id=10">please let me know'
+			. '</a> as well!'
+			. '</div>';
+
+		$beta_settings[] = '<p><strong>' . __("Enable Experimental Features") . '</strong><br />
+			<input type="checkbox" name="wp_biographia_beta_enabled" '
+			. checked ($settings['wp_biographia_beta_enabled'], 'on', false)
+			. '/>
+			<small>Enable setting and use of WP Biographia experimental features</small></p>';
+	*/
+
+		if (function_exists ('wp_nonce_field')) {
+			$wrapped_content[] = wp_nonce_field (
+				'wp-biographia-update-options',
+				'_wpnonce',
+				true,
+				false);
+		}
+
+		$wrapped_content[] = $this->admin_postbox ('wp-biographia-display-settings',
+			__('Biography Box Display Settings', 'wp-biographia'),
+			implode ('', $display_settings));
+
+		$wrapped_content[] = $this->admin_postbox ('wp-biographia-user-settings',
+			__('Biography Box Per User Settings', 'wp-biographia'),
+			implode ('', $user_settings));
+
+		$wrapped_content[] = $this->admin_postbox ('wp-biographia-style-settings',
+			__('Biography Box Style Settings', 'wp-biographia'),
+			implode ('', $style_settings));
+
+		$wrapped_content[] = $this->admin_postbox ('wp-biographia-settings-content',
+			__('Biography Box Content Settings', 'wp-biographia'),
+			implode ('', $content_settings));
+
+	/*
+	 *	$wrapped_content[] = wp_biographia_postbox ('wp-biographia-settings-beta', 'Biography Box Experimental Settings', implode ('', $beta_settings));
+	 */	
+
+		$this->admin_wrap (__('WP Biographia Settings And Options', 'wp-biographia'),
+			implode ('', $wrapped_content));
+	}
+
+	/*
+	 * Save the submitted admin options
+	 */
+
+	function admin_option ($field) {
+		return (isset ($_POST[$field]) ? $_POST[$field] : "");
+	}
+
+	function admin_meta_option ($user_array, $meta_key, $meta_value) {
+		if ($user_array) {
+			foreach ($user_array as $id) {
+				update_user_meta ($id, $meta_key, $meta_value);
+			}
+		}
+	}
+
+	function admin_save_settings () {
+		$settings = $this->get_option ();
+
+		if (!empty ($_POST['wp_biographia_option_submitted'])) {
+			if (strstr ($_GET['page'], "wp-biographia") &&
+			 		check_admin_referer ('wp-biographia-update-options')) {
+
+				/*
+				 * Biography Box Display Settings
+				 */
+
+				$settings['wp_biographia_display_front'] =
+					$this->admin_option ('wp_biographia_display_front');
+
+				$settings['wp_biographia_display_archives'] =
+					$this->admin_option ('wp_biographia_display_archives');
+
+				$settings['wp_biographia_display_posts'] =
+					$this->admin_option ('wp_biographia_display_posts');
+
+				// Add Custom Post Types for Archives & Single
+				$args = array (
+					'public' => true,
+					'_builtin' => false
+				);
+
+				$pts = get_post_types ($args, 'objects');
+				foreach ($pts as $pt) {
+					$settings['wp_biographia_display_archives_' . $pt->name] =
+						$this->admin_option ('wp_biographia_display_archives_' . $pt->name);
+
+
+					$settings['wp_biographia_display_' . $pt->name] =
+						$this->admin_option ('wp_biographia_display_' . $pt->name);
+
+					$settings['wp_biographia_' . $pt->name . '_exclusions'] =
+						$this->admin_option ('wp_biographia_' . $pt->name . '_exclusions');
+
+					$settings['wp_biographia_global_' . $pt->name . '_exclusions'] =
+						$this->admin_option ('wp_biographia_global_' . $pt->name . '_exclusions');
+				}
+
+				// Post exclusions 
+				$settings['wp_biographia_post_exclusions'] =
+					$this->admin_option ('wp_biographia_post_exclusions');
+
+				$settings['wp_biographia_global_post_exclusions'] =
+					$this->admin_option ('wp_biographia_global_post_exclusions');
+
+				$settings['wp_biographia_display_pages'] =
+						$this->admin_option ('wp_biographia_display_pages');
+
+				// Page exclusions 
+				$settings['wp_biographia_page_exclusions'] =
+					$this->admin_option ('wp_biographia_page_exclusions');
+
+				// Per user suppression of the Biography Box on posts and on pages
+
+				$enabled_post_users = $_POST['wp-biographia-enabled-post-users'];
+				$suppressed_post_users = $_POST['wp-biographia-suppressed-post-users'];
+				$enabled_page_users = $_POST['wp-biographia-enabled-page-users'];
+				$suppressed_page_users = $_POST['wp-biographia-suppressed-page-users'];
+
+				$this->admin_meta_option ($enabled_post_users,
+											'wp_biographia_suppress_posts',
+											'');
+				$this->admin_meta_option ($suppressed_post_users,
+											'wp_biographia_suppress_posts',
+											'on');
+				$this->admin_meta_option ($enabled_page_users,
+											'wp_biographia_suppress_pages',
+											'');
+				$this->admin_meta_option ($suppressed_page_users,
+											'wp_biographia_suppress_pages',
+											'on');
+
+				// Add my additions: location-top/bottom
+				$settings['wp_biographia_display_location'] =
+					$this->admin_option ('wp_biographia_display_location');
+
+				$settings['wp_biographia_display_feed'] =
+					$this->admin_option ('wp_biographia_display_feed');
+
+				/*
+				 * Biography Box Style Settings
+				 */
+
+				$color = preg_replace ('/[^0-9a-fA-F]/', '', $_POST['wp_biographia_style_bg']);
+
+				if ((strlen ($color) == 6 || strlen ($color) == 3) &&
+	 				isset($_POST['wp_biographia_style_bg'])) {
+						$settings['wp_biographia_style_bg'] = $_POST['wp_biographia_style_bg'];
+				}
+
+				$settings['wp_biographia_style_border'] = 
+					$this->admin_option ('wp_biographia_style_border');
+
+				/*
+				 * Biography Box Content Settings
+				 */
+				$settings['wp_biographia_content_prefix'] = 
+					$this->admin_option ('wp_biographia_content_prefix');
+
+				$settings['wp_biographia_content_name'] = 
+					$this->admin_option ('wp_biographia_content_name');
+
+				$settings['wp_biographia_content_authorpage'] =
+					$this->admin_option ('wp_biographia_content_authorpage');
+
+				$settings['wp_biographia_content_image'] = 
+					$this->admin_option ('wp_biographia_content_image');
+
+				// Add Image Size
+				$settings['wp_biographia_content_image_size'] = 
+					$this->admin_option ('wp_biographia_content_image_size');
+
+				$settings['wp_biographia_content_bio'] = 
+					$this->admin_option ('wp_biographia_content_bio');
+
+				$settings['wp_biographia_content_icons'] = 
+					$this->admin_option ('wp_biographia_content_icons');
+
+				$settings['wp_biographia_content_alt_icons'] = 
+					$this->admin_option ('wp_biographia_content_alt_icons');
+
+				$settings['wp_biographia_content_icon_url'] =
+					$this->admin_option ('wp_biographia_content_icon_url');
+
+				$settings['wp_biographia_content_email'] = 
+					$this->admin_option ('wp_biographia_content_email');
+
+				$settings['wp_biographia_content_web'] = 
+					$this->admin_option ('wp_biographia_content_web');
+
+				$settings['wp_biographia_content_twitter'] = 
+					$this->admin_option ('wp_biographia_content_twitter');
+
+				$settings['wp_biographia_content_facebook'] = 
+					$this->admin_option ('wp_biographia_content_facebook');
+
+				$settings['wp_biographia_content_linkedin'] = 
+					$this->admin_option ('wp_biographia_content_linkedin');
+
+				$settings['wp_biographia_content_googleplus'] = 
+					$this->admin_option ('wp_biographia_content_googleplus');
+
+				$settings['wp_biographia_content_delicious'] =
+					$this->admin_option ('wp_biographia_content_delicious');
+
+				$settings['wp_biographia_content_flickr'] =
+					$this->admin_option ('wp_biographia_content_flickr');
+
+				$settings['wp_biographia_content_picasa'] =
+					$this->admin_option ('wp_biographia_content_picasa');
+
+				$settings['wp_biographia_content_vimeo'] =
+					$this->admin_option ('wp_biographia_content_vimeo');
+
+				$settings['wp_biographia_content_youtube'] =
+					$this->admin_option ('wp_biographia_content_youtube');
+
+				$settings['wp_biographia_content_reddit'] =
+					$this->admin_option ('wp_biographia_content_reddit');
+
+				$settings['wp_biographia_content_posts'] = 
+					$this->admin_option ('wp_biographia_content_posts');
+
+				/*
+				 * Biography Box Beta/Experimental Settings
+				 */
+
+				/*
+				$settings['wp_biographia_beta_enabled'] = 
+					$this->admin_option ('wp_biographia_beta_enabled');
+				*/
+
+				echo "<div id=\"updatemessage\" class=\"updated fade\"><p>";
+				_e('WP Biographia Settings And Options Updated.', 'wp-biographia');
+				echo "</p></div>\n";
+				echo "<script type=\"text/javascript\">setTimeout(function(){jQuery('#updatemessage').hide('slow');}, 3000);</script>";	
+
+				update_option (self::OPTIONS, $settings);
+			}
+		}
+
+		$settings = $this->get_option ();
+
+		return $settings;
+	}
+
+	function admin_postbox ($id, $title, $content) {
+		$handle_title = __('Click to toggle', 'wp-biographia');
+		$wrapper = array ();
+		
+		$wrapper[] = '<div id="' . $id . '" class="postbox">';
+		$wrapper[] = '<div class="handlediv" title="'
+			. $handle_title
+			. '"><br /></div>';
+		$wrapper[] = '<h3 class="hndle"><span>' . $title . '</span></h3>';
+		$wrapper[] = '<div class="inside">' . $content . '</div></div>';
+
+		return implode ('', $wrapper);
+	}	
+
+	/*
+	 * Wrap up all the constituent components of our admin panel
+	 */
+
+	function admin_wrap ($title, $content) {
+	?>
+	    <div class="wrap">
+	        <h2><?php echo $title; ?></h2>
+	        <form method="post" action="">
+	            <div class="postbox-container wp-biographia-postbox-settings">
+	                <div class="metabox-holder">	
+	                    <div class="meta-box-sortables">
+	                    <?php
+	                        echo $content;
+	                    ?>
+	                    <p class="submit"> 
+	                        <input type="submit" name="wp_biographia_option_submitted" class="button-primary" value="<?php _e('Save Changes', 'wp-biographia')?>" /> 
+	                    </p> 
+	                    <br /><br />
+	                    </div>
+	                  </div>
+	                </div>
+	                <div class="postbox-container wp-biographia-postbox-sidebar">
+	                  <div class="metabox-holder">	
+	                    <div class="meta-box-sortables">
+	                    <?php
+							echo $this->admin_help_and_support ();
+							echo $this->admin_colophon ();
+							echo $this->admin_acknowledgements ();
+	                    ?>
+	                    </div>
+	                </div>
+	            </div>
+	        </form>
+	    </div>
+	<?php
+	}
 	
+	function admin_colophon () {
+		$content = array ();
+		
+		$content[] = '<p><em>"When it comes to software, I much prefer free software, because I have very seldom seen a program that has worked well enough for my needs and having sources available can be a life-saver"</em>&nbsp;&hellip;&nbsp;Linus Torvalds</p><p>';
+		$content[] = __('For the inner nerd in you, the latest version of WP Biographia was written using <a href="http://macromates.com/">TextMate</a> on a MacBook Pro running OS X 10.7.2 Lion and tested on the same machine running <a href="http://mamp.info/en/index.html">MAMP</a> (Mac/Apache/MySQL/PHP) before being let loose on the author\'s <a href="http://www.vicchi.org/">blog</a>.', 'wp-biographia');
+		$content[] = '</p><p>';
+		$content[] = __('The official home for WP Biographia is on <a href="http://www.vicchi.org/codeage/wp-biographia/">Gary\'s Codeage</a>; it\'s also available from the official <a href="http://wordpress.org/extend/plugins/wp-biographia/">WordPress plugins repository</a>. If you\'re interested in what lies under the hood, the code is also on <a href="https://github.com/vicchi/wp-biographia">GitHub</a> to download, fork and otherwise hack around.', 'wp-biographia');
+		$content[] = '</p><p>';
+		$content[] = __('WP Biographia is named after the etymology of the modern English word <em>biography</em>. The word first appeared in the 1680s, probably from the latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, meaning "life" and <em>graphia</em>, meaning "record" or "account" which derived from <em>graphein</em>, "to write".', 'wp-biographia');
+		$content[] = '</p><p><small>Dictionary.com, "biography," in <em>Online Etymology Dictionary</em>. Source location: Douglas Harper, Historian. <a href="http://dictionary.reference.com/browse/biography">http://dictionary.reference.com/browse/biography</a>. Available: <a href="http://dictionary.reference.com">http://dictionary.reference.com</a>. Accessed: July 27, 2011.</small></p>';
+
+		return $this->admin_postbox (
+			'wp-biographia-colophon', __('Colophon', 'wp-biographia'),
+			implode ('', $content));
+	}
+
+	/*
+	 * Define the Help and Support side box
+	 */
+
+	function admin_help_and_support () {
+		$email_address = antispambot ("gary@vicchi.org");
+		$content = array ();
+
+		$content[] = '<p>';
+		$content[] =  __('For help and support with WP Biographia, here\'s what you can do:', 'wp-biographia');
+		$content[] = '<ul><li>';
+		$content[] = __('Ask a question on the <a href="http://wordpress.org/tags/wp-biographia?forum_id=10">WordPress support forum</a>; this is by far the best way so that other users can follow the conversation.', 'wp-biographia');
+		$content[] = '</li><li>';
+		$content[] = __('Ask me a question on Twitter; I\'m <a href="http://twitter.com/vicchi">@vicchi</a>.', 'wp-biographia');
+		$content[] = '</li><li>';
+		$content[] = sprintf (__('Drop me an <a href="mailto:%s">email </a>instead.', 'wp-biographia'), $email_address);
+		$content[] = '</li></ul></p><p>';
+		$content[] = __('But help and support is a two way street; here\'s what you might want to do:', 'wp-biographia');
+		$content[] = '<ul><li>';
+		$content[] = sprintf (__('If you like this plugin and use it on your WordPress site, or if you write about it online, <a href="http://www.vicchi.org/codeage/wp-biographia/">link to the plugin</a> and drop me an <a href="mailto:%s">email</a> telling me about this.', 'wp-biographia'), $email_address);
+		$content[] = '</li><li>';
+		$content[] = __('Rate the plugin on the <a href="http://wordpress.org/extend/plugins/wp-biographia/">WordPress plugin repository</a>.', 'wp-biographia');
+		$content[] = '</li><li>';
+		$content[] = __('WP Biographia is both free as in speech and free as in beer. No donations are required; <a href="http://www.vicchi.org/codeage/donate/">here\'s why</a>.', 'wp-biographia');
+		$content[] = '</li></ul></p>';
+
+		return $this->admin_postbox ('wp-biographia-support',
+			__('Help &amp; Support', 'wp-biographia'),
+			implode ('', $content));
+	}
+
+	/*
+	 * Define the Acknowledgements side box
+	 */
+
+	function admin_acknowledgements () {
+		$email_address = antispambot ("gary@vicchi.org");
+		$content = array ();
+
+		$content[] = '<p>';
+		$content[] = __('WP Biographia is inspired by and based on <a href="http://www.jonbishop.com">Jon Bishop\'s</a> <a href="http://wordpress.org/extend/plugins/wp-about-author/">WP About Author</a> plugin. Thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place. Jon\'s written other <a href="http://profiles.wordpress.org/users/JonBishop/">WordPress plugins</a> as well; you should take a look.', 'wp-biographia');
+		$content[] = '</p>';
+
+		$content[] = '<p>';
+		$content[] = __('WP Biographia is now internationalised. Turkish language translation and support is thanks to <a href="https://twitter.com/#!/KazancExpert">Hakan Er</a>.', 'wp-biographia');
+		$content[] = '</p>';
+
+		$content[] = '<p>';
+		$content[] = sprintf (__('If you\'d like to see WP Biographia translated into your language and want to help with the process, then please drop me an <a href="mailto:%s">email</a>.', 'wp-biographia'), $email_address);
+		$content[] = '</p>';
+
+		return $this->admin_postbox ('wo-biographia-acknowledgements',
+			__('Acknowledgements', 'wp-biographia'),
+			implode ('', $content));
+	}
+
 }
 
 //define ('WPBIOGRAPHIA_VERSION', '24');
