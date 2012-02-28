@@ -349,6 +349,14 @@ function wp_biographia_upgrade() {
 			case '242':
 			case '243':
 			case '244':
+			case '25':
+				if (!isset ($wp_biographia_settings['wp_biographia_content_github'])) {
+					$wp_biographia_settings["wp_biographia_content_github"] = "";
+				}
+				if (!isset ($wp_biographia_settings['wp_biographia_content_bitbucket'])) {
+					$wp_biographia_settings["wp_biographia_content_bitbucket"] = "";
+				}
+
 				$wp_biographia_settings['wp_biographia_version'] = WPBIOGRAPHIA_VERSION;
 				$upgrade_settings = true;
 				
@@ -821,6 +829,19 @@ function wp_biographia_general_settings() {
 		. '/>
 		<small>' . __('Display the author\'s Reddit details?', 'wp-biographia') . '</small></p>';
 
+	$content_settings .= '<p><strong>' . __("Show Author's GitHub Link", 'wp-biographia') . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_github" '
+		. checked ($wp_biographia_settings['wp_biographia_content_github'], 'on', false)
+		. '/>
+		<small>' . __('Display the author\'s GitHub details?', 'wp-biographia') . '</small></p>';
+		
+	$content_settings .= '<p><strong>' . __("Show Author's Bitbucket Link", 'wp-biographia') . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_bitbucket" '
+		. checked ($wp_biographia_settings['wp_biographia_content_bitbucket'], 'on', false)
+		. '/>
+		<small>' . __('Display the author\'s Bitbucket details?', 'wp-biographia') . '</small></p>';
+
+
 	
 	$content_settings .= '<p><strong>' . __("Show More Posts Link", 'wp-biographia') . '</strong><br />
 		<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="basic" '
@@ -1064,6 +1085,12 @@ function wp_biographia_process_settings() {
 
 			$wp_biographia_settings['wp_biographia_content_reddit'] =
 				wp_biographia_option ('wp_biographia_content_reddit');
+				
+			$wp_biographia_settings['wp_biographia_content_github'] =
+				wp_biographia_option ('wp_biographia_content_github');
+				
+			$wp_biographia_settings['wp_biographia_content_bitbucket'] =
+				wp_biographia_option ('wp_biographia_content_bitbucket');
 
 			$wp_biographia_settings['wp_biographia_content_posts'] = 
 				wp_biographia_option ('wp_biographia_content_posts');

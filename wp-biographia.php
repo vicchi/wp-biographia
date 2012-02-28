@@ -10,7 +10,7 @@ License: GPL2
 Text Domain: wp-biographia
 */
 
-define ('WPBIOGRAPHIA_VERSION', '244');
+define ('WPBIOGRAPHIA_VERSION', '25');
 define ('WPBIOGRAPHIAURL_URL', plugin_dir_url(__FILE__));
 define ('WPBIOGRAPHIAURL_PATH', plugin_dir_path(__FILE__));
 
@@ -67,6 +67,8 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 	$wp_biographia_author['vimeo'] = get_the_author_meta ('vimeo', $author_id);
 	$wp_biographia_author['youtube'] = get_the_author_meta ('youtube', $author_id);
 	$wp_biographia_author['reddit'] = get_the_author_meta ('reddit', $author_id);
+	$wp_biographia_author['github'] = get_the_author_meta ('github', $author_id);
+	$wp_biographia_author['bitbucket'] = get_the_author_meta ('bitbucket', $author_id);
 	$wp_biographia_author['posts'] = (int)count_user_posts ($author_id);
   	$wp_biographia_author['posts_url'] = get_author_posts_url ($author_id);
 
@@ -232,6 +234,16 @@ function wp_biographia_display($for_feed=false, $author_id=NULL, $override=NULL)
 			"link_title" => __('Reddit', 'wp-biographia'),
 			"link_text" => __('Reddit', 'wp-biographia'),
 			"link_icon" => $icon_dir_url . 'reddit.png'
+			),
+		"github" => array (
+			"link_title" => __('GitHub', 'wp-biographia'),
+			"link_text" => __('GitHub', 'wp-biographia'),
+			"link_icon" => $icon_dir_url . 'github.png'
+			),
+		"bitbucket" => array (
+			"link_title" => __('Bitbucket', 'wp-biographia'),
+			"link_text" => __('Bitbucket', 'wp-biographia'),
+			"link_icon" => $icon_dir_url . 'bitbucket.png'
 			),
 	);
 
@@ -766,6 +778,8 @@ function wp_biographia_filter_contact($contactmethods) {
 	$contactmethods['aim'] = __('AIM', 'wp-biographia');
 	$contactmethods['msn'] = __('Windows Live Messenger', 'wp-biographia');
 	$contactmethods['jabber'] = __('Jabber / Google Talk', 'wp-biographia');
+	$contactmethods['github'] = __('GitHub', 'wp-biographia');
+	$contactmethods['bitbucket'] = __('BitBucket', 'wp-biographia');
 
 	return $contactmethods;
 }
