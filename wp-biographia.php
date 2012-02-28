@@ -14,7 +14,7 @@ define ('WPBIOGRAPHIA_PATH', plugin_dir_path (__FILE__));
 
 require_once (WPBIOGRAPHIA_PATH . '/wp-plugin-base/wp-plugin-base.php');
 
-class WP_Biographia extends WPPluginBase { 
+class WP_Biographia extends WP_PluginBase { 
 
 	static $instance;
 	public $author_id;
