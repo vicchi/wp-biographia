@@ -29,6 +29,10 @@ class WP_Biographia extends WP_PluginBase {
 	const PLUGIN_URL = '';
 	const PLUGIN_PATH = '';
 	
+	/**
+	 * Class constructor
+	 */
+	
 	function __construct() { 
 		self::$instance = $this;
 		define ('PLUGIN_URL', plugin_dir_url (__FILE__));
@@ -39,8 +43,14 @@ class WP_Biographia extends WP_PluginBase {
 		$this->icon_dir_url = PLUGIN_URL . 'images/';
 	}
 	
+	/**
+	 * "plugins_loaded" action hook; called after all active plugins and pluggable functions
+	 * are loaded.
+	 *
+	 * Adds front-end display actions, shortcode support and admin actions.
+	 */
+	
 	function plugins_loaded () {
-
 		register_activation_hook (__FILE__, array ($this, 'add_settings'));
 
 		$this->hook ('wp_enqueue_scripts', 'style');
@@ -65,11 +75,34 @@ class WP_Biographia extends WP_PluginBase {
 		}
 	}
 	
+	/**
+	 * Queries the back-end database for WP Biographia settings and options.
+	 *
+	 * @param string $key Optional settings/options key name; if specified only the value
+	 * for the key will be returned, if omitted all settings/options will be returned.
+	 * @return mixed If $key is specified, a string containing the key's settings/option 
+	 * value is returned. If $key is omitted, an array containing all settings/options will
+	 * be returned.
+	 */
+	
 	function get_option ($key='') {
 		$options = get_option (self::OPTIONS);
-		if(isset($options[$key])) return $options[$key];
-		else return $options;
+
+		if(isset($options[$key])) {
+			return $options[$key];
+		}
+
+		else {
+			return $options;
+		}
 	}
+	
+	/**
+	 * Adds/updates a settings/option key and value in the back-end database.
+	 *
+	 * @param string key Settings/option key to be created/updated.
+	 * @param string value Value to be associated with the specified settings/option key
+	 */
 	
 	function set_option ($key , $value) {
 		$options = get_option (self::OPTIONS);
@@ -77,27 +110,41 @@ class WP_Biographia extends WP_PluginBase {
 		update_option (self::OPTIONS , $options);
 	}
 	
-	function init() {
+	/**
+	 * "init" action hook; called to initialise the plugin
+	 */
+	
+	function init () {
 		$lang_dir = basename (dirname (__FILE__)) . DIRECTORY_SEPARATOR . 'lang';
 		load_plugin_textdomain ('wp-biographia', false, $lang_dir);
 	}
 	
-	/*
-	 * Filterable defaults (future use?)
-	 * Used in display() and user_contactmethods()
+	/**
+	 * Wrapper function for the WP_User_Query class. Queries the back-end database and
+	 * returns a list of users.
 	 *
-	 * @author Travis Smith
-	 * @return array output
+	 * @param string role Constrains the search to users of a specific role. Optional;
+	 * if omitted all users will be returned.
+	 * @param array args Array that specifies the fields to be returned. Optional; if
+	 * omitted the ID and user_login fields will be returned.
+	 * @return array Array containing the users that the search returned.
 	 */
+	 
 	function get_users ($role='', $args=array (0 => 'ID', 1 => 'user_login')) {
 		$wp_user_search = new WP_User_Query (array ('role' => $role, 'fields' => $args));
 		$roles = $wp_user_search->get_results ();
 		return $roles;
 	}
 	
-	/*
-	 * Sanitize/filter the author's profile contact info, via the user_contactmethods filter hook
+	
+	/**
+	 * "user_contactmethods" filter hook; Sanitizes, filters and augments the author's
+	 * profile contact information.
+	 *
+	 * @param array contactmethods Array containing the current set of contact methods.
+	 * @return array Array containing the modified set of contact methods.
 	 */
+	
 	function user_contactmethods ($contactmethods) {
 
 		foreach ($this->defaults() as $key => $data) {
@@ -109,9 +156,15 @@ class WP_Biographia extends WP_PluginBase {
 		return $contactmethods;
 	}
 	
-	/*
-	 * Define and set up the default settings and options for formatting the Biography Box
+	/**
+	 * plugin activation / "activate_pluginname" action hook; called when the plugin is
+	 * first activated.
+	 *
+	 * Defines and sets up the default settings and options for the plugin. The default set
+	 * of options are configurable, at activation time, via the
+	 * 'wp_biographia_default_settings' filter hook.
 	 */
+	
 	function add_settings () {
 		$settings = $this->get_option ();
 		
@@ -158,11 +211,13 @@ class WP_Biographia extends WP_PluginBase {
 			$this->set_option ('wp_biographia_display_feed' , '');
 	}
 	
-	/*
-	 * Determines whether current page is the last page
+	/**
+	 * Determines whether the current page is the last page
 	 *
-	 * @return boolean
+	 * @return boolean Returns true if the current page is the last page, otherwise returns
+	 * false.
 	 */
+	
 	function is_last_page () {
 		global $page;
 		global $numpages;
@@ -181,14 +236,15 @@ class WP_Biographia extends WP_PluginBase {
 		}
 	}
 	
-	/*
-	 * Filterable defaults (future use?)
-	 * Used in display() and user_contactmethods()
+	/**
+	 * Defines the default set of author's contact information. The default set of contact
+	 * links are filterable via the 'wp_biographia_defaults' filter hook. Used by the
+	 * display() and user_contactmethods() functions.
 	 *
-	 * @author Travis Smith
-	 * @return array output
+	 * @return array Array of default, filtered, contact information.
 	 */
-	function defaults() {
+
+	function defaults () {
 		$defaults = array (
 			//option name => array (field => custom field , contactmethod => field name)
 			'account-name' => array (
@@ -275,14 +331,16 @@ class WP_Biographia extends WP_PluginBase {
 			
 		);
 		
-		return  apply_filters ('$wp_biographia_defaults' , $defaults);
+		return  apply_filters ('wp_biographia_defaults' , $defaults);
 	}
 	
-	/*
-	 * Items to be linked
+	/**
+	 * Defines the default set of contact link items for the Biography Box. The default set
+	 * of links are filterable via the 'wp_biographia_link_items filter hook.
 	 *
-	 * @return array filterable link items
+	 * @return array Array of default, filtered, Biography Box link items.
 	 */
+
 	function link_items () {
 		$link_items = array (
 			"web" => array (
@@ -342,26 +400,32 @@ class WP_Biographia extends WP_PluginBase {
 				),
 		);
 		
-		return apply_filters ('$wp_biographia_links_items', $link_items, $this->icon_dir_url);
+		return apply_filters ('wp_biographia_link_items', $link_items, $this->icon_dir_url);
 	}
 
-	/*
-	 * Add/enqueue the Biography Box CSS for the generated page, via the wp_print_styles action hook
+	/**
+	 * "wp_enqueue_scripts" action hook; called to load the plugin's CSS for the
+	 * Biography Box.
 	 */
+
 	function style () {
 		wp_enqueue_style ('wp-biographia-bio', PLUGIN_URL . 'css/wp-biographia.css');	
 	}
 	
-	/*
-	 * Controls how the bio box is outputed based on page context
+	/**
+	 * "the_content" and "the_excerpt" action hook; adds the Biography Box to post or
+	 * page content according to the current set of plugin settings/options. The
+	 * Biography Box is filterable via the 'wp_biographia_pattern' and 'wp_biographia_pre'
+	 * filters.
 	 *
-	 * @author Travis Smith
-	 * @param string content
-	 * @return HTML output
+	 * @param string content String containing the post or page content or excerpt.
+	 * @return string String containing the original post/page content/excerpt plus
+	 * the Biography Box, providing the current set of settings/options permit this.
 	 */
+
 	function insert ($content) {
 		$new_content = $content;
-
+		
 		if (!isset ($this->author_id)) {
 			$this->author_id = get_the_author_meta ('ID');
 		}
@@ -407,14 +471,14 @@ class WP_Biographia extends WP_PluginBase {
 		return $new_content;
 	}
 	
-	/*
-	 * Cycles through all the post types
+	/**
+	 * Cycles through all default and currently defined custom post types
 	 *
-	 * @author Travis Smith
-	 * @param string content
-	 * @param string pattern for output
-	 * @return new HTML content
+	 * @param string content Source post content
+	 * @param string pattern Pattern to be used for output
+	 * @return string String containing the modified source post content
 	 */
+
 	function post_types_cycle ($content='', $pattern='') {
 		global $post;
 		$new_content = $content;
@@ -436,7 +500,7 @@ class WP_Biographia extends WP_PluginBase {
 
 			if ($post->post_type == $post_type) {
 				if ($this->get_option ('wp_biographia_display_' . $post_type_name) ||
-				 		$is_shortcode) {
+				 		$this->is_shortcode) {
 					// check exclusions
 					$post_option = 'wp_biographia_' . $post_type . '_exclusions';
 					$global_option = 'wp_biographia_global_' . $post_type . '_exclusions';
@@ -483,11 +547,17 @@ class WP_Biographia extends WP_PluginBase {
 		return $new_content;
 	}
 	
-	/*
-	 * Outputs the bio box based on page context
+	/**
+	 * Emits the Biography Box according to the current page content and settings/options.
 	 *
-	 * @author Travis Smith
+	 * @param string context Current page context; frontpage|archive|page|single|feed
+	 * @param string content Original post content
+	 * @param string pattern Biography Box location formatting pattern
+	 * @return string String containing the configured Biography Box or the original contents
+	 * of the content parameter string if the current page context and/or settings/options
+	 * require that no Biography Box is displayed.
 	 */
+	
 	function insert_biographia ($context, $content, $pattern) {
 		global $post;
 
@@ -524,7 +594,7 @@ class WP_Biographia extends WP_PluginBase {
 				if (($this->get_option ('wp_biographia_display_pages') &&
 						$this->get_option ('wp_biographia_display_pages') &&
 						get_user_meta ($this->author_id, 'wp_biographia_suppress_pages', true) !== 'on') ||
-						($is_shortcode && get_user_meta ($this->author_id, 'wp_biographia_suppress_pages', true) !== 'on')) {
+						($this->is_shortcode && get_user_meta ($this->author_id, 'wp_biographia_suppress_pages', true) !== 'on')) {
 					$this->display_bio = true;
 				}
 
@@ -533,7 +603,6 @@ class WP_Biographia extends WP_PluginBase {
 					
 					if ($this->get_option ('wp_biographia_page_exclusions')) {
 						$page_exclusions = explode (',', $this->get_option ('wp_biographia_page_exclusions'));
-						print_r ($page_exclusions);
 						$this->display_bio = (!in_array ($post->ID, $page_exclusions));
 					}
 				}
@@ -577,13 +646,21 @@ class WP_Biographia extends WP_PluginBase {
 		return $new_content;
 	}
 	
-	/*
-	 * Display the biography box when the [wp_biographia] short-code is detected
+	/**
+	 * Shortcode handler for the [wp_biographia] shortcode; expands the shortcode to the
+	 * Biography Box according to the current set of plugin settings/options. The
+	 * Biography Box is filterable via the 'wp_biographia_shortcode filter.
+	 *
+	 * @param array atts Array containing the optional shortcode attributes specified by
+	 * the current instance of the shortcode.
+	 * @return string String containing the Biography Box, providing that the current set
+	 * of settings/options permit this.
 	 */
+
 	function shortcode ($atts) {
 		global $wpdb;
 		$content = "";
-		$is_feed = false;
+		$this->for_feed = false;
 		
 		extract (shortcode_atts (array (
 			'mode' => 'raw',
@@ -617,19 +694,16 @@ class WP_Biographia extends WP_PluginBase {
 				$content[] = '<div class="wp-biographia-contributors">';
 				foreach ($contributors as $user_obj) {
 					if ($mode == 'raw') {
-						$content[] = $this->display ($is_feed,
-							$user_obj->ID,
-							$this->override);
+						$this->author_id = $user_obj->ID;
+						$content[] = $this->display ();
 					}
 
 					elseif ($mode == 'configured') {
 						$placeholder_content = "";
-						$is_shortcode = true;
+						$this->is_shortcode = true;
+						$this->author_id = $user_obj->ID;
 
-						$content[] = $this->insert ($placeholder_content,
-													$is_shortcode,
-													$user_obj->ID,
-													$this->override);
+						$content[] = $this->insert ($placeholder_content);
 					}
 				}
 
@@ -640,19 +714,16 @@ class WP_Biographia extends WP_PluginBase {
 				$user_obj = get_user_by ('login', $author);
 				if ($user_obj) {
 					if ($mode == 'raw') {
-						$content[] = $this->display ($is_feed,
-								$user_obj->ID,
-								$this->override);
+						$this->author_id = $user_obj->ID;
+						$content[] = $this->display ();
 					}
 
 					elseif ($mode == 'configured') {
 						$placeholder_content = "";
-						$is_shortcode = true;
+						$this->is_shortcode = true;
+						$this->author_id = $user_obj->ID;
 
-						$content[] = $this->insert ($placeholder_content,
-													$is_shortcode,
-													$user_obj->ID,
-													$this->override);
+						$content[] = $this->insert ($placeholder_content);
 					}
 				}
 			}
@@ -660,26 +731,25 @@ class WP_Biographia extends WP_PluginBase {
 		
 		else {	
 			if ($mode == 'raw') {
-				$content[] = $this->display ($is_feed, NULL, $this->override);
+				$content[] = $this->display ();
 			}
 		
 			elseif ($mode == 'configured') {
 				$placeholder_content = "";
-				$is_shortcode = true;
+				$this->is_shortcode = true;
+				$this->author_id = $user_obj->ID;
 			
-				$content[] = $this->insert ($placeholder_content,
-											 $is_shortcode,
-											 NULL,
-											 $this->override);
+				$content[] = $this->insert ($placeholder_content);
 			}
 		}	
 
-		return apply_filters ('wp_biographia_sc', implode (' ', $content), $content);
+		return apply_filters ('wp_biographia_shortcode', implode ('', $content), $content);
 	}
 	
-	/*
-	 * Produce and format the Biography Box according to the currently defined options
+	/**
+	 * Emits the Biography Box according to current settings/options.
 	 */
+
 	function display () {
 		$settings = $this->get_option ();
 		
@@ -706,6 +776,7 @@ class WP_Biographia extends WP_PluginBase {
 		$wp_biographia_author_pic_size =
 			 (isset ($settings['wp_biographia_content_image_size'])) ?
 				$this->get_option ('wp_biographia_content_image_size') : '100';
+
 		$wp_biographia_author_pic = get_avatar ($wp_biographia_author['email'], $wp_biographia_author_pic_size);
 
 		if (!empty ($settings['wp_biographia_content_prefix']) ||
@@ -885,31 +956,36 @@ class WP_Biographia extends WP_PluginBase {
 		
 		return apply_filters ('wp_biographia_biography' , implode ('', $wp_biographia_biography) , $wp_biographia_biography);
 	}
-	
-	/*
-	 * Produce and format the Biography Box according to the currently defined options
+
+	/**
+	 * Produce and format a contact link item.
 	 *
-	 * @author Travis Smith
-	 * @param string icon/text
-	 * @param string pattern for output
-	 * @param string url
-	 * @param string link title
-	 * @param string link body
-	 * @return HTML output
+	 * @param string display_icons String containing the CSS class type; text|icon
+	 * @param string format String containing a printf/sprintf format for output
+	 * @param string link_key Link key string.
+	 * @param string link_title Link title string.
+	 * @param string link_body Link body string.
+	 * @return string Formatted contact link item
 	 */
-	function link_item ($display_icons, $pattern, $link_key, $link_title, $link_body) {
+
+	function link_item ($display_icons, $format, $link_key, $link_title, $link_body) {
 		$item_class = "wp-biographia-item-" . $display_icons;
 		$link_class = "wp-biographia-link-" . $display_icons;
 		
 		if ($display_icons == 'icon') {
-			return sprintf ($pattern, $link_key, $link_title, $link_class, $link_body, $item_class);
+			return sprintf ($format, $link_key, $link_title, $link_class, $link_body, $item_class);
 		}
 		
 		else {
-			return sprintf ($pattern, $link_key, $link_title, $link_class, $link_body);
+			return sprintf ($format, $link_key, $link_title, $link_class, $link_body);
 		}
 	}
 	
+	/**
+	 * "admin_menu" action hook; called after the basic admin panel menu structure is in
+	 * place.
+	 */
+
 	function admin_menu () {
 		if (function_exists ('add_options_page')) {
 			$page_title = __('WP Biographia', 'wp-biographia');
@@ -919,6 +995,10 @@ class WP_Biographia extends WP_PluginBase {
 		}
 	}
 	
+	/**
+	 * "admin_print_scripts" action hook; called to enqueue admin specific scripts.
+	 */
+
 	function admin_print_scripts () {
 		global $pagenow;
 
@@ -932,6 +1012,10 @@ class WP_Biographia extends WP_PluginBase {
 		}
 	}
 	
+	/**
+	 * "admin_print_styles" action hook; called to enqueue admin specific CSS.
+	 */
+
 	function admin_print_styles () {
 		global $pagenow;
 
@@ -946,9 +1030,17 @@ class WP_Biographia extends WP_PluginBase {
 		}
 	}
 	
+	/**
+	 * "admin_init" action hook; called after the admin panel is initialised.
+	 */
+
 	function admin_init () {
 		$this->admin_upgrade ();
 	}
+
+	/**
+	 * "show_user_profile" and "edit_user_profile"; called to add fields to the user profile.
+	 */
 
 	function admin_add_profile_extensions ($user) {
 		?>
@@ -974,6 +1066,11 @@ class WP_Biographia extends WP_PluginBase {
 		<?php
 	}
 
+	/**
+	 * "personal_options_update" and "edit_user_profile_update" action hook; called to
+	 * save the plugin's extensions to the user profile.
+	 */
+
 	function admin_save_profile_extensions ($user_id) {
 		update_user_meta ($user_id, 'wp_biographia_suppress_posts',
 			$this->admin_option ('wp_biographia_suppress_posts'));
@@ -981,14 +1078,24 @@ class WP_Biographia extends WP_PluginBase {
 			$this->admin_option ('wp_biographia_suppress_pages'));
 	}
 	
+	/**
+	 * "plugin_action_links_'plugin-name'" action hook; called to add a link to the plugin's
+	 * settings/options panel.
+	 */
+
 	function admin_settings_link($links) {
-		$settings_link = '<a href="options-general.php?page=wp-biographia-new.php">'
+		$settings_link = '<a href="options-general.php?page=wp-biographia/wp-biographia.php">'
 			. __('Settings', 'wp-biographia')
 			. '</a>';
 		array_unshift ($links, $settings_link);
 		return $links;
 	}
 
+	/**
+	 * Called in response to the "admin_init" action hook; checks the current set of
+	 * settings/options and upgrades them according to the new version of the plugin.
+	 */
+	
 	function admin_upgrade () {
 		$settings = NULL;
 		$upgrade_settings = false;
@@ -1307,6 +1414,11 @@ class WP_Biographia extends WP_PluginBase {
 		}
 	}
 
+	/**
+	 * add_options_page() callback function; called to emit the plugin's settings/options
+	 * page.
+	 */
+	
 	function admin_display_settings () {
 		$settings = $this->admin_save_settings ();
 
@@ -1739,14 +1851,25 @@ class WP_Biographia extends WP_PluginBase {
 			implode ('', $wrapped_content));
 	}
 
-	/*
-	 * Save the submitted admin options
+	/**
+	 * Extracts a specific settings/option field from the $_POST array.
+	 *
+	 * @param string field Field name.
+	 * @return string Contents of the field parameter if present, else an empty string.
 	 */
 
 	function admin_option ($field) {
 		return (isset ($_POST[$field]) ? $_POST[$field] : "");
 	}
 
+	/**
+	 * Adds/updates a set of key/value pairs to a list of author profiles.
+	 *
+	 * @param array user_array Array of user profiles.
+	 * @param string meta_key Key for the user_meta option to be updated/added.
+	 * @param string meta_value Value for the user_meta option to be updated/added.
+	 */
+	
 	function admin_meta_option ($user_array, $meta_key, $meta_value) {
 		if ($user_array) {
 			foreach ($user_array as $id) {
@@ -1755,6 +1878,10 @@ class WP_Biographia extends WP_PluginBase {
 		}
 	}
 
+	/**
+	 * Verifies and saves the plugin's settings/options to the back-end database.
+	 */
+	
 	function admin_save_settings () {
 		$settings = $this->get_option ();
 
@@ -1945,6 +2072,15 @@ class WP_Biographia extends WP_PluginBase {
 		return $settings;
 	}
 
+	/**
+	 * Creates a postbox entry for the plugin's admin settings/options page.
+	 *
+	 * @param string id CSS id for this postbox
+	 * @param string title Title string for this postbox
+	 * @param string content HTML content for this postbox
+	 * @return string Wrapped postbox content.
+	 */
+	
 	function admin_postbox ($id, $title, $content) {
 		$handle_title = __('Click to toggle', 'wp-biographia');
 		$wrapper = array ();
@@ -1959,8 +2095,12 @@ class WP_Biographia extends WP_PluginBase {
 		return implode ('', $wrapper);
 	}	
 
-	/*
-	 * Wrap up all the constituent components of our admin panel
+	/**
+	 * Wrap up all the constituent components of the plugin's admin settings/options page.
+	 *
+	 * @param string title Title for the plugin's admin settings/options page.
+	 * @param string content HTML content for the plugin's admin settings/options page.
+	 * @return string Wrapped HTML content
 	 */
 
 	function admin_wrap ($title, $content) {
@@ -1997,6 +2137,10 @@ class WP_Biographia extends WP_PluginBase {
 	<?php
 	}
 	
+	/**
+	 * Emits the plugin's colophon side-box for the plugin's admin settings/options page.
+	 */
+	
 	function admin_colophon () {
 		$content = array ();
 		
@@ -2013,8 +2157,8 @@ class WP_Biographia extends WP_PluginBase {
 			implode ('', $content));
 	}
 
-	/*
-	 * Define the Help and Support side box
+	/**
+	 * Emits the plugin's help/support side-box for the plugin's admin settings/options page.
 	 */
 
 	function admin_help_and_support () {
@@ -2044,8 +2188,9 @@ class WP_Biographia extends WP_PluginBase {
 			implode ('', $content));
 	}
 
-	/*
-	 * Define the Acknowledgements side box
+	/**
+	 * Emits the plugin's acknowledgements side-box for the plugin's admin settings/options
+	 * page.
 	 */
 
 	function admin_acknowledgements () {
