@@ -26,6 +26,7 @@ class WP_Biographia extends WP_PluginBase {
 	
 	const OPTIONS = 'wp_biographia_settings';
 	const VERSION = '30';
+	const DISPLAY_VERSION = 'v3.0';
 	const PLUGIN_URL = '';
 	const PLUGIN_PATH = '';
 	
@@ -2125,6 +2126,7 @@ class WP_Biographia extends WP_PluginBase {
 	                  <div class="metabox-holder">	
 	                    <div class="meta-box-sortables">
 	                    <?php
+							echo $this->admin_about ();
 							echo $this->admin_help_and_support ();
 							echo $this->admin_colophon ();
 							echo $this->admin_acknowledgements ();
@@ -2135,6 +2137,21 @@ class WP_Biographia extends WP_PluginBase {
 	        </form>
 	    </div>
 	<?php
+	}
+
+	/**
+	 * Emits the plugin's about side-box.
+	 */
+	
+	function admin_about () {
+		$content = array ();
+		
+		$content[] = '<p>This is WP Biographia; a WordPress plugin to add a customisable biography to posts, to RSS feeds, to pages, to archives and to each post on your blog\'s landing page.</p>';
+		$content[] = '<p>You\'re currently running WP Biographia ' . self::DISPLAY_VERSION . '.</p>';
+
+		return $this->admin_postbox (
+			'wp-biographia-about', __('About', 'wp-biographia'),
+			implode ('', $content));
 	}
 	
 	/**
