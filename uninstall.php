@@ -16,6 +16,12 @@ if (defined('WP_UNINSTALL_PLUGIN')) {
 		delete_user_meta ($user->ID, 'facebook');
 		delete_user_meta ($user->ID, 'linkedin');
 		delete_user_meta ($user->ID, 'googleplus');
+		delete_user_meta ($user->ID, 'delicious');
+		delete_user_meta ($user->ID, 'flickr');
+		delete_user_meta ($user->ID, 'picasa');
+		delete_user_meta ($user->ID, 'vimeo');
+		delete_user_meta ($user->ID, 'youtube');
+		delete_user_meta ($user->ID, 'reddit');
 	}
 }
 
