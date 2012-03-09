@@ -593,12 +593,18 @@ class WP_Biographia extends WP_PluginBase {
 				if ((isset ($option) && $option) || ($this->is_shortcode)) {
 					$new_content = $this->post_types_cycle ($content, $pattern);
 				}
+				else {
+					$new_content = $content;
+				}
 				break;
 
 			case "archive":
 				$option = $this->get_option ('wp_biographia_display_archives');
 				if ((isset ($option) && $option) || ($this->is_shortcode)) {
 					$new_content = $this->post_types_cycle ($content, $pattern);
+				}
+				else {
+					$new_content = $content;
 				}
 				break;
 
@@ -649,6 +655,9 @@ class WP_Biographia extends WP_PluginBase {
 					$bio_content = $this->display ();
 					$new_content = sprintf ($pattern, $content, $bio_content);
 				}
+				else {
+					$new_content = $content;
+				}
 				break;
 
 			default:
@@ -657,6 +666,7 @@ class WP_Biographia extends WP_PluginBase {
 		}
 		
 		return $new_content;
+		
 	}
 	
 	/**
