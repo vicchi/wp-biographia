@@ -59,19 +59,27 @@ ul.wp-biographia-list-text li, ul.wp-biographia-list-icon li {
 	padding: 0 0 5px;
 }
 
-/*
-.wp-biographia-list-text li, .wp-biographia-list-icon li {
-	display: inline-block;
-	list-style-type: none;
-	padding-right: 5px;
-}
-*/
-
 .wp-biographia-list-icon a:link, .wp-biographia-list-icon a:visited {
         text-decoration: none;
         border-bottom: none;
 }
+
 .wp-biographia-item-icon {
 	height: 32px;
 	width: 32px;
+}
+
+.idevice .wp-biographia-container-top,
+.idevice .wp-biographia-container-around,
+.idevice .wp-biographia-container-none {
+	padding: 0;
+}
+
+.idevice .wp-biographia-pic {
+	float: none;
+}
+
+.idevice .wp-biographia-text {
+	float: none;
+	margin: 0 0 0 0;
 }
