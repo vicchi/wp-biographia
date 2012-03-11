@@ -154,6 +154,22 @@ class WP_Biographia extends WP_PluginBase {
 		return $roles;
 	}
 	
+	/**
+	 * Returns the currently defined set of post categories.
+	 *
+	 * @return array Array containing the categories.
+	 */
+	
+	function get_categories () {
+		$args = array (
+			'type' => 'post',
+			'orderby' => 'name',
+			'order' => 'asc',
+			'hide_empty' => '0'
+			);
+		
+		return get_categories ($args);
+	}
 	
 	/**
 	 * "user_contactmethods" filter hook; Sanitizes, filters and augments the author's
@@ -576,6 +592,8 @@ class WP_Biographia extends WP_PluginBase {
 		global $post;
 		$this->display_bio = false;
 		$settings = $this->get_option ();
+		$excluded = false;
+		
 		if (!$this->author_id || $this->author_id == 0) {
 			$this->author_id = get_the_author_meta ('ID');
 		}
@@ -586,11 +604,23 @@ class WP_Biographia extends WP_PluginBase {
 				($post->post_type != 'page')) {
 			return $content;
 		}
-		
+
+		if (!is_page ()) {
+			$categories = explode (',', $settings['wp_biographia_category_exclusions']);
+			if (!empty ($categories)) {
+				foreach ($categories as $category) {
+					if (in_category ($category, $post->ID)) {
+						$excluded = true;
+						break;
+					}
+				}	// end-foreach (...)
+			}
+		}
+
 		switch ($context) {
 			case "frontpage":
 				$option = $this->get_option ('wp_biographia_display_front');
-				if ((isset ($option) && $option) || ($this->is_shortcode)) {
+				if (!$excluded && ((isset ($option) && $option) || ($this->is_shortcode))) {
 					$new_content = $this->post_types_cycle ($content, $pattern);
 				}
 				else {
@@ -600,7 +630,7 @@ class WP_Biographia extends WP_PluginBase {
 
 			case "archive":
 				$option = $this->get_option ('wp_biographia_display_archives');
-				if ((isset ($option) && $option) || ($this->is_shortcode)) {
+				if (!$excluded && ((isset ($option) && $option) || ($this->is_shortcode))) {
 					$new_content = $this->post_types_cycle ($content, $pattern);
 				}
 				else {
@@ -616,7 +646,7 @@ class WP_Biographia extends WP_PluginBase {
 					$this->display_bio = true;
 				}
 
-				if ($this->display_bio) {
+				if (!$excluded && $this->display_bio) {
 					$page_exclusions = $this->get_option ('wp_biographia_page_exclusions');
 					
 					if ($this->get_option ('wp_biographia_page_exclusions')) {
@@ -625,7 +655,7 @@ class WP_Biographia extends WP_PluginBase {
 					}
 				}
 
-				if ($this->display_bio) {
+				if (!$excluded && $this->display_bio) {
 					$bio_content = $this->display ();
 					$new_content = sprintf ($pattern, $content, $bio_content);
 				}
@@ -637,7 +667,13 @@ class WP_Biographia extends WP_PluginBase {
 
 			case "single":
 				// Cycle through Custom Post Types
-				$new_content = $this->post_types_cycle ($content, $pattern);
+				if (!$excluded) {
+					$new_content = $this->post_types_cycle ($content, $pattern);
+				}
+
+				else {
+					$new_content = $content;
+				}
 				break;
 				
 			case "feed":
@@ -650,7 +686,7 @@ class WP_Biographia extends WP_PluginBase {
 					$this->display_bio = $this->is_shortcode;
 				}
 
-				if ($this->display_bio) {
+				if (!$excluded && $this->display_bio) {
 					$this->is_feed = true;
 					$bio_content = $this->display ();
 					$new_content = sprintf ($pattern, $content, $bio_content);
@@ -1453,6 +1489,8 @@ class WP_Biographia extends WP_PluginBase {
 		$wrapped_content = array ();
 		$display_settings = array ();
 		$exclusion_settings = array ();
+		$suppression_settings = array ();
+		$category_settings = array ();
 		$style_settings = array ();
 		$content_settings = array ();
 		$defaults_settings = array ();
@@ -1517,7 +1555,7 @@ class WP_Biographia extends WP_PluginBase {
 			. ' />&nbsp;' . __('Display the Biography Box after the post or page content', 'wp-biographia') . '<br />';
 
 		/********************************************************************************
-	 	 * Exclusions settings tab content
+	 	 * Exclusions settings tab content - 1) Exclusion Settings
 	 	 */
 
 		$exclusion_settings[] = '<p><strong>' . __("Exclude From Single Posts (via Post ID)", 'wp-biographia') . '</strong><br />
@@ -1541,6 +1579,10 @@ class WP_Biographia extends WP_PluginBase {
 		$exclusion_settings[] = '<p><strong>' . __("Exclude Pages (via Page ID)", 'wp-biographia') . '</strong><br />
 			<input type="text" name="wp_biographia_page_exclusions" id="wp_biographia_page_exclusions" value="' . $settings['wp_biographia_page_exclusions'] . '" /><br />
 			<small>' . __('Suppresses the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
+
+		/********************************************************************************
+	 	 * Exclusions settings tab content - 2) User Suppression Settings
+	 	 */
 
 		$users = $this->get_users ();
 
@@ -1567,57 +1609,103 @@ class WP_Biographia extends WP_PluginBase {
 			}
 		}	// end-foreach (...)
 
-		$exclusion_settings[] = '<p><strong>' . __('Per User Suppression Of The Biography Box On Posts', 'wp-biographia') . '</strong><br />';
-		$exclusion_settings[] = '<span class="wp-biographia-users">';
-		$exclusion_settings[] = '<strong>' . __('Enabled Users', 'wp-biographia') . '</strong><br />';
-		$exclusion_settings[] = '<select multiple id="wp-biographia-enabled-post-users" name="wp-biographia-enabled-post-users[]">';
+		$suppression_settings[] = '<p><strong>' . __('Per User Suppression Of The Biography Box On Posts', 'wp-biographia') . '</strong><br />';
+		$suppression_settings[] = '<span class="wp-biographia-users">';
+		$suppression_settings[] = '<strong>' . __('Enabled Users', 'wp-biographia') . '</strong><br />';
+		$suppression_settings[] = '<select multiple id="wp-biographia-enabled-post-users" name="wp-biographia-enabled-post-users[]">';
 
 		foreach ($post_enabled as $user_id => $user_login) {
-			$exclusion_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
+			$suppression_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
 		}	// end-foreach (...)
 
-		$exclusion_settings[] = '</select>';
-		$exclusion_settings[] = '<a href="#" id="wp-biographia-user-post-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
-		$exclusion_settings[] = '</span>';
-		$exclusion_settings[] = '<span class="wp-biographia-users">';
-		$exclusion_settings[] = '<strong>' . __('Suppressed Users', 'wp-biographia') . '</strong><br />';
-		$exclusion_settings[] = '<select multiple id="wp-biographia-suppressed-post-users" name="wp-biographia-suppressed-post-users[]">';
+		$suppression_settings[] = '</select>';
+		$suppression_settings[] = '<a href="#" id="wp-biographia-user-post-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
+		$suppression_settings[] = '</span>';
+		$suppression_settings[] = '<span class="wp-biographia-users">';
+		$suppression_settings[] = '<strong>' . __('Suppressed Users', 'wp-biographia') . '</strong><br />';
+		$suppression_settings[] = '<select multiple id="wp-biographia-suppressed-post-users" name="wp-biographia-suppressed-post-users[]">';
 
 		foreach ($post_suppressed as $user_id => $user_login) {
-			$exclusion_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
+			$suppression_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
 		}	// end-foreach (...)
 
-		$exclusion_settings[] = '</select>';
-		$exclusion_settings[] = '<a href="#" id="wp-biographia-user-post-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>';
-		$exclusion_settings[] = '</span>';
-		$exclusion_settings[] = '<br />';
-		$exclusion_settings[] = '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored posts. Selecting a user for suppression of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
+		$suppression_settings[] = '</select>';
+		$suppression_settings[] = '<a href="#" id="wp-biographia-user-post-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>';
+		$suppression_settings[] = '</span>';
+		$suppression_settings[] = '<br />';
+		$suppression_settings[] = '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored posts. Selecting a user for suppression of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
 
-		$exclusion_settings[] = '<p><strong>' . __('Per User Suppression Of The Biography Box On Pages', 'wp-biographia') . '</strong><br />';
-		$exclusion_settings[] = '<span class="wp-biographia-users">';
-		$exclusion_settings[] = '<strong>' . __('Enabled Users', 'wp-biographia') . '</strong><br />';
-		$exclusion_settings[] = '<select multiple id="wp-biographia-enabled-page-users" name="wp-biographia-enabled-page-users[]">';
+		$suppression_settings[] = '<p><strong>' . __('Per User Suppression Of The Biography Box On Pages', 'wp-biographia') . '</strong><br />';
+		$suppression_settings[] = '<span class="wp-biographia-users">';
+		$suppression_settings[] = '<strong>' . __('Enabled Users', 'wp-biographia') . '</strong><br />';
+		$suppression_settings[] = '<select multiple id="wp-biographia-enabled-page-users" name="wp-biographia-enabled-page-users[]">';
 
 		foreach ($page_enabled as $user_id => $user_login) {
-			$exclusion_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
+			$suppression_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
 		}	// end-foreach (...)
 
-		$exclusion_settings[] = '</select>';
-		$exclusion_settings[] = '<a href="#" id="wp-biographia-user-page-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
-		$exclusion_settings[] = '</span>';
-		$exclusion_settings[] = '<span class="wp-biographia-users">';
-		$exclusion_settings[] = '<strong>' . __('Suppressed Users', 'wp-biographia') . '</strong><br />';
-		$exclusion_settings[] = '<select multiple id="wp-biographia-suppressed-page-users" name="wp-biographia-suppressed-page-users[]">';
+		$suppression_settings[] = '</select>';
+		$suppression_settings[] = '<a href="#" id="wp-biographia-user-page-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
+		$suppression_settings[] = '</span>';
+		$suppression_settings[] = '<span class="wp-biographia-users">';
+		$suppression_settings[] = '<strong>' . __('Suppressed Users', 'wp-biographia') . '</strong><br />';
+		$suppression_settings[] = '<select multiple id="wp-biographia-suppressed-page-users" name="wp-biographia-suppressed-page-users[]">';
 
 		foreach ($page_suppressed as $user_id => $user_login) {
-			$exclusion_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
+			$suppression_settings[] = '<option value="' . $user_id . '">' . $user_login . '</option>';
 		}	// end-foreach (...)
 
-		$exclusion_settings[] = '</select>';
-		$exclusion_settings[] = '<a href="#" id="wp-biographia-user-page-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>
+		$suppression_settings[] = '</select>';
+		$suppression_settings[] = '<a href="#" id="wp-biographia-user-page-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>
 		</span>';
-		$exclusion_settings[] = '<br />';
-		$exclusion_settings[] = '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
+		$suppression_settings[] = '<br />';
+		$suppression_settings[] = '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
+
+		/********************************************************************************
+	 	 * Exclusions settings tab content - 2) Category Suppression Settings
+	 	 */
+
+		$categories = $this->get_categories ();
+		
+		$categories_enabled = array ();
+		$categories_excluded = array ();
+		$cat_excluded = explode (',', $settings['wp_biographia_category_exclusions']);
+
+		foreach ($categories as $cat) {
+			if (in_array ($cat->cat_ID, $cat_excluded)) {
+				$categories_excluded[$cat->cat_ID] = $cat->name;
+			}
+			
+			else {
+				$categories_enabled[$cat->cat_ID] = $cat->name;
+			}
+		}	// end-foreach (...)
+
+		$category_settings[] = '<p><strong>' . __('Exclude By Category On Posts', 'wp-biographia') . '</strong><br />';
+		$category_settings[] = '<span class="wp-biographia-categories">';
+		$category_settings[] = '<strong>' . __('Enabled Categories', 'wp-biographia') . '</strong><br />';
+		$category_settings[] = '<select multiple id="wp-biographia-enabled-categories" name="wp-biographia-enabled-categories[]">';
+
+		foreach ($categories_enabled as $cat_id => $cat_name) {
+			$category_settings[] = '<option value="' . $cat_id . '">' . $cat_name . '</option>';
+		}	// end-foreach (...)
+
+		$category_settings[] = '</select>';
+		$category_settings[] = '<a href="#" id="wp-biographia-category-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
+		$category_settings[] = '</span>';
+		$category_settings[] = '<span class="wp-biographia-categories">';
+		$category_settings[] = '<strong>' . __('Excluded Categories', 'wp-biographia') . '</strong><br />';
+		$category_settings[] = '<select multiple id="wp-biographia-excluded-categories" name="wp-biographia-excluded-categories[]">';
+
+		foreach ($categories_excluded as $cat_id => $cat_name) {
+			$category_settings[] = '<option value="' . $cat_id . '">' . $cat_name . '</option>';
+		}	// end-foreach (...)
+
+		$category_settings[] = '</select>';
+		$category_settings[] = '<a href="#" id="wp-biographia-category-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>';
+		$category_settings[] = '</span>';
+		$category_settings[] = '<br />';
+		$category_settings[] = '<div style="clear: both";><small>' . __('Select the post categories that should not display the Biography Box. Selecting a category for exclusion of the Biography Box affects all posts of that category, on single post display, on archive pages and on the front page.', 'wp-biographia') . '</small></div></p>';
 
 		/********************************************************************************
 	 	 * Style settings tab content
@@ -1846,9 +1934,16 @@ class WP_Biographia extends WP_PluginBase {
 
 		switch ($tab) {
 			case 'exclude':
-				$wrapped_content[] = $this->admin_postbox ('wp-biographia-user-settings',
-					__('Exclusion And Suppression Settings', 'wp-biographia'),
+				$wrapped_content[] = $this->admin_postbox ('wp-biographia-exclusion-settings',
+					__('Post, Page And Custom Post Type Exclusion Settings', 'wp-biographia'),
 					implode ('', $exclusion_settings));
+				$wrapped_content[] = $this->admin_postbox ('wp-biographia-category-settings',
+					__('Category Exclusion Settings', 'wp-biographia'),
+					implode ('', $category_settings));
+				$wrapped_content[] = $this->admin_postbox (
+					'wp-biographia-supression-settings',
+					__('User Suppression Settings', 'wp-biographia'),
+					implode ('', $suppression_settings));
 				break;
 
 			case 'style':
@@ -1955,6 +2050,18 @@ class WP_Biographia extends WP_PluginBase {
 						$settings['wp_biographia_page_exclusions'] =
 							$this->admin_option ('wp_biographia_page_exclusions');
 
+						// Category exclusions
+						
+						$categories = $this->admin_option (
+							'wp-biographia-excluded-categories');
+						if (!empty ($categories)) {
+							$settings['wp_biographia_category_exclusions'] = implode (
+								',', $categories);
+						}
+						else {
+							$settings['wp_biographia_category_exclusions'] = '';
+						}
+						
 						// Per user suppression of the Biography Box on posts and on pages
 
 						$enabled_post_users = $_POST['wp-biographia-enabled-post-users'];

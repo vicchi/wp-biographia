@@ -16,6 +16,14 @@
 	  		return !$('#wp-biographia-suppressed-page-users option:selected').remove().appendTo('#wp-biographia-enabled-page-users');  
 	 	});  
 
+		$('#wp-biographia-category-add').click(function() {
+			return !$('#wp-biographia-enabled-categories option:selected').remove().appendTo('#wp-biographia-excluded-categories');
+		});
+
+		$('#wp-biographia-category-rem').click(function() {
+			return !$('#wp-biographia-excluded-categories option:selected').remove().appendTo('#wp-biographia-enabled-categories');
+		});
+		
 		$('#wp-biographia-content-icons').click(function() {
 			$('#wp-biographia-icon-container').toggle(this.checked);
 		});
@@ -43,8 +51,16 @@
 			});  
 
 			$('#wp-biographia-suppressed-page-users option').each(function(i) {  
-				$(this).attr("selected", "selected");  
+				$(this).attr("selected", "selected");
 			});  
+			
+			$('#wp-biographia-enabled-categories option').each(function(i) {
+				$(this).attr("selected", "selected");
+			})
+
+			$('#wp-biographia-excluded-categories option').each(function(i) {
+				$(this).attr("selected", "selected");
+			})
 		});
 
 	});	
