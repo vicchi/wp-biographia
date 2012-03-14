@@ -181,7 +181,7 @@ class WP_Biographia extends WP_PluginBase {
 	
 	function user_contactmethods ($contactmethods) {
 
-		foreach ($this->defaults() as $key => $data) {
+		foreach ($this->defaults () as $key => $data) {
 			if ($data['contactmethod']) {
 				$contactmethods[$key] = $data['contactmethod'];
 			}
@@ -269,111 +269,125 @@ class WP_Biographia extends WP_PluginBase {
 	}
 	
 	/**
+	 * Defines the default set of author's contact methods that the plugin natively
+	 * supports. 
+	 *
+	 * @return array Array of contact methods.
+	 */
+
+	function supported_contact_info () {
+		$contacts = array (
+			//option name => array (field => custom field , contactmethod => field name)
+			'twitter' => array (
+				'field' => 'twitter',
+				'contactmethod' => __('Twitter', 'wp-biographia'),
+			),
+			'facebook' => array (
+				'field' => 'facebook',
+				'contactmethod' => __('Facebook', 'wp-biographia'),				
+			),
+			'linkedin' => array (
+				'field' => 'linkedin',
+				'contactmethod' => __('LinkedIn', 'wp-biographia'),				
+			),
+			'googleplus' => array (
+				'field' => 'googleplus',
+				'contactmethod' => __('Google+', 'wp-biographia'),					
+			),
+			'delicious' => array (
+				'field' => 'delicious',
+				'contactmethod' => __('Delicious', 'wp-biographia'),					
+			),
+			'flickr' => array (
+				'field' => 'flickr',
+				'contactmethod' => __('Flickr', 'wp-biographia'),					
+			),
+			'picasa' => array (
+				'field' => 'picasa',
+				'contactmethod' => __('Picasa', 'wp-biographia'),
+			),
+			'vimeo' => array (
+				'field' => 'vimeo',
+				'contactmethod' => __('Vimeo', 'wp-biographia'),
+			),
+			'youtube' => array (
+				'field' => 'youtube',
+				'contactmethod' => __('YouTube', 'wp-biographia'),
+			),
+			'reddit' => array (
+				'field' => 'reddit',
+				'contactmethod' => __('Reddit', 'wp-biographia'),
+			),
+			'yim' => array (
+				'field' => 'yim',
+				'contactmethod' => __('Yahoo IM', 'wp-biographia'),
+			),
+			'aim' => array (
+				'field' => 'aim',
+				'contactmethod' => __('AIM', 'wp-biographia'),
+			),
+			'msn' => array (
+				'field' => 'msn',
+				'contactmethod' => __('Windows Live Messenger', 'wp-biographia'),
+			),
+			'jabber' => array (
+				'field' => 'jabber',
+				'contactmethod' => __('Jabber / Google Talk', 'wp-biographia'),
+			)
+		);
+
+		return $contacts;
+	}
+	
+	/**
 	 * Defines the default set of author's contact information. The default set of contact
-	 * links are filterable via the 'wp_biographia_defaults' filter hook. Used by the
+	 * links are filterable via the 'wp_biographia_contact_info' filter hook. Used by the
 	 * display() and user_contactmethods() functions.
 	 *
 	 * @return array Array of default, filtered, contact information.
 	 */
 
 	function defaults () {
-		$defaults = array (
+		$non_contact_defaults = array (
 			//option name => array (field => custom field , contactmethod => field name)
 			'account-name' => array (
-					'field' => 'user_login',
-				),
+				'field' => 'user_login',
+			),
 			'first-last-name' => array (
-					'field' => '',
-				),
+				'field' => '',
+			),
 			'nickname' => array (
-					'field' => 'nickname',
-				),
+				'field' => 'nickname',
+			),
 			'display-name' => array (
-					'field' => 'display_name',
-				),
+				'field' => 'display_name',
+			),
 			'bio' => array (
-					'field' => 'description',
-				),
+				'field' => 'description',
+			),
 			'email' => array (
-					'field' => 'email',
-				),
+				'field' => 'email',
+			),
 			'website' => array (
-					'field' => 'url',
-				),
-			'twitter' => array (
-					'field' => 'twitter',
-					'contactmethod' => __('Twitter', 'wp-biographia'),
-				),
-			'facebook' => array (
-					'field' => 'facebook',
-					'contactmethod' => __('Facebook', 'wp-biographia'),				
-				),
-			'linkedin' => array (
-					'field' => 'linkedin',
-					'contactmethod' => __('LinkedIn', 'wp-biographia'),				
-				),
-			'googleplus' => array (
-					'field' => 'googleplus',
-					'contactmethod' => __('Google+', 'wp-biographia'),					
-				),
-			'delicious' => array (
-					'field' => 'delicious',
-					'contactmethod' => __('Delicious', 'wp-biographia'),					
-				),
-			'flickr' => array (
-					'field' => 'flickr',
-					'contactmethod' => __('Flickr', 'wp-biographia'),					
-				),
-			'picasa' => array (
-					'field' => 'picasa',
-					'contactmethod' => __('Picasa', 'wp-biographia'),
-				),
-			'vimeo' => array (
-					'field' => 'vimeo',
-					'contactmethod' => __('Vimeo', 'wp-biographia'),
-				),
-			'youtube' => array (
-					'field' => 'youtube',
-					'contactmethod' => __('YouTube', 'wp-biographia'),
-				),
-			'reddit' => array (
-					'field' => 'reddit',
-					'contactmethod' => __('Reddit', 'wp-biographia'),
-				),
-			'reddit' => array (
-					'field' => 'reddit',
-					'contactmethod' => __('Reddit', 'wp-biographia'),
-				),
-			'yim' => array (
-					'field' => 'yim',
-					'contactmethod' => __('Yahoo IM', 'wp-biographia'),
-				),
-			'aim' => array (
-					'field' => 'aim',
-					'contactmethod' => __('AIM', 'wp-biographia'),
-				),
-			'msn' => array (
-					'field' => 'msn',
-					'contactmethod' => __('Windows Live Messenger', 'wp-biographia'),
-				),
-			'jabber' => array (
-					'field' => 'jabber',
-					'contactmethod' => __('Jabber / Google Talk', 'wp-biographia'),
-				),
-			
+				'field' => 'url',
+			)
 		);
 		
-		return  apply_filters ('wp_biographia_defaults' , $defaults);
+		$supported_contact_info = $this->supported_contact_info ();
+		$filtered_contact_info = apply_filters ('wp_biographia_contact_info',
+		 										$supported_contact_info);
+		
+		return array_merge ($non_contact_defaults, $filtered_contact_info);
 	}
 	
 	/**
-	 * Defines the default set of contact link items for the Biography Box. The default set
-	 * of links are filterable via the 'wp_biographia_link_items filter hook.
+	 * Defines the default set of contact link items for the Biography Box that the plugin
+	 * natively supports.
 	 *
-	 * @return array Array of default, filtered, Biography Box link items.
+	 * @return array Array of default Biography Box link items.
 	 */
 
-	function link_items () {
+	function supported_link_items () {
 		$link_items = array (
 			"web" => array (
 				"link_title" => __('The Web', 'wp-biographia'),
@@ -429,10 +443,25 @@ class WP_Biographia extends WP_PluginBase {
 				"link_title" => __('Reddit', 'wp-biographia'),
 				"link_text" => __('Reddit', 'wp-biographia'),
 				"link_icon" => $this->icon_dir_url . 'reddit.png'
-				),
+				)
 		);
 		
-		return apply_filters ('wp_biographia_link_items', $link_items, $this->icon_dir_url);
+		return $link_items;
+	}
+
+	/**
+	 * Defines the default set of contact link items for the Biography Box. The default set
+	 * of links are filterable via the 'wp_biographia_link_items filter hook.
+	 *
+	 * @return array Array of default, filtered, Biography Box link items.
+	 */
+
+	function link_items () {
+		$supported_link_items = $this->supported_link_items ();
+		
+		return apply_filters ('wp_biographia_link_items',
+								$supported_link_items,
+								$this->icon_dir_url);
 	}
 
 	/**
@@ -929,9 +958,26 @@ class WP_Biographia extends WP_PluginBase {
 		}
 		
 		// Now deal with the other links that follow the same format and can be "templatised" ...
+		global $wplogger;
+		
+		$supported_links = $this->supported_link_items ();
 		foreach ($link_items as $link_key => $link_attrs) {
-			$option_name = 'wp_biographia_content_' . $link_key;
-			if (!empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key]) || ($link_key == 'web'))) {
+			$wplogger->log ('Looking at key ' . $link_key);
+			
+			$display_link = false;
+			
+			if (array_key_exists ($link_key, $supported_links)) {
+				$wplogger->log ('Key ' . $link_key . ' is built in and supported');
+				$option_name = 'wp_biographia_content_' . $link_key;
+				$display_link = (!empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key]) || ($link_key == 'web')));
+			}
+
+			else {
+				$wplogger->log ('Key ' . $link_key . ' is external');
+				$display_link = true;
+			}
+
+			if ($display_link) {
 				if (!empty ($formatted_name)) {
 					$link_title = sprintf ($title_name_stub, $formatted_name, $link_attrs['link_title']);
 				}
