@@ -977,7 +977,7 @@ class WP_Biographia extends WP_PluginBase {
 			}
 
 			else {
-				$display_link = true;
+				$display_link = (!empty ($author[$link_key]);
 			}
 
 			if ($display_link) {
