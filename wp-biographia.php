@@ -344,10 +344,12 @@ class WP_Biographia extends WP_PluginBase {
 	 * links are filterable via the 'wp_biographia_contact_info' filter hook. Used by the
 	 * display() and user_contactmethods() functions.
 	 *
+	 * @param boolean filter Controls whether the 'wp_biographia_contact_info' filter should
+	 * be applied.
 	 * @return array Array of default, filtered, contact information.
 	 */
 
-	function defaults () {
+	function defaults ($filter=true) {
 		$non_contact_defaults = array (
 			//option name => array (field => custom field , contactmethod => field name)
 			'account-name' => array (
@@ -374,10 +376,16 @@ class WP_Biographia extends WP_PluginBase {
 		);
 		
 		$supported_contact_info = $this->supported_contact_info ();
-		$filtered_contact_info = apply_filters ('wp_biographia_contact_info',
-		 										$supported_contact_info);
+		if ($filter) {
+			$filtered_contact_info = apply_filters ('wp_biographia_contact_info',
+			 										$supported_contact_info);
+
+			return array_merge ($non_contact_defaults, $filtered_contact_info);
+		}
 		
-		return array_merge ($non_contact_defaults, $filtered_contact_info);
+		else {
+			return array_merge ($non_contact_defaults, $supported_contact_info);
+		}
 	}
 	
 	/**
@@ -2480,7 +2488,8 @@ class WP_Biographia extends WP_PluginBase {
 	 */
 	
 	function admin_reset_plugin () {
-		$defaults = $this->defaults ();
+		$filter = false;
+		$defaults = $this->defaults ($filter);
 		$fields = array (0 => 'ID');
 		$search = new WP_User_Query (array ('fields' => $fields));
 		$users = $search->get_results ();
