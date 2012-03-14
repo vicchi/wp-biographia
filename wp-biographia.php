@@ -966,22 +966,17 @@ class WP_Biographia extends WP_PluginBase {
 		}
 		
 		// Now deal with the other links that follow the same format and can be "templatised" ...
-		global $wplogger;
-		
+
 		$supported_links = $this->supported_link_items ();
 		foreach ($link_items as $link_key => $link_attrs) {
-			$wplogger->log ('Looking at key ' . $link_key);
-			
 			$display_link = false;
 			
 			if (array_key_exists ($link_key, $supported_links)) {
-				$wplogger->log ('Key ' . $link_key . ' is built in and supported');
 				$option_name = 'wp_biographia_content_' . $link_key;
 				$display_link = (!empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key]) || ($link_key == 'web')));
 			}
 
 			else {
-				$wplogger->log ('Key ' . $link_key . ' is external');
 				$display_link = true;
 			}
 
