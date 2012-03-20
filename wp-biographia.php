@@ -1200,6 +1200,22 @@ class WP_Biographia extends WP_PluginBase {
 	}
 
 	/**
+	 * Checks for the presence of a settings/options key and if not present, adds the
+	 * key and its associated value.
+	 *
+	 * @param array settings Array containing the current set of settings/options
+	 * @param string key Settings/options key; specified without the 'wp_biographia_' prefix
+	 * @param stirng key Settings/options value for key
+	 */
+
+	function admin_upgrade_option (&$settings, $key, $value) {
+		$kn = 'wp_biographia_' . $key;
+		if (!isset ($settings[$kn])) {
+			$settings[$kn] = $value
+		}
+	}
+
+	/**
 	 * Called in response to the "admin_init" action hook; checks the current set of
 	 * settings/options and upgrades them according to the new version of the plugin.
 	 */
@@ -1367,89 +1383,42 @@ class WP_Biographia extends WP_PluginBase {
 
 			switch ($current_plugin_version) {
 				case '00':
-					if (!isset ($settings['wp_biographia_installed'])) {
-						$settings['wp_biographia_installed'] = "on";
-					}
-					if (!isset ($settings['wp_biographia_style_bg'])) {
-						$settings['wp_biographia_style_bg'] = "#FFEAA8";
-					}
-					if (!isset ($settings['wp_biographia_style_border'])) {
-						$settings['wp_biographia_style_border'] = "top";
-					}
-					if (!isset ($settings['wp_biographia_display_front'])) {
-						$settings['wp_biographia_display_front'] = "";
-					}
-					if (!isset ($settings['wp_biographia_display_archives'])) {
-						$settings['wp_biographia_display_archives'] = "";
-					}
-					if (!isset ($settings['wp_biographia_display_posts'])) {
-						$settings['wp_biographia_display_posts'] = "";
-					}
-					if (!isset ($settings['wp_biographia_display_pages'])) {
-						$settings['wp_biographia_display_pages'] = "";
-					}
-					if (!isset ($settings['wp_biographia_display_feed'])) {
-						$settings['wp_biographia_display_feed'] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_prefix'])) {
-						$settings['wp_biographia_content_prefix'] = "About";
-					}
-					if (!isset ($settings['wp_biographia_content_name'])) {
-						$settings['wp_biographia_content_name'] = "none";
-					}
-					if (!isset ($settings['wp_biographia_content_image'])) {
-						$settings['wp_biographia_content_image'] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_bio'])) {
-						$settings['wp_biographia_content_bio'] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_web'])) {
-						$settings['wp_biographia_content_web'] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_twitter'])) {
-						$settings['wp_biographia_content_twitter'] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_facebook'])) {
-						$settings['wp_biographia_content_facebook'] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_linkedin'])) {
-						$settings['wp_biographia_content_linkedin'] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_googleplus'])) {
-						$settings['wp_biographia_content_googleplus'] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_posts'])) {
-						$settings['wp_biographia_content_posts'] = "none";
-					}
+					$this->admin_upgrade_option ($settings, 'installed', 'on');
+					$this->admin_upgrade_option ($settings, 'style_bg', '#FFFFFF');
+					$this->admin_upgrade_option ($settings, 'style_border', 'top');
+					$this->admin_upgrade_option ($settings, 'display_front', '');
+					$this->admin_upgrade_option ($settings, 'display_archives', '');
+					$this->admin_upgrade_option ($settings, 'display_posts', '');
+					$this->admin_upgrade_option ($settings, 'display_pages', '');
+					$this->admin_upgrade_option ($settings, 'display_feed', '');
+					$this->admin_upgrade_option ($settings, 'content_prefix', 'About');
+					$this->admin_upgrade_option ($settings, 'content_name', 'none');
+					$this->admin_upgrade_option ($settings, 'content_image', '');
+					$this->admin_upgrade_option ($settings, 'content_bio', '');
+					$this->admin_upgrade_option ($settings, 'content_web', '');
+					$this->admin_upgrade_option ($settings, 'content_twitter', '');
+					$this->admin_upgrade_option ($settings, 'content_facebook', '');
+					$this->admin_upgrade_option ($settings, 'content_linkedin', '');
+					$this->admin_upgrade_option ($settings, 'content_googleplus', '');
+					$this->admin_upgrade_option ($settings, 'content_posts', 'none');
 
 				case '01':
-					if (!isset ($settings['wp_biographia_content_email'])) {
-						$settings["wp_biographia_content_email"] = "";
-					}
-
-					if (!isset ($settings['wp_biographia_content_image_size'])) {
-						$settings["wp_biographia_content_image_size"] = "100";
-					}
+					$this->admin_upgrade_option ($settings, 'content_email', '');
+					$this->admin_upgrade_option ($settings, 'content_image_size', '100');
 
 					if (isset ($settings['wp_biographia_alert_border'])) {
-						if (!isset ($settings['wp_biographia_style_border'])) {
-							$settings['wp_biographia_style_border'] = $settings['wp_biographia_alert_border'];
-						}
+						$this->admin_upgrade_option ($settings, 'style_border',
+						 						$settings['wp_biographia_alert_border']);
 						unset ($settings['wp_biographia_alert_border']);
 					}
 
 					if (isset ($settings['wp_biographia_alert_bg'])) {
-						if (!isset ($settings['wp_biographia_style_bg'])) {
-							$settings['wp_biographia_style_bg'] = $settings['wp_biographia_alert_bg'];
-						}
+						$this->admin_upgrade_option ($settings, 'style_bg',
+						 							$settings['wp_biographia_alert_bg']);
 						unset ($settings['wp_biographia_alert_bg']);
 					}
 
-					if (!isset ($settings['wp_biographia_display_location'])) {
-						$settings["wp_biographia_display_location"] = "bottom";
-					}
-
-					$upgrade_settings = true;
+					$this->admin_upgrade_option ($settings, 'display_location', 'bottom');
 
 				case '20':
 					$users = $this->get_users ();
@@ -1466,45 +1435,24 @@ class WP_Biographia extends WP_PluginBase {
 							update_user_meta ($user->ID, 'wp_biographia_suppress_pages', '');
 						}
 					}
-					$upgrade_settings = true;
 
 				case '21':
 				case '211':
 				case '22':
-					if (!isset ($settings['wp_biographia_content_delicious'])) {
-						$settings["wp_biographia_content_delicious"] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_flickr'])) {
-						$settings["wp_biographia_content_flickr"] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_picasa'])) {
-						$settings["wp_biographia_content_picasa"] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_vimeo'])) {
-						$settings["wp_biographia_content_vimeo"] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_youtube'])) {
-						$settings["wp_biographia_content_youtube"] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_reddit'])) {
-						$settings["wp_biographia_content_reddit"] = "";
-					}
+					$this->admin_upgrade_option ($settings, 'content_delicious', '');
+					$this->admin_upgrade_option ($settings, 'content_flickr', '');
+					$this->admin_upgrade_option ($settings, 'content_picasa', '');
+					$this->admin_upgrade_option ($settings, 'content_vimeo', '');
+					$this->admin_upgrade_option ($settings, 'content_youtube', '');
+					$this->admin_upgrade_option ($settings, 'content_reddit', '');
 
 				case '221':
 				case '23':
 				case '24':
-					if (!isset ($settings['wp_biographia_content_authorpage'])) {
-						$settings["wp_biographia_content_authorpage"] = "on";
-					}
-					if (!isset ($settings['wp_biographia_content_icons'])) {
-						$settings['wp_biographia_content_icons'] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_alt_icons'])) {
-						$settings['wp_biographia_content_alt_icons'] = "";
-					}
-					if (!isset ($settings['wp_biographia_content_icon_url'])) {
-						$settings['wp_biographia_content_icon_url'] = "";
-					}
+					$this->admin_upgrade_option ($settings, 'content_authorpage', 'on');
+					$this->admin_upgrade_option ($settings, 'content_icons', '');
+					$this->admin_upgrade_option ($settings, 'content_alt_icons', '');
+					$this->admin_upgrade_option ($settings, 'content_icon_url', '');
 
 				case '241':
 				case '242':
