@@ -749,13 +749,14 @@ class WP_Biographia extends WP_PluginBase {
 	 *
 	 * @param array atts Array containing the optional shortcode attributes specified by
 	 * the current instance of the shortcode.
+	 * @param string content String containing the enclosed content when the shortcode is
+	 * specified in the enclosing form. If the self-closing form is used, this parameter will
+	 * default to null.
 	 * @return string String containing the Biography Box, providing that the current set
 	 * of settings/options permit this.
 	 */
 
-	function shortcode ($atts) {
-		global $wpdb;
-		$content = "";
+	function shortcode ($atts, $content=null) {
 		$this->for_feed = false;
 		
 		extract (shortcode_atts (array (
@@ -765,7 +766,7 @@ class WP_Biographia extends WP_PluginBase {
 			'name' => ''
 		), $atts));
 
-		$this->override = $content = array ();
+		$this->override = $shortcode_content = array ();
 		if (!empty ($prefix)) {
 			$this->override['prefix'] = $prefix;
 		}
@@ -787,11 +788,11 @@ class WP_Biographia extends WP_PluginBase {
 		if (!empty ($author)) {
 			if ($author === "*") {
 				$contributors = $this->get_users();
-				$content[] = '<div class="wp-biographia-contributors">';
+				$shortcode_content[] = '<div class="wp-biographia-contributors">';
 				foreach ($contributors as $user_obj) {
 					if ($mode == 'raw') {
 						$this->author_id = $user_obj->ID;
-						$content[] = $this->display ();
+						$shortcode_content[] = $this->display ();
 					}
 
 					elseif ($mode == 'configured') {
@@ -799,11 +800,11 @@ class WP_Biographia extends WP_PluginBase {
 						$this->is_shortcode = true;
 						$this->author_id = $user_obj->ID;
 
-						$content[] = $this->insert ($placeholder_content);
+						$shortcode_content[] = $this->insert ($placeholder_content);
 					}
 				}
 
-				$content[] = '</div>';
+				$shortcode_content[] = '</div>';
 			}
 			
 			else {
@@ -811,7 +812,7 @@ class WP_Biographia extends WP_PluginBase {
 				if ($user_obj) {
 					if ($mode == 'raw') {
 						$this->author_id = $user_obj->ID;
-						$content[] = $this->display ();
+						$shortcode_content[] = $this->display ();
 					}
 
 					elseif ($mode == 'configured') {
@@ -819,7 +820,7 @@ class WP_Biographia extends WP_PluginBase {
 						$this->is_shortcode = true;
 						$this->author_id = $user_obj->ID;
 
-						$content[] = $this->insert ($placeholder_content);
+						$shortcode_content[] = $this->insert ($placeholder_content);
 					}
 				}
 			}
@@ -827,7 +828,7 @@ class WP_Biographia extends WP_PluginBase {
 		
 		else {	
 			if ($mode == 'raw') {
-				$content[] = $this->display ();
+				$shortcode_content[] = $this->display ();
 			}
 		
 			elseif ($mode == 'configured') {
@@ -835,11 +836,13 @@ class WP_Biographia extends WP_PluginBase {
 				$this->is_shortcode = true;
 				$this->author_id = $user_obj->ID;
 			
-				$content[] = $this->insert ($placeholder_content);
+				$shortcode_content[] = $this->insert ($placeholder_content);
 			}
 		}	
 
-		return apply_filters ('wp_biographia_shortcode', implode ('', $content), $content);
+		return apply_filters ('wp_biographia_shortcode',
+			implode ('', $shortcode_content),
+			$shortcode_content);
 	}
 	
 	/**
@@ -1211,7 +1214,7 @@ class WP_Biographia extends WP_PluginBase {
 	function admin_upgrade_option (&$settings, $key, $value) {
 		$kn = 'wp_biographia_' . $key;
 		if (!isset ($settings[$kn])) {
-			$settings[$kn] = $value
+			$settings[$kn] = $value;
 		}
 	}
 
