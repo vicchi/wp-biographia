@@ -370,7 +370,7 @@ class WP_Biographia extends WP_PluginBase {
 			'email' => array (
 				'field' => 'email'
 			),
-			'website' => array (
+			'web' => array (
 				'field' => 'url'
 			)
 		);
@@ -980,7 +980,7 @@ class WP_Biographia extends WP_PluginBase {
 			$display_link = false;
 			if (array_key_exists ($link_key, $supported_links)) {
 				$option_name = 'wp_biographia_content_' . $link_key;
-				$display_link = (!empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key]) || ($link_key == 'web')));
+				$display_link = (!empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key])));
 			}
 
 			else {
@@ -997,7 +997,6 @@ class WP_Biographia extends WP_PluginBase {
 				}
 
 				$link_body = ($display_icons == "icon") ? $link_attrs['link_icon'] : $link_attrs['link_text'];
-				$link_key = ($link_key != 'web') ? $link_key  : 'website';
 
 				$links[] = $this->link_item ($display_icons, $item_stub, $author[$link_key], $link_title, $link_body);
 			}
