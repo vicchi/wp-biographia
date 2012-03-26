@@ -1986,7 +1986,9 @@ class WP_Biographia extends WP_PluginBase {
 				break;
 		}	// end-switch ($tab)
 		
-		$this->admin_wrap ($tab, __('WP Biographia Settings And Options', 'wp-biographia'),
+		$this->admin_wrap ($tab,
+			sprintf (__('WP Biographia %s - Settings And Options',
+				'wp-biographia'), self::DISPLAY_VERSION),
 			implode ('', $wrapped_content));
 	}
 
