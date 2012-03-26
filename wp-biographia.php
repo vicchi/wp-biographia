@@ -353,25 +353,25 @@ class WP_Biographia extends WP_PluginBase {
 		$non_contact_defaults = array (
 			//option name => array (field => custom field , contactmethod => field name)
 			'account-name' => array (
-				'field' => 'user_login',
+				'field' => 'user_login'
 			),
 			'first-last-name' => array (
-				'field' => '',
+				'field' => ''
 			),
 			'nickname' => array (
-				'field' => 'nickname',
+				'field' => 'nickname'
 			),
 			'display-name' => array (
-				'field' => 'display_name',
+				'field' => 'display_name'
 			),
 			'bio' => array (
-				'field' => 'description',
+				'field' => 'description'
 			),
 			'email' => array (
-				'field' => 'email',
+				'field' => 'email'
 			),
 			'website' => array (
-				'field' => 'url',
+				'field' => 'url'
 			)
 		);
 		
@@ -466,7 +466,7 @@ class WP_Biographia extends WP_PluginBase {
 
 	function link_items () {
 		$supported_link_items = $this->supported_link_items ();
-		
+
 		return apply_filters ('wp_biographia_link_items',
 								$supported_link_items,
 								$this->icon_dir_url);
@@ -766,6 +766,11 @@ class WP_Biographia extends WP_PluginBase {
 			'name' => ''
 		), $atts));
 
+		$params = array ('mode' => $mode,
+			'author' => $author,
+			'prefix' => $prefix,
+			'name' => $name);
+
 		$this->override = $shortcode_content = array ();
 		if (!empty ($prefix)) {
 			$this->override['prefix'] = $prefix;
@@ -841,8 +846,8 @@ class WP_Biographia extends WP_PluginBase {
 		}	
 
 		return apply_filters ('wp_biographia_shortcode',
-			implode ('', $shortcode_content),
-			$shortcode_content);
+								implode ('', $shortcode_content),
+								$params);
 	}
 	
 	/**
@@ -969,11 +974,10 @@ class WP_Biographia extends WP_PluginBase {
 		}
 		
 		// Now deal with the other links that follow the same format and can be "templatised" ...
-
+	
 		$supported_links = $this->supported_link_items ();
 		foreach ($link_items as $link_key => $link_attrs) {
 			$display_link = false;
-			
 			if (array_key_exists ($link_key, $supported_links)) {
 				$option_name = 'wp_biographia_content_' . $link_key;
 				$display_link = (!empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key]) || ($link_key == 'web')));
@@ -994,6 +998,7 @@ class WP_Biographia extends WP_PluginBase {
 
 				$link_body = ($display_icons == "icon") ? $link_attrs['link_icon'] : $link_attrs['link_text'];
 				$link_key = ($link_key != 'web') ? $link_key  : 'website';
+
 				$links[] = $this->link_item ($display_icons, $item_stub, $author[$link_key], $link_title, $link_body);
 			}
 		}
@@ -1028,11 +1033,15 @@ class WP_Biographia extends WP_PluginBase {
 		$list_class = "wp-biographia-list-" . $display_icons;
 
 		if (!empty ($links)) {
+			$params = array (
+				'glue' => $item_glue,
+				'class' => $list_class);
+				
 			$content[] = apply_filters ('wp_biographia_links' , '<div class="wp-biographia-links">'
 				. '<small><ul class="wp-biographia-list ' . $list_class . '">'
 				. implode ($item_glue, $links)
 				. '</ul></small>'
-				. '</div>' , $links , $item_glue , $list_class);
+				. '</div>' , $links , $params);
 		}
 		
 		if (!$this->for_feed) {
