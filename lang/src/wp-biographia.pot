@@ -2,47 +2,33 @@
 # This file is distributed under the same license as the WP Biographia package.
 msgid ""
 msgstr ""
-"Project-Id-Version: WP Biographia\n"
+"Project-Id-Version: WP Biographia 3.0\n"
 "Report-Msgid-Bugs-To: http://wordpress.org/tag/wp-biographia\n"
 "POT-Creation-Date: 2012-03-28 16:02:27+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2012-03-28 18:21+0100\n"
-"Last-Translator: Gary Gale <gary@vicchi.org>\n"
-"Language-Team: Gary Gale <gary@vicchi.org>\n"
-"X-Poedit-Language: English\n"
-"X-Poedit-Country: UNITED KINGDOM\n"
-"X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-Basepath: .\n"
-"X-Poedit-SearchPath-0: ..\n"
-"X-Poedit-SearchPath-1: ../..\n"
+"PO-Revision-Date: 2012-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 
 #: wp-biographia.php:219
 msgid "About"
 msgstr ""
 
-#: wp-biographia.php:284
-#: wp-biographia.php:407
-#: wp-biographia.php:408
+#: wp-biographia.php:284 wp-biographia.php:407 wp-biographia.php:408
 msgid "Twitter"
 msgstr ""
 
-#: wp-biographia.php:288
-#: wp-biographia.php:412
-#: wp-biographia.php:413
+#: wp-biographia.php:288 wp-biographia.php:412 wp-biographia.php:413
 msgid "Facebook"
 msgstr ""
 
-#: wp-biographia.php:292
-#: wp-biographia.php:417
-#: wp-biographia.php:418
+#: wp-biographia.php:292 wp-biographia.php:417 wp-biographia.php:418
 msgid "LinkedIn"
 msgstr ""
 
-#: wp-biographia.php:296
-#: wp-biographia.php:422
-#: wp-biographia.php:423
+#: wp-biographia.php:296 wp-biographia.php:422 wp-biographia.php:423
 msgid "Google+"
 msgstr ""
 
@@ -50,33 +36,23 @@ msgstr ""
 msgid "Delicious"
 msgstr ""
 
-#: wp-biographia.php:304
-#: wp-biographia.php:432
-#: wp-biographia.php:433
+#: wp-biographia.php:304 wp-biographia.php:432 wp-biographia.php:433
 msgid "Flickr"
 msgstr ""
 
-#: wp-biographia.php:308
-#: wp-biographia.php:437
-#: wp-biographia.php:438
+#: wp-biographia.php:308 wp-biographia.php:437 wp-biographia.php:438
 msgid "Picasa"
 msgstr ""
 
-#: wp-biographia.php:312
-#: wp-biographia.php:442
-#: wp-biographia.php:443
+#: wp-biographia.php:312 wp-biographia.php:442 wp-biographia.php:443
 msgid "Vimeo"
 msgstr ""
 
-#: wp-biographia.php:316
-#: wp-biographia.php:447
-#: wp-biographia.php:448
+#: wp-biographia.php:316 wp-biographia.php:447 wp-biographia.php:448
 msgid "YouTube"
 msgstr ""
 
-#: wp-biographia.php:320
-#: wp-biographia.php:452
-#: wp-biographia.php:453
+#: wp-biographia.php:320 wp-biographia.php:452 wp-biographia.php:453
 msgid "Reddit"
 msgstr ""
 
@@ -104,8 +80,7 @@ msgstr ""
 msgid "Web"
 msgstr ""
 
-#: wp-biographia.php:427
-#: wp-biographia.php:428
+#: wp-biographia.php:427 wp-biographia.php:428
 msgid "Delicous"
 msgstr ""
 
@@ -133,16 +108,13 @@ msgstr ""
 msgid "More Posts By %s"
 msgstr ""
 
-#: wp-biographia.php:1013
-#: wp-biographia.php:1018
-#: wp-biographia.php:1024
+#: wp-biographia.php:1013 wp-biographia.php:1018 wp-biographia.php:1024
 msgid "More Posts"
 msgstr ""
 
 #. #-#-#-#-#  wp-biographia.pot (WP Biographia 3.0)  #-#-#-#-#
 #. Plugin Name of the plugin/theme
-#: wp-biographia.php:1114
-#: wp-biographia.php:1115
+#: wp-biographia.php:1114 wp-biographia.php:1115
 msgid "WP Biographia"
 msgstr ""
 
@@ -203,7 +175,8 @@ msgid "Display On Individual %s"
 msgstr ""
 
 #: wp-biographia.php:1545
-msgid "Displays the Biography Box on individual instances of custom post type %s."
+msgid ""
+"Displays the Biography Box on individual instances of custom post type %s."
 msgstr ""
 
 #: wp-biographia.php:1547
@@ -239,7 +212,10 @@ msgid "Exclude From Single Posts (via Post ID)"
 msgstr ""
 
 #: wp-biographia.php:1575
-msgid "Suppresses the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to suppress, comma separated with no spaces, e.g. 54,33,55"
+msgid ""
+"Suppresses the Biography Box when a post is displayed using the Single Post "
+"Template. Enter the Post IDs to suppress, comma separated with no spaces, e."
+"g. 54,33,55"
 msgstr ""
 
 #: wp-biographia.php:1577
@@ -247,7 +223,10 @@ msgid "Globally Exclude From Posts (via Post ID)"
 msgstr ""
 
 #: wp-biographia.php:1579
-msgid "Suppresses the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
+msgid ""
+"Suppresses the Biography Box whenever a post is displayed; singly, on "
+"archive pages or on the front page. Enter the Post IDs to globally suppress, "
+"comma separated with no spaces, e.g. 54,33,55."
 msgstr ""
 
 #: wp-biographia.php:1582
@@ -255,7 +234,10 @@ msgid "Exclude From Single %1$s (via %2$s ID)"
 msgstr ""
 
 #: wp-biographia.php:1584
-msgid "Suppresses the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
+msgid ""
+"Suppresses the Biography Box whenever a %1$s is displayed; singly, on "
+"archive pages or on the front page. Enter the %2$s IDs to globally suppress, "
+"comma separated with no spaces, e.g. 54,33,55."
 msgstr ""
 
 #: wp-biographia.php:1586
@@ -263,7 +245,9 @@ msgid "Globally Exclude From %1$s (via %2$s ID)."
 msgstr ""
 
 #: wp-biographia.php:1588
-msgid "Suppresses the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
+msgid ""
+"Suppresses the Biography Box whenever a %1$s is displayed. Enter the %2$s "
+"IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
 msgstr ""
 
 #: wp-biographia.php:1591
@@ -271,37 +255,39 @@ msgid "Exclude Pages (via Page ID)"
 msgstr ""
 
 #: wp-biographia.php:1593
-msgid "Suppresses the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to suppress, comma separated with no spaces, e.g. 54,33,55."
+msgid ""
+"Suppresses the Biography Box when a page is displayed using the Page "
+"Template. Enter the Page IDs to suppress, comma separated with no spaces, e."
+"g. 54,33,55."
 msgstr ""
 
 #: wp-biographia.php:1624
 msgid "Per User Suppression Of The Biography Box On Posts"
 msgstr ""
 
-#: wp-biographia.php:1626
-#: wp-biographia.php:1652
+#: wp-biographia.php:1626 wp-biographia.php:1652
 msgid "Enabled Users"
 msgstr ""
 
-#: wp-biographia.php:1634
-#: wp-biographia.php:1660
-#: wp-biographia.php:1706
+#: wp-biographia.php:1634 wp-biographia.php:1660 wp-biographia.php:1706
 msgid "Add"
 msgstr ""
 
-#: wp-biographia.php:1637
-#: wp-biographia.php:1663
+#: wp-biographia.php:1637 wp-biographia.php:1663
 msgid "Suppressed Users"
 msgstr ""
 
-#: wp-biographia.php:1645
-#: wp-biographia.php:1671
-#: wp-biographia.php:1717
+#: wp-biographia.php:1645 wp-biographia.php:1671 wp-biographia.php:1717
 msgid "Remove"
 msgstr ""
 
 #: wp-biographia.php:1648
-msgid "Select the users who should not display the Biography Box on their authored posts. Selecting a user for suppression of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile."
+msgid ""
+"Select the users who should not display the Biography Box on their authored "
+"posts. Selecting a user for suppression of the Biography Box affects all "
+"posts and custom post types by that user, on single post display, on archive "
+"pages and on the front page. This setting over-rides the individual user "
+"profile settings, providing the user has permission to edit their profile."
 msgstr ""
 
 #: wp-biographia.php:1650
@@ -309,7 +295,10 @@ msgid "Per User Suppression Of The Biography Box On Pages"
 msgstr ""
 
 #: wp-biographia.php:1674
-msgid "Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile."
+msgid ""
+"Select the users who should not display the Biography Box on their authored "
+"pages. This setting over-rides the individual user profile settings, "
+"providing the user has permission to edit their profile."
 msgstr ""
 
 #: wp-biographia.php:1696
@@ -325,7 +314,11 @@ msgid "Excluded Categories"
 msgstr ""
 
 #: wp-biographia.php:1720
-msgid "Select the post categories that should not display the Biography Box. Selecting a category for exclusion of the Biography Box affects all posts of that category, on single post display, on archive pages and on the front page."
+msgid ""
+"Select the post categories that should not display the Biography Box. "
+"Selecting a category for exclusion of the Biography Box affects all posts of "
+"that category, on single post display, on archive pages and on the front "
+"page."
 msgstr ""
 
 #: wp-biographia.php:1726
@@ -337,7 +330,8 @@ msgid "Select a Color"
 msgstr ""
 
 #: wp-biographia.php:1730
-msgid "By default, the background color of the Biography Box is a yellowish tone."
+msgid ""
+"By default, the background color of the Biography Box is a yellowish tone."
 msgstr ""
 
 #: wp-biographia.php:1731
@@ -405,7 +399,11 @@ msgid "Make author's name link to <em>More Posts By This Author</em>"
 msgstr ""
 
 #: wp-biographia.php:1774
-msgid "It looks like Avatars are not currently enabled; this means that the author's image won't be able to be displayed. If you want this to happen then go to <a href=\"%s\">Settings &rsaquo; Discussions</a> and set Avatar Display to Show Avatars."
+msgid ""
+"It looks like Avatars are not currently enabled; this means that the "
+"author's image won't be able to be displayed. If you want this to happen "
+"then go to <a href=\"%s\">Settings &rsaquo; Discussions</a> and set Avatar "
+"Display to Show Avatars."
 msgstr ""
 
 #: wp-biographia.php:1777
@@ -421,7 +419,9 @@ msgid "Image Size"
 msgstr ""
 
 #: wp-biographia.php:1798
-msgid "Enter image size, e.g. 32 for a 32x32 image, 70 for a 70x70 image, etc. Defaults to a 100x100 size image."
+msgid ""
+"Enter image size, e.g. 32 for a 32x32 image, 70 for a 70x70 image, etc. "
+"Defaults to a 100x100 size image."
 msgstr ""
 
 #: wp-biographia.php:1799
@@ -569,11 +569,12 @@ msgid "Don't Show The More Posts Link"
 msgstr ""
 
 #: wp-biographia.php:1911
-msgid "How you want to display and format the <em>More Posts By This Author</em> link"
+msgid ""
+"How you want to display and format the <em>More Posts By This Author</em> "
+"link"
 msgstr ""
 
-#: wp-biographia.php:1918
-#: wp-biographia.php:1922
+#: wp-biographia.php:1918 wp-biographia.php:1922
 msgid "Reset WP Biographia To Defaults"
 msgstr ""
 
@@ -582,7 +583,13 @@ msgid "Reset all WP Biographia settings and options to their default values."
 msgstr ""
 
 #: wp-biographia.php:1922
-msgid "<strong>WARNING!</strong> Checking <strong><em>%s</em></strong> and clicking on <strong><em>%s</em></strong> will erase <strong><em>all</em></strong> the current WP Biographia settings and options and will restore WP Biographia to a <em>just installed</em> state. This is the equivalent to deactivating, uninstalling and reinstalling the plugin. Only proceed if this is what you intend to do. This action is final and irreversable."
+msgid ""
+"<strong>WARNING!</strong> Checking <strong><em>%s</em></strong> and clicking "
+"on <strong><em>%s</em></strong> will erase <strong><em>all</em></strong> the "
+"current WP Biographia settings and options and will restore WP Biographia to "
+"a <em>just installed</em> state. This is the equivalent to deactivating, "
+"uninstalling and reinstalling the plugin. Only proceed if this is what you "
+"intend to do. This action is final and irreversable."
 msgstr ""
 
 #: wp-biographia.php:1922
@@ -590,15 +597,31 @@ msgid "Save Changes"
 msgstr ""
 
 #: wp-biographia.php:1930
-msgid "For the inner nerd in you, the latest version of WP Biographia was written using <a href=\"http://macromates.com/\">TextMate</a> on a MacBook Pro running OS X 10.7.2 Lion and tested on the same machine running <a href=\"http://mamp.info/en/index.html\">MAMP</a> (Mac/Apache/MySQL/PHP) before being let loose on the author's <a href=\"http://www.vicchi.org/\">blog</a>."
+msgid ""
+"For the inner nerd in you, the latest version of WP Biographia was written "
+"using <a href=\"http://macromates.com/\">TextMate</a> on a MacBook Pro "
+"running OS X 10.7.2 Lion and tested on the same machine running <a href="
+"\"http://mamp.info/en/index.html\">MAMP</a> (Mac/Apache/MySQL/PHP) before "
+"being let loose on the author's <a href=\"http://www.vicchi.org/\">blog</a>."
 msgstr ""
 
 #: wp-biographia.php:1932
-msgid "The official home for WP Biographia is on <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">Gary's Codeage</a>; it's also available from the official <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">WordPress plugins repository</a>. If you're interested in what lies under the hood, the code is also on <a href=\"https://github.com/vicchi/wp-biographia\">GitHub</a> to download, fork and otherwise hack around."
+msgid ""
+"The official home for WP Biographia is on <a href=\"http://www.vicchi.org/"
+"codeage/wp-biographia/\">Gary's Codeage</a>; it's also available from the "
+"official <a href=\"http://wordpress.org/extend/plugins/wp-biographia/"
+"\">WordPress plugins repository</a>. If you're interested in what lies under "
+"the hood, the code is also on <a href=\"https://github.com/vicchi/wp-"
+"biographia\">GitHub</a> to download, fork and otherwise hack around."
 msgstr ""
 
 #: wp-biographia.php:1934
-msgid "WP Biographia is named after the etymology of the modern English word <em>biography</em>. The word first appeared in the 1680s, probably from the latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, meaning \"life\" and <em>graphia</em>, meaning \"record\" or \"account\" which derived from <em>graphein</em>, \"to write\"."
+msgid ""
+"WP Biographia is named after the etymology of the modern English word "
+"<em>biography</em>. The word first appeared in the 1680s, probably from the "
+"latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, "
+"meaning \"life\" and <em>graphia</em>, meaning \"record\" or \"account\" "
+"which derived from <em>graphein</em>, \"to write\"."
 msgstr ""
 
 #: wp-biographia.php:1950
@@ -666,11 +689,16 @@ msgid "For help and support with WP Biographia, here's what you can do:"
 msgstr ""
 
 #: wp-biographia.php:2361
-msgid "Ask a question on the <a href=\"http://wordpress.org/tags/wp-biographia?forum_id=10\">WordPress support forum</a>; this is by far the best way so that other users can follow the conversation."
+msgid ""
+"Ask a question on the <a href=\"http://wordpress.org/tags/wp-biographia?"
+"forum_id=10\">WordPress support forum</a>; this is by far the best way so "
+"that other users can follow the conversation."
 msgstr ""
 
 #: wp-biographia.php:2363
-msgid "Ask me a question on Twitter; I'm <a href=\"http://twitter.com/vicchi\">@vicchi</a>."
+msgid ""
+"Ask me a question on Twitter; I'm <a href=\"http://twitter.com/vicchi"
+"\">@vicchi</a>."
 msgstr ""
 
 #: wp-biographia.php:2365
@@ -678,19 +706,29 @@ msgid "Drop me an <a href=\"mailto:%s\">email </a>instead."
 msgstr ""
 
 #: wp-biographia.php:2367
-msgid "But help and support is a two way street; here's what you might want to do:"
+msgid ""
+"But help and support is a two way street; here's what you might want to do:"
 msgstr ""
 
 #: wp-biographia.php:2369
-msgid "If you like this plugin and use it on your WordPress site, or if you write about it online, <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">link to the plugin</a> and drop me an <a href=\"mailto:%s\">email</a> telling me about this."
+msgid ""
+"If you like this plugin and use it on your WordPress site, or if you write "
+"about it online, <a href=\"http://www.vicchi.org/codeage/wp-biographia/"
+"\">link to the plugin</a> and drop me an <a href=\"mailto:%s\">email</a> "
+"telling me about this."
 msgstr ""
 
 #: wp-biographia.php:2371
-msgid "Rate the plugin on the <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">WordPress plugin repository</a>."
+msgid ""
+"Rate the plugin on the <a href=\"http://wordpress.org/extend/plugins/wp-"
+"biographia/\">WordPress plugin repository</a>."
 msgstr ""
 
 #: wp-biographia.php:2373
-msgid "WP Biographia is both free as in speech and free as in beer. No donations are required; <a href=\"http://www.vicchi.org/codeage/donate/\">here's why</a>."
+msgid ""
+"WP Biographia is both free as in speech and free as in beer. No donations "
+"are required; <a href=\"http://www.vicchi.org/codeage/donate/\">here's why</"
+"a>."
 msgstr ""
 
 #: wp-biographia.php:2377
@@ -698,15 +736,29 @@ msgid "Help &amp; Support"
 msgstr ""
 
 #: wp-biographia.php:2391
-msgid "WP Biographia is inspired by and based on <a href=\"http://www.jonbishop.com\">Jon Bishop's</a> <a href=\"http://wordpress.org/extend/plugins/wp-about-author/\">WP About Author</a> plugin. Thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place. Jon's written other <a href=\"http://profiles.wordpress.org/users/JonBishop/\">WordPress plugins</a> as well; you should take a look."
+msgid ""
+"WP Biographia is inspired by and based on <a href=\"http://www.jonbishop.com"
+"\">Jon Bishop's</a> <a href=\"http://wordpress.org/extend/plugins/wp-about-"
+"author/\">WP About Author</a> plugin. Thanks and kudos must go to Jon for "
+"writing a well structured, working WordPress plugin released under a "
+"software license that enables other plugins such as this one to be written "
+"or derived in the first place. Jon's written other <a href=\"http://profiles."
+"wordpress.org/users/JonBishop/\">WordPress plugins</a> as well; you should "
+"take a look."
 msgstr ""
 
 #: wp-biographia.php:2395
-msgid "WP Biographia is now internationalised. Turkish language translation and support is thanks to <a href=\"https://twitter.com/#!/KazancExpert\">Hakan Er</a>."
+msgid ""
+"WP Biographia is now internationalised. Turkish language translation and "
+"support is thanks to <a href=\"https://twitter.com/#!/KazancExpert\">Hakan "
+"Er</a>."
 msgstr ""
 
 #: wp-biographia.php:2399
-msgid "If you'd like to see WP Biographia translated into your language and want to help with the process, then please drop me an <a href=\"mailto:%s\">email</a>."
+msgid ""
+"If you'd like to see WP Biographia translated into your language and want to "
+"help with the process, then please drop me an <a href=\"mailto:%s\">email</"
+"a>."
 msgstr ""
 
 #: wp-biographia.php:2403
@@ -718,7 +770,10 @@ msgid "http://www.vicchi.org/codeage/wp-biographia/"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page and much more."
+msgid ""
+"Add and display a customizable author biography for individual posts, in RSS "
+"feeds, on pages, in archives and on each entry on the landing page and much "
+"more."
 msgstr ""
 
 #. Author of the plugin/theme
@@ -728,4 +783,3 @@ msgstr ""
 #. Author URI of the plugin/theme
 msgid "http://www.garygale.com/"
 msgstr ""
-
