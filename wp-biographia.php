@@ -204,6 +204,7 @@ class WP_Biographia extends WP_PluginBase {
 		
 		if (!is_array ($settings)) {
 			$settings = apply_filters ('wp_biographia_default_settings' , 
+				//option name => option value
 				array (
 					'wp_biographia_installed' => 'on',
 					'wp_biographia_version' => self::VERSION,
@@ -1032,15 +1033,18 @@ class WP_Biographia extends WP_PluginBase {
 		$list_class = "wp-biographia-list-" . $display_icons;
 
 		if (!empty ($links)) {
+			$prefix = '<div class="wp-biographia-links"><small><ul class="wp-biographia-list ' . $list_class . '">';
+			$postfix = '</ul></small></div>';
+			
 			$params = array (
 				'glue' => $item_glue,
-				'class' => $list_class);
+				'class' => $list_class,
+				'prefix' => $prefix,
+				'postfix' => $postfix);
 				
-			$content[] = apply_filters ('wp_biographia_links' , '<div class="wp-biographia-links">'
-				. '<small><ul class="wp-biographia-list ' . $list_class . '">'
-				. implode ($item_glue, $links)
-				. '</ul></small>'
-				. '</div>' , $links , $params);
+			$content[] = apply_filters ('wp_biographia_links' ,
+			 	$prefix . implode ($item_glue, $links) . $postfix,
+				$links, $params);
 		}
 		
 		if (!$this->for_feed) {
@@ -1073,7 +1077,7 @@ class WP_Biographia extends WP_PluginBase {
 			$biography[] = $content.'</p>';	
 		}
 		
-		return apply_filters ('wp_biographia_biography' , implode ('', $biography) , $biography);
+		return apply_filters ('wp_biographia_biography_box' , implode ('', $biography) , $biography);
 	}
 
 	/**
