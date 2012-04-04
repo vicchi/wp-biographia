@@ -1740,7 +1740,7 @@ class WP_Biographia extends WP_PluginBase {
 	 	 */
 
 		$content_settings[] = '<p><strong>' . __("Biography Prefix", 'wp-biographia') . '</strong><br />
-			<input type="text" name="wp_biographia_content_prefix" id="wp-biographia-content-name" value="'
+			<input type="text" name="wp_biographia_content_prefix" id="wp-biographia-content-name" size="40" value="'
 			. $settings["wp_biographia_content_prefix"]
 			. '" /><br />
 			<small>' . __('Prefix text to be prepended to the author\'s name', 'wp-biographia') . '</small></p>';
