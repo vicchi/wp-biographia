@@ -237,7 +237,9 @@ class WP_Biographia extends WP_PluginBase {
 					'wp_biograpia_content_vimeo' => '',
 					'wp_biographia_content_youtube' => '',
 					'wp_biographia_content_reddit' => '',
-					'wp_biographia_content_posts' => 'extended'
+					'wp_biographia_content_posts' => 'extended',
+					'wp_biographia_content_link_target' => '_self',
+					'wp_biographia_content_link_nofollow' => ''
 				) 
 			);
 			update_option (self::OPTIONS, $settings);
@@ -953,9 +955,15 @@ class WP_Biographia extends WP_PluginBase {
 		}
 
 		$link_items = $this->link_items ();
-		$item_stub = ($display_icons == "icon") ? '<li><a href="%s" title="%s" class="%s"><img src="%s" class="%s" /></a></li>' : '<li><a href="%s" title="%s" class="%s">%s</a></li>';
+		$item_stub = ($display_icons == "icon") ? '<li><a href="%s" %s title="%s" class="%s"><img src="%s" class="%s" /></a></li>' : '<li><a href="%s" %s title="%s" class="%s">%s</a></li>';
 		$title_name_stub = __('%1$s On %2$s', 'wp-biographia');
 		$title_noname_stub = __('On %s', 'wp-biographia');
+		
+		$link_meta = 'target="' . $settings['wp_biographia_content_link_target']. '"';
+		if (!empty($settings['wp_biographia_content_link_nofollow']) &&
+		($settings['wp_biographia_content_link_nofollow'] == 'on')) {
+			$link_meta .= ' rel="nofollow"';
+		}
 		
 		// Deal with the email link first as a special case ...
 		if ((!empty ($settings['wp_biographia_content_email']) && ($settings['wp_biographia_content_email'] == 'on')) && (!empty ($author['email']))) {
@@ -970,8 +978,7 @@ class WP_Biographia extends WP_PluginBase {
 			$link_text = __('Mail', 'wp-biographia');
 			
 			$link_body = ($display_icons == "icon") ? $this->icon_dir_url . 'mail.png' : $link_text;
-			$links[] = $this->link_item ($display_icons, $item_stub, 'mailto:' . antispambot ($author['email']), $link_title, $link_body);
-				
+			$links[] = $this->link_item ($display_icons, $item_stub, 'mailto:' . antispambot ($author['email']), $link_meta, $link_title, $link_body);
 		}
 		
 		// Now deal with the other links that follow the same format and can be "templatised" ...
@@ -999,7 +1006,7 @@ class WP_Biographia extends WP_PluginBase {
 
 				$link_body = ($display_icons == "icon") ? $link_attrs['link_icon'] : $link_attrs['link_text'];
 
-				$links[] = $this->link_item ($display_icons, $item_stub, $author[$link_key], $link_title, $link_body);
+				$links[] = $this->link_item ($display_icons, $item_stub, $author[$link_key], $link_meta, $link_title, $link_body);
 			}
 		}
 
@@ -1026,7 +1033,7 @@ class WP_Biographia extends WP_PluginBase {
 			}
 			
 			$link_body = ($display_icons == "icon") ? $this->icon_dir_url . 'wordpress.png' : $link_text;
-			$links[] = $this->link_item ($display_icons, $item_stub, $author['posts_url'], $link_title, $link_body);
+			$links[] = $this->link_item ($display_icons, $item_stub, $author['posts_url'], $link_meta, $link_title, $link_body);
 		}
 		
 		$item_glue = ($display_icons == 'icon') ? "" : " | ";
@@ -1086,21 +1093,22 @@ class WP_Biographia extends WP_PluginBase {
 	 * @param string display_icons String containing the CSS class type; text|icon
 	 * @param string format String containing a printf/sprintf format for output
 	 * @param string link_key Link key string.
+	 * @param string link_meta Link meta attributes (target/rel)
 	 * @param string link_title Link title string.
 	 * @param string link_body Link body string.
 	 * @return string Formatted contact link item
 	 */
 
-	function link_item ($display_icons, $format, $link_key, $link_title, $link_body) {
+	function link_item ($display_icons, $format, $link_key, $link_meta, $link_title, $link_body) {
 		$item_class = "wp-biographia-item-" . $display_icons;
 		$link_class = "wp-biographia-link-" . $display_icons;
 		
 		if ($display_icons == 'icon') {
-			return sprintf ($format, $link_key, $link_title, $link_class, $link_body, $item_class);
+			return sprintf ($format, $link_key, $link_meta, $link_title, $link_class, $link_body, $item_class);
 		}
 		
 		else {
-			return sprintf ($format, $link_key, $link_title, $link_class, $link_body);
+			return sprintf ($format, $link_key, $link_meta, $link_title, $link_class, $link_body);
 		}
 	}
 	
@@ -1477,6 +1485,8 @@ class WP_Biographia extends WP_PluginBase {
 					if (isset ($settings['wp_biographia_beta_enabled'])) {
 						unset ($settings['wp_biographia_beta_enabled']);
 					}
+					$this->admin_upgrade_option ($settings, 'content_link_target', '_self');
+					$this->admin_upgrade_option ($settings, 'content_link_nofollow', '');
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
 
@@ -1825,6 +1835,20 @@ class WP_Biographia extends WP_PluginBase {
 			. '/><br />
 			<small>' . __('Enter the URL where the alternate contact links icon set is located', 'wp-biographia') . '</small></p></div>';
 
+		$content_settings[] = '<p><strong>' . __("Opening Contact Links", 'wp-biographia') . '</strong><br />
+        <select name="wp_biographia_content_link_target">
+          <option value="_blank" ' .selected ($settings['wp_biographia_content_link_target'], '_blank', false) . '>' . __('Open contact links in a new window or tab', 'wp-biographia') . '</option>
+          <option value="_self" ' .selected ($settings['wp_biographia_content_link_target'], '_self', false) . '>' . __('Open contact links in the same frame', 'wp-biographia') . '</option>
+          <option value="_parent" ' .selected ($settings['wp_biographia_content_link_target'], '_parent', false) . '>' . __('Open contact links in the parent frame', 'wp-biographia') . '</option>
+          <option value="_top" ' .selected ($settings['wp_biographia_content_link_target'], '_top', false) . '>' . __('Open contact links in the full body of the window', 'wp-biographia') . '</option>
+        </select><br /><small>' . __('Select where to open contact links.', 'wp-biographia') . '</small></p>';
+
+	$content_settings[] = '<p><strong>' . __("Don't Follow Contact Links", 'wp-biographia') . '</strong><br />
+		<input type="checkbox" name="wp_biographia_content_link_nofollow" '
+		. checked ($settings['wp_biographia_content_link_nofollow'], 'on', false)
+		. '/>
+		<small>' . __('Add <em>rel="nofollow"</em> to contact links?', 'wp-biographia') . '</small></p>';
+
 		$content_settings[] = '<p><strong>' . __("Show Author's Email Address", 'wp-biographia') . '</strong><br />
 			<input type="checkbox" name="wp_biographia_content_email" '
 			. checked ($settings['wp_biographia_content_email'], 'on', false)
@@ -2138,6 +2162,12 @@ class WP_Biographia extends WP_PluginBase {
 						$settings['wp_biographia_content_icon_url'] =
 							$this->admin_option ('wp_biographia_content_icon_url');
 
+						$settings['wp_biographia_content_link_target'] =
+							$this->admin_option ('wp_biographia_content_link_target');
+
+						$settings['wp_biographia_content_link_nofollow'] =
+							$this->admin_option ('wp_biographia_content_link_nofollow');
+							
 						$settings['wp_biographia_content_email'] = 
 							$this->admin_option ('wp_biographia_content_email');
 
