@@ -1,0 +1,784 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wp-biographia\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-04 17:50-0800\n"
+"PO-Revision-Date: 2012-04-04 17:51-0800\n"
+"Last-Translator: Gary Gale <gary@vicchi.org>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: gettext;gettext_noop;__\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-Language: Polski\n"
+"X-Poedit-Country: POLAND\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: /Users/gary/Projects/wp-biographia\n"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:219
+msgid "About"
+msgstr "O"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:286
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:409
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:410
+msgid "Twitter"
+msgstr "Twitter"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:290
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:414
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:415
+msgid "Facebook"
+msgstr "Facebook"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:294
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:419
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:420
+msgid "LinkedIn"
+msgstr "LinkedIn"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:298
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:424
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:425
+msgid "Google+"
+msgstr "Google+"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:302
+msgid "Delicious"
+msgstr "Delicious"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:306
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:434
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:435
+msgid "Flickr"
+msgstr "Flickr"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:310
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:439
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:440
+msgid "Picasa"
+msgstr "Picasa"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:314
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:444
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:445
+msgid "Vimeo"
+msgstr "Vimeo"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:318
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:449
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:450
+msgid "YouTube"
+msgstr "YouTube"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:322
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:454
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:455
+msgid "Reddit"
+msgstr "Reddit"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:326
+msgid "Yahoo IM"
+msgstr "Yahoo IM"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:330
+msgid "AIM"
+msgstr "AIM"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:334
+msgid "Windows Live Messenger"
+msgstr "Windows Live Messenger"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:338
+msgid "Jabber / Google Talk"
+msgstr "Jabber / Google Talk"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:404
+msgid "The Web"
+msgstr "WWW"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:405
+msgid "Web"
+msgstr "WWW"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:429
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:430
+msgid "Delicous"
+msgstr "Delicous"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:959
+#, php-format
+msgid "%1$s On %2$s"
+msgstr "%1$s na %2$s"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:960
+#, php-format
+msgid "On %s"
+msgstr "na %s"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:971
+#, php-format
+msgid "Send %s Mail"
+msgstr "Wyślij e-mail do %s"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:975
+msgid "Send Mail"
+msgstr "Wyślij e-mail"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:978
+msgid "Mail"
+msgstr "E-mail"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1016
+#, php-format
+msgid "More Posts By %s"
+msgstr "Więcej postów napisanych przez %s"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1020
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1025
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1031
+msgid "More Posts"
+msgstr "Więcej postów"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1122
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1123
+msgid "WP Biographia"
+msgstr "WP Biographia"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1181
+msgid "Suppress From Posts"
+msgstr "Pomiń w postach"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1189
+msgid "Suppress From Pages"
+msgstr "Pomiń w stronach"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1219
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1536
+msgid "Display On Front Page"
+msgstr "Wyświetlaj na stronie głównej"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1538
+msgid "Displays the Biography Box for each post on the front page."
+msgstr "Wyświetla ramkę z biografią w każdym poście na stronie głównej"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1540
+msgid "Display On Individual Posts"
+msgstr "Wyświetlaj w pojedynczych postach"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1542
+msgid "Displays the Biography Box for individual posts."
+msgstr "Wyświetla ramkę z biografią w każdym indywidualnym poście"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1544
+msgid "Display In Post Archives"
+msgstr "Wyświetlaj w archiwum"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1546
+msgid "Displays the Biography Box for each post on archive pages."
+msgstr "Wyświetla ramkę z biografią w każdym poście w archiwum"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1548
+msgid "Display On Individual Pages"
+msgstr "Wyświetlaj w indywidualnych stronach"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1550
+msgid "Displays the Biography Box for individual pages."
+msgstr "Wyświetla ramkę z biografią na pojedynczych stronach"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1553
+#, php-format
+msgid "Display On Individual %s"
+msgstr "Wyświetlaj na indywidualnej stronie %s"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1555
+#, php-format
+msgid "Displays the Biography Box on individual instances of custom post type %s."
+msgstr "Wyświetla ramkę z biografią w przypadku niestandardowego typu postu %s"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1557
+#, php-format
+msgid "Display In %s Archives"
+msgstr "Wyświetlaj w achiwum %s"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1559
+#, php-format
+msgid "Displays the Biography Box on archive pages for custom post type %s."
+msgstr "Wyświetla ramkę z biografią w archiwum w przypadku niestandardowego typu postu %s"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1562
+msgid "Display In RSS Feeds"
+msgstr "Wyświetlanie w kanałach RSS"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1564
+msgid "Displays the Biography Box in feeds for each entry."
+msgstr "Wyświetla ramkę z biografią w kanałach RSS"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1571
+msgid "Display Location"
+msgstr "Miejsce wyświetlania"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1574
+msgid "Display the Biography Box before the post or page content"
+msgstr "Przed zawartością strony lub postu"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1577
+msgid "Display the Biography Box after the post or page content"
+msgstr "Po zawartości strony lub postu"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1583
+msgid "Exclude From Single Posts (via Post ID)"
+msgstr "Wyłącz ramkę w poszczególnych postach (po ID)"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1585
+msgid "Suppresses the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to suppress, comma separated with no spaces, e.g. 54,33,55"
+msgstr "Pomija ramkę z biografią, kiedy pojedynczy post jest otworzony. Wpisz ID postów oddzielając je przecinkiem np.: 54,33,16"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1587
+msgid "Globally Exclude From Posts (via Post ID)"
+msgstr "Wyłącz ramkę globalnie w poszczególnych postach (po ID)"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1589
+msgid "Suppresses the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
+msgstr "Pomija ramkę z biografią, kiedy post wyświetlony jest na stronie głównej, w archiwum lub indywidualnie. Wpisz ID postów oddzielając je przecinkiem np.: 54,33,16"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1592
+#, php-format
+msgid "Exclude From Single %1$s (via %2$s ID)"
+msgstr "Wyłącz w pojedynczym %1$s (po ID %2$s)"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1594
+#, php-format
+msgid "Suppresses the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
+msgstr "Pomija ramkę z biografią, kiedy wyświetla %1$s - pojedynczo, na stronie głównej lub w archiwum. Wpisz ID %2$s, aby pominąć globalnie oddzielając je przecinkiem np.: 54,33,16"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1596
+#, php-format
+msgid "Globally Exclude From %1$s (via %2$s ID)."
+msgstr "Wyłącz globalnie w pojedynczym %1$s (po ID %2$s)"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1598
+#, php-format
+msgid "Suppresses the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
+msgstr "Pomija ramkę z biografią, kiedy wyświetla %1$s. Wpisz ID %2$s, aby pominąć globalnie oddzielając je przecinkiem np.: 54,33,16"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1601
+msgid "Exclude Pages (via Page ID)"
+msgstr "Wyłącz ramkę w poszczególnych stronach(po ID)"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1603
+msgid "Suppresses the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to suppress, comma separated with no spaces, e.g. 54,33,55."
+msgstr "Pomija ramkę z biografią, kiedy pojedyncza strona jest otworzona. Wpisz ID stron oddzielając je przecinkiem np.: 54,33,16"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1634
+msgid "Per User Suppression Of The Biography Box On Posts"
+msgstr "Pomijanie użytkowników przy wyświetlaniu biografii przy ich postach"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1636
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1662
+msgid "Enabled Users"
+msgstr "Zatwierdzeni"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1644
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1670
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1716
+msgid "Add"
+msgstr "Dodaj"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1647
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1673
+msgid "Suppressed Users"
+msgstr "Zablokowani"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1655
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1681
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1727
+msgid "Remove"
+msgstr "Usuń"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1658
+msgid "Select the users who should not display the Biography Box on their authored posts. Selecting a user for suppression of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile."
+msgstr "Wybierz użytkowników, którzy nie powinni wyświetlać ramki z biografią w postach których są autorami. Blokada użytkownika spowoduje zablokowanie opcji w jego panelu. Ramka nie będzie wyświetlać się ani w pojedynczych postach, ani w archiwum czy też na stronie głównej"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1660
+msgid "Per User Suppression Of The Biography Box On Pages"
+msgstr "Pomijanie użytkowników przy wyświetlaniu biografii przy ich stronach"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1684
+msgid "Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile."
+msgstr "Wybierz użytkowników, którzy nie powinni wyświetlać ramki z biografią w stronach których są autorami. Blokada użytkownika spowoduje zablokowanie opcji w jego panelu."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1706
+msgid "Exclude By Category On Posts"
+msgstr "Wyłącz w postach z określonej kategorii"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1708
+msgid "Enabled Categories"
+msgstr "Włączone kategorie"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1719
+msgid "Excluded Categories"
+msgstr "Wyłączone kategorie"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1730
+msgid "Select the post categories that should not display the Biography Box. Selecting a category for exclusion of the Biography Box affects all posts of that category, on single post display, on archive pages and on the front page."
+msgstr "Wybierz kategorie postów, w których nie powinna wyświetlać się ramka z biografią. Wybór kategorii spowoduje, że ramka nie będzie wyświetlać się ani w pojedynczych postach tej kategorii, ani w archiwum czy też na stronie głównej"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1736
+msgid "Box Background Color"
+msgstr "Kolor tła ramki"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1738
+msgid "Select a Color"
+msgstr "Wybierz kolor"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1740
+msgid "By default, the background color of the Biography Box is a yellowish tone."
+msgstr "Domyślnie kolor ramki to żółte-niewiadomo-co"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1741
+msgid "Box Border"
+msgstr "Obramowanie"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1743
+msgid "Thick Top Border"
+msgstr "Gruba górna krawędź"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1744
+msgid "Thin Surrounding Border"
+msgstr "Cienkie obramowanie dookoła"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1745
+msgid "No Border"
+msgstr "Bez obramowania"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1746
+msgid "By default, a thick black line is displayed above the Biography Box."
+msgstr "Domyślnie wyświetlana jest gruba czarna linia powyżej ramki z biografią"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1752
+msgid "Biography Prefix"
+msgstr "Prefix autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1756
+msgid "Prefix text to be prepended to the author's name"
+msgstr "Tekst, który będzie pojawiał się przed wyświetlaną nazwą autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1758
+msgid "Author's Name"
+msgstr "Nazwa autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1761
+msgid "First/Last Name"
+msgstr "Imię Nazwisko"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1764
+msgid "Account Name"
+msgstr "Nazwa użytkownika (login)"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1767
+msgid "Nickname"
+msgstr "Pseudonim"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1770
+msgid "Display Name"
+msgstr "Wyświetlana nazwa"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1773
+msgid "Don't Show The Name"
+msgstr "Nie pokazuj nazwy autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1774
+msgid "How you want to see the author's name displayed (if at all)"
+msgstr "Jak ma wyświetlać się nazwa autora (jeśli w ogóle)"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1776
+msgid "Author's Name Link"
+msgstr "Nazwa autora jako link"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1780
+msgid "Make author's name link to <em>More Posts By This Author</em>"
+msgstr "Tworzy link pod nazwą autora do strony <em>Więcej postów tego autora</em>"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1784
+#, php-format
+msgid "It looks like Avatars are not currently enabled; this means that the author's image won't be able to be displayed. If you want this to happen then go to <a href=\"%s\">Settings &rsaquo; Discussions</a> and set Avatar Display to Show Avatars."
+msgstr "Wygląda na to, że avatary są obecnie wyłączone. To oznacza, że obrazek autora nie będzie wyświetlany. Jeśli chcesz, aby wyświetlał się wejdź w <a href=\"%s\">Ustawienia &rsaquo; Dyskusja</a> i ustaw opcję Wyświetlanie obrazków profilowych na włączoną."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1787
+msgid "Author's Image"
+msgstr "Obrazek autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1792
+msgid "Display the author's image?"
+msgstr "Wyświetla avatar autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1804
+msgid "Image Size"
+msgstr "Rozmiar obrazka"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1808
+msgid "Enter image size, e.g. 32 for a 32x32 image, 70 for a 70x70 image, etc. Defaults to a 100x100 size image."
+msgstr "Wpisz rozmiar kwadratowego obrazka np.: 32 dla obrazka 32x32. 70 dla obrazka 70x70. Domyślnie 100."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1809
+msgid "Show Author's Biography"
+msgstr "Pokaż biografię autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1813
+msgid "Display the author's biography?"
+msgstr "Wyświetlaj opis autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1815
+msgid "Show Contact Links As Icons"
+msgstr "Pokaż linki kontaktowe jako ikony"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1819
+msgid "Show the author's contact links as icons?"
+msgstr "Wyświetlaj linki kontaktowe i społecznościowe autora jako ikony"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1825
+msgid "Use Alternate Icon Set"
+msgstr "Użyj innego zestawu ikon"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1829
+msgid "Use an alternative icon set for contact links?"
+msgstr "Wyświetla inny zestaw ikon"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1830
+msgid "Alternate Icon Set URL"
+msgstr "Adres URL alternatywnych ikon"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1836
+msgid "Enter the URL where the alternate contact links icon set is located"
+msgstr "Wpisz adres URL ikon"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1838
+msgid "Opening Contact Links"
+msgstr "Otwarcie Kontakt Linki"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1840
+msgid "Open contact links in a new window or tab"
+msgstr "Otwórz kontakt linki w nowym oknie lub karcie"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1841
+msgid "Open contact links in the same frame"
+msgstr "Otwórz kontakt linki w tej samej ramce"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1842
+msgid "Open contact links in the parent frame"
+msgstr "Otwórz kontakt linki w ramce nadrzędnej"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1843
+msgid "Open contact links in the full body of the window"
+msgstr "Otwórz kontakt linki w pełnej treści oknie"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1844
+msgid "Select where to open contact links."
+msgstr "Wybierz gdzie otworzyć kontakt linki."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1846
+#, fuzzy
+msgid "Don't Follow Contact Links"
+msgstr "Pokaż linki kontaktowe jako ikony"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1850
+msgid "Add <em>rel=\"nofollow\"</em> to contact links?"
+msgstr "Dodaj <em>rel = \"nofollow\"</em> kontakt linki?"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1852
+msgid "Show Author's Email Address"
+msgstr "Pokaż e-mail autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1856
+msgid "Display the author's email address?"
+msgstr "Wyświetlaj adres e-mail autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1858
+msgid "Show Author's Website Link"
+msgstr "Pokaż stronę WWW autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1862
+msgid "Display the author's website details?"
+msgstr "Wyświetlaj stronę WWW autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1864
+msgid "Show Author's Twitter Link"
+msgstr "Pokaż Twitter'a autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1868
+msgid "Display the author's Twitter details?"
+msgstr "Wyświetlaj adres Twitter'a autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1870
+msgid "Show Author's Facebook Link"
+msgstr "Pokaż Facebook'a autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1874
+msgid "Display the author's Facebook details?"
+msgstr "Wyświetlaj adres Facebook'a autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1876
+msgid "Show Author's LinkedIn Link"
+msgstr "Pokaż LinkedIn autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1880
+msgid "Display the author's LinkedIn details?"
+msgstr "Wyświetlaj adres LinkedIn autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1882
+msgid "Show Author's Google+ Link"
+msgstr "Pokaż Google+ autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1886
+msgid "Display the author's Google+ details?"
+msgstr "Wyświetlaj adres G+ autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1888
+msgid "Show Author's Delicious Link"
+msgstr "Pokaż Delicious autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1892
+msgid "Display the author's Delicious details?"
+msgstr "Wyświetlaj adres Delicious autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1894
+msgid "Show Author's Flickr Link"
+msgstr "Pokaż Flickr autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1898
+msgid "Display the author's Flickr details?"
+msgstr "Wyświetlaj adres Flickr autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1900
+msgid "Show Author's Picasa Link"
+msgstr "Pokaż Piscasa'e autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1904
+msgid "Display the author's Picasa details?"
+msgstr "Wyświetlaj adres Picasa autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1906
+msgid "Show Author's Vimeo Link"
+msgstr "Pokaż Vimeo autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1910
+msgid "Display the author's Vimeo details?"
+msgstr "Wyświetlaj adres Vimeo autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1912
+msgid "Show Author's YouTube Link"
+msgstr "Pokaż YouTube autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1916
+msgid "Display the author's YouTube details?"
+msgstr "Wyświetlaj adres YouTube autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1918
+msgid "Show Author's Reddit Link"
+msgstr "Pokaż adres Reddit autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1922
+msgid "Display the author's Reddit details?"
+msgstr "Wyświetlaj adres Reddit autora"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1925
+msgid "Show More Posts Link"
+msgstr "Link pokaż więcej postów"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1928
+msgid "Basic More Posts Link"
+msgstr "Standardowy"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1931
+msgid "Extended More Posts Link"
+msgstr "Rozszerzony"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1934
+msgid "Don't Show The More Posts Link"
+msgstr "Nie pokazuj linku"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1935
+msgid "How you want to display and format the <em>More Posts By This Author</em> link"
+msgstr "Jak chcesz wyświetlać link <em>Więcej postów tego autora</em>"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1942
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1946
+msgid "Reset WP Biographia To Defaults"
+msgstr "Zresetuj wszystkie ustawienia do domyślnych"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1944
+msgid "Reset all WP Biographia settings and options to their default values."
+msgstr "Zresetuj wszystkie ustawienia WP Biographia do wartości domyślnych"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1946
+#, php-format
+msgid "<strong>WARNING!</strong> Checking <strong><em>%s</em></strong> and clicking on <strong><em>%s</em></strong> will erase <strong><em>all</em></strong> the current WP Biographia settings and options and will restore WP Biographia to a <em>just installed</em> state. This is the equivalent to deactivating, uninstalling and reinstalling the plugin. Only proceed if this is what you intend to do. This action is final and irreversable."
+msgstr "<strong>UWAGA!</strong>  Zaznaczenie <strong><em>%s</em></strong> i kliknięcie <strong><em>%s</em></strong> usunie <strong><em>wszystkie</em></strong> obecne ustawienia WP Biographia i przywróci wtyczkę do stanu <em>po instalacji</em>. Jest to równe wyłączeniu, usunięciu i zainstalowaniu ponownie wtyczki. Użyj tej opcji jedynie jeśli jesteś tego pewien. Zmiany będą nieodwracalne."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1946
+msgid "Save Changes"
+msgstr "Zapisz zmiany"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1954
+msgid "For the inner nerd in you, the latest version of WP Biographia was written using <a href=\"http://macromates.com/\">TextMate</a> on a MacBook Pro running OS X 10.7.2 Lion and tested on the same machine running <a href=\"http://mamp.info/en/index.html\">MAMP</a> (Mac/Apache/MySQL/PHP) before being let loose on the author's <a href=\"http://www.vicchi.org/\">blog</a>."
+msgstr "Dla informacji Twojego wewnętrznego nerd'a ostatnia wersja WP Biographia była napisana przy użyciu <a href=\"http://macromates.com/\">TextMate</a> na MacBook Pro z OS X 10.7.2 Lion i przetestowan na tej samej maszynie przez <a href=\"http://mamp.info/en/index.html\">MAMP</a> (Mac/Apache/MySQL/PHP) zanim została wypuszczona na <a href=\"http://www.vicchi.org/\">blogu autora</a>"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1956
+msgid "The official home for WP Biographia is on <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">Gary's Codeage</a>; it's also available from the official <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">WordPress plugins repository</a>. If you're interested in what lies under the hood, the code is also on <a href=\"https://github.com/vicchi/wp-biographia\">GitHub</a> to download, fork and otherwise hack around."
+msgstr "Wtyczkę możesz znaleźć na <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">oficjalnej stronie WP Biographia</a>, a także w <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">repozytorium WordPress'a</a>. Jeśli jesteś zainteresowany jaki kod jest pod maską możesz go znaleźć na <a href=\"https://github.com/vicchi/wp-biographia\">GitHub</a> do ściągnięcia i ewentualnego zhakowania."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1958
+msgid "WP Biographia is named after the etymology of the modern English word <em>biography</em>. The word first appeared in the 1680s, probably from the latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, meaning \"life\" and <em>graphia</em>, meaning \"record\" or \"account\" which derived from <em>graphein</em>, \"to write\"."
+msgstr "WP Biographia pochodzi od etymologii współczesnego wyrazu angielskiego <em>biography</em>. Słowo to ukazało się w latach 1680 prawdopodobnie z łacińskiego <em>biographia</em>, które samo pochodzi z greki: <em>bio</em> oznacza \"życie\" i <em>graphia</em> to \"zapis\"."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1974
+msgid "Post, Page And Custom Post Type Exclusion Settings"
+msgstr "Ustawienia wyłączeń w postach, stronach i niestandarowych typach postów"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1977
+msgid "Category Exclusion Settings"
+msgstr "Ustawienia wyłączeń z kategorii"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1981
+msgid "User Suppression Settings"
+msgstr "Ustawienia pomijania użytkowników"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1987
+msgid "Style Settings"
+msgstr "Ustawienia styli"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1993
+msgid "Content Settings"
+msgstr "Ustawienia treści"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:1999
+msgid "Reset WP Biographia"
+msgstr "Zresetuj WP Biographia"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2005
+msgid "Colophon"
+msgstr "O wtyczce"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2012
+msgid "Display Settings"
+msgstr "Ustawienia wyświetlania"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2018
+#, php-format
+msgid "WP Biographia %s - Settings And Options"
+msgstr "WP Biographia %s - Ustawienia i opcje"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2069
+msgid "Updated"
+msgstr "Zaktualizowane"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2217
+msgid "All"
+msgstr "Wszystko"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2218
+msgid "Reset To Default Values"
+msgstr "Zresetuj do ustawień domyślnych"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2263
+#, php-format
+msgid "%s Settings And Options %s"
+msgstr "%s Ustawienia i opcje %s"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2287
+msgid "Click to toggle"
+msgstr "Rozwiń/Zwiń"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2367
+#, php-format
+msgid "Save %s Settings"
+msgstr "Zapisz ustawienia %s"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2389
+msgid "For help and support with WP Biographia, here's what you can do:"
+msgstr "Co możesz zrobić, aby uzyskać pomoc z WP Biographia:"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2391
+msgid "Ask a question on the <a href=\"http://wordpress.org/tags/wp-biographia?forum_id=10\">WordPress support forum</a>; this is by far the best way so that other users can follow the conversation."
+msgstr "Zadaj pytanie na <a href=\"http://wordpress.org/tags/wp-biographia?forum_id=10\">forum WordPress'a</a>. To jest najlepsze wyjście ponieważ inni użytkownicy mogą zobaczyć rozwiązanie problemu"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2393
+msgid "Ask me a question on Twitter; I'm <a href=\"http://twitter.com/vicchi\">@vicchi</a>."
+msgstr "<a href=\"http://twitter.com/vicchi\">Zapytaj mnie na Twitterze</a>."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2395
+#, php-format
+msgid "Drop me an <a href=\"mailto:%s\">email </a>instead."
+msgstr "Wyślij mi <a href=\"mailto:%s\">e-mail</a>."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2397
+msgid "But help and support is a two way street; here's what you might want to do:"
+msgstr "Ale pomoc jest na wyciągnięcie ręki. Zobacz gdzie możesz jej szukać:"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2399
+#, php-format
+msgid "If you like this plugin and use it on your WordPress site, or if you write about it online, <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">link to the plugin</a> and drop me an <a href=\"mailto:%s\">email</a> telling me about this."
+msgstr "Jeśli spodobał Ci się plugin i używasz go na swoim WordPressie, albo opublikowałeś <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">link do wtyczki</a> - wyślij mi <a href=\"mailto:%s\">e-mail</a>."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2401
+msgid "Rate the plugin on the <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">WordPress plugin repository</a>."
+msgstr "Oceń tą wtyczkę na <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">repozytrium WordPress'a</a>."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2403
+msgid "WP Biographia is both free as in speech and free as in beer. No donations are required; <a href=\"http://www.vicchi.org/codeage/donate/\">here's why</a>."
+msgstr "WP Biographia jest tak samo darmowa jak język. Dotacje nie są potrzebne, <a href=\"http://www.vicchi.org/codeage/donate/\">wyjaśnienie dlaczego</a>."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2407
+msgid "Help &amp; Support"
+msgstr "Pomoc"
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2421
+msgid "WP Biographia is inspired by and based on <a href=\"http://www.jonbishop.com\">Jon Bishop's</a> <a href=\"http://wordpress.org/extend/plugins/wp-about-author/\">WP About Author</a> plugin. Thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place. Jon's written other <a href=\"http://profiles.wordpress.org/users/JonBishop/\">WordPress plugins</a> as well; you should take a look."
+msgstr "WP Biographia  jest zainspirowana i bazuje na wtyczce <a href=\"http://wordpress.org/extend/plugins/wp-about-author/\">WP About Author</a> <a href=\"http://www.jonbishop.com\">Jona Bishopa</a>. Dzięki Jonowi, za napisanie dobrze zbudowanej, działającej wtyczki WordPress'a wydaną na licencji pozwalającej wtyczkom takim jak ta, której korzystasz na modyfikacje i powstanie. Jon napisał również <a href=\"http://profiles.wordpress.org/users/JonBishop/\">inne wtyczki</a> - powinieneś rzucić okiem."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2425
+msgid "WP Biographia is now internationalised. Turkish language translation and support is thanks to <a href=\"https://twitter.com/#!/KazancExpert\">Hakan Er</a>."
+msgstr "WP Biographia jest teraz zinternacjonalizowana. Tureckie tłumaczenie i pomoc dzięki <a href=\"https://twitter.com/#!/KazancExpert\">Hakan Er</a>."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2429
+#, php-format
+msgid "If you'd like to see WP Biographia translated into your language and want to help with the process, then please drop me an <a href=\"mailto:%s\">email</a>."
+msgstr "If you'd like to see WP Biographia translated into your language and want to help with the process, then please drop me an <a href=\"mailto:%s\">email</a>."
+
+#: /Users/gary/Projects/wp-biographia/wp-biographia.php:2433
+msgid "Acknowledgements"
+msgstr "Podziękowania"
+
+#~ msgid "Don't show the Biography Box on your posts"
+#~ msgstr "Nie pokazuj WP Biography w moich postach"
+
+#~ msgid "Don't show the Biography Box on your pages"
+#~ msgstr "Nie pokazuj WP Biography w moich stronach"
+
+#~ msgid "http://www.vicchi.org/codeage/wp-biographia/"
+#~ msgstr "http://www.vicchi.org/codeage/wp-biographia/"
+
+#~ msgid ""
+#~ "Add and display a customizable author biography for individual posts, in "
+#~ "RSS feeds, on pages, in archives and on each entry on the landing page "
+#~ "and much more."
+#~ msgstr ""
+#~ "Dodaj i wyświetlaj dopasowaną biografię autora w postach, kanałach RSS, "
+#~ "stronach, archiwach itp. i o wiele więcej."
+
+#~ msgid "Gary Gale & Travis Smith"
+#~ msgstr "Gary Gale & Travis Smith"
+
+#~ msgid "http://www.garygale.com/"
+#~ msgstr "http://www.garygale.com/"
+
+#~ msgid "Biography Box Per User Settings"
+#~ msgstr "Ustawienia dla użytkowników"
+
+#~ msgid "Biography Box Style Settings"
+#~ msgstr "Ustawienia stylu"
