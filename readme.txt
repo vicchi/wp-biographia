@@ -147,11 +147,15 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Screenshots ==
 
-1. WP Biographia Settings And Options: Biography Box Display Settings
-1. WP Biographia Settings And Options: Biography Box Per User Settings
-1. WP Biographia Settings And Options: Biography Box Style Settings
-1. WP Biographia Settings And Options: Biography Box Content Settings
-1. WP Biographia Settings And Options: Biography Box Content Settings, continued
+1. Settings and Options: Admin Screen Display Tab
+1. Settings and Options: Admin Screen Exclusion Tab - Post, Page and Custom Post Type Exclusion Settings
+1. Settings and Options: Admin Screen Exclusion Tab - Category Exclusion Settings
+1. Settings and Options: Admin Screen Exclusion Tab - User Suppression Settings
+1. Settings and Options: Admin Screen Style Tab
+1. Settings and Options: Admin Screen Content Tab
+1. Settings and Options: Admin Screen Content Tab, continued
+1. Settings and Options: Admin Screen Defaults Tab
+1. Settings and Options: Admin Screen Colophon Tab
 1. Sample Biography Box; contact links shown as text
 1. Sample Biography Box; contact links shown as icons
 
