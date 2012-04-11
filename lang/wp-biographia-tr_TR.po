@@ -1,10 +1,12 @@
+# Copyright (C) 2012 WP Biographia
+# This file is distributed under the same license as the WP Biographia package.
 msgid ""
 msgstr ""
 "Project-Id-Version: wp-biographia\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-04-04 17:51-0800\n"
-"PO-Revision-Date: 2012-04-04 18:08-0800\n"
-"Last-Translator: Gary Gale <gary@vicchi.org>\n"
+"PO-Revision-Date: 2012-04-08 00:44+0200\n"
+"Last-Translator: kazancexpert <kazancexpert@gmail.com>\n"
 "Language-Team: kazancexpert <kazancexpert@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -111,7 +113,7 @@ msgstr "Delicous"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:959
 #, php-format
 msgid "%1$s On %2$s"
-msgstr "%1$s Üzerinde %2$s"
+msgstr "%2$s Üzerinde %1$s"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:960
 #, php-format
@@ -149,11 +151,11 @@ msgstr "WP Biographia"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1181
 msgid "Suppress From Posts"
-msgstr "Yazılardan Engelle"
+msgstr "Yazılardan Gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1189
 msgid "Suppress From Pages"
-msgstr "Sayfalardan Engelle"
+msgstr "Sayfalardan Gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1219
 msgid "Settings"
@@ -237,7 +239,7 @@ msgstr "Tekil Yazılardan Dışla (Yazı ID kimliğine göre)"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1585
 msgid "Suppresses the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to suppress, comma separated with no spaces, e.g. 54,33,55"
-msgstr "Tekil Yazı Şablonu kullanarak gösterlien yazılarda Biyografi Kutusunu engeller. Engellemek için Yazı ID kimliklerini örn. 54,33,55 olarak boşluksuz girin."
+msgstr "Tekil Yazı Şablonu kullanarak gösterlien yazılarda Biyografi Kutusunu gizler. Engellemek için Yazı ID kimliklerini örn. 54,33,55 olarak boşluksuz girin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1587
 msgid "Globally Exclude From Posts (via Post ID)"
@@ -245,7 +247,7 @@ msgstr "Yazılardan Genel Dışlama (Yazı ID kimliğine göre)"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1589
 msgid "Suppresses the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
-msgstr "Tek başına, arşiv sayfalarında veya ön sayfada yazının gösterildiği her yerde Biyografi Kutusunu engeller. Genel engelleme için Yazı ID kimliklerini örn. 54,33,55 olarak boşluksuz girin."
+msgstr "Tek başına, arşiv sayfalarında veya ön sayfada yazının gösterildiği her yerde Biyografi Kutusunu gizler. Genel engelleme için Yazı ID kimliklerini örn. 54,33,55 olarak boşluksuz girin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1592
 #, php-format
@@ -255,7 +257,7 @@ msgstr "Tekil %1$s İçinden Dışla (%2$s ID kimliği ile)"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1594
 #, php-format
 msgid "Suppresses the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
-msgstr "Tek başına, arşiv sayfalarında veya ön sayfada %1$s gösterildiği her yerde Biyografi Kutusunu engeller. Genel engelleme için %2$s ID kimliklerini örn. 54,33,55 olarak boşluksuz girin."
+msgstr "Tek başına, arşiv sayfalarında veya ön sayfada %1$s gösterildiği her yerde Biyografi Kutusunu gizler. Genel engelleme için %2$s ID kimliklerini örn. 54,33,55 olarak boşluksuz girin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1596
 #, php-format
@@ -265,7 +267,7 @@ msgstr "Genel %1$s İçinden Dışla (%2$s ID kimliği ile)"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1598
 #, php-format
 msgid "Suppresses the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
-msgstr "%1$s gösterildiği her yerde Biyografi Kutusunu engeller. Genel engelleme için %2$s ID kimliklerini örn. 54,33,55 olarak boşluksuz girin."
+msgstr "%1$s gösterildiği her yerde Biyografi Kutusunu gizler. Genel engelleme için %2$s ID kimliklerini örn. 54,33,55 olarak boşluksuz girin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1601
 msgid "Exclude Pages (via Page ID)"
@@ -273,11 +275,11 @@ msgstr "Sayfaları Dışla (Sayfa ID kimliğine göre)"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1603
 msgid "Suppresses the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to suppress, comma separated with no spaces, e.g. 54,33,55."
-msgstr "Sayfa Şablonu kullanarak gösterlien sayfalarda Biyografi Kutusunu engeller. Engellemek için Sayfa ID kimliklerini örn. 54,33,55 olarak boşluksuz girin."
+msgstr "Sayfa Şablonu kullanarak gösterlien sayfalarda Biyografi Kutusunu gizler. Engellemek için Sayfa ID kimliklerini örn. 54,33,55 olarak boşluksuz girin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1634
 msgid "Per User Suppression Of The Biography Box On Posts"
-msgstr "Yazılardaki Biygrafi Kutusunun Kullanıcılarını Belirleme"
+msgstr "Yazılardan Gizlenecek Biyografi Kutusu Kullanıcıları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1636
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1662
@@ -293,7 +295,7 @@ msgstr "Ekle"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1647
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1673
 msgid "Suppressed Users"
-msgstr "Engellenen Kullanıcılar"
+msgstr "Gizlenen Kullanıcılar"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1655
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1681
@@ -307,7 +309,7 @@ msgstr "Yetkili oldukları yazılarda Biyografi Kutusu gösterilmeyecek kullanı
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1660
 msgid "Per User Suppression Of The Biography Box On Pages"
-msgstr "Sayfalardaki Biygrafi Kutusunun Kullanıcılarını Belirleme"
+msgstr "Sayfalardan Gizlenecek Biyografi Kutusu Kullanıcıları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1684
 msgid "Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile."
@@ -315,15 +317,15 @@ msgstr "Yetkili oldukları sayfalarda Biyografi Kutusu gösterilmeyecek kullanı
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1706
 msgid "Exclude By Category On Posts"
-msgstr "Mesajlar On Kategoriye göre Exclude"
+msgstr "Yazılarda Kategoriye Göre Dışla"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1708
 msgid "Enabled Categories"
-msgstr "Etkin Kullanıcılar"
+msgstr "Etkin Kategoriler"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1719
 msgid "Excluded Categories"
-msgstr "Hariç Kategoriler"
+msgstr "Dışlanmış Kategoriler"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1730
 msgid "Select the post categories that should not display the Biography Box. Selecting a category for exclusion of the Biography Box affects all posts of that category, on single post display, on archive pages and on the front page."
@@ -460,35 +462,35 @@ msgstr "İletişim bağlantıları alternatif simge setinin bulunduğu yerin lin
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1838
 msgid "Opening Contact Links"
-msgstr "İletişim Linkler Açılış"
+msgstr "Açık İletişim Linkleri"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1840
 msgid "Open contact links in a new window or tab"
-msgstr "Yeni bir pencere veya sekme iletişim bağlantıları açın"
+msgstr "İletişim bağlantılarını yeni bir pencere ya da sekmede açın"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1841
 msgid "Open contact links in the same frame"
-msgstr "Aynı çerçevede iletişim bağlantıları açın"
+msgstr "İletişim bağlantılarını aynı çereçevede açın"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1842
 msgid "Open contact links in the parent frame"
-msgstr "Üst karede iletişim bağlantıları açın"
+msgstr "İletişim bağlantılarını ana çerçevede açın"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1843
 msgid "Open contact links in the full body of the window"
-msgstr "Pencerenin tam vücut temas bağlantıları açın"
+msgstr "İletişim bağlantılarını pencerenin tamamında açın"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1844
 msgid "Select where to open contact links."
-msgstr "Iletişim bağlantıları açmak için yeri seçin"
+msgstr "İletişim bağlantılarının açılacağı yeri seçin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1846
 msgid "Don't Follow Contact Links"
-msgstr "İletişim Bağlantılarını Simge olarak Göster"
+msgstr "İletişim bağlantılarını Takip Etme"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1850
 msgid "Add <em>rel=\"nofollow\"</em> to contact links?"
-msgstr "Linkler irtibata <em>rel=\"nofollow\"</em> ekle?"
+msgstr "İletişim bağlantılarına <em>rel=\"nofollow\"</em> eklensin?"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1852
 msgid "Show Author's Email Address"
@@ -609,16 +611,16 @@ msgstr "<em>Yazarın Diğer Yazıları</em> bağlantısını nasıl ve hangi for
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1942
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1946
 msgid "Reset WP Biographia To Defaults"
-msgstr "Varsayılanlarına WP Biographia sıfırlayın"
+msgstr "WP Biographia Varsayılana Sıfırla"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1944
 msgid "Reset all WP Biographia settings and options to their default values."
-msgstr "WP Biographia Ayarlar Ve Seçenekler"
+msgstr "Tüm WP Biographia ayar ve seçeneklerini varsayılan değerlere sıfırla."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1946
 #, php-format
 msgid "<strong>WARNING!</strong> Checking <strong><em>%s</em></strong> and clicking on <strong><em>%s</em></strong> will erase <strong><em>all</em></strong> the current WP Biographia settings and options and will restore WP Biographia to a <em>just installed</em> state. This is the equivalent to deactivating, uninstalling and reinstalling the plugin. Only proceed if this is what you intend to do. This action is final and irreversable."
-msgstr "<strong>UYARI!</strong> <strong><em>%2$s</em></strong> Denetleme ve <strong><em>%1$s</em></strong> tıklayarak <strong><em>TÜM</em></strong> mevcut WP Biographia ayarları ve seçenekleri silecektir ve <strong><em>sadace kurulu</em></strong> durumuna WP Biographia geri alacaktır. Bu, devreden kaldırıp eklentisini yeniden kurmanızı için eşdeğerdir. Bu size ne yapmak niyetinde ise sadece geçin. Bu eylem, nihai ve irreversable olduğunu."
+msgstr "<strong>UYARI!</strong> <strong><em>%s</em></strong> işaretlemek ve <strong><em>%s</em></strong> tıklamak <strong><em>tüm</em></strong> geçerli WP Biographia ayar ve seçeneklerini silecektir ve <em>ilk kurulduğu</em> şekline geri getirecektir. Bu, eklentiyi etkisizleştirmek, kaldırmak ve yeniden kurmak ile eş değerdedir. Buna sadece eğer yapmak istediğiniz şey buysa devam edin. Bu eylem, nihai ve geri döndürülemez."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1946
 msgid "Save Changes"
@@ -634,19 +636,19 @@ msgstr "WP Biographia için resmi ev <a href=\"http://www.vicchi.org/codeage/wp-
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1958
 msgid "WP Biographia is named after the etymology of the modern English word <em>biography</em>. The word first appeared in the 1680s, probably from the latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, meaning \"life\" and <em>graphia</em>, meaning \"record\" or \"account\" which derived from <em>graphein</em>, \"to write\"."
-msgstr "WP Biographia adını modern İngiliz etimoloji sözcüğü olan <em>biography</em> den almıştır. Sözcük ilk olarak 1680'lerde büyük ihtimalle \"yaşam\" anlamına gelen Yunan <em>bio</em> türemesi ve \"kayıt\"  anlamına gelen <em>graphia</em> yada \"hesap\" anlamına gelen <em>graphein</em> türevlerinden \"yazmak\" olarak <em>biographia</em> ortaya çıkmıştır."
+msgstr "WP Biographia adını modern İngiliz etimoloji sözcüğü olan <em>biography</em> den almıştır. Sözcük ilk olarak 1680'lerde büyük ihtimalle \"yaşam\" anlamına gelen Yunan <em>bio</em> türemesi ve \"kayıt\" anlamına gelen <em>graphia</em> yada \"hesap\" anlamına gelen <em>graphein</em> türevlerinden \"yazmak\" olarak <em>biographia</em> ortaya çıkmıştır."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1974
 msgid "Post, Page And Custom Post Type Exclusion Settings"
-msgstr "Mesaj, Sayfa Ve Özel Mesaj Tipi Dışlama Ayarlar"
+msgstr "Yazı, Sayfa Ve Kişisel Yazı Tipi Dışlama Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1977
 msgid "Category Exclusion Settings"
-msgstr "Kategori Hariç Ayarlar"
+msgstr "Kategori Dışlama Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1981
 msgid "User Suppression Settings"
-msgstr "Kullanıcı Bastırılması Ayarlar"
+msgstr "Kullanıcı Gizleme Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1987
 msgid "Style Settings"
@@ -654,7 +656,7 @@ msgstr "Stil Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1993
 msgid "Content Settings"
-msgstr "Biyografi Kutusu İçerik Ayarları"
+msgstr "İçerik Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1999
 msgid "Reset WP Biographia"
@@ -666,7 +668,7 @@ msgstr "Yayın Bilgileri"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2012
 msgid "Display Settings"
-msgstr "Biyografi Kutusu Görüntü Ayarları"
+msgstr "Görüntü Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2018
 #, php-format
@@ -675,7 +677,7 @@ msgstr "WP Biographia %s Ayarlar Ve Seçenekler"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2069
 msgid "Updated"
-msgstr "Güncelleme"
+msgstr "Güncellendi"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2217
 msgid "All"
@@ -688,7 +690,7 @@ msgstr "Varsayılan Değerler Sıfırlama"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2263
 #, php-format
 msgid "%s Settings And Options %s"
-msgstr "%s WP Biographia Ayarlar Ve Seçenekler %s"
+msgstr "%s Ayarlar Ve Seçenekler %s"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2287
 msgid "Click to toggle"
@@ -743,12 +745,12 @@ msgstr "WP Biographia <a href=\"http://www.jonbishop.com\">Jon Bishop</a> <a hre
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2425
 msgid "WP Biographia is now internationalised. Turkish language translation and support is thanks to <a href=\"https://twitter.com/#!/KazancExpert\">Hakan Er</a>."
-msgstr "WP Biographia is now internationalised. Turkish language translation and support is thanks to <a href=\"https://twitter.com/#!/KazancExpert\">Hakan Er</a>."
+msgstr "WP Biographia artık çok dillidir. Türkçe diline tercüme ve desteği için <a href=\"https://twitter.com/#!/KazancExpert\">Hakan Er</a> 'e teşekkür ederim."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2429
 #, php-format
 msgid "If you'd like to see WP Biographia translated into your language and want to help with the process, then please drop me an <a href=\"mailto:%s\">email</a>."
-msgstr "If you'd like to see WP Biographia translated into your language and want to help with the process, then please drop me an <a href=\"mailto:%s\">email</a>."
+msgstr "Eğer WP Biographia'yı kendi dilinizde görmek ve bu süreçte bize yardım etmek isterseniz, lütfen bana bir <a href=\"mailto:%s\">eposta</a> gönderin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2433
 msgid "Acknowledgements"
