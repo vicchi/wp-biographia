@@ -45,7 +45,7 @@ The position and content of the Biography Box, including adding support for new 
 
 = How do I get help or support for this plugin? =
 
-In short, yes. But before you read any further, take a look at the blog post [Asking For WordPress Plugin Help And Support Without Tears](http://www.vicchi.org/2012/03/31/asking-for-wordpress-plugin-help-and-support-without-tears/) before firing off a question. In order of preference, you can ask a question on the [WordPress support forum](http://wordpress.org/tags/wp-biographia?forum_id=10); this is by far the best way so that other users can follow the conversation. You can ask me a question on Twitter; I'm [@vicchi](http://twitter.com/vicchi). Or you can drop me an email instead. I can't promise to answer your question but I do promise to answer and do my best to help.
+In short, very easily. But before you read any further, take a look at [Asking For WordPress Plugin Help And Support Without Tears](http://www.vicchi.org/2012/03/31/asking-for-wordpress-plugin-help-and-support-without-tears/) before firing off a question. In order of preference, you can ask a question on the [WordPress support forum](http://wordpress.org/tags/wp-biographia?forum_id=10); this is by far the best way so that other users can follow the conversation. You can ask me a question on Twitter; I'm [@vicchi](http://twitter.com/vicchi). Or you can drop me an email instead. I can't promise to answer your question but I do promise to answer and do my best to help.
 
 = Is there a web site for this plugin? =
 
@@ -127,7 +127,18 @@ See the *Filter Support And Usage* section for more information on the plugin's 
 
 = I want to change the CSS used to format the Biography Box; how do I do this? =
 
-The HTML and CSS classes that the plugin emits follows a consistent structure and naming convention. See the blog post [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/2012/04/05/hacking-wp-biographias-appearance-with-css/) for more information.
+The HTML and CSS classes that the plugin emits follows a consistent structure and naming convention. See [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/2012/04/05/hacking-wp-biographias-appearance-with-css/) for more information.
+
+= WP Biographia doesn't support social network FOO; can you add this to the next version? =
+*Yes*. But also *no*. One of the wonderful things about today's web is the vast amount of ways we have to interact with each other. I can't keep up. No, really. In practical terms, this would mean that the plugin's settings and options panels would soon get out of hand, plus the overhead of adding, testing and releasing a new version of the plugin would get out of hand before the settings and options do. But ... see the next FAQ for the answer.
+
+= WP Biographia doesn't support social network or contact method BAR; how can I add this? =
+With the cunning use of the filters that WP Biographia supports, you can add support for as many social networks and/or contact methods as you like. You'll need to do two things for each link you want to add to the plugin.
+
+1. In your theme's `functions.php` add support for the new link to the author's profile by way of the `wp_biographia_contact_info` filter.
+1. Still in your theme's `functions.php` add support for the new link to be displayed, with an icon if you wish, via the `wp_biographia_link_items` filter.
+
+See the *Filter Support And Usage* section for a working example of these two filters to add support for a new contact link.
 
 = WP Biographia isn't available in my language; can I submit a translation? =
 
@@ -375,7 +386,7 @@ function add_pinterest_support ($contacts) {
 
 = wp_biographia_link_items =
 
-Applied to the default set of contact links that are added to the Biography Box by the plugin. Note that in order to add and display a new contact link, the contact information field must be added to the value returned by the `wp_biographia_contact_info filter` as well as the value returned by this filter. Note that `$icon_dir_url` will by default contain the URL of the images directory within the plugin directory, which will look something like `/wp-content/plugins/wp-biographia/images/` (the trailing slash is important). If an alternate icon directory has been specified in the plugin's settings and options, then `$icon_dir_url` will contain this alternate, configured, directory URL. If the icon you want to add for a new contact link doesn't reside in the directory URL mentioned previously, you'll need to set `$icon_dir_url` to point to your own custom location.
+Applied to the default set of contact links that are added to the Biography Box by the plugin. Note that in order to add and display a new contact link, the contact information field must be added to the value returned by the `wp_biographia_contact_info` filter as well as the value returned by this filter. Note that `$icon_dir_url` will by default contain the URL of the images directory within the plugin directory, which will look something like `/wp-content/plugins/wp-biographia/images/` (the trailing slash is important). If an alternate icon directory has been specified in the plugin's settings and options, then `$icon_dir_url` will contain this alternate, configured, directory URL. If the icon you want to add for a new contact link doesn't reside in the directory URL mentioned previously, you'll need to set `$icon_dir_url` to point to your own custom location.
 
 *Example:* Add Pinterest as a supported contact link in the Biography Box
 
