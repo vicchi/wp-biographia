@@ -10,7 +10,7 @@ Add and display a customisable author biography for all single post types, in RS
 
 == Description ==
 
-This plugin allows you to add a customisable biography to posts, to RSS feeds, to pages, to archives and to each post on your blog's landing page. It integrates out of the box with the information that can be provided in each user's profile and supports custom post types. Display of the Biography Box can be suppressed on a global or per user basis for posts, pages and custom post types.
+This plugin allows you to add a customisable biography to posts, to RSS feeds, to pages, to archives and to each post on your blog's landing page. It integrates out of the box with the information that can be provided in each user's profile and supports custom post types. Display of the Biography Box can be suppressed on a global or per user basis for posts, pages and custom post types as well as on a per category basis.
 
 Settings and options include:
 
@@ -21,9 +21,11 @@ Settings and options include:
 1. Choose to display the Biography Box at the top or the bottom of content (universally)
 1. Choose to suppress the display of the Biography Box for pages, posts and posts/pages on a per user basis
 
-The plugin expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn, Google+, Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles. Your Contact Info links can then be displayed as part of the Biography Box, either as plain text links or as icon links.
+The plugin expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn, Google+, Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles. Your Contact Info links can then be displayed as part of the Biography Box, either as plain text links or as icon links. Further contact links can easily be added to the Biography Box by using the `wp_biographia_contact_info` and `wp_biographia_link_items` filters.
 
-The plugin also has an added filter and shortcode (`[wp_biographia]`) to add further customisation. For example, if you use page templates to display custom post types on your blog, you can simply use `filter ('wp_biographia_pattern')` to decide how you'd like to customise. If you want the Biography Box to appear at the bottom but on archive pages, you want them at the top, then the filter can do that as well, or simply use the shortcode to control where it appears in a post of any post type. For more information on how to use the `[wp_biographia]` shortcode, see the *Shortcode Support And Usage* section.
+The position of the Biography Box can be controlled by the plugin's supported settings and options, or manually via the plugin's shortcode (`[wp_biographia]`). See the *Shortcode Support And Usage* section for more information.
+
+The position and content of the Biography Box, including adding support for new contact links, changing the content of the Biography Box when displayed via the shortcode, the format of the contact links and the overall format of the Biography Box can be modified by the plugin's filters. See the *Filter Support And Usage* section for more information.
 
 == Installation ==
 
@@ -37,13 +39,13 @@ The plugin also has an added filter and shortcode (`[wp_biographia]`) to add fur
 1. Click on the *"Save Changes"* button to preserve your chosen settings and options.
 1. If you enable the display of the post author's image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled. Don't forget to save your changes.
 1. Users with the `manage_options` capability can edit their profile via *Users / Your Profile* from the Dashboard to suppress the display of the Biography Box on posts and/or on pages and also the profiles of other users via the *Users / All Users / Edit* from the Dashboard.
-1. Suppression of the display of the Biography Box on posts and/or on pages can also be configured from the Dashboard; navigate to *Settings / WP Biographia / Biography Box Display Settings*.
+1. Suppression of the display of the Biography Box on posts and/or on pages can also be configured from the Dashboard; navigate to *Settings / WP Biographia / Biography Box Display Settings* and click on the *Exclusions* tab.
 
 == Frequently Asked Questions ==
 
 = How do I get help or support for this plugin? =
 
-In order of preference, you can ask a question on the [WordPress support forum](http://wordpress.org/tags/wp-biographia?forum_id=10); this is by far the best way so that other users can follow the conversation. You can ask me a question on Twitter; I'm [@vicchi](http://twitter.com/vicchi). Or you can drop me an email instead. I can't promise to answer your question but I do promise to answer and do my best to help.
+In short, yes. But before you read any further, take a look at the blog post [Asking For WordPress Plugin Help And Support Without Tears](http://www.vicchi.org/2012/03/31/asking-for-wordpress-plugin-help-and-support-without-tears/) before firing off a question. In order of preference, you can ask a question on the [WordPress support forum](http://wordpress.org/tags/wp-biographia?forum_id=10); this is by far the best way so that other users can follow the conversation. You can ask me a question on Twitter; I'm [@vicchi](http://twitter.com/vicchi). Or you can drop me an email instead. I can't promise to answer your question but I do promise to answer and do my best to help.
 
 = Is there a web site for this plugin? =
 
@@ -51,7 +53,7 @@ Absolutely. Go to the [WP Biographia home page](http://www.vicchi.org/codeage/wp
 
 = I've configured WP Biographia to display the author's image but it's not working; what's happening here? =
 
-Author profile pictures, or avatars, are part of the WordPress core but enabling them isn't done at the level of the user profile, instead it's part of the way in which comments are configured. If you enable the display of the post author’s image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled.
+Author profile pictures, or avatars, are part of the WordPress core but enabling them isn't done at the level of the user profile, instead it's part of the way in which comments are configured. If you enable the display of the post author’s image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled. WordPress uses the email address that is part of your author's profile to look up the right avatar image from [gravatar.com](http://gravatar.com/), so you need to ensure that you're using the same email address on your site as well as for your avatar.
 
 = I want to upload my author's images, host them on my web server and not use Gravatars; how do I do this? =
 
@@ -67,7 +69,11 @@ There's probably one of two things going on here. Firstly, you've already got an
 
 = I only want to show the Biography Box for certain users and not for others; can I do this? =
 
-As of v2.1, WP Biographia allows you to suppress the Biography Box being displayed on a per user basis. You can suppress for posts only, for pages only or for both posts and pages. There's two ways of configuring this. If your user has the `manage_options` capability, you can choose the degree of suppression, if any, from your user profile or for any other user's profile; from the Dashboard, navigate to Users and check the *Suppress From Posts* and/or *Suppress From Pages* checkbox options. You can also configure this easily from the plugin's Settings And Options; from the Dashboard, navigate to the *Settings / WP Biographia* page and under *Biography Box Per User Settings*, add and/or remove the users to fit your model of who should have the Biography Box displayed.
+As of v2.1, WP Biographia allows you to suppress the Biography Box being displayed on a per user basis. You can suppress for posts only, for pages only or for both posts and pages. There's two ways of configuring this. If your user has the `manage_options` capability, you can choose the degree of suppression, if any, from your user profile or for any other user's profile; from the Dashboard, navigate to Users and check the *Suppress From Posts* and/or *Suppress From Pages* checkbox options. You can also configure this easily from the plugin's Settings And Options; from the Dashboard, navigate to the *Settings / WP Biographia* page, click on the *Exclusions* tab and under *User Suppression Settings*, add and/or remove the users to fit your model of who should have the Biography Box displayed.
+
+= I want to show the Biography Box for all users but only for certain categories; can I do this? =
+
+From the Dashboard, navigate to the *Settings / WP Biographia* page, click on the *Exclusions* tab and under *Category Exclusion Settings*, add and/or remove the categories to fit your model of when the Biography Box should be displayed.
 
 = How do I add HTML to the Biographical Info section of a user's profile? =
 
@@ -107,11 +113,25 @@ This may be a configurable setting in a future version of the plugin to avoid th
 
 = I want to use my own icon set for my author's contact links; how do I do this? =
 
-Firstly select the icon set you want to use. You'll need to ensure that the icon files are in `.png` format and are named to match the icon set that WP Biographia ships with; take a look in `wp-biographia/images` to see the naming convention. Upload your icon set to your web server and note the URL (not the local path) to where your icons will live. Navigate to *Settings / WP Biographia / Biography Box Content Settings*, ensure that the *Use Alternate Icon Set* option is checked and the URL to your alternate icons is specified in the *Alternate Icon Set URL* text box. By default, WP Biographia sizes the contact link icons at 32x32 pixels; you can override this in your local CSS file by redefining the `.wp-biographia-item-icon` CSS class (see `wp-biographia/css/wp-biographia.css`).
+Firstly select the icon set you want to use. You'll need to ensure that the icon files are in `.png` format and are named to match the icon set that WP Biographia ships with; take a look in `wp-biographia/images` to see the naming convention. Upload your icon set to your web server and note the URL (not the local path) to where your icons will live. Navigate to *Settings / WP Biographia* and click on the *Content* tab, ensure that the *Use Alternate Icon Set* option is checked and the URL to your alternate icons is specified in the *Alternate Icon Set URL* text box. By default, WP Biographia sizes the contact link icons at 32x32 pixels; you can override this in your local CSS file by redefining the `.wp-biographia-item-icon` CSS class (see `wp-biographia/css/wp-biographia.css`).
+
+You can also override the icon file name and source URL on a per contact link basis via the `$icon_url_dir` parameter via the `wp_biographia_link_items` filter.
+
+So to recap, the plugin uses its own default set of icons, followed by the *Alternate Icon Set URL* to allow you to point to an entire alternate set of icons, if the supplied ones aren't to your liking, followed by link specific overrides via the `wp_biographia_link_items` filter. The order of precedence looks something like ...
+
+1. the plugin's icon set - for all icons - typically this is `/wp-content/plugins/wp-biographia/images`.
+1. the alternate icon set - for all icons (even added via the filter, if no override takes place on `$icon_url_dir`)
+1. an override of the icon set URL for the single contact method you're adding via `wp_biographia_link_items` (assuming it's also added via `wp_biographia_contact_info`)
+
+See the *Filter Support And Usage* section for more information on the plugin's filters.
+
+= I want to change the CSS used to format the Biography Box; how do I do this? =
+
+The HTML and CSS classes that the plugin emits follows a consistent structure and naming convention. See the blog post [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/2012/04/05/hacking-wp-biographias-appearance-with-css/) for more information.
 
 = WP Biographia isn't available in my language; can I submit a translation? =
 
-WordPress and this plugin use the gettext tools to support internationalisation. The source file containing each string that needs to be translated ships with the plugin in `wp-biographia/lang/src/wp-biographia.pot`. See the [I18n for WordPress Developers](http://codex.wordpress.org/I18n_for_WordPress_Developers) page for more information or get in touch for help and hand-holding.
+WordPress and this plugin use the gettext tools to support internationalisation. The source file containing each string that needs to be translated ships with the plugin in `wp-biographia/lang/src/wp-biographia.po`. See the [I18n for WordPress Developers](http://codex.wordpress.org/I18n_for_WordPress_Developers) page for more information or get in touch for help and hand-holding.
 
 = This plugin looks very much like the WP About Author; what's the connection? =
 
@@ -137,7 +157,25 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 2.4.4 (2012.02.22)
+The current version is 3.0 (2012.04.03)
+
+= 3.0 =
+* Summary: A substantial rewrite of the plugin's structure with a reworked tabbed admin interface and substantial customisation options via the WordPress filter mechanism.
+* Added: Filter wp_biographia_default_settings
+* Added: Filter wp_biographia_contact_info
+* Added: Filter wp_biographia_link_items
+* Added: Filter wp_biographia_pre
+* Added: Filter wp_biographia_shortcode
+* Added: Filter wp_biographia_links
+* Added: Filter wp_biographia_feed
+* Added: Filter wp_biographia_biography_box
+* Added: Support for the enclosing form of the wp_biographia shortcode in addition to the self-closing form.
+* Added: Support for resetting the plugin's settings/options to their initial default values from within the admin screen.
+* Added: Support for suppressing display of the Biography Box from posts, archives and the front page by category.
+* Added: Tabbed settings/options in the admin screen.
+* Fixed: Bug that caused an empty contact link to be displayed when an author's profile has an empty corresponding contact field.
+* Fixed: CSS bug that prevented WP Touch from working in non-restricted mode.
+* Fixed: Bug that caused extended contact links in an author's profile to be persisted after plugin uninstallation.
 
 = 2.4.4 =
 * Fixed bug where Vimeo contact link setting was not persisted across settings changes.
@@ -203,8 +241,10 @@ The current version is 2.4.4 (2012.02.22)
 
 == Upgrade Notice ==
 
-= 2.4.4 =
+= 3.0 =
+This is the 11th version of WP Biographia and is a major rewrite of the plugin's structure and functionality to use a PHP class. This version fixes several bugs as well as adding support for additional filters and a restructure of the admin settings/options screen to use a tabbed interface.
 
+= 2.4.4 =
 This is the 10th version of WP Biographia and is a bug fix release; fixed bugs in persisting Vimeo contact links settings, in "More Posts Link" incorrectly linking to the current page/post URL and minor CSS tweaks.
 
 = 2.4.3 =
@@ -282,3 +322,169 @@ If the `name` attribute is omitted, which is the default, the Biography Box will
 * `display-name`
 * `none`
 
+== Filter Support And Usage ==
+
+WP Biographia supports multiple filters, which are described in more detail below. The plugin's filters allow you to:
+
+* change the default set of installation settings and options at plugin activation time
+* modify and/or enhance the set of contact information fields the plugin adds to the author's profile
+* modify and/or enhance the contact links that are added to the Biography Box by the plugin
+* modify the position of the Biography Box to before or after the post content returned by `the_content()` and/or `the_excerpt()`
+* suppress the display of the Biography Box entirely under user-defined circumstances
+* modify and/or enhance the Biography Box that is produced by the `[wp_biographia]` shortcode
+* modify and/or enhance the format and content of the contact links that are added to the Biography Box by the plugin
+* modify and/or enhance the Biography Box that is produced for an RSS feed
+* modify and/or enhance the entirety of the Biography Box
+
+= wp_biographia_default_settings =
+
+Applied to the default set of plugin settings and options. Note that this filter is called once, upon plugin activation, when there are no WP Biographia settings/options existing in the database.
+
+*Example:* Add the date and time that the plugin was first activated
+
+`add_filter ('wp_biographia_default_settings', 'add_activation_timestamp');
+
+function add_activation_timestamp ($options) {
+	// options = array (option name => option value)
+	$options['plugin_activation_timestamp'] = date (DATE_ATOM);
+	
+	return $options;
+}`
+
+= wp_biographia_contact_info =
+
+Applied to the default set of contact information fields that are added to an author's profile by the plugin. Note that in order to add and display a new contact link to the Biography Box, the contact link must be added to the value returned by the `wp_biographia_link_items` filter as well as the value returned by this filter.
+
+*Example:* Add Pinterest as a supported contact information field
+
+`add_filter ('wp_biographia_contact_info', 'add_pinterest_support');
+
+function add_pinterest_support ($contacts) {
+	// contacts = array (field => array (field => field-name, contactmethod => description))
+	$contacts['pinterest'] = array (
+		'field' => 'pinterest',
+		'contactmethod' => __('Pinterest')
+	);
+	
+	return $contacts;
+}`
+
+= wp_biographia_link_items =
+
+Applied to the default set of contact links that are added to the Biography Box by the plugin. Note that in order to add and display a new contact link, the contact information field must be added to the value returned by the `wp_biographia_contact_info filter` as well as the value returned by this filter. Note that `$icon_dir_url` will by default contain the URL of the images directory within the plugin directory, which will look something like `/wp-content/plugins/wp-biographia/images/` (the trailing slash is important). If an alternate icon directory has been specified in the plugin's settings and options, then `$icon_dir_url` will contain this alternate, configured, directory URL. If the icon you want to add for a new contact link doesn't reside in the directory URL mentioned previously, you'll need to set `$icon_dir_url` to point to your own custom location.
+
+*Example:* Add Pinterest as a supported contact link in the Biography Box
+
+`add_filter ('wp_biographia_link_items', 'add_pinterest_link', 2);
+
+function add_pinterest_link ($links, $icon_dir_url) {
+	// links = array (field => array (link_title => title, link_text => text, link_icon => URL)
+	$links['pinterest'] = array (
+		'link_title' => __('Pinterest'),
+		'link_text' => __('Pinterest'),
+		'link_icon' => $icon_dir_url . 'pinterest.png'
+		);
+
+		return $links;
+}`
+
+= wp_biographia_pattern =
+
+Applied to the format string used to position the Biography Box before the post content or after the post content that is returned by `the_content()` and/or `the_excerpt()`.
+
+*Example:* Insert a header between post content and Biography Box
+
+`add_filter ('wp_biographia_pattern', 'insert_biography_header');
+
+function insert_biography_header ($pattern) {
+	return '%1$s<p class="biography-header">About The Author</p>%2$s';
+}`
+
+= wp_biographia_pre =
+
+Allows display of the Biography Box to be suppressed under user-defined circumstances. This only affects the display of the Biography Box that is configured via the plugin's admin screen or via the shortcode in configured mode.
+
+*Example:* Suppress the Biography Box
+
+`add_filter ('wp_biographia_pre', 'suppress_biography_box');
+
+function suppress_biography_box ($flag) {
+	return true;
+}`
+
+= wp_biographia_shortcode =
+
+Applied to the current instance of the Biography Box that is produced via the `[wp_biographia]` shortcode.
+
+*Example:* Apply shortcode specific CSS to the Biography Box
+
+`add_filter ('wp_biographia_links', 'add_shortcode_css', 10, 2);
+
+function add_shortcode_css ($content, $params) {
+	// params = array (mode => shortcode-mode, author => author-id, prefix => prefix-string,
+						name => name-option)
+
+	return '<div class="custom-shortcode-css">' . $content . '</div>';
+}`
+
+= wp_biographia_links =
+
+Applied to the formatted set of contact links for the current instance of the Biography Box.
+
+*Example:* Replace the default text link separator character (the pipe symbol "|") with a dash ("-").
+
+`add_filter ('wp_biographia_links', 'replace_link_separator', 10, 3);
+
+function replace_link_separator ($content, $links, $params) {
+	// links = array (link-item)
+	// params = array (glue => separator-string, class => link-item-css-class-name,
+	//					prefix => links-prefix-html, postfix => links-postfix-html)
+	
+	return str_replace ($params['glue'], ' - ', $content);
+}`
+
+*Example:* Wrap the formatted content links in an additional HTML div.
+
+`add_filter ('wp_biographia_links', 'wrap_links', 10, 3);
+
+function wrap_links ($content, $links, $params) {
+	// links = array (link-item)
+	// params = array (glue => separator-string, class => link-item-css-class-name,
+	//					prefix => links-prefix-html, postfix => links-postfix-html)
+	
+	$new_prefix = '<div class="custom-link-class">' . $params['prefix'];
+	$new_postfix = $params['postfix'] . '</div>';
+	
+	return $new_prefix . implode ($params['glue'], $links) . $new_postfix;
+}`
+
+= wp_biographia_feed =
+
+Applied to the current instance of the Biography Box that is produced via the site's RSS feed.
+
+*Example:* Apply RSS feed specific CSS to the Biography Box
+
+`add_filter ('wp_biographia_feed', 'add_feed_css');
+
+function add_shortcode_css ($content) {
+	return '<div class="custom-feed-css">' . $content . '</div>';
+}`
+
+
+= wp_biographia_biography_box =
+
+Applied to the entire content of the current instance of the Biography Box.
+
+*Example:* Remove all WP Biographia CSS classes commencing `wp-biographia-` and replace them with custom CSS classes that adhere to the plugin's CSS class naming convention.
+
+`add_filter ('wp_biographia_biography_box', 'replace_css_classes', 10, 2);
+
+function replace_css_classes ($biography, $items) {
+	$new_content = array ();
+	
+	foreach ($items as $item) {
+		$new_content[] = str_replace ('wp-biographia-', 'custom-', $item);
+	}
+	
+	return implode ('', $new_content);
+}`
