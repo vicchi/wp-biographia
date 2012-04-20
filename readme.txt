@@ -4,7 +4,7 @@ Donate link: http://www.vicchi.org/codeage/donate/
 Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, about author, author box, contributors
 Requires at least: 3.3
 Tested up to: 3.3.1
-Stable tag: 3.0
+Stable tag: 3.0.1
 
 Add and display a customisable author biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
 
@@ -172,7 +172,12 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 3.0 (2012.04.03)
+The current version is 3.0.1 (2012.04.20)
+
+= 3.0.1 =
+* Fixed: Bug in plugin initialisation that incorrectly named the Vimeo content display option.
+* Fixed: Bug that caused a post's author not to be refreshed in the front page and archive pages.
+* Fixed: Bug that caused a post's author to be determined as the author of the enclosing page where a custom Loop is being used.
 
 = 3.0 =
 * Summary: A substantial rewrite of the plugin's structure with a reworked tabbed admin interface and substantial customisation options via the WordPress filter mechanism.
@@ -255,6 +260,9 @@ The current version is 3.0 (2012.04.03)
 * First version of WP Biographia released
 
 == Upgrade Notice ==
+
+= 3.0.1 =
+This version fixes several bugs that affected the correct author being associated with the Biography Box on front/archive pages and when called from within a custom Loop. This is 12th version of WP Biographia.
 
 = 3.0 =
 This is the 11th version of WP Biographia and is a major rewrite of the plugin's structure and functionality to use a PHP class. This version fixes several bugs as well as adding support for additional filters and a restructure of the admin settings/options screen to use a tabbed interface.
