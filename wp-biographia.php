@@ -47,7 +47,7 @@ class WP_Biographia extends WP_PluginBase {
 			);
 		define ('PLUGIN_URL', plugin_dir_url (__FILE__));
 		define ('PLUGIN_PATH', plugin_dir_path (__FILE__));
-		$this->author_id = get_the_author_meta ('ID');
+		$this->author_id = NULL;
 		$this->override = NULL;
 		$this->hook ('plugins_loaded');
 		$this->icon_dir_url = PLUGIN_URL . 'images/';
@@ -496,12 +496,13 @@ class WP_Biographia extends WP_PluginBase {
 	 */
 
 	function insert ($content) {
+		global $post;
 		$new_content = $content;
 		
-		if (!isset ($this->author_id)) {
-			$this->author_id = get_the_author_meta ('ID');
+		if (!$this->is_shortcode) {
+			$this->author_id = $post->post_author;
 		}
-		
+
 		$location = $this->get_option ('wp_biographia_display_location');
 		if ((isset ($location)) && ($location == 'top')) {
 			$pattern = apply_filters ('wp_biographia_pattern', '%2$s %1$s');
@@ -552,7 +553,7 @@ class WP_Biographia extends WP_PluginBase {
 	function post_types_cycle ($content='', $pattern='') {
 		global $post;
 		$new_content = $content;
-		$bio_content = $this->display();
+		$bio_content = $this->display ();
 		$post_types = get_post_types (array (), 'objects');
 
 		foreach ($post_types as $post_type => $post_data) {
@@ -633,10 +634,6 @@ class WP_Biographia extends WP_PluginBase {
 		$this->display_bio = false;
 		$settings = $this->get_option ();
 		$excluded = false;
-		
-		if (!$this->author_id || $this->author_id == 0) {
-			$this->author_id = get_the_author_meta ('ID');
-		}
 
 		if ((get_user_meta ($this->author_id,
 					'wp_biographia_suppress_posts',
@@ -742,7 +739,6 @@ class WP_Biographia extends WP_PluginBase {
 		}
 		
 		return $new_content;
-		
 	}
 	
 	/**
@@ -774,6 +770,7 @@ class WP_Biographia extends WP_PluginBase {
 			'prefix' => $prefix,
 			'name' => $name);
 
+		$this->is_shortcode = true;
 		$this->override = $shortcode_content = array ();
 		if (!empty ($prefix)) {
 			$this->override['prefix'] = $prefix;
@@ -798,16 +795,13 @@ class WP_Biographia extends WP_PluginBase {
 				$contributors = $this->get_users();
 				$shortcode_content[] = '<div class="wp-biographia-contributors">';
 				foreach ($contributors as $user_obj) {
+					$this->author_id = $user_obj->ID;
 					if ($mode == 'raw') {
-						$this->author_id = $user_obj->ID;
 						$shortcode_content[] = $this->display ();
 					}
 
 					elseif ($mode == 'configured') {
 						$placeholder_content = "";
-						$this->is_shortcode = true;
-						$this->author_id = $user_obj->ID;
-
 						$shortcode_content[] = $this->insert ($placeholder_content);
 					}
 				}
@@ -817,24 +811,26 @@ class WP_Biographia extends WP_PluginBase {
 			
 			else {
 				$user_obj = get_user_by ('login', $author);
+				
 				if ($user_obj) {
+					$this->author_id = $user_obj->ID;
+
 					if ($mode == 'raw') {
-						$this->author_id = $user_obj->ID;
 						$shortcode_content[] = $this->display ();
 					}
 
 					elseif ($mode == 'configured') {
 						$placeholder_content = "";
-						$this->is_shortcode = true;
-						$this->author_id = $user_obj->ID;
-
 						$shortcode_content[] = $this->insert ($placeholder_content);
 					}
 				}
 			}
 		}
 		
-		else {	
+		else {
+			global $post;
+			$this->author_id = $post->post_author;
+
 			if ($mode == 'raw') {
 				$shortcode_content[] = $this->display ();
 			}
@@ -842,7 +838,6 @@ class WP_Biographia extends WP_PluginBase {
 			elseif ($mode == 'configured') {
 				$placeholder_content = "";
 				$this->is_shortcode = true;
-				$this->author_id = $user_obj->ID;
 			
 				$shortcode_content[] = $this->insert ($placeholder_content);
 			}
@@ -858,10 +853,12 @@ class WP_Biographia extends WP_PluginBase {
 	 */
 
 	function display () {
+		global $post;
+		
 		$settings = $this->get_option ();
 		
 		if (!$this->author_id || $this->author_id == 0) {
-			$this->author_id = get_the_author_meta ('ID');
+			$this->author_id = $post->post_author;
 		}
 
 		$content = $links = $author = $biography = array();
