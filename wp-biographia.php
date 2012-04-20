@@ -3,7 +3,7 @@
 Plugin Name: WP Biographia
 Plugin URI: http://www.vicchi.org/codeage/wp-biographia/
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page and much more.
-Version: 3.0
+Version: 3.0.1
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
@@ -26,8 +26,8 @@ class WP_Biographia extends WP_PluginBase {
 	public $icon_dir_url = '';
 	
 	const OPTIONS = 'wp_biographia_settings';
-	const VERSION = '30';
-	const DISPLAY_VERSION = 'v3.0';
+	const VERSION = '301';
+	const DISPLAY_VERSION = 'v3.0.1';
 	const PLUGIN_URL = '';
 	const PLUGIN_PATH = '';
 	
@@ -234,7 +234,7 @@ class WP_Biographia extends WP_PluginBase {
 					'wp_biographia_content_delicious' => '',
 					'wp_biographia_content_flickr' => '',
 					'wp_biographia_content_picasa' => '',
-					'wp_biograpia_content_vimeo' => '',
+					'wp_biographia_content_vimeo' => '',
 					'wp_biographia_content_youtube' => '',
 					'wp_biographia_content_reddit' => '',
 					'wp_biographia_content_posts' => 'extended',
@@ -1479,11 +1479,16 @@ class WP_Biographia extends WP_PluginBase {
 				case '243':
 				case '244':
 				case '30':
+				case '301':
 					if (isset ($settings['wp_biographia_beta_enabled'])) {
 						unset ($settings['wp_biographia_beta_enabled']);
 					}
 					$this->admin_upgrade_option ($settings, 'content_link_target', '_self');
 					$this->admin_upgrade_option ($settings, 'content_link_nofollow', '');
+					if (isset ($settings['wp_biograpia_content_vimeo'])) {
+						$this->admin_upgrade_option ($settings, 'content_vimeo', '');
+						unset ($settings['wp_biograpia_content_vimeo']);
+					}
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
 
@@ -2002,7 +2007,7 @@ class WP_Biographia extends WP_PluginBase {
 					__('Colophon', 'wp-biographia'),
 					implode ('', $colophon_content));
 				break;
-
+			
 			case 'display':
 			default:
 				$wrapped_content[] = $this->admin_postbox ('wp-biographia-display-settings',
