@@ -3,11 +3,67 @@
 Plugin Name: WP Biographia
 Plugin URI: http://www.vicchi.org/codeage/wp-biographia/
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page and much more.
-Version: 3.0.1
+Version: 3.1
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
 Text Domain: wp-biographia
+*/
+
+/*
+A quick and dirty aide memoire for me to stop having to work this out each time I modify
+the plugin ...
+
+hook 'the_excerpt' calls $this->insert ()
+hook 'the_content' calls $this->insert ()
+add_shortcode () calls $this->shortcode ()
+
+$this->insert calls $this->insert_biographia ()
+
+$this->insert_biographia ()
+	for posts and custom post-types
+		checks per-user suppression via 'wp_biographia_suppress_posts'
+	if not a page
+		checks per-category suppression via 'wp_biographia_category_exclusions'
+	for frontpage
+		checks display via 'wp_biographia_display_front'
+		calls $this->post_types_cycle ()
+	for archive
+		checks display via 'wp_biographia_display_archives'
+		calls $this->post_types_cycle ()
+	for page
+		checks display via 'wp_biographia_display_pages'
+		checks per-user suppression via 'wp_biographia_page_exclusions'
+		calls $this->display ()
+	for single
+		calls $this->post_types_cycle ()
+	for feed
+		checks display via 'wp_biographia_display_feed'
+		
+$this->post_types_cycle ()
+	calls $this->display ()
+	for-each post type
+		checks display via 'wp_biographia_display_"post-type-name"'
+		checks exclusions via 'wp_biographia_"post-type"_exclusions'
+		checks exclusions via 'wp_biographia_global_"post-type"_exclusions'
+		emits Biography Box
+	end-for-each
+
+$this->shortcode ()
+	if author attribute is not empty
+		if author attribute is *, for-each user
+			if mode attribute is 'raw', call $this->display ()
+			if mode attribute is 'configured', call $this->insert ()
+		else
+			if mode attribute is 'raw', call $this->display ()
+			if mode attribute is 'configured', call $this->insert ()
+		end-for-each
+	else
+		if mode attribute is 'raw', call $this->display ()
+		if mode attribute is 'configured', call $this->insert ()
+
+$this->display
+	formats the Biography Box according to the settings defined in Style and Content tabs
 */
 
 define ('WPBIOGRAPHIA_PATH', plugin_dir_path (__FILE__));
@@ -26,8 +82,8 @@ class WP_Biographia extends WP_PluginBase {
 	public $icon_dir_url = '';
 	
 	const OPTIONS = 'wp_biographia_settings';
-	const VERSION = '301';
-	const DISPLAY_VERSION = 'v3.0.1';
+	const VERSION = '310';
+	const DISPLAY_VERSION = 'v3.1.0';
 	const PLUGIN_URL = '';
 	const PLUGIN_PATH = '';
 	
@@ -762,7 +818,8 @@ class WP_Biographia extends WP_PluginBase {
 			'mode' => 'raw',
 			'author' => '',
 			'prefix' => '',
-			'name' => ''
+			'name' => '',
+			'role' => ''
 		), $atts));
 
 		$params = array ('mode' => $mode,
@@ -792,21 +849,49 @@ class WP_Biographia extends WP_PluginBase {
 
 		if (!empty ($author)) {
 			if ($author === "*") {
-				$contributors = $this->get_users();
-				$shortcode_content[] = '<div class="wp-biographia-contributors">';
-				foreach ($contributors as $user_obj) {
-					$this->author_id = $user_obj->ID;
-					if ($mode == 'raw') {
-						$shortcode_content[] = $this->display ();
-					}
-
-					elseif ($mode == 'configured') {
-						$placeholder_content = "";
-						$shortcode_content[] = $this->insert ($placeholder_content);
+				$contributors = array ();
+				
+				if (!empty ($role)) {
+					$valid_role = false;
+					$role = strtolower ($role);
+					
+					switch ($role) {
+						case 'administrator':
+						case 'editor':
+						case 'author':
+						case 'contributor':
+						case 'subscriber':
+							$valid_role = true;
+							break;
+						default:
+							break;
+					}	// end-switch
+					
+					if ($valid_role) {
+						$contributors = $this->get_users ($role);
 					}
 				}
+				
+				else {
+					$contributors = $this->get_users ();
+				}
 
-				$shortcode_content[] = '</div>';
+				if (!empty ($contributors)) {
+					$shortcode_content[] = '<div class="wp-biographia-contributors">';
+					foreach ($contributors as $user_obj) {
+						$this->author_id = $user_obj->ID;
+						if ($mode == 'raw') {
+							$shortcode_content[] = $this->display ();
+						}
+
+						elseif ($mode == 'configured') {
+							$placeholder_content = "";
+							$shortcode_content[] = $this->insert ($placeholder_content);
+						}
+					}
+
+					$shortcode_content[] = '</div>';
+				}
 			}
 			
 			else {
@@ -1489,6 +1574,8 @@ class WP_Biographia extends WP_PluginBase {
 						$this->admin_upgrade_option ($settings, 'content_vimeo', '');
 						unset ($settings['wp_biograpia_content_vimeo']);
 					}
+
+				case '310':
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
 

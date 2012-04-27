@@ -4,7 +4,7 @@ Donate link: http://www.vicchi.org/codeage/donate/
 Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, about author, author box, contributors
 Requires at least: 3.3
 Tested up to: 3.3.1
-Stable tag: 3.0.1
+Stable tag: 3.1.0
 
 Add and display a customisable author biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
 
@@ -308,6 +308,7 @@ The shortcode also supports multiple *attributes* which allow you to customise t
 
 * the `mode` attribute
 * the `author` attribute
+* the `role` attribute
 * the `prefix` attribute
 * the `name` attribute
 
@@ -330,6 +331,20 @@ Specifying a user's login name as the `author` attribute overrides this behaviou
 You call also use the `author` attribute in *wildcard* mode, specifying the author's login name as `*` as `[wp_biographia author="*"]`; this will then loop over all of the authors that have logins on your site, displaying the Biography Box once for each author, ordered alphabetically by login name.
 
 Specifying an invalid login name (`[wp_biographia author="idontexist"]`) will result in no Biography Box being displayed. Specifying an empty login name (`[wp_biographia author=""]`) will cause the `author` parameter to be ignored and may result in undefined behaviour, such as a partially populated Biography Box being displayed as the shortcode is being used outside of the Loop and thus no author information is made available to the plugin by WordPress.
+
+= the "role" Attribute =
+
+Valid only when used in conjunction with the `author` attribute in *wildcard* mode, the `role` attribute allows you to filter the authors that have user accounts on your blog according to their [WordPress Role](http://codex.wordpress.org/Roles_and_Capabilities). The `role` attribute takes a single argument which defines the WordPress role; at the time of writing, this can be one of:
+
+* `administrator`
+* `editor`
+* `author`
+* `contributor`
+* `subscriber`
+
+For example, if you want to display the Biography Box for all users of your blog who have a role of `author` you can use the `role` attribute plus the `author` attribute in *wildcard* mode to do this, along the lines of `[wp_biographia user="*" role="author"]`.
+
+Specifying an invalid role (`[wp_biographia user="*" role="foo"])` will result in no Biography Box being displayed. Specifying the `role` attribute without the `author` attribute in *wildcard* mode will have no effect.
 
 = The "prefix" Attribute =
 
