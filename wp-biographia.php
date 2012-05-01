@@ -99,7 +99,9 @@ class WP_Biographia extends WP_PluginBase {
 			'style' => 'Style',
 			'content' => 'Content',
 			'defaults' => 'Defaults',
-			'colophon' => 'Colophon'
+			'colophon' => 'Colophon',
+			'dryrun' => 'Dry Run',
+			'config' => 'Config'
 			);
 		define ('PLUGIN_URL', plugin_dir_url (__FILE__));
 		define ('PLUGIN_PATH', plugin_dir_path (__FILE__));
@@ -1606,6 +1608,9 @@ class WP_Biographia extends WP_PluginBase {
 		$content_settings = array ();
 		$defaults_settings = array ();
 		$colophon_content = array ();
+		$dryrun_content = array ();
+		$config_settings = array ();
+		$config_users = array ();
 		
 		$args = array (
 			'public' => true,
@@ -2047,6 +2052,50 @@ class WP_Biographia extends WP_PluginBase {
 		$colophon_content[] = __('WP Biographia is named after the etymology of the modern English word <em>biography</em>. The word first appeared in the 1680s, probably from the latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, meaning "life" and <em>graphia</em>, meaning "record" or "account" which derived from <em>graphein</em>, "to write".', 'wp-biographia');
 		$colophon_content[] = '</p><p><small>Dictionary.com, "biography," in <em>Online Etymology Dictionary</em>. Source location: Douglas Harper, Historian. <a href="http://dictionary.reference.com/browse/biography">http://dictionary.reference.com/browse/biography</a>. Available: <a href="http://dictionary.reference.com">http://dictionary.reference.com</a>. Accessed: July 27, 2011.</small></p>';
 
+		/********************************************************************************
+	 	 * Dry Run tab content
+	 	 */
+
+		$dryrun_content[] = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non dui ipsum, at posuere dui. Sed adipiscing dignissim metus vel aliquam. Suspendisse tempor sollicitudin vehicula. Maecenas quis volutpat est. Quisque id mi ac arcu dignissim tincidunt pretium eget nisi. In at turpis eros. Sed iaculis eleifend lacus a ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus lacus et est facilisis hendrerit. Sed mi urna, faucibus vitae vehicula non, volutpat sed purus. Nam faucibus, est a ullamcorper placerat, justo lorem condimentum arcu, nec vehicula erat nisl in lectus. Pellentesque iaculis libero id quam imperdiet sit amet imperdiet odio consequat.</p>';
+		
+		/********************************************************************************
+	 	 * Debug tab content
+	 	 */
+
+		$config_settings[] = '<p>';
+		$config_settings[] = __('For those times when you need help and support with this plugin, one of the first things you\'ll probably be asked for is the plugin\'s current configuration. If this happens, just <em>copy-and-paste</em> the dump of the <em>WP Biographia Settings and Options</em> below into any support forum post or email.', 'wp-biographia');
+		$config_settings[] = '</p>';
+		
+		$config_settings[] = '<pre>';
+		$config_settings[] = print_r ($settings, true);
+		$config_settings[] = '</pre>';
+
+		$users = $this->get_users ();
+		$debug_users = array ();
+
+		foreach ($users as $user) {
+			$debug_users[$user->ID] = array (
+				'ID' => $user->ID,
+				'user_login' =>$user->user_login,
+				'wp_biographia_suppress_posts' => get_user_meta (
+					$user->ID,
+					'wp_biographia_suppress_pages',
+					true),
+				'wp_biographia_suppress_pages' => get_user_meta (
+					$user->ID,
+					'wp_biographia_suppress_pages',
+					true)
+				);
+		}
+
+		$config_users[] = '<p>';
+		$config_users[] = __('Almost all of WP Biographia\'s Settings and Options are maintained in the database in a single entry. But there\'s also some settings added to each user\'s account; you\'ll find these below.', 'wp-biographia');
+		$config_users[] = '</p>';
+
+		$config_users[] = '<pre>';
+		$config_users[] = print_r ($debug_users, true);
+		$config_users[] = '</pre>';
+		
 		if (function_exists ('wp_nonce_field')) {
 			$wrapped_content[] = wp_nonce_field (
 				'wp-biographia-update-options',
@@ -2095,6 +2144,21 @@ class WP_Biographia extends WP_PluginBase {
 					implode ('', $colophon_content));
 				break;
 			
+			case 'dryrun':
+				$wrapped_content[] = $this->admin_postbox ('wp-biographia-dryrun',
+					__('Dry Run', 'wp-biographia'),
+					implode ('', $dryrun_content));
+				break;
+				
+			case 'config':
+				$wrapped_content[] = $this->admin_postbox ('wp-biographia-config-settings',
+					__('Plugin Configuration Settings', 'wp-biographia'),
+					implode ('', $config_settings));
+				$wrapped_content[] = $this->admin_postbox ('wp-biographia-config-users',
+					__('User Configuration Settings', 'wp-biographia'),
+					implode ('', $config_users));
+				break;
+
 			case 'display':
 			default:
 				$wrapped_content[] = $this->admin_postbox ('wp-biographia-display-settings',
