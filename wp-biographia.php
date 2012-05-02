@@ -1331,19 +1331,17 @@ class WP_Biographia extends WP_PluginBase {
 	 * then set the 'wp_biographia_suppress_posts' and 'wp_biographia_suppress_pages' options
 	 * in the user's metadata.
 	 */
-	
+
 	function admin_user_register ($user_id) {
-		global $wplogger;
-		$wplogger->log ('admin_user_register: user id ' . $user_id);
-		$do_not_suppress = false;
+		$do_not_suppress = true;
 		$option = $this->get_option ('wp_biographia_admin_new_users');
 		$user = get_userdata ($user_id);
-		$wplogger->log ('admin_user_register: user login ' . $user->user_login);
+
 		if (!empty ($option)) {
 			$new_user_roles = explode (',', $option);
 			foreach ($user->roles as $role) {
 				if (in_array ($role, $new_user_roles)) {
-					$do_not_suppress = true;
+					$do_not_suppress = false;
 					break;
 				}
 			}	// end-foreach;
@@ -1354,7 +1352,7 @@ class WP_Biographia extends WP_PluginBase {
 			update_user_meta ($user_id, 'wp_biographia_suppress_pages', 'on');
 		}
 	}
-	
+
 	/**
 	 * "plugin_action_links_'plugin-name'" action hook; called to add a link to the plugin's
 	 * settings/options panel.
@@ -1533,8 +1531,9 @@ class WP_Biographia extends WP_PluginBase {
 			 * v3.1 changed default configuration settings ...
 			 *		wp_biographia_version = "310"
 			 * v3.1 added configuration settings ...
-			 *		 wp_biographia_admin_new_users = ""
+			 *		wp_biographia_admin_new_users = ""
 			 * 		wp_biographia_admin_hide_profiles = ""
+			 *		wp_biographia_category_exclusions = ""
 			 */
 
 			switch ($current_plugin_version) {
@@ -1627,6 +1626,7 @@ class WP_Biographia extends WP_PluginBase {
 
 				case '301':
 				case '310':
+					$this->admin_upgrade_option ($settings, 'category_exclusions', '');
 					$this->admin_upgrade_option ($settings, 'admin_new_users', '');
 					$this->admin_upgrade_option ($settings, 'admin_hide_profiles', '');
 					$settings['wp_biographia_version'] = self::VERSION;
@@ -1680,6 +1680,8 @@ class WP_Biographia extends WP_PluginBase {
 	 	 * Display settings tab content
 	 	 */
 
+		$display_settings[] = '<p><em>' . __('This tab contains broad level settings to control how the Biography Box is displayed and where. You can configure more specific display settings in the Exclusions tab and what is actually displayed in the Biography Box in the Content tab.', 'wp-biographia') . '</em></p>';
+
 		$display_settings[] = '<p><strong>' . __("Display On Front Page", 'wp-biographia') . '</strong><br /> 
 					<input type="checkbox" name="wp_biographia_display_front" ' . checked ($settings['wp_biographia_display_front'], 'on', false) . ' />
 					<small>' . __('Displays the Biography Box for each post on the front page.', 'wp-biographia') . '</small></p>';
@@ -1727,8 +1729,8 @@ class WP_Biographia extends WP_PluginBase {
 	 	 * Admin tab content - 1) Automatically Exclude New Users By Role
 	 	 */
 
-		$role_settings[] = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non dui ipsum, at posuere dui. Sed adipiscing dignissim metus vel aliquam. Suspendisse tempor sollicitudin vehicula. Maecenas quis volutpat est. Quisque id mi ac arcu dignissim tincidunt pretium eget nisi. In at turpis eros. Sed iaculis eleifend lacus a ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus lacus et est facilisis hendrerit. Sed mi urna, faucibus vitae vehicula non, volutpat sed purus. Nam faucibus, est a ullamcorper placerat, justo lorem condimentum arcu, nec vehicula erat nisl in lectus. Pellentesque iaculis libero id quam imperdiet sit amet imperdiet odio consequat.</p>';
-		
+		$role_settings[] = '<p><em>' . __('New User Settings allow you to configure globally whether a newly created user should have the Biography Box displayed under their posts or not. You can then control the display of the Biography Box on a per-user basis in the Exclusions tab.','wp-biographia') . '</em></p>';
+
 		$editable_roles = get_editable_roles ();
 		$roles_enabled = array ();
 		$roles_excluded = array ();
@@ -1775,7 +1777,7 @@ class WP_Biographia extends WP_PluginBase {
 	 	 * Admin tab content - 2) Hide User Profile Settings By Role
 	 	 */
 
-		$profile_settings[] = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non dui ipsum, at posuere dui. Sed adipiscing dignissim metus vel aliquam. Suspendisse tempor sollicitudin vehicula. Maecenas quis volutpat est. Quisque id mi ac arcu dignissim tincidunt pretium eget nisi. In at turpis eros. Sed iaculis eleifend lacus a ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus lacus et est facilisis hendrerit. Sed mi urna, faucibus vitae vehicula non, volutpat sed purus. Nam faucibus, est a ullamcorper placerat, justo lorem condimentum arcu, nec vehicula erat nisl in lectus. Pellentesque iaculis libero id quam imperdiet sit amet imperdiet odio consequat.</p>';
+		$profile_settings[] = '<p><em>' . __('If you want to stop users having the ability to stop the Biography Box being displayed on their posts and pages, you can control this according to the user\'s role below. An Administrator can still control the display of the Biography Box on a per-user basis in the Exclusions tab.', 'wp-biographia') . '</em></p>';
 
 		$profiles_visible = array ();
 		$profiles_hidden = array ();
@@ -1822,6 +1824,8 @@ class WP_Biographia extends WP_PluginBase {
 	 	 * Exclusions settings tab content - 1) Exclusion Settings
 	 	 */
 
+		$exclusion_settings[] = '<p><em>' . __('If you want to stop the Biography Box being displayed on a single post, page or custom post type, you can do this here.', 'wp-biographia') . '</em></p>';
+
 		$exclusion_settings[] = '<p><strong>' . __("Exclude From Single Posts (via Post ID)", 'wp-biographia') . '</strong><br />
 				<input type="text" name="wp_biographia_post_exclusions" id="wp_biographia_post_exclusions" value="' . $settings['wp_biographia_post_exclusions'] . '" /><br />
 				<small>' . __('Suppresses the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to suppress, comma separated with no spaces, e.g. 54,33,55', 'wp-biographia') . '</small></p>';
@@ -1847,6 +1851,8 @@ class WP_Biographia extends WP_PluginBase {
 		/********************************************************************************
 	 	 * Exclusions settings tab content - 2) User Suppression Settings
 	 	 */
+
+		$suppression_settings[] = '<p><em>' . __('If you want to stop the Biography Box being displayed on a single post or custom post type on a per-user basis, you can do this here.', 'wp-biographia') . '</em></p>';
 
 		$users = $this->get_users ();
 
@@ -1929,6 +1935,8 @@ class WP_Biographia extends WP_PluginBase {
 	 	 * Exclusions settings tab content - 3) Category Suppression Settings
 	 	 */
 
+		$category_settings[] = '<p><em>' . __('If you want to stop the Biography Box being displayed on a single post or custom post type by Category, you can do this here.', 'wp-biographia') . '</em></p>';
+
 		$categories = $this->get_categories ();
 		
 		$categories_enabled = array ();
@@ -1975,6 +1983,8 @@ class WP_Biographia extends WP_PluginBase {
 	 	 * Style settings tab content
 	 	 */
 
+		$style_settings[] = '<p><em>' . __('This tab contains broad level settings to control how the Biography Box is styled; its background colour and border. The Biography Box is fully style-able but this needs knowledge of how to write CSS.', 'wp-biographia') . '</em></p>';
+
 		$style_settings[] = '<p><strong>' . __("Box Background Color", 'wp-biographia') . '</strong><br /> 
 					<input type="text" name="wp_biographia_style_bg" id="background-color" value="' . $settings['wp_biographia_style_bg'] . '" />
 					<a class="hide-if-no-js" href="#" id="pickcolor">' . __('Select a Color', 'wp-biographia') . '</a>
@@ -1990,6 +2000,8 @@ class WP_Biographia extends WP_PluginBase {
 		/********************************************************************************
 	 	 * Content settings tab content
 	 	 */
+
+		$content_settings[] = '<p><em>' . __('This tab contains settings that control what information is and is not displayed within the Biography Box.', 'wp-biographia') . '</em></p>';
 
 		$content_settings[] = '<p><strong>' . __("Biography Prefix", 'wp-biographia') . '</strong><br />
 			<input type="text" name="wp_biographia_content_prefix" id="wp-biographia-content-name" size="40" value="'
@@ -2180,6 +2192,8 @@ class WP_Biographia extends WP_PluginBase {
 		/********************************************************************************
  	 	 * Defaults settings tab content
  	 	 */
+
+		$defaults_settings[] = '<p><em>' . __('<strong>Here Be Dragons</strong>. Please <strong>read</strong> the warning below before doing anything with this tab. The options in this tab with reset WP Biographia to a just installed state, clearing any configuration settings you may have made.', 'wp-biographia') . '</em></p>';
 
 		$defaults_settings[] = '<p><strong>' . __('Reset WP Biographia To Defaults', 'wp-biographia') . '</strong><br />
 			<input type="checkbox" name="wp_biographia_reset_defaults" />
