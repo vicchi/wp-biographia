@@ -51,13 +51,19 @@
 	background: #FCB2B5 url(../images/error.png) no-repeat 5px center;
 }
 
-.wp-biographia-categories, .wp-biographia-users {
+.wp-biographia-user-profiles,
+.wp-biographia-user-roles,
+.wp-biographia-categories,
+.wp-biographia-users {
 	float: left;
 	text-align: center;
 	margin: 10px;
 }
 
-.wp-biographia-categories a, .wp-biographia-users a {
+.wp-biographia-user-profiles a,
+.wp-biographia-user-roles a,
+.wp-biographia-categories a,
+.wp-biographia-users a {
 	display: block;
 	border: 1px solid #AAAAAA;
 	text-decoration: none;
@@ -67,6 +73,10 @@
 	/*clear: both;*/
 }
 
+#wp-biographia-visible-profiles,
+#wp-biographia-hidden-profiles,
+#wp-biographia-enabled-user-roles,
+#wp-biographia-excluded-user-roles,
 #wp-biographia-enabled-post-users,
 #wp-biographia-suppressed-post-users, 
 #wp-biographia-enabled-page-users,

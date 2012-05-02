@@ -1,5 +1,19 @@
 (function($) {
 	$().ready(function() {  
+		$('#wp-biographia-user-role-add').click(function() {  
+	  		return !$('#wp-biographia-enabled-user-roles option:selected').remove().appendTo('#wp-biographia-excluded-user-roles');  
+	 	});  
+	 	$('#wp-biographia-user-role-rem').click(function() {
+	  		return !$('#wp-biographia-excluded-user-roles option:selected').remove().appendTo('#wp-biographia-enabled-user-roles');
+	 	});  
+
+		$('#wp-biographia-user-profile-add').click(function() {  
+	  		return !$('#wp-biographia-visible-profiles option:selected').remove().appendTo('#wp-biographia-hidden-profiles');  
+	 	});  
+	 	$('#wp-biographia-user-profile-rem').click(function() {
+	  		return !$('#wp-biographia-hidden-profiles option:selected').remove().appendTo('#wp-biographia-visible-profiles');
+	 	});  
+
 		$('#wp-biographia-user-post-add').click(function() {  
 	  		return !$('#wp-biographia-enabled-post-users option:selected').remove().appendTo('#wp-biographia-suppressed-post-users');  
 	 	});  

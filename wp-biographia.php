@@ -95,13 +95,13 @@ class WP_Biographia extends WP_PluginBase {
 		self::$instance = $this;
 		self::$admin_tab_names = array (
 			'display' => 'Display',
+			'admin' => 'Admin',
 			'exclude' => 'Exclusions',
 			'style' => 'Style',
 			'content' => 'Content',
 			'defaults' => 'Defaults',
 			'colophon' => 'Colophon',
-			'dryrun' => 'Dry Run',
-			'config' => 'Config'
+			'dryrun' => 'Dry Run'
 			);
 		define ('PLUGIN_URL', plugin_dir_url (__FILE__));
 		define ('PLUGIN_PATH', plugin_dir_path (__FILE__));
@@ -140,6 +140,7 @@ class WP_Biographia extends WP_PluginBase {
 			$this->hook ('edit_user_profile_update', 'admin_save_profile_extensions');
 			$this->hook ('plugin_action_links_' . plugin_basename (__FILE__),
 				'admin_settings_link');
+			$this->hook ('user_register', 'admin_user_register');
 		}
 	}
 	
@@ -297,7 +298,9 @@ class WP_Biographia extends WP_PluginBase {
 					'wp_biographia_content_reddit' => '',
 					'wp_biographia_content_posts' => 'extended',
 					'wp_biographia_content_link_target' => '_self',
-					'wp_biographia_content_link_nofollow' => ''
+					'wp_biographia_content_link_nofollow' => '',
+					'wp_biographia_admin_new_users' => '',
+					'wp_biographia_admin_hide_profiles' => ''
 				) 
 			);
 			update_option (self::OPTIONS, $settings);
@@ -1258,6 +1261,19 @@ class WP_Biographia extends WP_PluginBase {
 	 */
 
 	function admin_add_profile_extensions ($user) {
+		$hide = false;
+		$option = $this->get_option ('wp_biographia_admin_hide_profiles');
+		if (!empty ($option)) {
+			$hidden_profiles = explode (',', $option);
+			foreach ($user->roles as $role) {
+				if (in_array ($role, $hidden_profiles)) {
+					$hide = true;
+					break;
+				}
+			}	// end-foreach;
+		}
+		
+		if (!$hide) {
 		?>
 		<h3>Biography Box</h3>
 		<table class="form-table">
@@ -1279,6 +1295,7 @@ class WP_Biographia extends WP_PluginBase {
 			</tr>
 		</table>
 		<?php
+		}
 	}
 
 	/**
@@ -1287,10 +1304,55 @@ class WP_Biographia extends WP_PluginBase {
 	 */
 
 	function admin_save_profile_extensions ($user_id) {
-		update_user_meta ($user_id, 'wp_biographia_suppress_posts',
-			$this->admin_option ('wp_biographia_suppress_posts'));
-		update_user_meta ($user_id, 'wp_biographia_suppress_pages',
-			$this->admin_option ('wp_biographia_suppress_pages'));
+		$hide = false;
+		$option = $this->get_option ('wp_biographia_admin_hide_profiles');
+		$user = get_userdata ($user_id);
+		if (!empty ($option)) {
+			$hidden_profiles = explode (',', $option);
+			foreach ($user->roles as $role) {
+				if (in_array ($role, $hidden_profiles)) {
+					$hide = true;
+					break;
+				}
+			}	// end-foreach;
+		}
+
+		if (!$hide) {
+			update_user_meta ($user_id, 'wp_biographia_suppress_posts',
+				$this->admin_option ('wp_biographia_suppress_posts'));
+			update_user_meta ($user_id, 'wp_biographia_suppress_pages',
+				$this->admin_option ('wp_biographia_suppress_pages'));
+		}
+	}
+	
+	/**
+	 * "user_register" action hook; called immediately after a new user is registered and
+	 * added to the database. If the user's role is in the list of excluded new user roles
+	 * then set the 'wp_biographia_suppress_posts' and 'wp_biographia_suppress_pages' options
+	 * in the user's metadata.
+	 */
+	
+	function admin_user_register ($user_id) {
+		global $wplogger;
+		$wplogger->log ('admin_user_register: user id ' . $user_id);
+		$do_not_suppress = false;
+		$option = $this->get_option ('wp_biographia_admin_new_users');
+		$user = get_userdata ($user_id);
+		$wplogger->log ('admin_user_register: user login ' . $user->user_login);
+		if (!empty ($option)) {
+			$new_user_roles = explode (',', $option);
+			foreach ($user->roles as $role) {
+				if (in_array ($role, $new_user_roles)) {
+					$do_not_suppress = true;
+					break;
+				}
+			}	// end-foreach;
+		}
+
+		if (!$do_not_suppress) {
+			update_user_meta ($user_id, 'wp_biographia_suppress_posts', 'on');
+			update_user_meta ($user_id, 'wp_biographia_suppress_pages', 'on');
+		}
 	}
 	
 	/**
@@ -1377,115 +1439,102 @@ class WP_Biographia extends WP_PluginBase {
 
 			/*
 			 * V1.0 configuration settings ...
-			 *
-			 * wp_biographia_installed
-			 * wp_biographia_version = "01"
-			 * wp_biographia_alert_bg
-			 * wp_biographia_display_front
-			 * wp_biographia_display_archives
-			 * wp_biographia_display_posts
-			 * wp_biographia_display_pages
-			 * wp_biographia_display_feed
-			 * wp_biographia_alert_border
-			 * wp_biographia_content_prefix
-			 * wp_biographia_content_name
-			 * wp_biographia_content_image
-			 * wp_biographia_content_bio
-			 * wp_biographia_content_web
-			 * wp_biographia_content_twitter
-			 * wp_biographia_content_facebook
-			 * wp_biographia_content_linkedin
-			 * wp_biographia_content_googleplus
-			 * wp_biographia_content_posts
+			 *		wp_biographia_installed
+			 *		wp_biographia_version = "01"
+			 *		wp_biographia_alert_bg
+			 *		wp_biographia_display_front
+			 *		wp_biographia_display_archives
+			 *		wp_biographia_display_posts
+			 *		wp_biographia_display_pages
+			 *		wp_biographia_display_feed
+			 *		wp_biographia_alert_border
+			 *		wp_biographia_content_prefix
+			 *		wp_biographia_content_name
+			 *		wp_biographia_content_image
+			 *		wp_biographia_content_bio
+			 *		wp_biographia_content_web
+			 *		wp_biographia_content_twitter
+			 *		wp_biographia_content_facebook
+			 *		wp_biographia_content_linkedin
+			 *		wp_biographia_content_googleplus
+			 *		wp_biographia_content_posts
 			 *
 			 * v2.0 added configuration settings ...
-			 *
-			 * wp_biographia_content_email = "on"
-			 * wp_biographia_content_image_size = "100"
-			 * wp_biographia_style_border (was wp_biographia_alert_border) = "top"
-			 * wp_biographia_style_bg (was wp_biographia_alert_bg) = "#FFEAA8"
-			 * wp_biographia_display_location = "bottom"
-			 * wp_biographia_page_exclusions (no default value)
-			 * wp_biographia_post_exclusions (no default value)
-			 *
+			 *		wp_biographia_content_email = "on"
+			 *		wp_biographia_content_image_size = "100"
+			 *		wp_biographia_style_border (was wp_biographia_alert_border) = "top"
+			 *		wp_biographia_style_bg (was wp_biographia_alert_bg) = "#FFEAA8"
+			 *		wp_biographia_display_location = "bottom"
+			 *		wp_biographia_page_exclusions (no default value)
+			 *		wp_biographia_post_exclusions (no default value)
 			 * v2.0 removed configuration settings
-			 *
-			 * wp_biographia_alert_border (replaced by wp_biographia_style_border)
-			 * wp_biographia_alert_bg (replaced by wp_biographia_style_bg)
-			 * 
+			 *		wp_biographia_alert_border (replaced by wp_biographia_style_border)
+			 *		wp_biographia_alert_bg (replaced by wp_biographia_style_bg)
 			 * v2.0 changed default configuration settings ...
-			 *
-			 * wp_biographia_version = "20"
+			 *		wp_biographia_version = "20"
 			 *
 	         * v2.1 added configuration settings ...
-			 *
-	         * wp_biographia_beta_enabled = ""
-	         * wp_biographia_suppress_posts = "" (user profile extension)
-	         * wp_biographia_suppress_pages = "" (user profile extension)
-			 *
+	         *		wp_biographia_beta_enabled = ""
+	         *		wp_biographia_suppress_posts = "" (user profile extension)
+	         *		wp_biographia_suppress_pages = "" (user profile extension)
 			 * v2.1 changed default configuration settings ...
-			 *
-			 * wp_biographia_version = "21"
+			 *		wp_biographia_version = "21"
 			 *
 			 * v2.1.1 changed default configuration settings ...
-			 *
-			 * wp_biographia_version = "211"
+			 *		wp_biographia_version = "211"
 			 *
 			 * v2.2 added configuration settings ...
-			 * wp_biographia_content_delicious = ""
-			 * wp_biographia_content_flickr = ""
-			 * wp_biographia_content_picasa = ""
-			 * wp_biographia_content_vimeo = ""
-			 * wp_biographia_content_youtube = ""
-			 * wp_biographia_content_reddit = ""
-			 *
+			 *		wp_biographia_content_delicious = ""
+			 *		wp_biographia_content_flickr = ""
+			 *		wp_biographia_content_picasa = ""
+			 *		wp_biographia_content_vimeo = ""
+			 *		wp_biographia_content_youtube = ""
+			 *		wp_biographia_content_reddit = ""
 			 * v2.2 changed default configuration settings ...
-			 *
-			 * wp_biographia_version = "22"
+			 *		wp_biographia_version = "22"
 			 *
 			 * v2.2.1 changed default configuration settings ...
 			 * Note: v2.2.1 was a private beta and never formally released.
-			 *
-			 * wp_biographia_version = "221"
+			 *		wp_biographia_version = "221"
 			 *
 			 * v2.3 changed default configuration settings ...
-			 *
-			 * wp_biographia_version = "23"
+			 *		wp_biographia_version = "23"
 			 *
 			 * v2.4 added configuration settings ...
-			 *
-			 * wp_biographia_content_authorpage = "on"
-			 * wp_biographia_content_icons = ""
-			 * wp_biographia_content_alt_icons = ""
-			 * wp_biographia_content_icon_url = ""
-			 *
+			 *		wp_biographia_content_authorpage = "on"
+			 *		wp_biographia_content_icons = ""
+			 *		wp_biographia_content_alt_icons = ""
+			 *		wp_biographia_content_icon_url = ""
 			 * v2.4 changed default configuration settings ...
-			 *
-			 * wp_biographia_version = "24"
+			 *		wp_biographia_version = "24"
 			 *
 			 * v2.4.1 changed default configuration settings ...
-			 *
-			 * wp_biographia_version = "241"
-			 *
+			 * 		wp_biographia_version = "241"
 			 * v2.4.2 changed default configuration settings ...
-			 *
-			 * wp_biographia_version = "242"
+			 * 		wp_biographia_version = "242"
 			 *
 			 * v2.4.3 changed default configuration settings ...
-			 *
-			 * wp_biographia_version = "243"
-			 *
+			 *		wp_biographia_version = "243"
 			 * v2.4.4 changed default configuration settings ...
+			 *		wp_biographia_version = "244"
 			 *
-			 * wp_biographia_version = "244"
-			 *
+			 * v3.0 added configuration settings ...
+			 *		wp_biographia_content_link_target = "_self"
+			 *		wp_biographia_content_link_nofollow = ""
 			 * v3.0 changed default configuration settings ...
-			 *
-			 * wp_biographia_version = "30"
-
+			 *		wp_biographia_version = "30"
 			 * v3.0 removed configuration settings
+			 *		wp_biographia_beta_enabled
+			 *		wp_biograpia_content_vimeo
 			 *
-			 * wp_biographia_beta_enabled
+			 * v3.0.1 changed default configuration settings ...
+			 *		wp_biographia_version = "301"
+
+			 * v3.1 changed default configuration settings ...
+			 *		wp_biographia_version = "310"
+			 * v3.1 added configuration settings ...
+			 *		 wp_biographia_admin_new_users = ""
+			 * 		wp_biographia_admin_hide_profiles = ""
 			 */
 
 			switch ($current_plugin_version) {
@@ -1566,7 +1615,6 @@ class WP_Biographia extends WP_PluginBase {
 				case '243':
 				case '244':
 				case '30':
-				case '301':
 					if (isset ($settings['wp_biographia_beta_enabled'])) {
 						unset ($settings['wp_biographia_beta_enabled']);
 					}
@@ -1577,7 +1625,10 @@ class WP_Biographia extends WP_PluginBase {
 						unset ($settings['wp_biograpia_content_vimeo']);
 					}
 
+				case '301':
 				case '310':
+					$this->admin_upgrade_option ($settings, 'admin_new_users', '');
+					$this->admin_upgrade_option ($settings, 'admin_hide_profiles', '');
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
 
@@ -1601,6 +1652,8 @@ class WP_Biographia extends WP_PluginBase {
 
 		$wrapped_content = array ();
 		$display_settings = array ();
+		$role_settings = array ();
+		$profile_settings = array ();
 		$exclusion_settings = array ();
 		$suppression_settings = array ();
 		$category_settings = array ();
@@ -1608,9 +1661,9 @@ class WP_Biographia extends WP_PluginBase {
 		$content_settings = array ();
 		$defaults_settings = array ();
 		$colophon_content = array ();
-		$dryrun_content = array ();
 		$config_settings = array ();
 		$config_users = array ();
+		$dryrun_content = array ();
 		
 		$args = array (
 			'public' => true,
@@ -1669,6 +1722,101 @@ class WP_Biographia extends WP_PluginBase {
 			<input type="radio" name="wp_biographia_display_location" id="wp-biographia-content-name" value="bottom" '
 			. checked ($settings['wp_biographia_display_location'], 'bottom', false)
 			. ' />&nbsp;' . __('Display the Biography Box after the post or page content', 'wp-biographia') . '<br />';
+
+		/********************************************************************************
+	 	 * Admin tab content - 1) Automatically Exclude New Users By Role
+	 	 */
+
+		$role_settings[] = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non dui ipsum, at posuere dui. Sed adipiscing dignissim metus vel aliquam. Suspendisse tempor sollicitudin vehicula. Maecenas quis volutpat est. Quisque id mi ac arcu dignissim tincidunt pretium eget nisi. In at turpis eros. Sed iaculis eleifend lacus a ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus lacus et est facilisis hendrerit. Sed mi urna, faucibus vitae vehicula non, volutpat sed purus. Nam faucibus, est a ullamcorper placerat, justo lorem condimentum arcu, nec vehicula erat nisl in lectus. Pellentesque iaculis libero id quam imperdiet sit amet imperdiet odio consequat.</p>';
+		
+		$editable_roles = get_editable_roles ();
+		$roles_enabled = array ();
+		$roles_excluded = array ();
+		$role_list = explode (',', $settings['wp_biographia_admin_new_users']);
+
+		foreach ($editable_roles as $role => $role_info) {
+			if (in_array ($role, $role_list)) {
+				$roles_excluded[$role] = $role_info['name'];
+			}
+			
+			else {
+				$roles_enabled[$role] = $role_info['name'];
+			}
+		}	// end-foreach (...)
+
+		$role_settings[] = '<p><strong>' . __('Automatically Exclude New Users By Role', 'wp-biographia') . '</strong><br />';
+		$role_settings[] = '<span class="wp-biographia-user-roles">';
+		$role_settings[] = '<strong>' . __('Enabled Roles', 'wp-biographia') . '</strong><br />';
+		$role_settings[] = '<select multiple id="wp-biographia-enabled-user-roles" name="wp-biographia-enabled-user-roles[]">';
+
+		foreach ($roles_enabled as $role_name => $role_display) {
+			$role_settings[] = '<option value="' . $role_name . '">' . $role_display . '</option>';
+		}	// end-foreach (...)
+
+		$role_settings[] = '</select>';
+		$role_settings[] = '<a href="#" id="wp-biographia-user-role-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
+		$role_settings[] = '</span>';
+		$role_settings[] = '<span class="wp-biographia-user-roles">';
+		$role_settings[] = '<strong>' . __('Excluded Roles', 'wp-biographia') . '</strong><br />';
+		$role_settings[] = '<select multiple id="wp-biographia-excluded-user-roles" name="wp-biographia-excluded-user-roles[]">';
+
+		foreach ($roles_excluded as $role_name => $role_display) {
+			$role_settings[] = '<option value="' . $role_name . '">' . $role_display . '</option>';
+		}	// end-foreach (...)
+
+		$role_settings[] = '</select>';
+		$role_settings[] = '<a href="#" id="wp-biographia-user-role-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>';
+		$role_settings[] = '</span>';
+		$role_settings[] = '<br />';
+		$role_settings[] = '<div style="clear: both";><small>' . __('Select the roles for which new users should be automatically excluded from displaying the Biography Box. This setting only affects the creation of new users; individual users may be enabled to display the Biography Box on a per-user basis in the Exclusions Tab.', 'wp-biographia') . '</small></div></p>';
+		
+
+		/********************************************************************************
+	 	 * Admin tab content - 2) Hide User Profile Settings By Role
+	 	 */
+
+		$profile_settings[] = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non dui ipsum, at posuere dui. Sed adipiscing dignissim metus vel aliquam. Suspendisse tempor sollicitudin vehicula. Maecenas quis volutpat est. Quisque id mi ac arcu dignissim tincidunt pretium eget nisi. In at turpis eros. Sed iaculis eleifend lacus a ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus lacus et est facilisis hendrerit. Sed mi urna, faucibus vitae vehicula non, volutpat sed purus. Nam faucibus, est a ullamcorper placerat, justo lorem condimentum arcu, nec vehicula erat nisl in lectus. Pellentesque iaculis libero id quam imperdiet sit amet imperdiet odio consequat.</p>';
+
+		$profiles_visible = array ();
+		$profiles_hidden = array ();
+		$profile_list = explode (',', $settings['wp_biographia_admin_hide_profiles']);
+
+		foreach ($editable_roles as $role => $role_info) {
+			if (in_array ($role, $profile_list)) {
+				$profiles_hidden[$role] = $role_info['name'];
+			}
+			
+			else {
+				$profiles_visible[$role] = $role_info['name'];
+			}
+		}	// end-foreach (...)
+
+		$profile_settings[] = '<p><strong>' . __('Hide Biography Box Settings In User Profiles by Role', 'wp-biographia') . '</strong><br />';
+		$profile_settings[] = '<span class="wp-biographia-user-profiles">';
+		$profile_settings[] = '<strong>' . __('Visible In Profiles', 'wp-biographia') . '</strong><br />';
+		$profile_settings[] = '<select multiple id="wp-biographia-visible-profiles" name="wp-biographia-visible-profiles[]">';
+
+		foreach ($profiles_visible as $role_name => $role_display) {
+			$profile_settings[] = '<option value="' . $role_name . '">' . $role_display . '</option>';
+		}	// end-foreach (...)
+
+		$profile_settings[] = '</select>';
+		$profile_settings[] = '<a href="#" id="wp-biographia-user-profile-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
+		$profile_settings[] = '</span>';
+		$profile_settings[] = '<span class="wp-biographia-user-profiles">';
+		$profile_settings[] = '<strong>' . __('Hidden In Profiles', 'wp-biographia') . '</strong><br />';
+		$profile_settings[] = '<select multiple id="wp-biographia-hidden-profiles" name="wp-biographia-hidden-profiles[]">';
+
+		foreach ($profiles_hidden as $role_name => $role_display) {
+			$profile_settings[] = '<option value="' . $role_name . '">' . $role_display . '</option>';
+		}	// end-foreach (...)
+
+		$profile_settings[] = '</select>';
+		$profile_settings[] = '<a href="#" id="wp-biographia-user-profile-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>';
+		$profile_settings[] = '</span>';
+		$profile_settings[] = '<br />';
+		$profile_settings[] = '<div style="clear: both";><small>' . __('Select the roles for users who should have the Biography Box hidden or visible in their user profile.', 'wp-biographia') . '</small></div></p>';
+
 
 		/********************************************************************************
 	 	 * Exclusions settings tab content - 1) Exclusion Settings
@@ -1778,7 +1926,7 @@ class WP_Biographia extends WP_PluginBase {
 		$suppression_settings[] = '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
 
 		/********************************************************************************
-	 	 * Exclusions settings tab content - 2) Category Suppression Settings
+	 	 * Exclusions settings tab content - 3) Category Suppression Settings
 	 	 */
 
 		$categories = $this->get_categories ();
@@ -2041,7 +2189,7 @@ class WP_Biographia extends WP_PluginBase {
 		$defaults_settingsp[] = '</p>';
 			
 		/********************************************************************************
-	 	 * Colophon tab content
+	 	 * Colophon tab content - 1) Colophon Display
 	 	 */
 
 		$colophon_content[] = '<p><em>"When it comes to software, I much prefer free software, because I have very seldom seen a program that has worked well enough for my needs and having sources available can be a life-saver"</em>&nbsp;&hellip;&nbsp;Linus Torvalds</p><p>';
@@ -2051,15 +2199,9 @@ class WP_Biographia extends WP_PluginBase {
 		$colophon_content[] = '</p><p>';
 		$colophon_content[] = __('WP Biographia is named after the etymology of the modern English word <em>biography</em>. The word first appeared in the 1680s, probably from the latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, meaning "life" and <em>graphia</em>, meaning "record" or "account" which derived from <em>graphein</em>, "to write".', 'wp-biographia');
 		$colophon_content[] = '</p><p><small>Dictionary.com, "biography," in <em>Online Etymology Dictionary</em>. Source location: Douglas Harper, Historian. <a href="http://dictionary.reference.com/browse/biography">http://dictionary.reference.com/browse/biography</a>. Available: <a href="http://dictionary.reference.com">http://dictionary.reference.com</a>. Accessed: July 27, 2011.</small></p>';
-
-		/********************************************************************************
-	 	 * Dry Run tab content
-	 	 */
-
-		$dryrun_content[] = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non dui ipsum, at posuere dui. Sed adipiscing dignissim metus vel aliquam. Suspendisse tempor sollicitudin vehicula. Maecenas quis volutpat est. Quisque id mi ac arcu dignissim tincidunt pretium eget nisi. In at turpis eros. Sed iaculis eleifend lacus a ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus lacus et est facilisis hendrerit. Sed mi urna, faucibus vitae vehicula non, volutpat sed purus. Nam faucibus, est a ullamcorper placerat, justo lorem condimentum arcu, nec vehicula erat nisl in lectus. Pellentesque iaculis libero id quam imperdiet sit amet imperdiet odio consequat.</p>';
 		
 		/********************************************************************************
-	 	 * Debug tab content
+	 	 * Colophon tab content - 2) Plugin Configuration Settings
 	 	 */
 
 		$config_settings[] = '<p>';
@@ -2088,6 +2230,10 @@ class WP_Biographia extends WP_PluginBase {
 				);
 		}
 
+		/********************************************************************************
+	 	 * Colophon tab content - 3) User Configuration Settings
+	 	 */
+
 		$config_users[] = '<p>';
 		$config_users[] = __('Almost all of WP Biographia\'s Settings and Options are maintained in the database in a single entry. But there\'s also some settings added to each user\'s account; you\'ll find these below.', 'wp-biographia');
 		$config_users[] = '</p>';
@@ -2095,6 +2241,17 @@ class WP_Biographia extends WP_PluginBase {
 		$config_users[] = '<pre>';
 		$config_users[] = print_r ($debug_users, true);
 		$config_users[] = '</pre>';
+		
+
+		/********************************************************************************
+	 	 * Dry Run tab content
+	 	 */
+
+		$dryrun_content[] = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non dui ipsum, at posuere dui. Sed adipiscing dignissim metus vel aliquam. Suspendisse tempor sollicitudin vehicula. Maecenas quis volutpat est. Quisque id mi ac arcu dignissim tincidunt pretium eget nisi. In at turpis eros. Sed iaculis eleifend lacus a ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus lacus et est facilisis hendrerit. Sed mi urna, faucibus vitae vehicula non, volutpat sed purus. Nam faucibus, est a ullamcorper placerat, justo lorem condimentum arcu, nec vehicula erat nisl in lectus. Pellentesque iaculis libero id quam imperdiet sit amet imperdiet odio consequat.</p>';
+		
+		/********************************************************************************
+	 	 * Put it all together ...
+	 	 */
 		
 		if (function_exists ('wp_nonce_field')) {
 			$wrapped_content[] = wp_nonce_field (
@@ -2105,8 +2262,16 @@ class WP_Biographia extends WP_PluginBase {
 		}
 
 		$tab = $this->admin_validate_tab ();
-
 		switch ($tab) {
+			case 'admin':
+				$wrapped_content[] = $this->admin_postbox ('wp-biographia-user-settings',
+					__('New User Settings', 'wp-biographia'),
+					implode ('', $role_settings));
+				$wrapped_content[] = $this->admin_postbox ('wp-biographia-profile-settings',
+					__('User Profile Settings', 'wp-biographia'),
+					implode ('', $profile_settings));
+				break;
+			
 			case 'exclude':
 				$wrapped_content[] = $this->admin_postbox ('wp-biographia-exclusion-settings',
 					__('Post, Page And Custom Post Type Exclusion Settings', 'wp-biographia'),
@@ -2142,6 +2307,12 @@ class WP_Biographia extends WP_PluginBase {
 				$wrapped_content[] = $this->admin_postbox ('wp-biographia-colophon',
 					__('Colophon', 'wp-biographia'),
 					implode ('', $colophon_content));
+				$wrapped_content[] = $this->admin_postbox ('wp-biographia-config-settings',
+					__('Plugin Configuration Settings', 'wp-biographia'),
+					implode ('', $config_settings));
+				$wrapped_content[] = $this->admin_postbox ('wp-biographia-config-users',
+					__('User Configuration Settings', 'wp-biographia'),
+					implode ('', $config_users));
 				break;
 			
 			case 'dryrun':
@@ -2150,15 +2321,6 @@ class WP_Biographia extends WP_PluginBase {
 					implode ('', $dryrun_content));
 				break;
 				
-			case 'config':
-				$wrapped_content[] = $this->admin_postbox ('wp-biographia-config-settings',
-					__('Plugin Configuration Settings', 'wp-biographia'),
-					implode ('', $config_settings));
-				$wrapped_content[] = $this->admin_postbox ('wp-biographia-config-users',
-					__('User Configuration Settings', 'wp-biographia'),
-					implode ('', $config_users));
-				break;
-
 			case 'display':
 			default:
 				$wrapped_content[] = $this->admin_postbox ('wp-biographia-display-settings',
@@ -2222,6 +2384,26 @@ class WP_Biographia extends WP_PluginBase {
 				$action_msg = __('Updated', 'wp-biographia');
 
 				switch ($tab) {
+					case 'admin':
+						$roles = $this->admin_option ('wp-biographia-excluded-user-roles');
+						if (!empty ($roles)) {
+							$settings['wp_biographia_admin_new_users'] = implode (
+								',', $roles);
+						}
+						else {
+							$settings['wp_biographia_admin_new_users'] = '';
+						}
+
+						$profiles = $this->admin_option ('wp-biographia-hidden-profiles');
+						if (!empty ($profiles)) {
+							$settings['wp_biographia_admin_hide_profiles'] = implode (
+								',', $profiles);
+						}
+						else {
+							$settings['wp_biographia_admin_hide_profiles'] = '';
+						}
+						break;
+					
 					case 'exclude':
 						foreach ($pts as $pt) {
 							$settings['wp_biographia_' . $pt->name . '_exclusions'] =
@@ -2230,7 +2412,7 @@ class WP_Biographia extends WP_PluginBase {
 							$settings['wp_biographia_global_' . $pt->name . '_exclusions'] =
 								$this->admin_option ('wp_biographia_global_' . $pt->name . '_exclusions');
 						}
-
+						
 						// Post exclusions 
 						$settings['wp_biographia_post_exclusions'] =
 							$this->admin_option ('wp_biographia_post_exclusions');
@@ -2510,6 +2692,7 @@ class WP_Biographia extends WP_PluginBase {
 		$content = array ();
 		
 		switch ($tab) {
+			case 'admin':
 			case 'display':
 			case 'exclude':
 			case 'style':
