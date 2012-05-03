@@ -52,10 +52,23 @@
 		});
 		
 		$('form').submit(function() {
-			$('#wp-biographia-enabled-post-users option').each(function(i) {  
+			$('#wp-biographia-enabled-user-roles option').each(function(i) {  
+				$(this).attr("selected", "selected");  
+			});  
+			$('#wp-biographia-excluded-user-roles option').each(function(i) {  
 				$(this).attr("selected", "selected");  
 			});  
 
+			$('#wp-biographia-visible-profiles option').each(function(i) {  
+				$(this).attr("selected", "selected");  
+			});  
+			$('#wp-biographia-hidden-profiles option').each(function(i) {  
+				$(this).attr("selected", "selected");  
+			});  
+
+			$('#wp-biographia-enabled-post-users option').each(function(i) {  
+				$(this).attr("selected", "selected");  
+			});  
 			$('#wp-biographia-suppressed-post-users option').each(function(i) {  
 				$(this).attr("selected", "selected");  
 			});  
@@ -63,7 +76,6 @@
 			$('#wp-biographia-enabled-page-users option').each(function(i) {  
 				$(this).attr("selected", "selected");  
 			});  
-
 			$('#wp-biographia-suppressed-page-users option').each(function(i) {  
 				$(this).attr("selected", "selected");
 			});  
@@ -71,7 +83,6 @@
 			$('#wp-biographia-enabled-categories option').each(function(i) {
 				$(this).attr("selected", "selected");
 			})
-
 			$('#wp-biographia-excluded-categories option').each(function(i) {
 				$(this).attr("selected", "selected");
 			})
