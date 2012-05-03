@@ -158,28 +158,41 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Screenshots ==
 
-1. Settings and Options: Admin Screen Display Tab
-1. Settings and Options: Admin Screen Exclusion Tab - Post, Page and Custom Post Type Exclusion Settings
-1. Settings and Options: Admin Screen Exclusion Tab - Category Exclusion Settings
-1. Settings and Options: Admin Screen Exclusion Tab - User Suppression Settings
-1. Settings and Options: Admin Screen Style Tab
-1. Settings and Options: Admin Screen Content Tab
-1. Settings and Options: Admin Screen Content Tab, continued
-1. Settings and Options: Admin Screen Defaults Tab
-1. Settings and Options: Admin Screen Colophon Tab
+1. Settings and Options: Display Tab
+1. Settings and Options: Admin Tab
+1. Settings and Options: Exclusions Tab - Post, Page and Custom Post Type Exclusion Settings
+1. Settings and Options: Exclusions Tab - Category Exclusion Settings
+1. Settings and Options: Exclusions Tab - User Suppression Settings
+1. Settings and Options: Style Tab
+1. Settings and Options: Content Tab
+1. Settings and Options: Content Tab, continued
+1. Settings and Options: Defaults Tab
+1. Settings and Options: Colophon Tab - Colophon
+1. Settings and Options: Colophon Tab - Plugin Configuration Settings
+1. Settings and Options: Colophon Tab - User Configuration Settings
 1. Sample Biography Box; contact links shown as text
 1. Sample Biography Box; contact links shown as icons
 
 == Changelog ==
 
-The current version is 3.0.1 (2012.04.20)
+The current version is 3.1.0 (2012.05.03)
+
+= 3.1 =
+* Released 2012.05.03
+* Added: Support for shortcode `role` attribute to further filter display of users when the shortcode is used in *wildcard* mode.
+* Added: The *Colophon* tab in the admin settings screen now displays a dump of the plugin's setting and options without the need to extract that information from the database via MySQL or phpMyAdmin.
+* Added: New *Admin* tab in the admin settings screen. This allows a suitably permissioned administator to hide the Biography Box settings from a user's profile according to the user's role and to automatically suppress display of the Biography Box for newly created users according to that user's role.
+* Added: Introductory help text to each post-box in each tab in the admin settings screen.
+* Fixed: Bug where the `wp_biographia_category_exclusions` setting was not defined in the database upon plugin upgrade, causing an *undefined index* notice message when the PHP error reporting level is set to `E_NOTICE`.
 
 = 3.0.1 =
+* Released 2012.04.20
 * Fixed: Bug in plugin initialisation that incorrectly named the Vimeo content display option.
 * Fixed: Bug that caused a post's author not to be refreshed in the front page and archive pages.
 * Fixed: Bug that caused a post's author to be determined as the author of the enclosing page where a custom Loop is being used.
 
 = 3.0 =
+* Released 2012.04.11
 * Summary: A substantial rewrite of the plugin's structure with a reworked tabbed admin interface and substantial customisation options via the WordPress filter mechanism.
 * Added: Filter wp_biographia_default_settings
 * Added: Filter wp_biographia_contact_info
@@ -198,34 +211,41 @@ The current version is 3.0.1 (2012.04.20)
 * Fixed: Bug that caused extended contact links in an author's profile to be persisted after plugin uninstallation.
 
 = 2.4.4 =
+* Released 2012.02.22
 * Fixed bug where Vimeo contact link setting was not persisted across settings changes.
 * Fix bug where "More Posts" link linked to the current page URL.
 * Minor CSS tweak.
 
 = 2.4.3 =
+* Released 2012.02.17
 * Fixed bug where page exclusion settings were not persisted to the back-end database configuration settings.
 
 = 2.4.2 =
+* Released 2012.02.16
 * Correct version number in plugin header.
 
 = 2.4.1 =
+* Released 2012.02.16
 * Fixed regression bug in v2.4 where a contact link items displayed as an empty link if enabled in WP Biographia but if the corresponding link in the user's profile was empty.
 * Fixed regression bug in v2.4 where the user profile Biography Box settings text was not properly displayed.
 * Tweak v2.4 CSS to clear up styling issues and to align list item styling with best practice.
 
 = 2.4 =
+* Released 2012.02.16
 * Add internationalisation support; add Spanish and Turkish language files.
 * Add configuration setting to control the author's name in the Biography Box as a link to "More Posts By This Author".
 * Add support for displaying the author's contact links as icons as well as plain text links.
 * Add support for using an alternate link icon set.
 
 = 2.3 =
+* Released 2012.01.26
 * Suppress display of "More Posts" link in the Biography Box (if configured) if the user/author has no posts.
 * Add `author`, `prefix` and `name` short code attribute support.
 * Add support for global (across single, archive and front page templates) post exclusions in built-in post types and custom post types.
 * Tightened wording in admin screen around post exclusions.
 
 = 2.2 =
+* Released 2012.01.17
 * Add enhanced short code support (`raw` and `configured` modes)
 * Add support for displaying the Biography Box on archive pages that use excerpts
 * Enhance contact information and Biography Box links to support Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit
@@ -235,9 +255,11 @@ The current version is 3.0.1 (2012.04.20)
 * Made terminology and control ordering for custom post types consistent in admin pages
 
 = 2.1.1 =
+* Released 2011.12.21
 * Fixed bug in per user suppression due to debug code being left in the release
 
 = 2.1 =
+* Released 2011.12.20
 * Add ability to suppress the Biography Box from being displayed on posts, on pages and on posts and pages on a per user basis
 * Add settings link to Settings / WP Biographia admin page from the plugin's entry on the Dashboard / Plugins page
 * Add checks for avatar display in the Biography Box being requested with avatar support not enabled in the Settings / Discussions admin page
@@ -247,6 +269,7 @@ The current version is 3.0.1 (2012.04.20)
 * Tweaked admin CSS to introduce padding between the settings container and sidebar container that changed in WordPress 3.3
 
 = 2.0 =
+* Released 2011.11.18
 * Added the ability to set image size
 * Added a simple shortcode
 * Added Custom Post Types support with the ability to exclude based on post IDs
@@ -257,9 +280,13 @@ The current version is 3.0.1 (2012.04.20)
 * Fixed CSS issue for gravatar
 
 = 1.0 =
+* Released 2011.08.03
 * First version of WP Biographia released
 
 == Upgrade Notice ==
+
+= 3.1 =
+This version adds a new *Admin* tab to the settings screen and support for an additional `role` attribute to the plugin's shortcode. It also fixes a minor bug that caused a notice message to be displayed when the PHP error reporting level is set to `E_NOTICE`. This is the 13th version of WP Biographia.
 
 = 3.0.1 =
 This version fixes several bugs that affected the correct author being associated with the Biography Box on front/archive pages and when called from within a custom Loop. This is 12th version of WP Biographia.
