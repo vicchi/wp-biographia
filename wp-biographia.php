@@ -100,8 +100,7 @@ class WP_Biographia extends WP_PluginBase {
 			'style' => 'Style',
 			'content' => 'Content',
 			'defaults' => 'Defaults',
-			'colophon' => 'Colophon',
-			'dryrun' => 'Dry Run'
+			'colophon' => 'Colophon'
 			);
 		define ('PLUGIN_URL', plugin_dir_url (__FILE__));
 		define ('PLUGIN_PATH', plugin_dir_path (__FILE__));
@@ -1663,7 +1662,6 @@ class WP_Biographia extends WP_PluginBase {
 		$colophon_content = array ();
 		$config_settings = array ();
 		$config_users = array ();
-		$dryrun_content = array ();
 		
 		$args = array (
 			'public' => true,
@@ -2255,14 +2253,7 @@ class WP_Biographia extends WP_PluginBase {
 		$config_users[] = '<pre>';
 		$config_users[] = print_r ($debug_users, true);
 		$config_users[] = '</pre>';
-		
 
-		/********************************************************************************
-	 	 * Dry Run tab content
-	 	 */
-
-		$dryrun_content[] = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. In non dui ipsum, at posuere dui. Sed adipiscing dignissim metus vel aliquam. Suspendisse tempor sollicitudin vehicula. Maecenas quis volutpat est. Quisque id mi ac arcu dignissim tincidunt pretium eget nisi. In at turpis eros. Sed iaculis eleifend lacus a ullamcorper. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam cursus lacus et est facilisis hendrerit. Sed mi urna, faucibus vitae vehicula non, volutpat sed purus. Nam faucibus, est a ullamcorper placerat, justo lorem condimentum arcu, nec vehicula erat nisl in lectus. Pellentesque iaculis libero id quam imperdiet sit amet imperdiet odio consequat.</p>';
-		
 		/********************************************************************************
 	 	 * Put it all together ...
 	 	 */
@@ -2329,12 +2320,6 @@ class WP_Biographia extends WP_PluginBase {
 					implode ('', $config_users));
 				break;
 			
-			case 'dryrun':
-				$wrapped_content[] = $this->admin_postbox ('wp-biographia-dryrun',
-					__('Dry Run', 'wp-biographia'),
-					implode ('', $dryrun_content));
-				break;
-				
 			case 'display':
 			default:
 				$wrapped_content[] = $this->admin_postbox ('wp-biographia-display-settings',
