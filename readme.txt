@@ -5,6 +5,8 @@ Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biograp
 Requires at least: 3.3
 Tested up to: 3.3.1
 Stable tag: 3.1.0
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Add and display a customisable author biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
 
@@ -15,7 +17,7 @@ This plugin allows you to add a customisable biography to posts, to RSS feeds, t
 Settings and options include:
 
 1. Choose when to display a Biography Box; on the front page, in archives, on individual posts, pages, or any other custom post type and in RSS feeds.
-1. Choose the border style and background color of the Biography Box
+1. Choose the border style and background colour of the Biography Box
 1. Choose the amount of user profile information displayed in the Biography Box
 1. Choose the avatar image size
 1. Choose to display the Biography Box at the top or the bottom of content (universally)
@@ -181,7 +183,7 @@ The current version is 3.1.0 (2012.05.03)
 * Released 2012.05.03
 * Added: Support for shortcode `role` attribute to further filter display of users when the shortcode is used in *wildcard* mode.
 * Added: The *Colophon* tab in the admin settings screen now displays a dump of the plugin's setting and options without the need to extract that information from the database via MySQL or phpMyAdmin.
-* Added: New *Admin* tab in the admin settings screen. This allows a suitably permissioned administator to hide the Biography Box settings from a user's profile according to the user's role and to automatically suppress display of the Biography Box for newly created users according to that user's role.
+* Added: New *Admin* tab in the admin settings screen. This allows a suitably permissioned administrator to hide the Biography Box settings from a user's profile according to the user's role and to automatically suppress display of the Biography Box for newly created users according to that user's role.
 * Added: Introductory help text to each post-box in each tab in the admin settings screen.
 * Fixed: Bug where the `wp_biographia_category_exclusions` setting was not defined in the database upon plugin upgrade, causing an *undefined index* notice message when the PHP error reporting level is set to `E_NOTICE`.
 
