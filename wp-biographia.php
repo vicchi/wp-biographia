@@ -299,7 +299,11 @@ class WP_Biographia extends WP_PluginBase {
 					'wp_biographia_content_link_target' => '_self',
 					'wp_biographia_content_link_nofollow' => '',
 					'wp_biographia_admin_new_users' => '',
-					'wp_biographia_admin_hide_profiles' => ''
+					'wp_biographia_admin_hide_profiles' => '',
+					'wp_biographia_category_exclusions' => '',
+					'wp_biographia_post_exclusions' => '',
+					'wp_biographia_global_post_exclusions' => '',
+					'wp_biographia_page_exclusions' => ''
 				) 
 			);
 			update_option (self::OPTIONS, $settings);
@@ -1533,7 +1537,11 @@ class WP_Biographia extends WP_PluginBase {
 			 *		wp_biographia_admin_new_users = ""
 			 * 		wp_biographia_admin_hide_profiles = ""
 			 *		wp_biographia_category_exclusions = ""
+			 *		wp_biographia_post_exclusions = ""
+			 *		wp_biographia_global_post_exclusions = ""
+			 *		wp_biographia_page_exclusions = ""
 			 */
+
 
 			switch ($current_plugin_version) {
 				case '00':
@@ -1628,6 +1636,10 @@ class WP_Biographia extends WP_PluginBase {
 					$this->admin_upgrade_option ($settings, 'category_exclusions', '');
 					$this->admin_upgrade_option ($settings, 'admin_new_users', '');
 					$this->admin_upgrade_option ($settings, 'admin_hide_profiles', '');
+					$this->admin_upgrade_option ($settings, 'post_exclusions', '');
+					$this->admin_upgrade_option ($settings, 'global_post_exclusions', '');
+					$this->admin_upgrade_option ($settings, 'page_exclusions', '');
+					
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
 
