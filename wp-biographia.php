@@ -1185,7 +1185,14 @@ class WP_Biographia extends WP_PluginBase {
 			$biography[] = '<div style="float:left; text-align:left;>'.$author_pic.'</div>';
 			$biography[] = $content.'</p>';	
 		}
-		
+
+		$biography_box = array ();
+		$biography_box[] = '<!-- WP Biographia ' . self::DISPLAY_VERSION . ' -->' . PHP_EOL;
+		$biography_box[] = apply_filters ('wp_biographia_biography_box', implode ('', $biography), $biography);
+		$biography_box[] = '<!-- WP Biographia ' . self::DISPLAY_VERSION . ' -->' . PHP_EOL;
+
+		return (implode ('', $biography_box));
+
 		return apply_filters ('wp_biographia_biography_box' , implode ('', $biography) , $biography);
 	}
 
