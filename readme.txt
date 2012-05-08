@@ -185,7 +185,9 @@ The current version is 3.1.0 (2012.05.03)
 * Added: The *Colophon* tab in the admin settings screen now displays a dump of the plugin's setting and options without the need to extract that information from the database via MySQL or phpMyAdmin.
 * Added: New *Admin* tab in the admin settings screen. This allows a suitably permissioned administrator to hide the Biography Box settings from a user's profile according to the user's role and to automatically suppress display of the Biography Box for newly created users according to that user's role.
 * Added: Introductory help text to each post-box in each tab in the admin settings screen.
+* Added: The filter priorities for both `the_content` and `the_excerpt` can now be individually defined to cope with priority clashes with other themes and plugins which use these filters.
 * Fixed: Bug where the `wp_biographia_category_exclusions` setting was not defined in the database upon plugin upgrade, causing an *undefined index* notice message when the PHP error reporting level is set to `E_NOTICE`.
+* Fixed: Bug in settings initialisation; post_exclusions, global_post_exclusions and page_exclusions are now pre-defined and initialised correctly on both install and upgrade.
 
 = 3.0.1 =
 * Released 2012.04.20
