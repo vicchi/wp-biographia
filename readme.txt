@@ -161,7 +161,8 @@ WP Biographia is named after the etymology of the modern English word biography.
 == Screenshots ==
 
 1. Settings and Options: Display Tab
-1. Settings and Options: Admin Tab
+1. Settings and Options: Admin Tab - New User and User Profile Settings
+1. Settings and Options: Admin Tab - Content and Excerpt Priority Settings
 1. Settings and Options: Exclusions Tab - Post, Page and Custom Post Type Exclusion Settings
 1. Settings and Options: Exclusions Tab - Category Exclusion Settings
 1. Settings and Options: Exclusions Tab - User Suppression Settings
@@ -290,7 +291,7 @@ The current version is 3.1.0 (2012.05.03)
 == Upgrade Notice ==
 
 = 3.1 =
-This version adds a new *Admin* tab to the settings screen and support for an additional `role` attribute to the plugin's shortcode. It also fixes a minor bug that caused a notice message to be displayed when the PHP error reporting level is set to `E_NOTICE`. This is the 13th version of WP Biographia.
+This version adds a new *Admin* tab to the settings screen, the ability to set the content and excerpt filter priorities and support for the shortcode `role` attribute This is the 13th version of WP Biographia.
 
 = 3.0.1 =
 This version fixes several bugs that affected the correct author being associated with the Biography Box on front/archive pages and when called from within a custom Loop. This is 12th version of WP Biographia.
