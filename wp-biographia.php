@@ -86,6 +86,7 @@ class WP_Biographia extends WP_PluginBase {
 	const DISPLAY_VERSION = 'v3.1.0';
 	const PLUGIN_URL = '';
 	const PLUGIN_PATH = '';
+	const PRIORITY = 10;
 	
 	/**
 	 * Class constructor
@@ -120,10 +121,19 @@ class WP_Biographia extends WP_PluginBase {
 	function plugins_loaded () {
 		register_activation_hook (__FILE__, array ($this, 'add_settings'));
 
+		$settings = $this->get_option ();
+		if (is_array ($settings) && isset ($settings['wp_biographia_version'])) {
+			$content_priority = $settings['wp_biographia_admin_content_priority'];
+			$excerpt_priority = $settings['wp_biographia_admin_excerpt_priority'];
+		}
+		else {
+			$content_priority = $excerpt_priority = self::PRIORITY;
+		}
+		
 		$this->hook ('wp_enqueue_scripts', 'style');
-		$this->hook ('init');	
-		$this->hook ('the_excerpt', 'insert');
-		$this->hook ('the_content', 'insert');
+		$this->hook ('init');
+		$this->hook ('the_excerpt', 'insert', intval($excerpt_priority));
+		$this->hook ('the_content', 'insert', intval ($content_priority));
 		$this->hook ('user_contactmethods');
 		
 		add_shortcode ('wp_biographia', array ($this, 'shortcode'));
@@ -303,7 +313,9 @@ class WP_Biographia extends WP_PluginBase {
 					'wp_biographia_category_exclusions' => '',
 					'wp_biographia_post_exclusions' => '',
 					'wp_biographia_global_post_exclusions' => '',
-					'wp_biographia_page_exclusions' => ''
+					'wp_biographia_page_exclusions' => '',
+					'wp_biographia_admin_content_priority' => self::PRIORITY,
+					'wp_biographia_admin_excerpt_priority' => self::PRIORITY
 				) 
 			);
 			update_option (self::OPTIONS, $settings);
@@ -1540,6 +1552,8 @@ class WP_Biographia extends WP_PluginBase {
 			 *		wp_biographia_post_exclusions = ""
 			 *		wp_biographia_global_post_exclusions = ""
 			 *		wp_biographia_page_exclusions = ""
+			 *		wp_biographia_admin_content_priority = "10"
+			 *		wp_biographia_admin_excerpt_priority = "10"
 			 */
 
 
@@ -1639,6 +1653,10 @@ class WP_Biographia extends WP_PluginBase {
 					$this->admin_upgrade_option ($settings, 'post_exclusions', '');
 					$this->admin_upgrade_option ($settings, 'global_post_exclusions', '');
 					$this->admin_upgrade_option ($settings, 'page_exclusions', '');
+					$this->admin_upgrade_option ($settings, 'admin_content_priority',
+					 	self::PRIORITY);
+					$this->admin_upgrade_option ($settings, 'admin_excerpt_priority',
+						self::PRIORITY);
 					
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
@@ -1665,6 +1683,7 @@ class WP_Biographia extends WP_PluginBase {
 		$display_settings = array ();
 		$role_settings = array ();
 		$profile_settings = array ();
+		$priority_settings = array ();
 		$exclusion_settings = array ();
 		$suppression_settings = array ();
 		$category_settings = array ();
@@ -1829,6 +1848,19 @@ class WP_Biographia extends WP_PluginBase {
 		$profile_settings[] = '<br />';
 		$profile_settings[] = '<div style="clear: both";><small>' . __('Select the roles for users who should have the Biography Box hidden or visible in their user profile.', 'wp-biographia') . '</small></div></p>';
 
+		/********************************************************************************
+	 	 * Admin tab content - 3) Set Post Content And Excerpt Priority
+	 	 */
+
+		$priority_settings[] = '<p><em>' . __('WP Biographia uses the WordPress <code>the_content</code> and <code>the_excerpt</code> filters to add the Biography Box to the start or the end of posts and excerpts. If another theme or plugin also adds content to the posts or excerpts, the Biography Box may not be displayed in the order you want. To prevent this happening, you can adjust the priority that WP Biographia uses when queuing the filters. A lower priority will cause the plugin\'s filters to fire earlier. A higher priority will cause the plugin\'s filters to fire later.', 'wp-biographia') . '</em></p>';
+
+		$priority_settings[] = '<p><strong>' . __("Content Filter Priority", 'wp-biographia') . '</strong><br />
+				<input type="text" name="wp_biographia_content_priority" id="wp_biographia_content_priority" value="' . $settings['wp_biographia_admin_content_priority'] . '" /><br />
+				<small>' . __('Enter the priority to be used to display the Biography Box for the full content for posts, pages and custom post types, e.g. 10.', 'wp-biographia') . '</small></p>';
+
+		$priority_settings[] = '<p><strong>' . __("Excerpt Filter Priority", 'wp-biographia') . '</strong><br />
+			<input type="text" name="wp_biographia_excerpt_priority" id="wp_biographia_excerpt_priority" value="' . $settings['wp_biographia_admin_excerpt_priority'] . '" /><br />
+			<small>' . __('Enter the priority to be used to display the Biography Box for the excerpt for posts, pages and custom post types, e.g. 10', 'wp-biographia') . '</small></p>';
 
 		/********************************************************************************
 	 	 * Exclusions settings tab content - 1) Exclusion Settings
@@ -2287,6 +2319,9 @@ class WP_Biographia extends WP_PluginBase {
 				$wrapped_content[] = $this->admin_postbox ('wp-biographia-profile-settings',
 					__('User Profile Settings', 'wp-biographia'),
 					implode ('', $profile_settings));
+				$wrapped_content[] = $this->admin_postbox ('wp-biographia-priority-settings',
+					__('Content And Excerpt Priority Settings', 'wp-biographia'),
+					implode ('', $priority_settings));
 				break;
 			
 			case 'exclude':
@@ -2412,6 +2447,15 @@ class WP_Biographia extends WP_PluginBase {
 						}
 						else {
 							$settings['wp_biographia_admin_hide_profiles'] = '';
+						}
+
+						$value = $this->admin_option ('wp_biographia_content_priority');
+						if (is_numeric ($value)) {
+							$settings['wp_biographia_admin_content_priority'] = $value;
+						}
+						$value = $this->admin_option ('wp_biographia_excerpt_priority');
+						if (is_numeric ($value)) {
+							$settings['wp_biographia_admin_excerpt_priority'] = $value;
 						}
 						break;
 					
