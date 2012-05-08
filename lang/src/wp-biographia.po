@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Biographia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-04-04 17:46-0800\n"
-"PO-Revision-Date: 2012-04-04 17:46-0800\n"
+"POT-Creation-Date: 2012-05-08 17:18+0100\n"
+"PO-Revision-Date: 2012-05-08 17:18+0100\n"
 "Last-Translator: Gary Gale <gary@vicchi.org>\n"
 "Language-Team: Gary Gale <gary@vicchi.org>\n"
 "MIME-Version: 1.0\n"
@@ -18,748 +18,872 @@ msgstr ""
 "X-Poedit-SearchPath-0: ..\n"
 "X-Poedit-SearchPath-1: ../..\n"
 
-#: ../../wp-biographia.php:219
+#: ../../wp-biographia.php:287
 msgid "About"
 msgstr ""
 
-#: ../../wp-biographia.php:286
-#: ../../wp-biographia.php:409
-#: ../../wp-biographia.php:410
+#: ../../wp-biographia.php:362
+#: ../../wp-biographia.php:485
+#: ../../wp-biographia.php:486
 msgid "Twitter"
 msgstr ""
 
-#: ../../wp-biographia.php:290
-#: ../../wp-biographia.php:414
-#: ../../wp-biographia.php:415
+#: ../../wp-biographia.php:366
+#: ../../wp-biographia.php:490
+#: ../../wp-biographia.php:491
 msgid "Facebook"
 msgstr ""
 
-#: ../../wp-biographia.php:294
-#: ../../wp-biographia.php:419
-#: ../../wp-biographia.php:420
+#: ../../wp-biographia.php:370
+#: ../../wp-biographia.php:495
+#: ../../wp-biographia.php:496
 msgid "LinkedIn"
 msgstr ""
 
-#: ../../wp-biographia.php:298
-#: ../../wp-biographia.php:424
-#: ../../wp-biographia.php:425
+#: ../../wp-biographia.php:374
+#: ../../wp-biographia.php:500
+#: ../../wp-biographia.php:501
 msgid "Google+"
 msgstr ""
 
-#: ../../wp-biographia.php:302
+#: ../../wp-biographia.php:378
 msgid "Delicious"
 msgstr ""
 
-#: ../../wp-biographia.php:306
-#: ../../wp-biographia.php:434
-#: ../../wp-biographia.php:435
+#: ../../wp-biographia.php:382
+#: ../../wp-biographia.php:510
+#: ../../wp-biographia.php:511
 msgid "Flickr"
 msgstr ""
 
-#: ../../wp-biographia.php:310
-#: ../../wp-biographia.php:439
-#: ../../wp-biographia.php:440
+#: ../../wp-biographia.php:386
+#: ../../wp-biographia.php:515
+#: ../../wp-biographia.php:516
 msgid "Picasa"
 msgstr ""
 
-#: ../../wp-biographia.php:314
-#: ../../wp-biographia.php:444
-#: ../../wp-biographia.php:445
+#: ../../wp-biographia.php:390
+#: ../../wp-biographia.php:520
+#: ../../wp-biographia.php:521
 msgid "Vimeo"
 msgstr ""
 
-#: ../../wp-biographia.php:318
-#: ../../wp-biographia.php:449
-#: ../../wp-biographia.php:450
+#: ../../wp-biographia.php:394
+#: ../../wp-biographia.php:525
+#: ../../wp-biographia.php:526
 msgid "YouTube"
 msgstr ""
 
-#: ../../wp-biographia.php:322
-#: ../../wp-biographia.php:454
-#: ../../wp-biographia.php:455
+#: ../../wp-biographia.php:398
+#: ../../wp-biographia.php:530
+#: ../../wp-biographia.php:531
 msgid "Reddit"
 msgstr ""
 
-#: ../../wp-biographia.php:326
+#: ../../wp-biographia.php:402
 msgid "Yahoo IM"
 msgstr ""
 
-#: ../../wp-biographia.php:330
+#: ../../wp-biographia.php:406
 msgid "AIM"
 msgstr ""
 
-#: ../../wp-biographia.php:334
+#: ../../wp-biographia.php:410
 msgid "Windows Live Messenger"
 msgstr ""
 
-#: ../../wp-biographia.php:338
+#: ../../wp-biographia.php:414
 msgid "Jabber / Google Talk"
 msgstr ""
 
-#: ../../wp-biographia.php:404
+#: ../../wp-biographia.php:480
 msgid "The Web"
 msgstr ""
 
-#: ../../wp-biographia.php:405
+#: ../../wp-biographia.php:481
 msgid "Web"
 msgstr ""
 
-#: ../../wp-biographia.php:429
-#: ../../wp-biographia.php:430
+#: ../../wp-biographia.php:505
+#: ../../wp-biographia.php:506
 msgid "Delicous"
 msgstr ""
 
-#: ../../wp-biographia.php:959
+#: ../../wp-biographia.php:1061
 #, php-format
 msgid "%1$s On %2$s"
 msgstr ""
 
-#: ../../wp-biographia.php:960
+#: ../../wp-biographia.php:1062
 #, php-format
 msgid "On %s"
 msgstr ""
 
-#: ../../wp-biographia.php:971
+#: ../../wp-biographia.php:1073
 #, php-format
 msgid "Send %s Mail"
 msgstr ""
 
-#: ../../wp-biographia.php:975
+#: ../../wp-biographia.php:1077
 msgid "Send Mail"
 msgstr ""
 
-#: ../../wp-biographia.php:978
+#: ../../wp-biographia.php:1080
 msgid "Mail"
 msgstr ""
 
-#: ../../wp-biographia.php:1016
+#: ../../wp-biographia.php:1118
 #, php-format
 msgid "More Posts By %s"
 msgstr ""
 
-#: ../../wp-biographia.php:1020
-#: ../../wp-biographia.php:1025
-#: ../../wp-biographia.php:1031
+#: ../../wp-biographia.php:1122
+#: ../../wp-biographia.php:1127
+#: ../../wp-biographia.php:1133
 msgid "More Posts"
 msgstr ""
 
-#: ../../wp-biographia.php:1122
-#: ../../wp-biographia.php:1123
+#: ../../wp-biographia.php:1231
+#: ../../wp-biographia.php:1232
 msgid "WP Biographia"
 msgstr ""
 
-#: ../../wp-biographia.php:1181
+#: ../../wp-biographia.php:1303
 msgid "Suppress From Posts"
 msgstr ""
 
-#: ../../wp-biographia.php:1184
+#: ../../wp-biographia.php:1306
 msgid "Don't show the Biography Box on your posts"
 msgstr ""
 
-#: ../../wp-biographia.php:1189
+#: ../../wp-biographia.php:1311
 msgid "Suppress From Pages"
 msgstr ""
 
-#: ../../wp-biographia.php:1192
+#: ../../wp-biographia.php:1314
 msgid "Don't show the Biography Box on your pages"
 msgstr ""
 
-#: ../../wp-biographia.php:1219
+#: ../../wp-biographia.php:1385
 msgid "Settings"
 msgstr ""
 
-#: ../../wp-biographia.php:1536
-msgid "Display On Front Page"
+#: ../../wp-biographia.php:1726
+msgid "New User Settings allow you to configure globally whether a newly created user should have the Biography Box displayed under their posts or not. You can then control the display of the Biography Box on a per-user basis in the Exclusions tab."
 msgstr ""
 
-#: ../../wp-biographia.php:1538
-msgid "Displays the Biography Box for each post on the front page."
+#: ../../wp-biographia.php:1743
+msgid "Automatically Exclude New Users By Role"
 msgstr ""
 
-#: ../../wp-biographia.php:1540
-msgid "Display On Individual Posts"
+#: ../../wp-biographia.php:1745
+msgid "Enabled Roles"
 msgstr ""
 
-#: ../../wp-biographia.php:1542
-msgid "Displays the Biography Box for individual posts."
+#: ../../wp-biographia.php:1753
+#: ../../wp-biographia.php:1799
+#: ../../wp-biographia.php:1904
+#: ../../wp-biographia.php:1930
+#: ../../wp-biographia.php:1978
+msgid "Add"
 msgstr ""
 
-#: ../../wp-biographia.php:1544
-msgid "Display In Post Archives"
+#: ../../wp-biographia.php:1756
+msgid "Excluded Roles"
 msgstr ""
 
-#: ../../wp-biographia.php:1546
-msgid "Displays the Biography Box for each post on archive pages."
+#: ../../wp-biographia.php:1764
+#: ../../wp-biographia.php:1810
+#: ../../wp-biographia.php:1915
+#: ../../wp-biographia.php:1941
+#: ../../wp-biographia.php:1989
+msgid "Remove"
 msgstr ""
 
-#: ../../wp-biographia.php:1548
-msgid "Display On Individual Pages"
+#: ../../wp-biographia.php:1767
+msgid "Select the roles for which new users should be automatically excluded from displaying the Biography Box. This setting only affects the creation of new users; individual users may be enabled to display the Biography Box on a per-user basis in the Exclusions Tab."
 msgstr ""
 
-#: ../../wp-biographia.php:1550
-msgid "Displays the Biography Box for individual pages."
+#: ../../wp-biographia.php:1773
+msgid "If you want to stop users having the ability to stop the Biography Box being displayed on their posts and pages, you can control this according to the user's role below. An Administrator can still control the display of the Biography Box on a per-user basis in the Exclusions tab."
 msgstr ""
 
-#: ../../wp-biographia.php:1553
-#, php-format
-msgid "Display On Individual %s"
+#: ../../wp-biographia.php:1789
+msgid "Hide Biography Box Settings In User Profiles by Role"
 msgstr ""
 
-#: ../../wp-biographia.php:1555
-#, php-format
-msgid "Displays the Biography Box on individual instances of custom post type %s."
+#: ../../wp-biographia.php:1791
+msgid "Visible In Profiles"
 msgstr ""
 
-#: ../../wp-biographia.php:1557
-#, php-format
-msgid "Display In %s Archives"
+#: ../../wp-biographia.php:1802
+msgid "Hidden In Profiles"
 msgstr ""
 
-#: ../../wp-biographia.php:1559
-#, php-format
-msgid "Displays the Biography Box on archive pages for custom post type %s."
+#: ../../wp-biographia.php:1813
+msgid "Select the roles for users who should have the Biography Box hidden or visible in their user profile."
 msgstr ""
 
-#: ../../wp-biographia.php:1562
-msgid "Display In RSS Feeds"
+#: ../../wp-biographia.php:1819
+msgid "WP Biographia uses the WordPress <code>the_content</code> and <code>the_excerpt</code> filters to add the Biography Box to the start or the end of posts and excerpts. If another theme or plugin also adds content to the posts or excerpts, the Biography Box may not be displayed in the order you want. To prevent this happening, you can adjust the priority that WP Biographia uses when queuing the filters. A lower priority will cause the plugin's filters to fire earlier. A higher priority will cause the plugin's filters to fire later."
 msgstr ""
 
-#: ../../wp-biographia.php:1564
-msgid "Displays the Biography Box in feeds for each entry."
+#: ../../wp-biographia.php:1821
+msgid "Content Filter Priority"
 msgstr ""
 
-#: ../../wp-biographia.php:1571
-msgid "Display Location"
+#: ../../wp-biographia.php:1823
+msgid "Enter the priority to be used to display the Biography Box for the full content for posts, pages and custom post types, e.g. 10."
 msgstr ""
 
-#: ../../wp-biographia.php:1574
-msgid "Display the Biography Box before the post or page content"
+#: ../../wp-biographia.php:1825
+msgid "Excerpt Filter Priority"
 msgstr ""
 
-#: ../../wp-biographia.php:1577
-msgid "Display the Biography Box after the post or page content"
+#: ../../wp-biographia.php:1827
+msgid "Enter the priority to be used to display the Biography Box for the excerpt for posts, pages and custom post types, e.g. 10"
 msgstr ""
 
-#: ../../wp-biographia.php:1583
+#: ../../wp-biographia.php:1839
+msgid "If you want to stop the Biography Box being displayed on a single post, page or custom post type, you can do this here."
+msgstr ""
+
+#: ../../wp-biographia.php:1841
 msgid "Exclude From Single Posts (via Post ID)"
 msgstr ""
 
-#: ../../wp-biographia.php:1585
+#: ../../wp-biographia.php:1843
 msgid "Suppresses the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to suppress, comma separated with no spaces, e.g. 54,33,55"
 msgstr ""
 
-#: ../../wp-biographia.php:1587
+#: ../../wp-biographia.php:1845
 msgid "Globally Exclude From Posts (via Post ID)"
 msgstr ""
 
-#: ../../wp-biographia.php:1589
+#: ../../wp-biographia.php:1847
 msgid "Suppresses the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
 msgstr ""
 
-#: ../../wp-biographia.php:1592
+#: ../../wp-biographia.php:1850
 #, php-format
 msgid "Exclude From Single %1$s (via %2$s ID)"
 msgstr ""
 
-#: ../../wp-biographia.php:1594
+#: ../../wp-biographia.php:1852
 #, php-format
 msgid "Suppresses the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
 msgstr ""
 
-#: ../../wp-biographia.php:1596
+#: ../../wp-biographia.php:1854
 #, php-format
 msgid "Globally Exclude From %1$s (via %2$s ID)."
 msgstr ""
 
-#: ../../wp-biographia.php:1598
+#: ../../wp-biographia.php:1856
 #, php-format
 msgid "Suppresses the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55."
 msgstr ""
 
-#: ../../wp-biographia.php:1601
+#: ../../wp-biographia.php:1859
 msgid "Exclude Pages (via Page ID)"
 msgstr ""
 
-#: ../../wp-biographia.php:1603
+#: ../../wp-biographia.php:1861
 msgid "Suppresses the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to suppress, comma separated with no spaces, e.g. 54,33,55."
 msgstr ""
 
-#: ../../wp-biographia.php:1634
+#: ../../wp-biographia.php:1867
+msgid "If you want to stop the Biography Box being displayed on a single post or custom post type on a per-user basis, you can do this here."
+msgstr ""
+
+#: ../../wp-biographia.php:1894
 msgid "Per User Suppression Of The Biography Box On Posts"
 msgstr ""
 
-#: ../../wp-biographia.php:1636
-#: ../../wp-biographia.php:1662
+#: ../../wp-biographia.php:1896
+#: ../../wp-biographia.php:1922
 msgid "Enabled Users"
 msgstr ""
 
-#: ../../wp-biographia.php:1644
-#: ../../wp-biographia.php:1670
-#: ../../wp-biographia.php:1716
-msgid "Add"
-msgstr ""
-
-#: ../../wp-biographia.php:1647
-#: ../../wp-biographia.php:1673
+#: ../../wp-biographia.php:1907
+#: ../../wp-biographia.php:1933
 msgid "Suppressed Users"
 msgstr ""
 
-#: ../../wp-biographia.php:1655
-#: ../../wp-biographia.php:1681
-#: ../../wp-biographia.php:1727
-msgid "Remove"
-msgstr ""
-
-#: ../../wp-biographia.php:1658
+#: ../../wp-biographia.php:1918
 msgid "Select the users who should not display the Biography Box on their authored posts. Selecting a user for suppression of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile."
 msgstr ""
 
-#: ../../wp-biographia.php:1660
+#: ../../wp-biographia.php:1920
 msgid "Per User Suppression Of The Biography Box On Pages"
 msgstr ""
 
-#: ../../wp-biographia.php:1684
+#: ../../wp-biographia.php:1944
 msgid "Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile."
 msgstr ""
 
-#: ../../wp-biographia.php:1706
+#: ../../wp-biographia.php:1950
+msgid "If you want to stop the Biography Box being displayed on a single post or custom post type by Category, you can do this here."
+msgstr ""
+
+#: ../../wp-biographia.php:1968
 msgid "Exclude By Category On Posts"
 msgstr ""
 
-#: ../../wp-biographia.php:1708
+#: ../../wp-biographia.php:1970
 msgid "Enabled Categories"
 msgstr ""
 
-#: ../../wp-biographia.php:1719
+#: ../../wp-biographia.php:1981
 msgid "Excluded Categories"
 msgstr ""
 
-#: ../../wp-biographia.php:1730
+#: ../../wp-biographia.php:1992
 msgid "Select the post categories that should not display the Biography Box. Selecting a category for exclusion of the Biography Box affects all posts of that category, on single post display, on archive pages and on the front page."
 msgstr ""
 
-#: ../../wp-biographia.php:1736
+#: ../../wp-biographia.php:2004
+msgid "This tab contains broad level settings to control how the Biography Box is styled; its background colour and border. The Biography Box is fully style-able but this needs knowledge of how to write CSS."
+msgstr ""
+
+#: ../../wp-biographia.php:2006
 msgid "Box Background Color"
 msgstr ""
 
-#: ../../wp-biographia.php:1738
+#: ../../wp-biographia.php:2008
 msgid "Select a Color"
 msgstr ""
 
-#: ../../wp-biographia.php:1740
+#: ../../wp-biographia.php:2010
 msgid "By default, the background color of the Biography Box is a yellowish tone."
 msgstr ""
 
-#: ../../wp-biographia.php:1741
+#: ../../wp-biographia.php:2011
 msgid "Box Border"
 msgstr ""
 
-#: ../../wp-biographia.php:1743
+#: ../../wp-biographia.php:2013
 msgid "Thick Top Border"
 msgstr ""
 
-#: ../../wp-biographia.php:1744
+#: ../../wp-biographia.php:2014
 msgid "Thin Surrounding Border"
 msgstr ""
 
-#: ../../wp-biographia.php:1745
+#: ../../wp-biographia.php:2015
 msgid "No Border"
 msgstr ""
 
-#: ../../wp-biographia.php:1746
+#: ../../wp-biographia.php:2016
 msgid "By default, a thick black line is displayed above the Biography Box."
 msgstr ""
 
-#: ../../wp-biographia.php:1752
+#: ../../wp-biographia.php:2028
+msgid "This tab contains settings that control what information is and is not displayed within the Biography Box."
+msgstr ""
+
+#: ../../wp-biographia.php:2030
 msgid "Biography Prefix"
 msgstr ""
 
-#: ../../wp-biographia.php:1756
+#: ../../wp-biographia.php:2034
 msgid "Prefix text to be prepended to the author's name"
 msgstr ""
 
-#: ../../wp-biographia.php:1758
+#: ../../wp-biographia.php:2036
 msgid "Author's Name"
 msgstr ""
 
-#: ../../wp-biographia.php:1761
+#: ../../wp-biographia.php:2039
 msgid "First/Last Name"
 msgstr ""
 
-#: ../../wp-biographia.php:1764
+#: ../../wp-biographia.php:2042
 msgid "Account Name"
 msgstr ""
 
-#: ../../wp-biographia.php:1767
+#: ../../wp-biographia.php:2045
 msgid "Nickname"
 msgstr ""
 
-#: ../../wp-biographia.php:1770
+#: ../../wp-biographia.php:2048
 msgid "Display Name"
 msgstr ""
 
-#: ../../wp-biographia.php:1773
+#: ../../wp-biographia.php:2051
 msgid "Don't Show The Name"
 msgstr ""
 
-#: ../../wp-biographia.php:1774
+#: ../../wp-biographia.php:2052
 msgid "How you want to see the author's name displayed (if at all)"
 msgstr ""
 
-#: ../../wp-biographia.php:1776
+#: ../../wp-biographia.php:2054
 msgid "Author's Name Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1780
+#: ../../wp-biographia.php:2058
 msgid "Make author's name link to <em>More Posts By This Author</em>"
 msgstr ""
 
-#: ../../wp-biographia.php:1784
+#: ../../wp-biographia.php:2062
 #, php-format
 msgid "It looks like Avatars are not currently enabled; this means that the author's image won't be able to be displayed. If you want this to happen then go to <a href=\"%s\">Settings &rsaquo; Discussions</a> and set Avatar Display to Show Avatars."
 msgstr ""
 
-#: ../../wp-biographia.php:1787
+#: ../../wp-biographia.php:2065
 msgid "Author's Image"
 msgstr ""
 
-#: ../../wp-biographia.php:1792
+#: ../../wp-biographia.php:2070
 msgid "Display the author's image?"
 msgstr ""
 
-#: ../../wp-biographia.php:1804
+#: ../../wp-biographia.php:2082
 msgid "Image Size"
 msgstr ""
 
-#: ../../wp-biographia.php:1808
+#: ../../wp-biographia.php:2086
 msgid "Enter image size, e.g. 32 for a 32x32 image, 70 for a 70x70 image, etc. Defaults to a 100x100 size image."
 msgstr ""
 
-#: ../../wp-biographia.php:1809
+#: ../../wp-biographia.php:2087
 msgid "Show Author's Biography"
 msgstr ""
 
-#: ../../wp-biographia.php:1813
+#: ../../wp-biographia.php:2091
 msgid "Display the author's biography?"
 msgstr ""
 
-#: ../../wp-biographia.php:1815
+#: ../../wp-biographia.php:2093
 msgid "Show Contact Links As Icons"
 msgstr ""
 
-#: ../../wp-biographia.php:1819
+#: ../../wp-biographia.php:2097
 msgid "Show the author's contact links as icons?"
 msgstr ""
 
-#: ../../wp-biographia.php:1825
+#: ../../wp-biographia.php:2103
 msgid "Use Alternate Icon Set"
 msgstr ""
 
-#: ../../wp-biographia.php:1829
+#: ../../wp-biographia.php:2107
 msgid "Use an alternative icon set for contact links?"
 msgstr ""
 
-#: ../../wp-biographia.php:1830
+#: ../../wp-biographia.php:2108
 msgid "Alternate Icon Set URL"
 msgstr ""
 
-#: ../../wp-biographia.php:1836
+#: ../../wp-biographia.php:2114
 msgid "Enter the URL where the alternate contact links icon set is located"
 msgstr ""
 
-#: ../../wp-biographia.php:1838
+#: ../../wp-biographia.php:2116
 msgid "Opening Contact Links"
 msgstr ""
 
-#: ../../wp-biographia.php:1840
+#: ../../wp-biographia.php:2118
 msgid "Open contact links in a new window or tab"
 msgstr ""
 
-#: ../../wp-biographia.php:1841
+#: ../../wp-biographia.php:2119
 msgid "Open contact links in the same frame"
 msgstr ""
 
-#: ../../wp-biographia.php:1842
+#: ../../wp-biographia.php:2120
 msgid "Open contact links in the parent frame"
 msgstr ""
 
-#: ../../wp-biographia.php:1843
+#: ../../wp-biographia.php:2121
 msgid "Open contact links in the full body of the window"
 msgstr ""
 
-#: ../../wp-biographia.php:1844
+#: ../../wp-biographia.php:2122
 msgid "Select where to open contact links."
 msgstr ""
 
-#: ../../wp-biographia.php:1846
+#: ../../wp-biographia.php:2124
 msgid "Don't Follow Contact Links"
 msgstr ""
 
-#: ../../wp-biographia.php:1850
+#: ../../wp-biographia.php:2128
 msgid "Add <em>rel=\"nofollow\"</em> to contact links?"
 msgstr ""
 
-#: ../../wp-biographia.php:1852
+#: ../../wp-biographia.php:2130
 msgid "Show Author's Email Address"
 msgstr ""
 
-#: ../../wp-biographia.php:1856
+#: ../../wp-biographia.php:2134
 msgid "Display the author's email address?"
 msgstr ""
 
-#: ../../wp-biographia.php:1858
+#: ../../wp-biographia.php:2136
 msgid "Show Author's Website Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1862
+#: ../../wp-biographia.php:2140
 msgid "Display the author's website details?"
 msgstr ""
 
-#: ../../wp-biographia.php:1864
+#: ../../wp-biographia.php:2142
 msgid "Show Author's Twitter Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1868
+#: ../../wp-biographia.php:2146
 msgid "Display the author's Twitter details?"
 msgstr ""
 
-#: ../../wp-biographia.php:1870
+#: ../../wp-biographia.php:2148
 msgid "Show Author's Facebook Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1874
+#: ../../wp-biographia.php:2152
 msgid "Display the author's Facebook details?"
 msgstr ""
 
-#: ../../wp-biographia.php:1876
+#: ../../wp-biographia.php:2154
 msgid "Show Author's LinkedIn Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1880
+#: ../../wp-biographia.php:2158
 msgid "Display the author's LinkedIn details?"
 msgstr ""
 
-#: ../../wp-biographia.php:1882
+#: ../../wp-biographia.php:2160
 msgid "Show Author's Google+ Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1886
+#: ../../wp-biographia.php:2164
 msgid "Display the author's Google+ details?"
 msgstr ""
 
-#: ../../wp-biographia.php:1888
+#: ../../wp-biographia.php:2166
 msgid "Show Author's Delicious Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1892
+#: ../../wp-biographia.php:2170
 msgid "Display the author's Delicious details?"
 msgstr ""
 
-#: ../../wp-biographia.php:1894
+#: ../../wp-biographia.php:2172
 msgid "Show Author's Flickr Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1898
+#: ../../wp-biographia.php:2176
 msgid "Display the author's Flickr details?"
 msgstr ""
 
-#: ../../wp-biographia.php:1900
+#: ../../wp-biographia.php:2178
 msgid "Show Author's Picasa Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1904
+#: ../../wp-biographia.php:2182
 msgid "Display the author's Picasa details?"
 msgstr ""
 
-#: ../../wp-biographia.php:1906
+#: ../../wp-biographia.php:2184
 msgid "Show Author's Vimeo Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1910
+#: ../../wp-biographia.php:2188
 msgid "Display the author's Vimeo details?"
 msgstr ""
 
-#: ../../wp-biographia.php:1912
+#: ../../wp-biographia.php:2190
 msgid "Show Author's YouTube Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1916
+#: ../../wp-biographia.php:2194
 msgid "Display the author's YouTube details?"
 msgstr ""
 
-#: ../../wp-biographia.php:1918
+#: ../../wp-biographia.php:2196
 msgid "Show Author's Reddit Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1922
+#: ../../wp-biographia.php:2200
 msgid "Display the author's Reddit details?"
 msgstr ""
 
-#: ../../wp-biographia.php:1925
+#: ../../wp-biographia.php:2202
 msgid "Show More Posts Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1928
+#: ../../wp-biographia.php:2205
 msgid "Basic More Posts Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1931
+#: ../../wp-biographia.php:2208
 msgid "Extended More Posts Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1934
+#: ../../wp-biographia.php:2211
 msgid "Don't Show The More Posts Link"
 msgstr ""
 
-#: ../../wp-biographia.php:1935
+#: ../../wp-biographia.php:2212
 msgid "How you want to display and format the <em>More Posts By This Author</em> link"
 msgstr ""
 
-#: ../../wp-biographia.php:1942
-#: ../../wp-biographia.php:1946
+#: ../../wp-biographia.php:2224
+msgid "<strong>Here Be Dragons</strong>. Please <strong>read</strong> the warning below before doing anything with this tab. The options in this tab with reset WP Biographia to a just installed state, clearing any configuration settings you may have made."
+msgstr ""
+
+#: ../../wp-biographia.php:2226
+#: ../../wp-biographia.php:2230
 msgid "Reset WP Biographia To Defaults"
 msgstr ""
 
-#: ../../wp-biographia.php:1944
+#: ../../wp-biographia.php:2228
 msgid "Reset all WP Biographia settings and options to their default values."
 msgstr ""
 
-#: ../../wp-biographia.php:1946
+#: ../../wp-biographia.php:2230
 #, php-format
 msgid "<strong>WARNING!</strong> Checking <strong><em>%s</em></strong> and clicking on <strong><em>%s</em></strong> will erase <strong><em>all</em></strong> the current WP Biographia settings and options and will restore WP Biographia to a <em>just installed</em> state. This is the equivalent to deactivating, uninstalling and reinstalling the plugin. Only proceed if this is what you intend to do. This action is final and irreversable."
 msgstr ""
 
-#: ../../wp-biographia.php:1946
+#: ../../wp-biographia.php:2230
 msgid "Save Changes"
 msgstr ""
 
-#: ../../wp-biographia.php:1954
+#: ../../wp-biographia.php:2243
+msgid "\"When it comes to software, I much prefer free software, because I have very seldom seen a program that has worked well enough for my needs and having sources available can be a life-saver\"</em>&nbsp;&hellip;&nbsp;Linus Torvalds"
+msgstr ""
+
+#: ../../wp-biographia.php:2244
 msgid "For the inner nerd in you, the latest version of WP Biographia was written using <a href=\"http://macromates.com/\">TextMate</a> on a MacBook Pro running OS X 10.7.2 Lion and tested on the same machine running <a href=\"http://mamp.info/en/index.html\">MAMP</a> (Mac/Apache/MySQL/PHP) before being let loose on the author's <a href=\"http://www.vicchi.org/\">blog</a>."
 msgstr ""
 
-#: ../../wp-biographia.php:1956
+#: ../../wp-biographia.php:2246
 msgid "The official home for WP Biographia is on <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">Gary's Codeage</a>; it's also available from the official <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">WordPress plugins repository</a>. If you're interested in what lies under the hood, the code is also on <a href=\"https://github.com/vicchi/wp-biographia\">GitHub</a> to download, fork and otherwise hack around."
 msgstr ""
 
-#: ../../wp-biographia.php:1958
+#: ../../wp-biographia.php:2248
 msgid "WP Biographia is named after the etymology of the modern English word <em>biography</em>. The word first appeared in the 1680s, probably from the latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, meaning \"life\" and <em>graphia</em>, meaning \"record\" or \"account\" which derived from <em>graphein</em>, \"to write\"."
 msgstr ""
 
-#: ../../wp-biographia.php:1974
+#: ../../wp-biographia.php:2256
+msgid "For those times when you need help and support with this plugin, one of the first things you'll probably be asked for is the plugin's current configuration. If this happens, just <em>copy-and-paste</em> the dump of the <em>WP Biographia Settings and Options</em> below into any support forum post or email."
+msgstr ""
+
+#: ../../wp-biographia.php:2286
+msgid "Almost all of WP Biographia's Settings and Options are maintained in the database in a single entry. But there's also some settings added to each user's account; you'll find these below."
+msgstr ""
+
+#: ../../wp-biographia.php:2304
+msgid "This tab contains broad level settings to control how the Biography Box is displayed and where. You can configure more specific display settings in the Exclusions tab and what is actually displayed in the Biography Box in the Content tab."
+msgstr ""
+
+#: ../../wp-biographia.php:2306
+msgid "Display On Front Page"
+msgstr ""
+
+#: ../../wp-biographia.php:2308
+msgid "Displays the Biography Box for each post on the front page."
+msgstr ""
+
+#: ../../wp-biographia.php:2310
+msgid "Display On Individual Posts"
+msgstr ""
+
+#: ../../wp-biographia.php:2312
+msgid "Displays the Biography Box for individual posts."
+msgstr ""
+
+#: ../../wp-biographia.php:2314
+msgid "Display In Post Archives"
+msgstr ""
+
+#: ../../wp-biographia.php:2316
+msgid "Displays the Biography Box for each post on archive pages."
+msgstr ""
+
+#: ../../wp-biographia.php:2318
+msgid "Display On Individual Pages"
+msgstr ""
+
+#: ../../wp-biographia.php:2320
+msgid "Displays the Biography Box for individual pages."
+msgstr ""
+
+#: ../../wp-biographia.php:2323
+#, php-format
+msgid "Display On Individual %s"
+msgstr ""
+
+#: ../../wp-biographia.php:2325
+#, php-format
+msgid "Displays the Biography Box on individual instances of custom post type %s."
+msgstr ""
+
+#: ../../wp-biographia.php:2327
+#, php-format
+msgid "Display In %s Archives"
+msgstr ""
+
+#: ../../wp-biographia.php:2329
+#, php-format
+msgid "Displays the Biography Box on archive pages for custom post type %s."
+msgstr ""
+
+#: ../../wp-biographia.php:2332
+msgid "Display In RSS Feeds"
+msgstr ""
+
+#: ../../wp-biographia.php:2334
+msgid "Displays the Biography Box in feeds for each entry."
+msgstr ""
+
+#: ../../wp-biographia.php:2341
+msgid "Display Location"
+msgstr ""
+
+#: ../../wp-biographia.php:2344
+msgid "Display the Biography Box before the post or page content"
+msgstr ""
+
+#: ../../wp-biographia.php:2347
+msgid "Display the Biography Box after the post or page content"
+msgstr ""
+
+#: ../../wp-biographia.php:2374
+msgid "New User Settings"
+msgstr ""
+
+#: ../../wp-biographia.php:2377
+msgid "User Profile Settings"
+msgstr ""
+
+#: ../../wp-biographia.php:2380
+msgid "Content And Excerpt Priority Settings"
+msgstr ""
+
+#: ../../wp-biographia.php:2386
 msgid "Post, Page And Custom Post Type Exclusion Settings"
 msgstr ""
 
-#: ../../wp-biographia.php:1977
+#: ../../wp-biographia.php:2389
 msgid "Category Exclusion Settings"
 msgstr ""
 
-#: ../../wp-biographia.php:1981
+#: ../../wp-biographia.php:2393
 msgid "User Suppression Settings"
 msgstr ""
 
-#: ../../wp-biographia.php:1987
+#: ../../wp-biographia.php:2399
 msgid "Style Settings"
 msgstr ""
 
-#: ../../wp-biographia.php:1993
+#: ../../wp-biographia.php:2405
 msgid "Content Settings"
 msgstr ""
 
-#: ../../wp-biographia.php:1999
+#: ../../wp-biographia.php:2411
 msgid "Reset WP Biographia"
 msgstr ""
 
-#: ../../wp-biographia.php:2005
+#: ../../wp-biographia.php:2417
 msgid "Colophon"
 msgstr ""
 
-#: ../../wp-biographia.php:2012
+#: ../../wp-biographia.php:2420
+msgid "Plugin Configuration Settings"
+msgstr ""
+
+#: ../../wp-biographia.php:2423
+msgid "User Configuration Settings"
+msgstr ""
+
+#: ../../wp-biographia.php:2430
 msgid "Display Settings"
 msgstr ""
 
-#: ../../wp-biographia.php:2018
+#: ../../wp-biographia.php:2436
 #, php-format
 msgid "WP Biographia %s - Settings And Options"
 msgstr ""
 
-#: ../../wp-biographia.php:2069
+#: ../../wp-biographia.php:2487
 msgid "Updated"
 msgstr ""
 
-#: ../../wp-biographia.php:2217
+#: ../../wp-biographia.php:2664
 msgid "All"
 msgstr ""
 
-#: ../../wp-biographia.php:2218
+#: ../../wp-biographia.php:2665
 msgid "Reset To Default Values"
 msgstr ""
 
-#: ../../wp-biographia.php:2263
+#: ../../wp-biographia.php:2710
 #, php-format
 msgid "%s Settings And Options %s"
 msgstr ""
 
-#: ../../wp-biographia.php:2287
+#: ../../wp-biographia.php:2734
 msgid "Click to toggle"
 msgstr ""
 
-#: ../../wp-biographia.php:2367
+#: ../../wp-biographia.php:2815
 #, php-format
 msgid "Save %s Settings"
 msgstr ""
 
-#: ../../wp-biographia.php:2389
+#: ../../wp-biographia.php:2837
 msgid "For help and support with WP Biographia, here's what you can do:"
 msgstr ""
 
-#: ../../wp-biographia.php:2391
+#: ../../wp-biographia.php:2839
 msgid "Ask a question on the <a href=\"http://wordpress.org/tags/wp-biographia?forum_id=10\">WordPress support forum</a>; this is by far the best way so that other users can follow the conversation."
 msgstr ""
 
-#: ../../wp-biographia.php:2393
+#: ../../wp-biographia.php:2841
 msgid "Ask me a question on Twitter; I'm <a href=\"http://twitter.com/vicchi\">@vicchi</a>."
 msgstr ""
 
-#: ../../wp-biographia.php:2395
+#: ../../wp-biographia.php:2843
 #, php-format
 msgid "Drop me an <a href=\"mailto:%s\">email </a>instead."
 msgstr ""
 
-#: ../../wp-biographia.php:2397
+#: ../../wp-biographia.php:2845
 msgid "But help and support is a two way street; here's what you might want to do:"
 msgstr ""
 
-#: ../../wp-biographia.php:2399
+#: ../../wp-biographia.php:2847
 #, php-format
 msgid "If you like this plugin and use it on your WordPress site, or if you write about it online, <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">link to the plugin</a> and drop me an <a href=\"mailto:%s\">email</a> telling me about this."
 msgstr ""
 
-#: ../../wp-biographia.php:2401
+#: ../../wp-biographia.php:2849
 msgid "Rate the plugin on the <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">WordPress plugin repository</a>."
 msgstr ""
 
-#: ../../wp-biographia.php:2403
+#: ../../wp-biographia.php:2851
 msgid "WP Biographia is both free as in speech and free as in beer. No donations are required; <a href=\"http://www.vicchi.org/codeage/donate/\">here's why</a>."
 msgstr ""
 
-#: ../../wp-biographia.php:2407
+#: ../../wp-biographia.php:2855
 msgid "Help &amp; Support"
 msgstr ""
 
-#: ../../wp-biographia.php:2421
-msgid "WP Biographia is inspired by and based on <a href=\"http://www.jonbishop.com\">Jon Bishop's</a> <a href=\"http://wordpress.org/extend/plugins/wp-about-author/\">WP About Author</a> plugin. Thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place. Jon's written other <a href=\"http://profiles.wordpress.org/users/JonBishop/\">WordPress plugins</a> as well; you should take a look."
+#: ../../wp-biographia.php:2869
+msgid "The fact that you're reading this wouldn't have been possible without the help, bug fixing, beta testing, gentle prodding and overall general warmth and continued support of <a href=\"https://twitter.com/#!/wp_smith\">Travis Smith</a> and <a href=\"https://twitter.com/#!/webendev\">Bruce Munson</a>. Travis and Bruce ... you're awesome. Thank you."
 msgstr ""
 
-#: ../../wp-biographia.php:2425
-msgid "WP Biographia is now internationalised. Turkish language translation and support is thanks to <a href=\"https://twitter.com/#!/KazancExpert\">Hakan Er</a>."
-msgstr ""
-
-#: ../../wp-biographia.php:2429
+#: ../../wp-biographia.php:2871
 #, php-format
-msgid "If you'd like to see WP Biographia translated into your language and want to help with the process, then please drop me an <a href=\"mailto:%s\">email</a>."
+msgid "WP Biographia has supported translation and internationalisation for a while now. Thanks go out to <a href=\"https://twitter.com/#!/KazancExpert\">Hakan Er</a> for the Turkish translation and to <a href=\"http://wordpress.org/support/profile/kubitomakita\">Jakub Mikita</a> for the Polish translation. If you'd like to see WP Biographia translated into your language and want to help with the process, then please drop me an <a href=\"mailto:%s\">email</a>."
 msgstr ""
 
-#: ../../wp-biographia.php:2433
+#: ../../wp-biographia.php:2873
+msgid "The v1.x and v2.x releases of WP Biographia were inspired and based on <a href=\"http://www.jonbishop.com\">Jon Bishop's</a> <a href=\"http://wordpress.org/extend/plugins/wp-about-author/\">WP About Author</a> plugin. WP Biographia has come a long way since v1.0, including a total rewrite in v3.0, but thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place."
+msgstr ""
+
+#: ../../wp-biographia.php:2877
 msgid "Acknowledgements"
 msgstr ""
 
