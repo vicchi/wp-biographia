@@ -39,7 +39,7 @@ The position and content of the Biography Box, including adding support for new 
 1. Customise and configure what information WP Biographia displays; From the Dashboard, navigate to the *Settings / WP Biographia* page or click on the *"Settings"* link from the Plugins page on the Dashboard.
 1. You can can control display settings, style settings and content settings for the Biography Box.
 1. Click on the *"Save Changes"* button to preserve your chosen settings and options.
-1. If you enable the display of the post author's image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled. Don't forget to save your changes.
+1. If you enable the display of the post user's image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled. Don't forget to save your changes.
 1. Users with the `manage_options` capability can edit their profile via *Users / Your Profile* from the Dashboard to suppress the display of the Biography Box on posts and/or on pages and also the profiles of other users via the *Users / All Users / Edit* from the Dashboard.
 1. Suppression of the display of the Biography Box on posts and/or on pages can also be configured from the Dashboard; navigate to *Settings / WP Biographia / Biography Box Display Settings* and click on the *Exclusions* tab.
 
@@ -53,13 +53,13 @@ In short, very easily. But before you read any further, take a look at [Asking F
 
 Absolutely. Go to the [WP Biographia home page](http://www.vicchi.org/codeage/wp-biographia/) for the latest information. There's also the official [WordPress plugin repository page](http://wordpress.org/extend/plugins/wp-biographia/) and the [source for the plugin is on GitHub](http://vicchi.github.com/wp-biographia/) as well.
 
-= I've configured WP Biographia to display the author's image but it's not working; what's happening here? =
+= I've configured WP Biographia to display the user's image but it's not working; what's happening here? =
 
-Author profile pictures, or avatars, are part of the WordPress core but enabling them isn't done at the level of the user profile, instead it's part of the way in which comments are configured. If you enable the display of the post author’s image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled. WordPress uses the email address that is part of your author's profile to look up the right avatar image from [gravatar.com](http://gravatar.com/), so you need to ensure that you're using the same email address on your site as well as for your avatar.
+User profile pictures, or avatars, are part of the WordPress core but enabling them isn't done at the level of the user profile, instead it's part of the way in which comments are configured. If you enable the display of the post user’s image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled. WordPress uses the email address that is part of your user's profile to look up the right avatar image from [gravatar.com](http://gravatar.com/), so you need to ensure that you're using the same email address on your site as well as for your avatar.
 
-= I want to upload my author's images, host them on my web server and not use Gravatars; how do I do this? =
+= I want to upload my user's images, host them on my web server and not use Gravatars; how do I do this? =
 
-WP Biographia uses the `get_avatar` [pluggable function](http://codex.wordpress.org/Pluggable_Functions) to output the author's avatar image. Theoretically, any plugin that supports locally hosted avatar images and which overrides the default WordPress implementation of `get_avatar` should be able to be used. In practice, whether this approach will work for you or not depends on the combination of the theme you're using and the interactions that the other plugins that you're using has with the WordPress core and with your theme. The [Simple Local Avatars](http://wordpress.org/extend/plugins/simple-local-avatars/) plugin plugs `get_avatar` and cooperates nicely with WP Biographia, at least in my local testing environment; your mileage may vary.
+WP Biographia uses the `get_avatar` [pluggable function](http://codex.wordpress.org/Pluggable_Functions) to output the user's avatar image. Theoretically, any plugin that supports locally hosted avatar images and which overrides the default WordPress implementation of `get_avatar` should be able to be used. In practice, whether this approach will work for you or not depends on the combination of the theme you're using and the interactions that the other plugins that you're using has with the WordPress core and with your theme. The [Simple Local Avatars](http://wordpress.org/extend/plugins/simple-local-avatars/) plugin plugs `get_avatar` and cooperates nicely with WP Biographia, at least in my local testing environment; your mileage may vary.
 
 = I've configured WP Biographia to show my website/Twitter/Facebook/etc links but I don't see them in the Biography Box; where do I define these links? =
 
@@ -100,9 +100,9 @@ This may be a configurable setting in a future version of the plugin to avoid th
 
 Add this code to your theme's <code>functions.php</code> file:
 
-<code>add_action ('wp_head', 'remove_author_box_page_template');
+<code>add_action ('wp_head', 'remove_user_box_page_template');
 
-function remove_author_box_page_template() {
+function remove_user_box_page_template() {
   if (is_page_template ('page_blog.php'))
 		add_filter ('wp_biographia_pattern' , 'content_only_pattern');
 }
@@ -113,7 +113,7 @@ function content_only_pattern($pattern) {
 
 This may be a configurable setting in a future version of the plugin to avoid the need to hack your theme's <code>functions.php</code> file.
 
-= I want to use my own icon set for my author's contact links; how do I do this? =
+= I want to use my own icon set for my user's contact links; how do I do this? =
 
 Firstly select the icon set you want to use. You'll need to ensure that the icon files are in `.png` format and are named to match the icon set that WP Biographia ships with; take a look in `wp-biographia/images` to see the naming convention. Upload your icon set to your web server and note the URL (not the local path) to where your icons will live. Navigate to *Settings / WP Biographia* and click on the *Content* tab, ensure that the *Use Alternate Icon Set* option is checked and the URL to your alternate icons is specified in the *Alternate Icon Set URL* text box. By default, WP Biographia sizes the contact link icons at 32x32 pixels; you can override this in your local CSS file by redefining the `.wp-biographia-item-icon` CSS class (see `wp-biographia/css/wp-biographia.css`).
 
@@ -137,7 +137,7 @@ The HTML and CSS classes that the plugin emits follows a consistent structure an
 = WP Biographia doesn't support social network or contact method BAR; how can I add this? =
 With the cunning use of the filters that WP Biographia supports, you can add support for as many social networks and/or contact methods as you like. You'll need to do two things for each link you want to add to the plugin.
 
-1. In your theme's `functions.php` add support for the new link to the author's profile by way of the `wp_biographia_contact_info` filter.
+1. In your theme's `functions.php` add support for the new link to the user's profile by way of the `wp_biographia_contact_info` filter.
 1. Still in your theme's `functions.php` add support for the new link to be displayed, with an icon if you wish, via the `wp_biographia_link_items` filter.
 
 See the *Filter Support And Usage* section for a working example of these two filters to add support for a new contact link.
@@ -193,8 +193,8 @@ The current version is 3.1.0 (2012.05.03)
 = 3.0.1 =
 * Released 2012.04.20
 * Fixed: Bug in plugin initialisation that incorrectly named the Vimeo content display option.
-* Fixed: Bug that caused a post's author not to be refreshed in the front page and archive pages.
-* Fixed: Bug that caused a post's author to be determined as the author of the enclosing page where a custom Loop is being used.
+* Fixed: Bug that caused a post's user not to be refreshed in the front page and archive pages.
+* Fixed: Bug that caused a post's user to be determined as the user of the enclosing page where a custom Loop is being used.
 
 = 3.0 =
 * Released 2012.04.11
@@ -211,9 +211,9 @@ The current version is 3.1.0 (2012.05.03)
 * Added: Support for resetting the plugin's settings/options to their initial default values from within the admin screen.
 * Added: Support for suppressing display of the Biography Box from posts, archives and the front page by category.
 * Added: Tabbed settings/options in the admin screen.
-* Fixed: Bug that caused an empty contact link to be displayed when an author's profile has an empty corresponding contact field.
+* Fixed: Bug that caused an empty contact link to be displayed when an user's profile has an empty corresponding contact field.
 * Fixed: CSS bug that prevented WP Touch from working in non-restricted mode.
-* Fixed: Bug that caused extended contact links in an author's profile to be persisted after plugin uninstallation.
+* Fixed: Bug that caused extended contact links in an user's profile to be persisted after plugin uninstallation.
 
 = 2.4.4 =
 * Released 2012.02.22
@@ -238,13 +238,13 @@ The current version is 3.1.0 (2012.05.03)
 = 2.4 =
 * Released 2012.02.16
 * Add internationalisation support; add Spanish and Turkish language files.
-* Add configuration setting to control the author's name in the Biography Box as a link to "More Posts By This Author".
-* Add support for displaying the author's contact links as icons as well as plain text links.
+* Add configuration setting to control the user's name in the Biography Box as a link to "More Posts By This User".
+* Add support for displaying the user's contact links as icons as well as plain text links.
 * Add support for using an alternate link icon set.
 
 = 2.3 =
 * Released 2012.01.26
-* Suppress display of "More Posts" link in the Biography Box (if configured) if the user/author has no posts.
+* Suppress display of "More Posts" link in the Biography Box (if configured) if the user has no posts.
 * Add `author`, `prefix` and `name` short code attribute support.
 * Add support for global (across single, archive and front page templates) post exclusions in built-in post types and custom post types.
 * Tightened wording in admin screen around post exclusions.
@@ -280,7 +280,7 @@ The current version is 3.1.0 (2012.05.03)
 * Added Custom Post Types support with the ability to exclude based on post IDs
 * Added ability to set the bio at the top or the bottom
 * Added a filter to short circuit for further customization
-* Added ability to include the post author's email link
+* Added ability to include the post user's email link
 * Refactored plugin file locations in line with WordPress plugin development recommendations
 * Fixed CSS issue for gravatar
 
@@ -294,7 +294,7 @@ The current version is 3.1.0 (2012.05.03)
 This version adds a new *Admin* tab to the settings screen, the ability to set the content and excerpt filter priorities and support for the shortcode `role` attribute This is the 13th version of WP Biographia.
 
 = 3.0.1 =
-This version fixes several bugs that affected the correct author being associated with the Biography Box on front/archive pages and when called from within a custom Loop. This is 12th version of WP Biographia.
+This version fixes several bugs that affected the correct user being associated with the Biography Box on front/archive pages and when called from within a custom Loop. This is 12th version of WP Biographia.
 
 = 3.0 =
 This is the 11th version of WP Biographia and is a major rewrite of the plugin's structure and functionality to use a PHP class. This version fixes several bugs as well as adding support for additional filters and a restructure of the admin settings/options screen to use a tabbed interface.
@@ -312,10 +312,10 @@ This is the 8th version of WP Biographia and is a bug fix release, clearing up s
 This is the 8th version of WP Biographia and is a bug fix release, clearing up several regression bugs that appeared in v2.4.
 
 = 2.4 =
-This is the 7th version of WP Biographia; adds internationalisation support plus Spanish and Turkish translations; adds support for displaying the author's contact links as icons and for using an alternate icon set.
+This is the 7th version of WP Biographia; adds internationalisation support plus Spanish and Turkish translations; adds support for displaying the user's contact links as icons and for using an alternate icon set.
 
 = 2.3 =
-This is the 6th version of WP Biographia; adds support for global post exclusions, enhanced shortcode options and suppression of the "More Posts" link if the author has no posts.
+This is the 6th version of WP Biographia; adds support for global post exclusions, enhanced shortcode options and suppression of the "More Posts" link if the user has no posts.
 
 = 2.2 =
 * This is the fifth version of WP Biographia; adds support for enhanced shortcode usage, excerpt support on archive pages and additional social media profiles and links as well as several bug fixes.
@@ -356,17 +356,17 @@ The thinking behind this is that you probably want to honour post or page exclus
 
 = The "author" Attribute =
 
-If the `author` attribute is omitted, which is the default, the shortcode assumes it's being used within the [WordPress Loop](http://codex.wordpress.org/The_Loop) and will display the Biography Box once for the current post's, page's or custom post type's author.
+If the `author` attribute is omitted, which is the default, the shortcode assumes it's being used within the [WordPress Loop](http://codex.wordpress.org/The_Loop) and will display the Biography Box once for the current post's, page's or custom post type's user.
 
-Specifying a user's login name as the `author` attribute overrides this behaviour and allows multi-user sites to use the plugin to create a *contributors* page, where you use the shortcode as `[wp_biographia user="login-name"]` once for each of your site's authors that you want to appear, replacing `"login-name"` with a valid login name for one of your authors.
+Specifying a user's login name as the `author` attribute overrides this behaviour and allows multi-user sites to use the plugin to create a *contributors* page, where you use the shortcode as `[wp_biographia user="login-name"]` once for each of your site's users that you want to appear, replacing `"login-name"` with a valid login name for one of your users.
 
-You call also use the `author` attribute in *wildcard* mode, specifying the author's login name as `*` as `[wp_biographia author="*"]`; this will then loop over all of the authors that have logins on your site, displaying the Biography Box once for each author, ordered alphabetically by login name.
+You call also use the `author` attribute in *wildcard* mode, specifying the user's login name as `*` as `[wp_biographia author="*"]`; this will then loop over all of the users that have logins on your site, displaying the Biography Box once for each user, ordered alphabetically by login name.
 
 Specifying an invalid login name (`[wp_biographia author="idontexist"]`) will result in no Biography Box being displayed. Specifying an empty login name (`[wp_biographia author=""]`) will cause the `author` parameter to be ignored and may result in undefined behaviour, such as a partially populated Biography Box being displayed as the shortcode is being used outside of the Loop and thus no author information is made available to the plugin by WordPress.
 
 = the "role" Attribute =
 
-Valid only when used in conjunction with the `author` attribute in *wildcard* mode, the `role` attribute allows you to filter the authors that have user accounts on your blog according to their [WordPress Role](http://codex.wordpress.org/Roles_and_Capabilities). The `role` attribute takes a single argument which defines the WordPress role; at the time of writing, this can be one of:
+Valid only when used in conjunction with the `author` attribute in *wildcard* mode, the `role` attribute allows you to filter the users that have user accounts on your blog according to their [WordPress Role](http://codex.wordpress.org/Roles_and_Capabilities). The `role` attribute takes a single argument which defines the WordPress role; at the time of writing, this can be one of:
 
 * `administrator`
 * `editor`

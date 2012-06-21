@@ -240,7 +240,7 @@ class WP_Biographia extends WP_PluginBase {
 	}
 	
 	/**
-	 * "user_contactmethods" filter hook; Sanitizes, filters and augments the author's
+	 * "user_contactmethods" filter hook; Sanitizes, filters and augments the user's
 	 * profile contact information.
 	 *
 	 * @param array contactmethods Array containing the current set of contact methods.
@@ -348,7 +348,7 @@ class WP_Biographia extends WP_PluginBase {
 	}
 	
 	/**
-	 * Defines the default set of author's contact methods that the plugin natively
+	 * Defines the default set of user's contact methods that the plugin natively
 	 * supports. 
 	 *
 	 * @return array Array of contact methods.
@@ -419,7 +419,7 @@ class WP_Biographia extends WP_PluginBase {
 	}
 	
 	/**
-	 * Defines the default set of author's contact information. The default set of contact
+	 * Defines the default set of user's contact information. The default set of contact
 	 * links are filterable via the 'wp_biographia_contact_info' filter hook. Used by the
 	 * display() and user_contactmethods() functions.
 	 *
@@ -2031,9 +2031,9 @@ class WP_Biographia extends WP_PluginBase {
 					<input type="text" name="wp_biographia_content_prefix" id="wp-biographia-content-name" size="40" value="'
 					. $settings["wp_biographia_content_prefix"]
 					. '" /><br />
-					<small>' . __('Prefix text to be prepended to the author\'s name', 'wp-biographia') . '</small></p>';
+					<small>' . __('Prefix text to be prepended to the user\'s name', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Author's Name", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("User's Name", 'wp-biographia') . '</strong><br />
 					<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="first-last-name" '
 					. checked ($settings['wp_biographia_content_name'], 'first-last-name', false)
 					.' />&nbsp;' . __('First/Last Name', 'wp-biographia') . '<br />
@@ -2049,25 +2049,25 @@ class WP_Biographia extends WP_PluginBase {
 					<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="none" '
 					. checked ($settings['wp_biographia_content_name'], 'none', false)
 					. ' />&nbsp;' . __('Don\'t Show The Name', 'wp-biographia') . '<br />
-					<small>' . __('How you want to see the author\'s name displayed (if at all)', 'wp-biographia') . '</small></p>';
+					<small>' . __('How you want to see the users\'s name displayed (if at all)', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __('Author\'s Name Link', 'wp-biographia') . '</strong><br/>
+				$content_settings[] = '<p><strong>' . __('User\'s Name Link', 'wp-biographia') . '</strong><br/>
 					<input type="checkbox" name="wp_biographia_content_authorpage" '
 					.checked ($settings['wp_biographia_content_authorpage'], 'on', false)
 					. '/>
-					<small>' . __('Make author\'s name link to <em>More Posts By This Author</em>', 'wp_biographia') . '</small></p>';
+					<small>' . __('Make user\'s name link to <em>More Posts By This User</em>', 'wp_biographia') . '</small></p>';
 
 				if (!$avatars_enabled) {
 					$content_settings[] = '<div class="wp-biographia-warning">'
-						. sprintf (__('It looks like Avatars are not currently enabled; this means that the author\'s image won\'t be able to be displayed. If you want this to happen then go to <a href="%s">Settings &rsaquo; Discussions</a> and set Avatar Display to Show Avatars.', 'wp-biographia'), admin_url('options-discussion.php')) . '</div>';
+						. sprintf (__('It looks like Avatars are not currently enabled; this means that the user\'s image won\'t be able to be displayed. If you want this to happen then go to <a href="%s">Settings &rsaquo; Discussions</a> and set Avatar Display to Show Avatars.', 'wp-biographia'), admin_url('options-discussion.php')) . '</div>';
 				}
 
-				$content_settings[] = '<p><strong>' . __("Author's Image", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("User's Image", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_image" '
 					. checked ($settings['wp_biographia_content_image'], 'on', false)
 					. disabled ($avatars_enabled, false, false)
 					. '/>
-					<small>' . __('Display the author\'s image?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s image?', 'wp-biographia') . '</small></p>';
 
 				if (!isset ($settings['wp_biographia_content_image_size']) ||
 						$settings['wp_biographia_content_image_size'] === '' ||
@@ -2084,17 +2084,17 @@ class WP_Biographia extends WP_PluginBase {
 					. disabled ($avatars_enabled, false, false)
 					. '/><br />'
 					. '<small>' . __('Enter image size, e.g. 32 for a 32x32 image, 70 for a 70x70 image, etc. Defaults to a 100x100 size image.', 'wp-biographia') . '</small></p>';
-				$content_settings[] = '<p><strong>' . __("Show Author's Biography", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's Biography", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_bio" '
 					. checked ($settings['wp_biographia_content_bio'], 'on', false)
 					. '/>
-						<small>' . __('Display the author\'s biography?', 'wp-biographia') . '</small></p>';
+						<small>' . __('Display the user\'s biography?', 'wp-biographia') . '</small></p>';
 
 				$content_settings[] = '<p><strong>' . __("Show Contact Links As Icons", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_icons" id="wp-biographia-content-icons" '
 					. checked ($settings['wp_biographia_content_icons'], 'on', false)
 					. '/>
-					<small>' . __('Show the author\'s contact links as icons?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Show the user\'s contact links as icons?', 'wp-biographia') . '</small></p>';
 
 				$content_settings[] = '<div id="wp-biographia-icon-container"';
 				if (!$icons_enabled) {
@@ -2127,77 +2127,77 @@ class WP_Biographia extends WP_PluginBase {
 				. '/>
 				<small>' . __('Add <em>rel="nofollow"</em> to contact links?', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's Email Address", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's Email Address", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_email" '
 					. checked ($settings['wp_biographia_content_email'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s email address?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s email address?', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's Website Link", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's Website Link", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_web" '
 					. checked ($settings['wp_biographia_content_web'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s website details?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s website details?', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's Twitter Link", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's Twitter Link", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_twitter" '
 					. checked ($settings['wp_biographia_content_twitter'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s Twitter details?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s Twitter details?', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's Facebook Link", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's Facebook Link", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_facebook" '
 					. checked ($settings['wp_biographia_content_facebook'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s Facebook details?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s Facebook details?', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's LinkedIn Link", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's LinkedIn Link", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_linkedin" '
 					. checked ($settings['wp_biographia_content_linkedin'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s LinkedIn details?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s LinkedIn details?', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's Google+ Link", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's Google+ Link", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_googleplus" '
 					. checked ($settings['wp_biographia_content_googleplus'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s Google+ details?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s Google+ details?', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's Delicious Link", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's Delicious Link", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_delicious" '
 					. checked ($settings['wp_biographia_content_delicious'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s Delicious details?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s Delicious details?', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's Flickr Link", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's Flickr Link", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_flickr" '
 					. checked ($settings['wp_biographia_content_flickr'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s Flickr details?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s Flickr details?', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's Picasa Link", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's Picasa Link", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_picasa" '
 					. checked ($settings['wp_biographia_content_picasa'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s Picasa details?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s Picasa details?', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's Vimeo Link", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's Vimeo Link", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_vimeo" '
 					. checked ($settings['wp_biographia_content_vimeo'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s Vimeo details?' , 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s Vimeo details?' , 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's YouTube Link", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's YouTube Link", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_youtube" '
 					. checked ($settings['wp_biographia_content_youtube'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s YouTube details?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s YouTube details?', 'wp-biographia') . '</small></p>';
 
-				$content_settings[] = '<p><strong>' . __("Show Author's Reddit Link", 'wp-biographia') . '</strong><br />
+				$content_settings[] = '<p><strong>' . __("Show User's Reddit Link", 'wp-biographia') . '</strong><br />
 					<input type="checkbox" name="wp_biographia_content_reddit" '
 					. checked ($settings['wp_biographia_content_reddit'], 'on', false)
 					. '/>
-					<small>' . __('Display the author\'s Reddit details?', 'wp-biographia') . '</small></p>';
+					<small>' . __('Display the user\'s Reddit details?', 'wp-biographia') . '</small></p>';
 
 				$content_settings[] = '<p><strong>' . __("Show More Posts Link", 'wp-biographia') . '</strong><br />
 					<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="basic" '
@@ -2209,7 +2209,7 @@ class WP_Biographia extends WP_PluginBase {
 					<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="none" '
 					. checked ($settings['wp_biographia_content_posts'], 'none', false)
 					. ' />&nbsp;' . __('Don\'t Show The More Posts Link', 'wp-biographia') . '<br />
-					<small>' . __('How you want to display and format the <em>More Posts By This Author</em> link', 'wp-biographia') . '</small></p>';
+					<small>' . __('How you want to display and format the <em>More Posts By This User</em> link', 'wp-biographia') . '</small></p>';
 				
 				/****************************************************************************
 		 	 	 * End of Content tab content
@@ -2450,7 +2450,7 @@ class WP_Biographia extends WP_PluginBase {
 	}
 
 	/**
-	 * Adds/updates a set of key/value pairs to a list of author profiles.
+	 * Adds/updates a set of key/value pairs to a list of user profiles.
 	 *
 	 * @param array user_array Array of user profiles.
 	 * @param string meta_key Key for the user_meta option to be updated/added.
