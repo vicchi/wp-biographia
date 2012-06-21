@@ -836,6 +836,7 @@ class WP_Biographia extends WP_PluginBase {
 		
 		extract (shortcode_atts (array (
 			'mode' => 'raw',
+			'user' => '',
 			'author' => '',
 			'prefix' => '',
 			'name' => '',
@@ -843,6 +844,7 @@ class WP_Biographia extends WP_PluginBase {
 		), $atts));
 
 		$params = array ('mode' => $mode,
+			'user' => $user,
 			'author' => $author,
 			'prefix' => $prefix,
 			'name' => $name);
@@ -867,8 +869,16 @@ class WP_Biographia extends WP_PluginBase {
 			}
 		}
 
-		if (!empty ($author)) {
-			if ($author === "*") {
+		// Handle legacy shortcode useage (before the introduction of the user attribute);
+		// if the 'author' attribute is present but no 'user' attribute exists, treat the
+		// 'author' attribute *as* the 'user' attribute.
+		
+		if (empty ($user) && !empty ($author)) {
+			$user = $author;
+		}
+		
+		if (!empty ($user)) {
+			if ($user === "*") {
 				$contributors = array ();
 				
 				if (!empty ($role)) {
@@ -915,7 +925,7 @@ class WP_Biographia extends WP_PluginBase {
 			}
 			
 			else {
-				$user_obj = get_user_by ('login', $author);
+				$user_obj = get_user_by ('login', $user);
 				
 				if ($user_obj) {
 					$this->author_id = $user_obj->ID;

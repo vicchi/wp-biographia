@@ -1,14 +1,14 @@
 === WP Biographia ===
 Contributors: vicchi, wpsmith
 Donate link: http://www.vicchi.org/codeage/donate/
-Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, about author, author box, contributors
+Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, user, about author, user box, author box, contributors, author biography, user biography, avatar, gravatar
 Requires at least: 3.3
 Tested up to: 3.3.1
 Stable tag: 3.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Add and display a customisable author biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
+Add and display a customisable user biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
 
 == Description ==
 
@@ -339,7 +339,8 @@ WP Biographia supports a single shortcode, `[wp_biographia]`. Adding this shortc
 The shortcode also supports multiple *attributes* which allow you to customise the way in which the shortcode is expanded into the Biography Box:
 
 * the `mode` attribute
-* the `author` attribute
+* the `user` attribute
+* the `author` attribute *(deprecated)*
 * the `role` attribute
 * the `prefix` attribute
 * the `name` attribute
@@ -354,19 +355,27 @@ In `configured` mode, specified as `[wp_biographia mode="configured"]`, the plug
 
 The thinking behind this is that you probably want to honour post or page exclusions and per user exclusions, but by using the shortcode in your theme templates, you want to be in control of how and where the Biography Box is displayed.
 
+= The "user" Attribute =
+
+If the `user` attribute is omitted, which is the default, the shortcode assumes it's being used within the [WordPress Loop](http://codex.wordpress.org/The_Loop) and will display the Biography Box once for the current post's, page's or custom post type's user.
+
+Specifying a user's login name as the `user` attribute overrides this behaviour and allows multi-user sites to use the plugin to create a *contributors* page, where you use the shortcode as `[wp_biographia user="login-name"]` once for each of your site's users that you want to appear, replacing `"login-name"` with a valid login name for one of your users.
+
+You call also use the `user` attribute in *wildcard* mode, specifying the user's login name as `*` as `[wp_biographia user="*"]`; this will then loop over all of the users that have logins on your site, displaying the Biography Box once for each user, ordered alphabetically by login name.
+
+Specifying an invalid login name (`[wp_biographia user="idontexist"]`) will result in no Biography Box being displayed. Specifying an empty login name (`[wp_biographia user=""]`) will cause the `user` attribute to be ignored and may result in undefined behaviour, such as a partially populated Biography Box being displayed as the shortcode is being used outside of the Loop and thus no user information is made available to the plugin by WordPress.
+
 = The "author" Attribute =
 
-If the `author` attribute is omitted, which is the default, the shortcode assumes it's being used within the [WordPress Loop](http://codex.wordpress.org/The_Loop) and will display the Biography Box once for the current post's, page's or custom post type's user.
+The `author` attribute is now deprecated in favour of the `user` attribute introduced in v3.2.0 of the plugin. If the `author` attribute is used and no `user` attribute is present, the `author` attribute will act in the same way as the `user` attribute, described above. If both the `user` and `author` attributes are present, the `author` attribute will be ignored in favour of the `user` attribute.
 
-Specifying a user's login name as the `author` attribute overrides this behaviour and allows multi-user sites to use the plugin to create a *contributors* page, where you use the shortcode as `[wp_biographia user="login-name"]` once for each of your site's users that you want to appear, replacing `"login-name"` with a valid login name for one of your users.
+In other words, if you use the shortcode and supply both the `author` and `user` attributes, such as `[wp_biographia author="foo" user="bar"]`, the Biography Box will be displayed for the user `bar`, not the user `foo`. Likewise, `[wp_biographia user="*" author="foo"]` will display the Biography Box in *wildcard* mode, not for the user `foo`.
 
-You call also use the `author` attribute in *wildcard* mode, specifying the user's login name as `*` as `[wp_biographia author="*"]`; this will then loop over all of the users that have logins on your site, displaying the Biography Box once for each user, ordered alphabetically by login name.
-
-Specifying an invalid login name (`[wp_biographia author="idontexist"]`) will result in no Biography Box being displayed. Specifying an empty login name (`[wp_biographia author=""]`) will cause the `author` parameter to be ignored and may result in undefined behaviour, such as a partially populated Biography Box being displayed as the shortcode is being used outside of the Loop and thus no author information is made available to the plugin by WordPress.
+Support for the `author` attribute will be likely be removed in a future release of the plugin to avoid confusion over the `author` and `user` attributes.
 
 = the "role" Attribute =
 
-Valid only when used in conjunction with the `author` attribute in *wildcard* mode, the `role` attribute allows you to filter the users that have user accounts on your blog according to their [WordPress Role](http://codex.wordpress.org/Roles_and_Capabilities). The `role` attribute takes a single argument which defines the WordPress role; at the time of writing, this can be one of:
+Valid only when used in conjunction with the `user` attribute in *wildcard* mode, the `role` attribute allows you to filter the users that have user accounts on your blog according to their [WordPress Role](http://codex.wordpress.org/Roles_and_Capabilities). The `role` attribute takes a single argument which defines the WordPress role; at the time of writing, this can be one of:
 
 * `administrator`
 * `editor`
@@ -376,15 +385,15 @@ Valid only when used in conjunction with the `author` attribute in *wildcard* mo
 
 For example, if you want to display the Biography Box for all users of your blog who have a role of `author` you can use the `role` attribute plus the `author` attribute in *wildcard* mode to do this, along the lines of `[wp_biographia user="*" role="author"]`.
 
-Specifying an invalid role (`[wp_biographia user="*" role="foo"])` will result in no Biography Box being displayed. Specifying the `role` attribute without the `author` attribute in *wildcard* mode will have no effect.
+Specifying an invalid role (`[wp_biographia user="*" role="foo"])` will result in no Biography Box being displayed. Specifying the `role` attribute without the `user` attribute in *wildcard* mode will have no effect.
 
 = The "prefix" Attribute =
 
-If the `prefix` attribute is omitted, which is the default, the Biography Box will be displayed with *Biography Prefix* text configured in *Settings/ WP Biographuia / Biography Box Content Settings* before the author's name. This can be overridden by using the `prefix` attribute, along the lines of `[wp_biographia prefix="All About"]`.
+If the `prefix` attribute is omitted, which is the default, the Biography Box will be displayed with *Biography Prefix* text configured in *Settings/ WP Biographuia / Biography Box Content Settings* before the user's name. This can be overridden by using the `prefix` attribute, along the lines of `[wp_biographia prefix="All About"]`.
 
 = The "name" Attribute =
 
-If the `name` attribute is omitted, which is the default, the Biography Box will be displayed with the author's name as configured by *Author's Name* in *Settings / WP Biographia /Biography Box Content Settings*. This can be overriden by supplying one of the following for the `name` attribute's argument:
+If the `name` attribute is omitted, which is the default, the Biography Box will be displayed with the user's name as configured by *User's Name* in *Settings / WP Biographia /Biography Box Content Settings*. This can be overriden by supplying one of the following for the `name` attribute's argument:
 
 * `account-name`
 * `first-last-name`
@@ -397,7 +406,7 @@ If the `name` attribute is omitted, which is the default, the Biography Box will
 WP Biographia supports multiple filters, which are described in more detail below. The plugin's filters allow you to:
 
 * change the default set of installation settings and options at plugin activation time
-* modify and/or enhance the set of contact information fields the plugin adds to the author's profile
+* modify and/or enhance the set of contact information fields the plugin adds to the user's profile
 * modify and/or enhance the contact links that are added to the Biography Box by the plugin
 * modify the position of the Biography Box to before or after the post content returned by `the_content()` and/or `the_excerpt()`
 * suppress the display of the Biography Box entirely under user-defined circumstances
@@ -423,7 +432,7 @@ function add_activation_timestamp ($options) {
 
 = wp_biographia_contact_info =
 
-Applied to the default set of contact information fields that are added to an author's profile by the plugin. Note that in order to add and display a new contact link to the Biography Box, the contact link must be added to the value returned by the `wp_biographia_link_items` filter as well as the value returned by this filter.
+Applied to the default set of contact information fields that are added to an user's profile by the plugin. Note that in order to add and display a new contact link to the Biography Box, the contact link must be added to the value returned by the `wp_biographia_link_items` filter as well as the value returned by this filter.
 
 *Example:* Add Pinterest as a supported contact information field
 
@@ -467,7 +476,7 @@ Applied to the format string used to position the Biography Box before the post 
 `add_filter ('wp_biographia_pattern', 'insert_biography_header');
 
 function insert_biography_header ($pattern) {
-	return '%1$s<p class="biography-header">About The Author</p>%2$s';
+	return '%1$s<p class="biography-header">About The User</p>%2$s';
 }`
 
 = wp_biographia_pre =
@@ -491,7 +500,7 @@ Applied to the current instance of the Biography Box that is produced via the `[
 `add_filter ('wp_biographia_links', 'add_shortcode_css', 10, 2);
 
 function add_shortcode_css ($content, $params) {
-	// params = array (mode => shortcode-mode, author => author-id, prefix => prefix-string,
+	// params = array (mode => shortcode-mode, user => author-id, prefix => prefix-string,
 						name => name-option)
 
 	return '<div class="custom-shortcode-css">' . $content . '</div>';
