@@ -1839,25 +1839,25 @@ class WP_Biographia extends WP_PluginBase {
 				$exclusion_settings[] = '<p><em>' . __('If you want to stop the Biography Box being displayed on a single post, page or custom post type, you can do this here.', 'wp-biographia') . '</em></p>';
 
 				$exclusion_settings[] = '<p><strong>' . __("Exclude From Single Posts (via Post ID)", 'wp-biographia') . '</strong><br />
-						<input type="text" name="wp_biographia_post_exclusions" id="wp_biographia_post_exclusions" value="' . $settings['wp_biographia_post_exclusions'] . '" /><br />
+						<input type="text" name="wp_biographia_post_exclusions" id="wp_biographia_post_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_post_exclusions'] . '" /><br />
 						<small>' . __('Suppresses the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to suppress, comma separated with no spaces, e.g. 54,33,55', 'wp-biographia') . '</small></p>';
 
 				$exclusion_settings[] = '<p><strong>' . __("Globally Exclude From Posts (via Post ID)", 'wp-biographia') . '</strong><br />
-					<input type="text" name="wp_biographia_global_post_exclusions" id="wp_biographia_global_post_exclusions" value="' . $settings['wp_biographia_global_post_exclusions'] . '" /><br />
+					<input type="text" name="wp_biographia_global_post_exclusions" id="wp_biographia_global_post_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_global_post_exclusions'] . '" /><br />
 					<small>' . __('Suppresses the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
 
 				foreach ($pts as $pt) {
 					$exclusion_settings[] = '<p><strong>' . sprintf (__('Exclude From Single %1$s (via %2$s ID)', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
-						<input type="text" name="wp_biographia_' . $pt->name .'_exclusions" id="wp_biographia_'. $pt->name .'_exclusions" value="' . $settings['wp_biographia_' . $pt->name . '_exclusions'] . '" /><br />
+						<input type="text" name="wp_biographia_' . $pt->name .'_exclusions" id="wp_biographia_'. $pt->name .'_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_' . $pt->name . '_exclusions'] . '" /><br />
 						<small>' . sprintf (__('Suppresses the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name) . '</small></p>';
 
 					$exclusion_settings[] = '<p><strong>' . sprintf (__('Globally Exclude From %1$s (via %2$s ID).', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
-						<input type="text" name="wp_biographia_global_' . $pt->name . '_exclusions" id="wp_biographia_global_' . $pt->name . '_exclusions" value="' . $settings['wp_biographia_global_' . $pt->name . '_exclusions'] . '" /><br />
+						<input type="text" name="wp_biographia_global_' . $pt->name . '_exclusions" id="wp_biographia_global_' . $pt->name . '_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_global_' . $pt->name . '_exclusions'] . '" /><br />
 						<small>' . sprintf (__('Suppresses the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name)  . '</small></p>';
 				}
 
 				$exclusion_settings[] = '<p><strong>' . __("Exclude Pages (via Page ID)", 'wp-biographia') . '</strong><br />
-					<input type="text" name="wp_biographia_page_exclusions" id="wp_biographia_page_exclusions" value="' . $settings['wp_biographia_page_exclusions'] . '" /><br />
+					<input type="text" name="wp_biographia_page_exclusions" id="wp_biographia_page_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_page_exclusions'] . '" /><br />
 					<small>' . __('Suppresses the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
 					
 				/****************************************************************************

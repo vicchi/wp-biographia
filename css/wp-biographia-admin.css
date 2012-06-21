@@ -83,6 +83,10 @@
 #wp-biographia-suppressed-page-users,
 #wp-biographia-enabled-categories,
 #wp-biographia-excluded-categories {
-	width: 100px;
-	height: 80px;
+	width: 200px;
+	height: 100px;
+}
+
+.wp-biographia-exclusions-input {
+	width: 400px;
 }
