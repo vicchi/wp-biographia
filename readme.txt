@@ -12,7 +12,7 @@ Add and display a customisable user biography for all single post types, in RSS 
 
 == Description ==
 
-This plugin allows you to add a customisable biography to posts, to RSS feeds, to pages, to archives and to each post on your blog's landing page. It integrates out of the box with the information that can be provided in each user's profile and supports custom post types. Display of the Biography Box can be suppressed on a global or per user basis for posts, pages and custom post types as well as on a per category basis.
+This plugin allows you to add a customisable biography to posts, to RSS feeds, to pages, to archives and to each post on your blog's landing page. It integrates out of the box with the information that can be provided in each user's profile and supports custom post types. Display of the Biography Box can be hidden on a global or per user basis for posts, pages and custom post types as well as on a per category basis.
 
 Settings and options include:
 
@@ -21,7 +21,7 @@ Settings and options include:
 1. Choose the amount of user profile information displayed in the Biography Box
 1. Choose the avatar image size
 1. Choose to display the Biography Box at the top or the bottom of content (universally)
-1. Choose to suppress the display of the Biography Box for pages, posts and posts/pages on a per user basis
+1. Choose to hide the display of the Biography Box for pages, posts and posts/pages on a per user basis
 
 The plugin expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn, Google+, Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles. Your Contact Info links can then be displayed as part of the Biography Box, either as plain text links or as icon links. Further contact links can easily be added to the Biography Box by using the `wp_biographia_contact_info` and `wp_biographia_link_items` filters.
 
@@ -40,8 +40,8 @@ The position and content of the Biography Box, including adding support for new 
 1. You can can control display settings, style settings and content settings for the Biography Box.
 1. Click on the *"Save Changes"* button to preserve your chosen settings and options.
 1. If you enable the display of the post user's image, make sure avatar support is turned on; from the Dashboard, navigate to *Settings / Discussion* and ensure that *Show Avatars* is enabled. Don't forget to save your changes.
-1. Users with the `manage_options` capability can edit their profile via *Users / Your Profile* from the Dashboard to suppress the display of the Biography Box on posts and/or on pages and also the profiles of other users via the *Users / All Users / Edit* from the Dashboard.
-1. Suppression of the display of the Biography Box on posts and/or on pages can also be configured from the Dashboard; navigate to *Settings / WP Biographia / Biography Box Display Settings* and click on the *Exclusions* tab.
+1. Users with the `manage_options` capability can edit their profile via *Users / Your Profile* from the Dashboard to hide the display of the Biography Box on posts and/or on pages and also the profiles of other users via the *Users / All Users / Edit* from the Dashboard.
+1. Hiding of the display of the Biography Box on posts and/or on pages can also be configured from the Dashboard; navigate to *Settings / WP Biographia / Biography Box Display Settings* and click on the *Exclusions* tab.
 
 == Frequently Asked Questions ==
 
@@ -71,7 +71,7 @@ There's probably one of two things going on here. Firstly, you've already got an
 
 = I only want to show the Biography Box for certain users and not for others; can I do this? =
 
-As of v2.1, WP Biographia allows you to suppress the Biography Box being displayed on a per user basis. You can suppress for posts only, for pages only or for both posts and pages. There's two ways of configuring this. If your user has the `manage_options` capability, you can choose the degree of suppression, if any, from your user profile or for any other user's profile; from the Dashboard, navigate to Users and check the *Suppress From Posts* and/or *Suppress From Pages* checkbox options. You can also configure this easily from the plugin's Settings And Options; from the Dashboard, navigate to the *Settings / WP Biographia* page, click on the *Exclusions* tab and under *User Suppression Settings*, add and/or remove the users to fit your model of who should have the Biography Box displayed.
+As of v2.1, WP Biographia allows you to hide the Biography Box from being displayed on a per user basis. You can hide for posts only, for pages only or for both posts and pages. There's two ways of configuring this. If your user has the `manage_options` capability, you can choose the degree of hiding, if any, from your user profile or for any other user's profile; from the Dashboard, navigate to Users and check the *Hide From Posts* and/or *Hide From Pages* checkbox options. You can also configure this easily from the plugin's Settings And Options; from the Dashboard, navigate to the *Settings / WP Biographia* page, click on the *Exclusions* tab and under *User Hiding Settings*, add and/or remove the users to fit your model of who should have the Biography Box displayed.
 
 = I want to show the Biography Box for all users but only for certain categories; can I do this? =
 
@@ -165,7 +165,7 @@ WP Biographia is named after the etymology of the modern English word biography.
 1. Settings and Options: Admin Tab - Content and Excerpt Priority Settings
 1. Settings and Options: Exclusions Tab - Post, Page and Custom Post Type Exclusion Settings
 1. Settings and Options: Exclusions Tab - Category Exclusion Settings
-1. Settings and Options: Exclusions Tab - User Suppression Settings
+1. Settings and Options: Exclusions Tab - User Hiding Settings
 1. Settings and Options: Style Tab
 1. Settings and Options: Content Tab
 1. Settings and Options: Content Tab, continued
@@ -184,7 +184,7 @@ The current version is 3.1.0 (2012.05.03)
 * Released 2012.05.03
 * Added: Support for shortcode `role` attribute to further filter display of users when the shortcode is used in *wildcard* mode.
 * Added: The *Colophon* tab in the admin settings screen now displays a dump of the plugin's setting and options without the need to extract that information from the database via MySQL or phpMyAdmin.
-* Added: New *Admin* tab in the admin settings screen. This allows a suitably permissioned administrator to hide the Biography Box settings from a user's profile according to the user's role and to automatically suppress display of the Biography Box for newly created users according to that user's role.
+* Added: New *Admin* tab in the admin settings screen. This allows a suitably permissioned administrator to hide the Biography Box settings from a user's profile according to the user's role and to automatically hide display of the Biography Box for newly created users according to that user's role.
 * Added: Introductory help text to each post-box in each tab in the admin settings screen.
 * Added: The filter priorities for both `the_content` and `the_excerpt` can now be individually defined to cope with priority clashes with other themes and plugins which use these filters.
 * Fixed: Bug where the `wp_biographia_category_exclusions` setting was not defined in the database upon plugin upgrade, causing an *undefined index* notice message when the PHP error reporting level is set to `E_NOTICE`.
@@ -209,7 +209,7 @@ The current version is 3.1.0 (2012.05.03)
 * Added: Filter wp_biographia_biography_box
 * Added: Support for the enclosing form of the wp_biographia shortcode in addition to the self-closing form.
 * Added: Support for resetting the plugin's settings/options to their initial default values from within the admin screen.
-* Added: Support for suppressing display of the Biography Box from posts, archives and the front page by category.
+* Added: Support for hiding display of the Biography Box from posts, archives and the front page by category.
 * Added: Tabbed settings/options in the admin screen.
 * Fixed: Bug that caused an empty contact link to be displayed when an user's profile has an empty corresponding contact field.
 * Fixed: CSS bug that prevented WP Touch from working in non-restricted mode.
@@ -244,7 +244,7 @@ The current version is 3.1.0 (2012.05.03)
 
 = 2.3 =
 * Released 2012.01.26
-* Suppress display of "More Posts" link in the Biography Box (if configured) if the user has no posts.
+* Hide the display of the "More Posts" link in the Biography Box (if configured) if the user has no posts.
 * Add `author`, `prefix` and `name` short code attribute support.
 * Add support for global (across single, archive and front page templates) post exclusions in built-in post types and custom post types.
 * Tightened wording in admin screen around post exclusions.
@@ -261,11 +261,11 @@ The current version is 3.1.0 (2012.05.03)
 
 = 2.1.1 =
 * Released 2011.12.21
-* Fixed bug in per user suppression due to debug code being left in the release
+* Fixed bug in per user hiding due to debug code being left in the release
 
 = 2.1 =
 * Released 2011.12.20
-* Add ability to suppress the Biography Box from being displayed on posts, on pages and on posts and pages on a per user basis
+* Add ability to hide the Biography Box from being displayed on posts, on pages and on posts and pages on a per user basis
 * Add settings link to Settings / WP Biographia admin page from the plugin's entry on the Dashboard / Plugins page
 * Add checks for avatar display in the Biography Box being requested with avatar support not enabled in the Settings / Discussions admin page
 * Add Help & Support sidebar box to Settings / WP Biographia admin page
@@ -315,7 +315,7 @@ This is the 8th version of WP Biographia and is a bug fix release, clearing up s
 This is the 7th version of WP Biographia; adds internationalisation support plus Spanish and Turkish translations; adds support for displaying the user's contact links as icons and for using an alternate icon set.
 
 = 2.3 =
-This is the 6th version of WP Biographia; adds support for global post exclusions, enhanced shortcode options and suppression of the "More Posts" link if the user has no posts.
+This is the 6th version of WP Biographia; adds support for global post exclusions, enhanced shortcode options and hiding of the "More Posts" link if the user has no posts.
 
 = 2.2 =
 * This is the fifth version of WP Biographia; adds support for enhanced shortcode usage, excerpt support on archive pages and additional social media profiles and links as well as several bug fixes.
@@ -324,7 +324,7 @@ This is the 6th version of WP Biographia; adds support for global post exclusion
 * This is the fourth version of WP Biographia which fixes a fatal bug in v2.1; please upgrade to this version and skip v2.0.
 
 = 2.1 =
-* This is the third version of WP Biographia; adds support for per user suppression of displaying the Biography Box on posts, on pages and on posts and pages, plus bug fixes and minor UI changes.
+* This is the third version of WP Biographia; adds support for per user hiding of displaying the Biography Box on posts, on pages and on posts and pages, plus bug fixes and minor UI changes.
 
 = 2.0 =
 * This is the second version of WP Biographia and incorporates new features and bug fixes as well as some under-the-hood plumbing changes; in particular the plugin file locations have changed to reflect WordPress plugin development recommendations
@@ -409,7 +409,7 @@ WP Biographia supports multiple filters, which are described in more detail belo
 * modify and/or enhance the set of contact information fields the plugin adds to the user's profile
 * modify and/or enhance the contact links that are added to the Biography Box by the plugin
 * modify the position of the Biography Box to before or after the post content returned by `the_content()` and/or `the_excerpt()`
-* suppress the display of the Biography Box entirely under user-defined circumstances
+* hide the display of the Biography Box entirely under user-defined circumstances
 * modify and/or enhance the Biography Box that is produced by the `[wp_biographia]` shortcode
 * modify and/or enhance the format and content of the contact links that are added to the Biography Box by the plugin
 * modify and/or enhance the Biography Box that is produced for an RSS feed
@@ -481,13 +481,13 @@ function insert_biography_header ($pattern) {
 
 = wp_biographia_pre =
 
-Allows display of the Biography Box to be suppressed under user-defined circumstances. This only affects the display of the Biography Box that is configured via the plugin's admin screen or via the shortcode in configured mode.
+Allows display of the Biography Box to be hidden ed under user-defined circumstances. This only affects the display of the Biography Box that is configured via the plugin's admin screen or via the shortcode in configured mode.
 
-*Example:* Suppress the Biography Box
+*Example:* Hide the Biography Box
 
-`add_filter ('wp_biographia_pre', 'suppress_biography_box');
+`add_filter ('wp_biographia_pre', 'hide_biography_box');
 
-function suppress_biography_box ($flag) {
+function hide_biography_box ($flag) {
 	return true;
 }`
 

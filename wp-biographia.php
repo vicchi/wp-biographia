@@ -1310,7 +1310,7 @@ class WP_Biographia extends WP_PluginBase {
 		<h3>Biography Box</h3>
 		<table class="form-table">
 			<tr>
-				<th scope="row"><?php __('Suppress From Posts', 'wp-biographia')?></th>
+				<th scope="row"><?php __('Hide On Posts', 'wp-biographia')?></th>
 				<td>
 					<label for="wp_biographia_suppress_posts">
 						<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php _e('Don\'t show the Biography Box on your posts', 'wp-biographia')?>
@@ -1318,7 +1318,7 @@ class WP_Biographia extends WP_PluginBase {
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><?php __('Suppress From Pages', 'wp-biographia')?></th>
+				<th scope="row"><?php __('Hide On Pages', 'wp-biographia')?></th>
 				<td>
 					<label for="wp_biographia_suppress_pages">
 						<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php _e('Don\'t show the Biography Box on your pages', 'wp-biographia')?>
@@ -1850,25 +1850,25 @@ class WP_Biographia extends WP_PluginBase {
 
 				$exclusion_settings[] = '<p><strong>' . __("Exclude From Single Posts (via Post ID)", 'wp-biographia') . '</strong><br />
 						<input type="text" name="wp_biographia_post_exclusions" id="wp_biographia_post_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_post_exclusions'] . '" /><br />
-						<small>' . __('Suppresses the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to suppress, comma separated with no spaces, e.g. 54,33,55', 'wp-biographia') . '</small></p>';
+						<small>' . __('Hides the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to hide, comma separated with no spaces, e.g. 54,33,55', 'wp-biographia') . '</small></p>';
 
 				$exclusion_settings[] = '<p><strong>' . __("Globally Exclude From Posts (via Post ID)", 'wp-biographia') . '</strong><br />
 					<input type="text" name="wp_biographia_global_post_exclusions" id="wp_biographia_global_post_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_global_post_exclusions'] . '" /><br />
-					<small>' . __('Suppresses the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
+					<small>' . __('Hides the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
 
 				foreach ($pts as $pt) {
 					$exclusion_settings[] = '<p><strong>' . sprintf (__('Exclude From Single %1$s (via %2$s ID)', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
 						<input type="text" name="wp_biographia_' . $pt->name .'_exclusions" id="wp_biographia_'. $pt->name .'_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_' . $pt->name . '_exclusions'] . '" /><br />
-						<small>' . sprintf (__('Suppresses the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name) . '</small></p>';
+						<small>' . sprintf (__('Hides the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name) . '</small></p>';
 
 					$exclusion_settings[] = '<p><strong>' . sprintf (__('Globally Exclude From %1$s (via %2$s ID).', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
 						<input type="text" name="wp_biographia_global_' . $pt->name . '_exclusions" id="wp_biographia_global_' . $pt->name . '_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_global_' . $pt->name . '_exclusions'] . '" /><br />
-						<small>' . sprintf (__('Suppresses the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name)  . '</small></p>';
+						<small>' . sprintf (__('Hides the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name)  . '</small></p>';
 				}
 
 				$exclusion_settings[] = '<p><strong>' . __("Exclude Pages (via Page ID)", 'wp-biographia') . '</strong><br />
 					<input type="text" name="wp_biographia_page_exclusions" id="wp_biographia_page_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_page_exclusions'] . '" /><br />
-					<small>' . __('Suppresses the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to suppress, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
+					<small>' . __('Hides the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
 					
 				/****************************************************************************
 			 	 * Exclusions tab content - 2) User Suppression Settings
@@ -1901,7 +1901,7 @@ class WP_Biographia extends WP_PluginBase {
 					}
 				}	// end-foreach (...)
 
-				$suppression_settings[] = '<p><strong>' . __('Per User Suppression Of The Biography Box On Posts', 'wp-biographia') . '</strong><br />';
+				$suppression_settings[] = '<p><strong>' . __('Hide The Biography Box On Posts For Specific Users', 'wp-biographia') . '</strong><br />';
 				$suppression_settings[] = '<span class="wp-biographia-users">';
 				$suppression_settings[] = '<strong>' . __('Enabled Users', 'wp-biographia') . '</strong><br />';
 				$suppression_settings[] = '<select multiple id="wp-biographia-enabled-post-users" name="wp-biographia-enabled-post-users[]">';
@@ -1914,7 +1914,7 @@ class WP_Biographia extends WP_PluginBase {
 				$suppression_settings[] = '<a href="#" id="wp-biographia-user-post-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
 				$suppression_settings[] = '</span>';
 				$suppression_settings[] = '<span class="wp-biographia-users">';
-				$suppression_settings[] = '<strong>' . __('Suppressed Users', 'wp-biographia') . '</strong><br />';
+				$suppression_settings[] = '<strong>' . __('Hidden Users', 'wp-biographia') . '</strong><br />';
 				$suppression_settings[] = '<select multiple id="wp-biographia-suppressed-post-users" name="wp-biographia-suppressed-post-users[]">';
 
 				foreach ($post_suppressed as $user_id => $user_login) {
@@ -1925,9 +1925,9 @@ class WP_Biographia extends WP_PluginBase {
 				$suppression_settings[] = '<a href="#" id="wp-biographia-user-post-rem">&laquo; ' . __('Remove', 'wp-biographia') . '</a>';
 				$suppression_settings[] = '</span>';
 				$suppression_settings[] = '<br />';
-				$suppression_settings[] = '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored posts. Selecting a user for suppression of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
+				$suppression_settings[] = '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored posts. Selecting a user for hiding of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
 
-				$suppression_settings[] = '<p><strong>' . __('Per User Suppression Of The Biography Box On Pages', 'wp-biographia') . '</strong><br />';
+				$suppression_settings[] = '<p><strong>' . __('Hide The Biography Box On Pages For Specific Users', 'wp-biographia') . '</strong><br />';
 				$suppression_settings[] = '<span class="wp-biographia-users">';
 				$suppression_settings[] = '<strong>' . __('Enabled Users', 'wp-biographia') . '</strong><br />';
 				$suppression_settings[] = '<select multiple id="wp-biographia-enabled-page-users" name="wp-biographia-enabled-page-users[]">';
@@ -1940,7 +1940,7 @@ class WP_Biographia extends WP_PluginBase {
 				$suppression_settings[] = '<a href="#" id="wp-biographia-user-page-add">' . __('Add', 'wp-biographia') . ' &raquo;</a>';
 				$suppression_settings[] = '</span>';
 				$suppression_settings[] = '<span class="wp-biographia-users">';
-				$suppression_settings[] = '<strong>' . __('Suppressed Users', 'wp-biographia') . '</strong><br />';
+				$suppression_settings[] = '<strong>' . __('Hidden Users', 'wp-biographia') . '</strong><br />';
 				$suppression_settings[] = '<select multiple id="wp-biographia-suppressed-page-users" name="wp-biographia-suppressed-page-users[]">';
 
 				foreach ($page_suppressed as $user_id => $user_login) {
@@ -2400,7 +2400,7 @@ class WP_Biographia extends WP_PluginBase {
 					implode ('', $category_settings));
 				$wrapped_content[] = $this->admin_postbox (
 					'wp-biographia-supression-settings',
-					__('User Suppression Settings', 'wp-biographia'),
+					__('User Hiding Settings', 'wp-biographia'),
 					implode ('', $suppression_settings));
 				break;
 
