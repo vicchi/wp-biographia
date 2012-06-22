@@ -1309,22 +1309,24 @@ class WP_Biographia extends WP_PluginBase {
 		?>
 		<h3>Biography Box</h3>
 		<table class="form-table">
+			<tbody>
 			<tr>
-				<th scope="row"><?php __('Hide On Posts', 'wp-biographia')?></th>
+				<th>
+					<label for="wp_biographia_suppress_posts"><?php _e('Hide On Posts', 'wp-biographia'); ?></label>
+				</th>
 				<td>
-					<label for="wp_biographia_suppress_posts">
-						<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php _e('Don\'t show the Biography Box on your posts', 'wp-biographia')?>
-					</label>
+					<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php _e('Don\'t show the Biography Box on your posts', 'wp-biographia'); ?>
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><?php __('Hide On Pages', 'wp-biographia')?></th>
+				<th>
+					<label for="wp_biographia_suppress_pages"><?php _e('Hide On Pages', 'wp-biographia'); ?></label>
+				</th>
 				<td>
-					<label for="wp_biographia_suppress_pages">
-						<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php _e('Don\'t show the Biography Box on your pages', 'wp-biographia')?>
-					</label>
+					<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php _e('Don\'t show the Biography Box on your pages', 'wp-biographia'); ?>
 				</td>
 			</tr>
+			</tbody>
 		</table>
 		<?php
 		}
