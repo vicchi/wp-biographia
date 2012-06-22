@@ -38,8 +38,8 @@
 			return !$('#wp-biographia-excluded-categories option:selected').remove().appendTo('#wp-biographia-enabled-categories');
 		});
 		
-		$('#wp-biographia-display-archives').click(function () {
-			$('#wp-biographia-archive-container').toggle(!this.checked);
+		$('#wp-biographia-display-archives-posts').click(function () {
+			$('#wp-biographia-archive-posts-container').toggle(!this.checked);
 		});
 		
 		$('#wp-biographia-content-icons').click(function() {

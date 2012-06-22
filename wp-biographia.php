@@ -29,7 +29,7 @@ $this->insert_biographia ()
 		checks display via 'wp_biographia_display_front'
 		calls $this->post_types_cycle ()
 	for archive
-		checks display via 'wp_biographia_display_archives'
+		checks display via 'wp_biographia_display_archives_posts'
 		calls $this->post_types_cycle ()
 	for page
 		checks display via 'wp_biographia_display_pages'
@@ -279,11 +279,11 @@ class WP_Biographia extends WP_PluginBase {
 					'wp_biographia_style_bg' => '#FFEAA8',
 					'wp_biographia_style_border' => 'top',
 					'wp_biographia_display_front' => 'on',
-					'wp_biographia_display_archives' => 'on',
-					'wp_biographia_display_author_archives' => '',
-					'wp_biographia_display_category_archives' => '',
-					'wp_biographia_display_date_archives' => '',
-					'wp_biographia_display_tag_archives' => '',
+					'wp_biographia_display_archives_posts' => 'on',
+					'wp_biographia_display_author_archives_posts' => '',
+					'wp_biographia_display_category_archives_posts' => '',
+					'wp_biographia_display_date_archives_posts' => '',
+					'wp_biographia_display_tag_archives_posts' => '',
 					'wp_biographia_display_posts' => 'on',
 					'wp_biographia_display_pages' => 'on',
 					'wp_biographia_display_feed' => '',
@@ -746,7 +746,7 @@ class WP_Biographia extends WP_PluginBase {
 				break;
 
 			case "archive":
-				$option = $this->get_option ('wp_biographia_display_archives');
+				$option = $this->get_option ('wp_biographia_display_archives_posts');
 				if (!$excluded && ((isset ($option) && $option) || ($this->is_shortcode))) {
 					$new_content = $this->post_types_cycle ($content, $pattern);
 				}
@@ -1579,10 +1579,13 @@ class WP_Biographia extends WP_PluginBase {
 			 * v3.2 changed default configuration settings ...
 			 *		wp_biographia_version = "320"
 			 * v3.2 added configuration settings ...
-			 *		wp_biographia_display_author_archives = ""
-			 *		wp_biographia_display_category_archives = ""
-			 *		wp_biographia_display_date_archives = ""
-			 *		wp_biographia_display_tag_archives = ""
+			 *		wp_biographia_display_archives_posts = ""
+			 *		wp_biographia_display_author_archives_posts = ""
+			 *		wp_biographia_display_category_archives_posts = ""
+			 *		wp_biographia_display_date_archives_posts = ""
+			 *		wp_biographia_display_tag_archives_posts = ""
+			 * v3.2 removed configuration settings ...
+			 *		wp_biographia_display_archives (replaced by wp_biographia_display_archive_posts)
 			 */
 
 			switch ($current_plugin_version) {
@@ -1687,10 +1690,15 @@ class WP_Biographia extends WP_PluginBase {
 						self::PRIORITY);
 						
 				case '320':
-					$this->admin_upgrade_option ($settings, 'display_author_archives', '');
-					$this->admin_upgrade_option ($settings, 'display_category_archives', '');
-					$this->admin_upgrade_option ($settings, 'display_date_archives', '');
-					$this->admin_upgrade_option ($settings, 'display_tag_archives', '');
+					if (isset ($settings['wp_biographia_display_archives'])) {
+						$this->admin_upgrade_option ($settings, 'display_archives_posts',
+					 							$settings['wp_biographia_display_archives']);
+											unset ($settings['wp_biographia_display_archives']);
+					}
+					$this->admin_upgrade_option ($settings, 'display_author_archives_posts', '');
+					$this->admin_upgrade_option ($settings, 'display_category_archives_posts', '');
+					$this->admin_upgrade_option ($settings, 'display_date_archives_posts', '');
+					$this->admin_upgrade_option ($settings, 'display_tag_archives_posts', '');
 					
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
@@ -1737,7 +1745,6 @@ class WP_Biographia extends WP_PluginBase {
 		$image_size = "";
 		$avatars_enabled = (get_option ('show_avatars') == 1 ? true : false);
 		$icons_enabled = ($settings['wp_biographia_content_icons'] == 'on' ? true : false);
-		$all_archives_enabled = ($settings['wp_biographia_display_archives'] == 'on' ? true : false);
 		$alt_icons = ($settings['wp_biographia_content_alt_icons'] == 'on' ? true : false);
 
 		$tab = $this->admin_validate_tab ();
@@ -2329,6 +2336,8 @@ class WP_Biographia extends WP_PluginBase {
 		 	 	 * Display settings tab content
 		 	 	 */
 
+				$archives_enabled = ($settings['wp_biographia_display_archives_posts'] == 'on' ? true : false);
+
 				$display_settings[] = '<p><em>' . __('This tab contains broad level settings to control how the Biography Box is displayed and where. You can configure more specific display settings in the Exclusions tab and what is actually displayed in the Biography Box in the Content tab.', 'wp-biographia') . '</em></p>';
 
 				$display_settings[] = '<p><strong>' . __("Display On Front Page", 'wp-biographia') . '</strong><br /> 
@@ -2340,11 +2349,11 @@ class WP_Biographia extends WP_PluginBase {
 						<small>' . __('Displays the Biography Box for individual posts.', 'wp-biographia') . '</small></p>';
 
 				$display_settings[] = '<p><strong>' . __("Display On All Post Archives", 'wp-biographia') . '</strong><br /> 
-						<input type="checkbox" name="wp_biographia_display_archives" ' . checked ($settings['wp_biographia_display_archives'], 'on', false) . ' id="wp-biographia-display-archives" />
+						<input type="checkbox" name="wp_biographia_display_archives_posts" ' . checked ($settings['wp_biographia_display_archives_posts'], 'on', false) . ' id="wp-biographia-display-archives-posts" />
 						<small>' . __('Displays the Biography Box for each post on <strong>all types</strong> of Archive page (Author, Category, Date and Tag)', 'wp-biographia') . '</small></p>';
 
-				$display_settings[] = '<div id="wp-biographia-archive-container"';
-				if ($all_archives_enabled) {
+				$display_settings[] = '<div id="wp-biographia-archive-posts-container"';
+				if ($archives_enabled) {
 					$display_settings[] = ' style="display:none"';
 				}
 				$display_settings[] = '>';
@@ -2364,24 +2373,24 @@ class WP_Biographia extends WP_PluginBase {
 				$display_settings[] = '<p><strong>' . __("Display On Tag Archives", 'wp-biographia') . '</strong><br /> 
 						<input type="checkbox" name="wp_biographia_display_tag_archives" ' . checked ($settings['wp_biographia_display_tag_archives'], 'on', false) . ' />
 						<small>' . __('Displays the Biography Box for each post on Tag Archive pages.', 'wp-biographia') . '</small></p>';
-				$display_settings[] = '</div>';
 
 				$display_settings[] = '<p><strong>' . __("Display On Individual Pages", 'wp-biographia') . '</strong><br /> 
-								<input type="checkbox" name="wp_biographia_display_pages" ' . checked ($settings['wp_biographia_display_pages'], 'on', false) . ' />
-								<small>' . __('Displays the Biography Box for individual pages.', 'wp-biographia') . '</small></p>';
+						<input type="checkbox" name="wp_biographia_display_pages" ' . checked ($settings['wp_biographia_display_pages'], 'on', false) . ' />
+						<small>' . __('Displays the Biography Box for individual pages.', 'wp-biographia') . '</small></p>';
+				$display_settings[] = '</div>';
 
 				foreach ($pts as $pt) {
 					$display_settings[] = '<p><strong>' . sprintf (__('Display On Individual %s', 'wp-biographia'), $pt->labels->name) . '</strong><br /> 
-											<input type="checkbox" name="wp_biographia_display_' . $pt->name . '" ' . checked ($settings['wp_biographia_display_' . $pt->name], 'on', false) . ' />
-				<small>' . sprintf (__('Displays the Biography Box on individual instances of custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';
+							<input type="checkbox" name="wp_biographia_display_' . $pt->name . '" ' . checked ($settings['wp_biographia_display_' . $pt->name], 'on', false) . ' />
+							<small>' . sprintf (__('Displays the Biography Box on individual instances of custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';
 
-					$display_settings[] = '<p><strong>' . sprintf (__('Display On All %s Archives', 'wp-biographia'), $pt->labels->singular_name) . '</strong><br /> 
-				<input type="checkbox" name="wp_biographia_display_archives_' . $pt->name . '" ' . checked ($settings['wp_biographia_display_archives_'.$pt->name], 'on', false) . ' />
-				<small>' . sprintf (__('Displays the Biography Box on <strong>all types</strong> of Archive page for custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';	
+					$display_settings[] = '<p><strong>' . sprintf (__('Display On %s Archives', 'wp-biographia'), $pt->labels->singular_name) . '</strong><br /> 
+							<input type="checkbox" name="wp_biographia_display_archives_' . $pt->name . '" ' . checked ($settings['wp_biographia_display_archives_'.$pt->name], 'on', false) . ' />
+							<small>' . sprintf (__('Displays the Biography Box on Archive pages for custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';	
 				}	// end-foreach (...)
 
 				$display_settings[] = '<p><strong>' . __("Display In RSS Feeds", 'wp-biographia') . '</strong><br />
-				<input type="checkbox" name="wp_biographia_display_feed" ' . checked ($settings['wp_biographia_display_feed'], 'on', false) . ' />
+						<input type="checkbox" name="wp_biographia_display_feed" ' . checked ($settings['wp_biographia_display_feed'], 'on', false) . ' />
 						<small>' . __('Displays the Biography Box in feeds for each entry.', 'wp-biographia') . '</small></p>';
 
 				$settings['wp_biographia_display_location'] = (
@@ -2724,20 +2733,20 @@ class WP_Biographia extends WP_PluginBase {
 						$settings['wp_biographia_display_posts'] =
 							$this->admin_option ('wp_biographia_display_posts');
 
-						$settings['wp_biographia_display_archives'] =
-							$this->admin_option ('wp_biographia_display_archives');
+						$settings['wp_biographia_display_archives_posts'] =
+							$this->admin_option ('wp_biographia_display_archives_posts');
 
-						$settings['wp_biographia_display_author_archives'] =
-							$this->admin_option ('wp_biographia_display_author_archives');
+						$settings['wp_biographia_display_author_archives_posts'] =
+							$this->admin_option ('wp_biographia_display_author_archives_posts');
 
-						$settings['wp_biographia_display_category_archives'] =
-							$this->admin_option ('wp_biographia_display_category_archives');
+						$settings['wp_biographia_display_category_archives_posts'] =
+							$this->admin_option ('wp_biographia_display_category_archives_posts');
 
-						$settings['wp_biographia_display_date_archives'] =
-							$this->admin_option ('wp_biographia_display_date_archives');
+						$settings['wp_biographia_display_date_archives_posts'] =
+							$this->admin_option ('wp_biographia_display_date_archives_posts');
 
-						$settings['wp_biographia_display_tag_archives'] =
-							$this->admin_option ('wp_biographia_display_tag_archives');
+						$settings['wp_biographia_display_tag_archives_posts'] =
+							$this->admin_option ('wp_biographia_display_tag_archives_posts');
 
 						$settings['wp_biographia_display_pages'] =
 								$this->admin_option ('wp_biographia_display_pages');
