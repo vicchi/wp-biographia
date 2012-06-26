@@ -742,7 +742,6 @@ class WP_Biographia extends WP_PluginBase {
 		switch ($context) {
 			case "frontpage":
 				$option = 'wp_biographia_display_front_';
-				//$option = $this->get_option ('wp_biographia_display_front_posts');
 				if (!$excluded || $this->is_shortcode) {
 					$new_content = $this->post_types_cycle ($option, $content, $pattern);
 				}
@@ -770,7 +769,6 @@ class WP_Biographia extends WP_PluginBase {
 					}
 				}
 
-				//$option = $this->get_option ('wp_biographia_display_archives_posts');
 				if (!$excluded || $this->is_shortcode) {
 					$new_content = $this->post_types_cycle ($option, $content, $pattern);
 				}
@@ -788,8 +786,6 @@ class WP_Biographia extends WP_PluginBase {
 				}
 
 				if (!$excluded && $this->display_bio) {
-					$page_exclusions = $this->get_option ('wp_biographia_page_exclusions');
-					
 					if ($this->get_option ('wp_biographia_page_exclusions')) {
 						$page_exclusions = explode (',', $this->get_option ('wp_biographia_page_exclusions'));
 						$this->display_bio = (!in_array ($post->ID, $page_exclusions));
