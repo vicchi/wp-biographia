@@ -150,6 +150,9 @@ class WP_Biographia extends WP_PluginBase {
 			$this->hook ('plugin_action_links_' . plugin_basename (__FILE__),
 				'admin_settings_link');
 			$this->hook ('user_register', 'admin_user_register');
+			$this->hook ('add_meta_boxes', 'admin_add_meta_boxes');
+			$this->hook ('save_post', 'admin_save_meta_boxes');
+			$this->hook ('before_delete_post', 'admin_before_delete_post');
 		}
 	}
 	
@@ -1314,7 +1317,8 @@ class WP_Biographia extends WP_PluginBase {
 	}
 
 	/**
-	 * "show_user_profile" and "edit_user_profile"; called to add fields to the user profile.
+	 * "show_user_profile" and "edit_user_profile" action hooks; called to add fields to
+	 * the admin user profile screen.
 	 */
 
 	function admin_add_profile_extensions ($user) {
@@ -3037,6 +3041,289 @@ class WP_Biographia extends WP_PluginBase {
 		}	// end-foreach (users)
 
 		$this->add_settings ();
+	}
+	
+	/**
+	 * "add_meta_boxes" action hook; adds a meta box to hide the Biography Box for a page,
+	 * and to hide the Biography Box on posts and custom post types to the admin edit
+	 * screens.
+	 */
+
+	function admin_add_meta_boxes () {
+		$user = wp_get_current_user ();
+		$hide = false;
+		$option = $this->get_option ('wp_biographia_admin_hide_profiles');
+		if (!empty ($option)) {
+			$hidden_profiles = explode (',', $option);
+			foreach ($user->roles as $role) {
+				if (in_array ($role, $hidden_profiles)) {
+					$hide = true;
+					break;
+				}
+			}	// end-foreach;
+		}
+
+		if ($hide) {
+			return;
+		}
+
+		$hide_page = (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true) == 'on');
+		$hide_post = (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true) == 'on');
+		
+		$pts = get_post_types (array (), 'objects');
+
+		foreach ($pts as $pt) {
+			if ($pt->name == 'page' && $hide_page) {
+				continue;
+			}
+			
+			elseif ($pt->name == 'post' && $hide_post) {
+				continue;
+			}
+			
+			$id = sprintf ('wp-biographia-%s-meta', $pt->name);
+			$title = sprintf (__('Biography Box %s Options', 'wp-biographia'), $pt->labels->singular_name);
+			
+			add_meta_box ($id, $title, array ($this, 'admin_display_meta_box'), $pt->name);
+		}	// end-foreach
+	}
+	
+	/**
+	 * "add_meta_box" callback; adds a meta box to hide the Biography Box for a page,
+	 * and to hide the Biography Box on posts and custom post types to the admin edit
+	 * screens.
+	 *
+	 * @param object post WordPress post object
+	 */
+
+	function admin_display_meta_box ($post) {
+		$content = array ();
+		
+		$pt = get_post_type ();
+		$pto = get_post_type_object ($pt);
+
+		switch ($pt) {
+			case 'page':
+				$checked = false;
+				$exclusions = $this->get_option ('wp_biographia_page_exclusions');
+				if (isset ($exclusions)) {
+					$page_exclusions = explode (',', $exclusions);
+					$checked = (in_array ($post->ID, $page_exclusions));
+					
+				}
+
+				$content[] = '<p><strong>' . __("Hide The Biography Box On This Page", 'wp-biographia') . '</strong><br /> 
+					<input type="checkbox" name="wp_biographia_admin_meta_page_hide" ' . checked ($checked, true, false) . ' />
+					<small>' . __('Hides the Biography Box each time this page is displayed.', 'wp-biographia') . '</small></p>';
+				break;
+				
+			default:
+				$checked = false;
+				$opt = 'wp_biographia_' . $pt . '_exclusions';
+				$exclusions = $this->get_option ($opt);
+				if (isset ($exclusions)) {
+					$post_exclusions = explode (',', $exclusions);
+					$checked = (in_array ($post->ID, $post_exclusions));
+				}
+
+				$title = sprintf (__('Hide The Biography Box On Single %s', 'wp_biographia'), $pto->labels->name);
+				$control = 'wp_biographia_admin_meta_single_hide';
+				$text = sprintf (__('Hides the Biography Box each time this %1$s is displayed using the Single %2$s Template.', 'wp_biographia'),
+					$pto->labels->singular_name, $pto->labels->singular_name);
+
+				$content[] = '<p><strong>' . $title . '</strong><br /> 
+					<input type="checkbox" name="' . $control . '" ' . checked ($checked, true, false) . ' />
+					<small>' . $text . '</small></p>';
+				
+				$checked = false;
+				$opt = 'wp_biographia_global_' . $pt . '_exclusions';
+				$exclusions = $this->get_option ($opt);
+				if (isset ($exclusions)) {
+					$post_exclusions = explode (',', $exclusions);
+					$checked = (in_array ($post->ID, $post_exclusions));
+				}
+
+				$title = sprintf (__('Globally Hide The Biography Box On %s', 'wp_biographia'), $pto->labels->name);
+				$control = 'wp_biographia_admin_meta_global_hide';
+				$text = sprintf (__('Hides the Biography Box whenever this %s is displayed; singly, on archive pages or on the front page.', 'wp_biographia'),
+					$pto->labels->singular_name);
+
+				$content[] = '<p><strong>' . $title . '</strong><br /> 
+					<input type="checkbox" name="' . $control . '" ' . checked ($checked, true, false) . ' />
+					<small>' . $text . '</small></p>';
+
+				break;
+		}
+
+		if (!empty ($content)) {
+			echo implode ('', $content);
+		}
+	}
+	
+	/**
+	 * "save_post" action hook; save the post/page/custom post Biography Box hiding options
+	 * (if shown)
+	 *
+	 * @param integer post_id Post ID for the current post
+	 * @param object post WordPress post object
+	 */
+
+	function admin_save_meta_boxes ($post_id, $post) {
+		// CODE HEALTH WARNING
+		// the "save_post" hook is a misnomer; it's not called just on the saving of a
+		// post, but during initial post creation, during autosave, during the creation of
+		// a revision, in fact during anything that changes the disposition of the post.
+		// Which is why there's a whole lot of checking and validation going on here before
+		// we even look at the custom meta box options.
+		
+		if (defined ('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+			return $post_id; 
+		}
+
+		if ($parent_id = wp_is_post_revision ($post_id)) {
+			return $post_id;
+		}
+		
+		
+		$post_type = get_post_type_object ($post->post_type);
+		if (!current_user_can ($post_type->cap->edit_post, $post_id)) {
+			return $post_id;
+		}
+		
+		switch ($post->post_status) {
+			case 'draft':
+			case 'pending':
+			case 'publish':
+				break;
+				
+			default:
+				return $post_id;
+		}
+
+		if ($post_type->name == 'page') {
+			$stub = $post_type->name;
+			$field = 'wp_biographia_admin_meta_page_hide';
+			$value = $this->admin_option ($field);
+			if (isset ($value) && $value) {
+				$this->admin_set_exclusion ($stub, $post_id);
+			}
+			else {
+				$this->admin_clear_exclusion ($stub, $post_id);
+			}
+		}
+		
+		else {
+			$stub = $post_type->name;
+			$field = 'wp_biographia_admin_meta_single_hide';
+			$value = $this->admin_option ($field);
+			if (isset ($value) && $value) {
+				$this->admin_set_exclusion ($stub, $post_id);
+			}
+			else {
+				$this->admin_clear_exclusion ($stub, $post_id);
+			}
+
+			$stub = 'global_' . $post_type->name;
+			$field = 'wp_biographia_admin_meta_global_hide';
+			$value = $this->admin_option ($field);
+			if (isset ($value) && $value) {
+				$this->admin_set_exclusion ($stub, $post_id);
+			}
+			else {
+				$this->admin_clear_exclusion ($stub, $post_id);
+			}
+		}
+	}
+	
+	/**
+	 * "before_delete_post" action hook; called just prior to a post being deleted.
+	 *
+	 * @param integer post_id Post ID for the current post
+	 */
+
+	function admin_before_delete_post ($post_id) {
+		if ($parent_id = wp_is_post_revision ($post_id)) {
+			return;
+		}
+		
+		$post = get_post ($post_id);
+		$stub = $post->post_type;
+		$this->admin_clear_exclusion ($stub, $post_id);
+
+		if ($post->post_type != 'page') {
+			$stub = 'global_' . $post->post_type;
+			$this->admin_clear_exclusion ($stub, $post_id);
+		}
+	}
+	
+	/**
+	 * Helper function to get the current set of post/page/custom post type exclusions
+	 *
+	 * @param string $stub Stub settings/option name
+	 */
+	
+	function admin_get_exclusions ($stub) {
+		$option = 'wp_biographia_' . $stub . '_exclusions';
+		$optval = $this->get_option ($option);
+		$excl = array ();
+		if (!empty ($optval)) {
+			$excl = explode (',', $optval);
+		}
+
+		return $excl;
+	}
+	
+	/**
+	 * Helper function to determine if the current post/page/custom post is excluded/hidden
+	 *
+	 * @param string $stub Stub settings/option name
+	 * @param integer $post_id Post ID for the current post
+	 */
+
+	function admin_is_excluded ($stub, $post_id) {
+		$excl = $this->admin_get_exclusions ($stub);
+		if (isset ($optval)) {
+			return (in_array ($post_id, $excl));
+		}
+		else
+			return false;
+	}
+	
+	/**
+	 * Helper function to flag the current post/page/custom post as excluded/hidden
+	 *
+	 * @param string $stub Stub settings/option name
+	 * @param integer $post_id Post ID for the current post
+	 */
+
+	function admin_set_exclusion ($stub, $post_id) {
+		$excl = $this->admin_get_exclusions ($stub);
+		if (!in_array ($post_id, $excl)) {
+			$excl[] = strval ($post_id);
+			sort ($excl);
+		}
+		$optval = implode (',', $excl);
+		$option = 'wp_biographia_' . $stub . '_exclusions';
+		$this->set_option ($option, $optval);
+	}
+	
+	/**
+	 * Helper function to clear the current post/page/custom post as excluded/hidden
+	 *
+	 * @param string $stub Stub settings/option name
+	 * @param integer $post_id Post ID for the current post
+	 */
+
+	function admin_clear_exclusion ($stub, $post_id) {
+		$excl = $this->admin_get_exclusions ($stub);
+		if (in_array ($post_id, $excl)) {
+			if (($key = array_search (strval ($post_id), $excl)) !== false) {
+				unset ($excl[$key]);
+			}
+		}
+		$optval = implode (',', $excl);
+		$option = 'wp_biographia_' . $stub . '_exclusions';
+		$this->set_option ($option, $optval);
 	}
 }
 
