@@ -545,7 +545,7 @@ Applied to the current instance of the Biography Box that is produced via the si
 
 `add_filter ('wp_biographia_feed', 'add_feed_css');
 
-function add_shortcode_css ($content) {
+function add_feed_css ($content) {
 	return '<div class="custom-feed-css">' . $content . '</div>';
 }`
 
