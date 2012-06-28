@@ -69,6 +69,7 @@ $this->display
 define ('WPBIOGRAPHIA_PATH', plugin_dir_path (__FILE__));
 
 require_once (WPBIOGRAPHIA_PATH . '/wp-plugin-base/wp-plugin-base.php');
+require_once (WPBIOGRAPHIA_PATH . '/includes/wp-biographia-widget.php');
 
 class WP_Biographia extends WP_PluginBase { 
 
@@ -132,6 +133,7 @@ class WP_Biographia extends WP_PluginBase {
 		
 		$this->hook ('wp_enqueue_scripts', 'style');
 		$this->hook ('init');
+		$this->hook ('widgets_init');
 		$this->hook ('the_excerpt', 'insert', intval($excerpt_priority));
 		$this->hook ('the_content', 'insert', intval ($content_priority));
 		$this->hook ('user_contactmethods');
@@ -206,6 +208,14 @@ class WP_Biographia extends WP_PluginBase {
 	function init () {
 		$lang_dir = basename (dirname (__FILE__)) . DIRECTORY_SEPARATOR . 'lang';
 		load_plugin_textdomain ('wp-biographia', false, $lang_dir);
+	}
+	
+	/**
+	 * "widgets_init" action hook; called to initialise the plugin's widget(s)
+	 */
+	
+	function widgets_init () {
+		return register_widget ('WP_BiographiaWidget');
 	}
 	
 	/**
@@ -1330,11 +1340,22 @@ class WP_Biographia extends WP_PluginBase {
 			}	// end-foreach;
 		}
 		
-		if (!$hide) {
 		?>
 		<h3>Biography Box</h3>
 		<table class="form-table">
 			<tbody>
+			<tr>
+				<th>
+					<label for="wp_biographia_short_bio"><?php _e('Short Biography', 'wp-biographia'); ?></label>
+				</th>
+				<td>
+					<textarea name="wp_biographia_short_bio" id="description" rows="5" cols="30"><?php echo get_user_meta ($user->ID, 'wp_biographia_short_bio', true); ?></textarea><br>
+					<span class="description"><?php _e('Share a shorter biography to be used on WP Biographia\'s sidebar widget.', 'wp-biographia'); ?></span>
+				</td>
+			</tr>
+			<?php
+		if (!$hide) {
+			?>
 			<tr>
 				<th>
 					<label for="wp_biographia_suppress_posts"><?php _e('Hide On Posts', 'wp-biographia'); ?></label>
@@ -1351,10 +1372,12 @@ class WP_Biographia extends WP_PluginBase {
 					<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" <?php checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on'); ?> <?php disabled (current_user_can ('manage_options'), false); ?> />&nbsp;<?php _e('Don\'t show the Biography Box on your pages', 'wp-biographia'); ?>
 				</td>
 			</tr>
+			<?php
+		}
+			?>
 			</tbody>
 		</table>
 		<?php
-		}
 	}
 
 	/**
@@ -1363,6 +1386,9 @@ class WP_Biographia extends WP_PluginBase {
 	 */
 
 	function admin_save_profile_extensions ($user_id) {
+		update_user_meta ($user_id, 'wp_biographia_short_bio',
+			$this->admin_option ('wp_biographia_short_bio'));
+
 		$hide = false;
 		$option = $this->get_option ('wp_biographia_admin_hide_profiles');
 		$user = get_userdata ($user_id);

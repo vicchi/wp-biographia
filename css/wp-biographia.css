@@ -83,3 +83,15 @@ ul.wp-biographia-list-text li, ul.wp-biographia-list-icon li {
 	float: none;
 	margin: 0 0 0 0;
 }
+
+.wp-biographia-avatar-wrap {
+	float: left;
+	margin: 8px;
+}
+
+.wp-biographia-avatar-nowrap {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 8px;
+}
