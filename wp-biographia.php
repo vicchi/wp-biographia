@@ -835,7 +835,7 @@ class WP_Biographia extends WP_PluginBase {
 				}
 
 				if (!$excluded && $this->display_bio) {
-					$this->is_feed = true;
+					$this->for_feed = true;
 					$bio_content = $this->display ();
 					$new_content = sprintf ($pattern, $content, $bio_content);
 				}
@@ -1220,16 +1220,22 @@ class WP_Biographia extends WP_PluginBase {
 					. '</div>';
 			}
 
+			$biography[] = '<div class="wp-biographia-text">'
+				. implode ('', $content)
+				. '</div></div>';
+		}
+		
+		else {
+			if (!empty ($settings['wp_biographia_content_image']) &&
+					 ($settings['wp_biographia_content_image'] == 'on')) {
+				$biography[] = '<p>';
+				$biography[] = '<div style="float:left; text-align:left;>'.$author_pic.'</div>';
+				$biography[] = $content.'</p>';	
+			}
+
 			$biography[] = apply_filters ('wp_biographia_feed' , '<div class="wp-biographia-text">'
 				. implode ('', $content)
 				. '</div></div>' , $content , $settings);
-		}
-		
-		elseif (!empty ($settings['wp_biographia_content_image']) &&
-					 ($settings['wp_biographia_content_image'] == 'on')) {
-			$biography[] = '<p>';
-			$biography[] = '<div style="float:left; text-align:left;>'.$author_pic.'</div>';
-			$biography[] = $content.'</p>';	
 		}
 
 		$biography_box = array ();
