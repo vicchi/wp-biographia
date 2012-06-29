@@ -118,12 +118,12 @@ class WP_BiographiaPointers extends WP_PluginBase {
 			$show_pointer = true;
 			$id = '#menu-plugins';
 			$content = '<h3>' . sprintf (__('What\'s New In WP Biographia %s?', 'wp-biographia'), WP_Biographia::DISPLAY_VERSION) . '</h3>';
-			$content .= '<p>Support for WordPress Pointers to display <em>what\'s new</em> information post install or upgrade and to provide a <em>guided tour</em> of the plugin\'s settings and options.</p>';
-			$content .= '<p>Display the Biography Box as a widget.</p>';
-			$content .= '<p>Add a shorter biography to your user profile to be used in conjunction with the Biography Box widget.</p>';
-			$content .= '<p>Display the Biography Box on all types of archive page; author, category, date and tag.</p>';
-			$content .= '<p>New custom meta boxes added to the post/page/custom-post creation/editing screens to hide the Biography Box.</p>';
-			$content .= '<p>New shortcode <code>user</code> attribute; the <code>author</code> attribute is now deprecated.</p>';
+			$content .= '<p>' . __('Support for WordPress Pointers to display <em>what\'s new</em> information post install or upgrade and to provide a <em>guided tour</em> of the plugin\'s settings and options.', 'wp-biographia') . '</p>';
+			$content .= '<p>' . __('Display the Biography Box as a widget.', 'wp-biographia') . '</p>';
+			$content .= '<p>' . __('Add a shorter biography to your user profile to be used in conjunction with the Biography Box widget.', 'wp-biographia') . '</p>';
+			$content .= '<p>' . __('Display the Biography Box on all types of archive page; author, category, date and tag.', 'wp-biographia') . '</p>';
+			$content .= '<p>' . __('New custom meta boxes added to the post/page/custom-post creation/editing screens to hide the Biography Box.', 'wp-biographia') . '</p>';
+			$content .= '<p>' . __('New shortcode <code>user</code> attribute; the <code>author</code> attribute is now deprecated.', 'wp-biographia') . '</p>';
 			$content .= '<p>' . __('Want to know more? Look in the plugin\'s <code>readme.txt</code> or just click the <em>Find Out More</em> button below.</p>', 'wp-biographia' ) . '</p>';
 			$options = array (
 				'content' => $content,
@@ -137,11 +137,6 @@ class WP_BiographiaPointers extends WP_PluginBase {
 			if ($tab != '' && in_array ($tab, array_keys ($tour))) {
 				$show_pointer = true;
 				$id = "#wp-biographia-tab-$tab";
-				/*$options = array (
-					'content' => $tour[$tab]['content'],
-					'position' => array ('edge' => 'top', 'align' => 'left'),
-					'pointerWidth' => 400
-					);*/
 				$options = array (
 					'content' => $tour[$tab]['content'],
 					'position' => array ('edge' => 'top', 'align' => 'left')
