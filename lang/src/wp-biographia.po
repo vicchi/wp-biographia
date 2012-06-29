@@ -4,8 +4,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WP Biographia\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-29 16:22+0100\n"
-"PO-Revision-Date: 2012-06-29 16:22+0100\n"
+"POT-Creation-Date: 2012-06-29 17:09+0100\n"
+"PO-Revision-Date: 2012-06-29 17:09+0100\n"
 "Last-Translator: Gary Gale <gary@vicchi.org>\n"
 "Language-Team: Gary Gale <gary@vicchi.org>\n"
 "MIME-Version: 1.0\n"
@@ -1112,7 +1112,7 @@ msgid "New shortcode <code>user</code> attribute; the <code>author</code> attrib
 msgstr ""
 
 #: ../../includes/wp-biographia-pointers.php:127
-msgid "Want to know more? Look in the plugin's <code>readme.txt</code> or just click the <em>Find Out More</em> button below.</p>"
+msgid "Want to know more? Look in the plugin's <code>readme.txt</code> or just click the <em>Find Out More</em> button below."
 msgstr ""
 
 #: ../../includes/wp-biographia-pointers.php:132

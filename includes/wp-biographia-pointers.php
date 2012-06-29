@@ -124,7 +124,7 @@ class WP_BiographiaPointers extends WP_PluginBase {
 			$content .= '<p>' . __('Display the Biography Box on all types of archive page; author, category, date and tag.', 'wp-biographia') . '</p>';
 			$content .= '<p>' . __('New custom meta boxes added to the post/page/custom-post creation/editing screens to hide the Biography Box.', 'wp-biographia') . '</p>';
 			$content .= '<p>' . __('New shortcode <code>user</code> attribute; the <code>author</code> attribute is now deprecated.', 'wp-biographia') . '</p>';
-			$content .= '<p>' . __('Want to know more? Look in the plugin\'s <code>readme.txt</code> or just click the <em>Find Out More</em> button below.</p>', 'wp-biographia' ) . '</p>';
+			$content .= '<p>' . __('Want to know more? Look in the plugin\'s <code>readme.txt</code> or just click the <em>Find Out More</em> button below.', 'wp-biographia' ) . '</p>';
 			$options = array (
 				'content' => $content,
 				'position' => array ('edge' => 'left', 'align' => 'center')
