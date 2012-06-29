@@ -180,6 +180,21 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 The current version is 3.1.0 (2012.05.03)
 
+= 3.2 =
+* Released 2012.06.29
+* Added: Support for WordPress Pointers to display "what's new" information post install or upgrade and to provide a "guided tour" of the plugin's settings and options.
+* Added: Support for displaying the Biography Box as a widget
+* Added: Support for a shorter biography to the user's profile to be used in conjunction with the Biography Box widget.
+* Added: Support to display the Biography Box for all types of archive page; author, category, date and tag.
+* Added: Custom meta boxes to the post/page/custom-post creation/editing screens to hide the Biography Box, making it easier to define the Admin screen's Exclusion settings.
+* Added: Support for the shortcode's `user` attribute; deprecating support for the `author` attribute.
+* Added: Increased the width of text and select boxes for the Admin and Exclusion admin tabs to allow for longer category names and longer lists of post IDs to be displayed.
+* Fixed: Example use of the `wp_biographia_feed` filter in `readme.txt`.
+* Fixed: Bug where the `wp_biographia_feed` filter was never called in the context of a feed.
+* Fixed: Formatting of HTML for the Biography Box post/page hiding options in the user's profile.
+* Fixed: Use the term "hide" consistently across the plugin and documentation; previous versions used "hide" and "suppress" interchangeably.
+* Fixed: Use the term "user" consistently across the plugin and documentation; previous versions used "author" and "user" interchangeably.
+
 = 3.1 =
 * Released 2012.05.03
 * Added: Support for shortcode `role` attribute to further filter display of users when the shortcode is used in *wildcard* mode.
