@@ -155,6 +155,23 @@ class WP_Biographia extends WP_PluginBase {
 			$this->hook ('add_meta_boxes', 'admin_add_meta_boxes');
 			$this->hook ('save_post', 'admin_save_meta_boxes');
 			$this->hook ('before_delete_post', 'admin_before_delete_post');
+			
+			$user_id = get_current_user_id ();
+			$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
+			$skip_tour = in_array ('wp_biographia_pointer', $dismissed);
+
+			if (isset ($_GET['wp_biographia_restart_tour'])) {
+				$key = array_search ('wp_biographia_pointer', $dismissed);
+				if ($key !== false) {
+					unset ($dismissed[$key]);
+				}
+				update_user_meta ($user_id, 'dismissed_wp_pointers', implode (',', $dismissed));
+				$skip_tour = false;
+			}
+
+			if (!$skip_tour) {
+				require (WPBIOGRAPHIA_PATH . '/includes/wp-biographia-pointers.php');
+			}
 		}
 	}
 	
@@ -2964,6 +2981,9 @@ class WP_Biographia extends WP_PluginBase {
 
 	function admin_help_and_support () {
 		$email_address = antispambot ("gary@vicchi.org");
+		$restart_url = admin_url ('options-general.php');
+		$restart_url .= '?page=wp-biographia/wp-biographia.php&tab=display&wp_biographia_restart_tour';
+		
 		$content = array ();
 
 		$content[] = '<p>';
@@ -2983,6 +3003,7 @@ class WP_Biographia extends WP_PluginBase {
 		$content[] = '</li><li>';
 		$content[] = __('WP Biographia is both free as in speech and free as in beer. No donations are required; <a href="http://www.vicchi.org/codeage/donate/">here\'s why</a>.', 'wp-biographia');
 		$content[] = '</li></ul></p>';
+		$content[] = sprintf (__('<p>Find out what\'s new and get an overview of WP Biographia; <a href="%s">restart the plugin tour</a>.</p>', 'wp-biographia'), $restart_url);
 
 		return $this->admin_postbox ('wp-biographia-support',
 			__('Help &amp; Support', 'wp-biographia'),
@@ -3027,7 +3048,7 @@ class WP_Biographia extends WP_PluginBase {
 		
 		foreach (self::$admin_tab_names as $tab => $name) {
 			$class = ($tab == $current) ? ' nav-tab-active' : '';
-			$content[] = "<a class='nav-tab$class' href='options-general.php?page=wp-biographia/wp-biographia.php&tab=$tab'>$name</a>";
+			$content[] = "<a class='nav-tab$class' id='wp-biographia-tab-$tab' href='options-general.php?page=wp-biographia/wp-biographia.php&tab=$tab'>$name</a>";
 		}	// end-foreach (...)
 		
 		$content[] = '</h2>';
