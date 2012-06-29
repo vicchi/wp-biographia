@@ -155,23 +155,6 @@ class WP_Biographia extends WP_PluginBase {
 			$this->hook ('add_meta_boxes', 'admin_add_meta_boxes');
 			$this->hook ('save_post', 'admin_save_meta_boxes');
 			$this->hook ('before_delete_post', 'admin_before_delete_post');
-			
-			$user_id = get_current_user_id ();
-			$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
-			$skip_tour = in_array ('wp_biographia_pointer', $dismissed);
-
-			if (isset ($_GET['wp_biographia_restart_tour'])) {
-				$key = array_search ('wp_biographia_pointer', $dismissed);
-				if ($key !== false) {
-					unset ($dismissed[$key]);
-				}
-				update_user_meta ($user_id, 'dismissed_wp_pointers', implode (',', $dismissed));
-				$skip_tour = false;
-			}
-
-			if (!$skip_tour) {
-				require (WPBIOGRAPHIA_PATH . '/includes/wp-biographia-pointers.php');
-			}
 		}
 	}
 	
@@ -1343,6 +1326,23 @@ class WP_Biographia extends WP_PluginBase {
 
 	function admin_init () {
 		$this->admin_upgrade ();
+		
+		$user_id = get_current_user_id ();
+		$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
+		$skip_tour = in_array ('wp_biographia_pointer', $dismissed);
+
+		if (isset ($_GET['wp_biographia_restart_tour'])) {
+			$key = array_search ('wp_biographia_pointer', $dismissed);
+			if ($key !== false) {
+				unset ($dismissed[$key]);
+			}
+			update_user_meta ($user_id, 'dismissed_wp_pointers', implode (',', $dismissed));
+			$skip_tour = false;
+		}
+
+		if (!$skip_tour) {
+			require (WPBIOGRAPHIA_PATH . '/includes/wp-biographia-pointers.php');
+		}
 	}
 
 	/**
@@ -1787,6 +1787,14 @@ class WP_Biographia extends WP_PluginBase {
 			}	// end-switch
 
 			if ($upgrade_settings) {
+				$user_id = get_current_user_id ();
+				$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
+				$key = array_search ('wp_biographia_pointer', $dismissed);
+				if ($key !== false) {
+					unset ($dismissed[$key]);
+					update_user_meta ($user_id, 'dismissed_wp_pointers', implode (',', $dismissed));
+				}
+
 				update_option (self::OPTIONS, $settings);
 			}
 		}
