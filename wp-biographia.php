@@ -1327,16 +1327,10 @@ class WP_Biographia extends WP_PluginBase {
 	function admin_init () {
 		$this->admin_upgrade ();
 		
-		$user_id = get_current_user_id ();
-		$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
-		$skip_tour = in_array ('wp_biographia_pointer', $dismissed);
-
+		$skip_tour = $this->admin_is_pointer_set ();
+		
 		if (isset ($_GET['wp_biographia_restart_tour'])) {
-			$key = array_search ('wp_biographia_pointer', $dismissed);
-			if ($key !== false) {
-				unset ($dismissed[$key]);
-			}
-			update_user_meta ($user_id, 'dismissed_wp_pointers', implode (',', $dismissed));
+			$this->admin_clear_pointer ();
 			$skip_tour = false;
 		}
 
@@ -1787,14 +1781,7 @@ class WP_Biographia extends WP_PluginBase {
 			}	// end-switch
 
 			if ($upgrade_settings) {
-				$user_id = get_current_user_id ();
-				$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
-				$key = array_search ('wp_biographia_pointer', $dismissed);
-				if ($key !== false) {
-					unset ($dismissed[$key]);
-					update_user_meta ($user_id, 'dismissed_wp_pointers', implode (',', $dismissed));
-				}
-
+				$this->admin_clear_pointer ();
 				update_option (self::OPTIONS, $settings);
 			}
 		}
@@ -3381,6 +3368,22 @@ class WP_Biographia extends WP_PluginBase {
 		$optval = implode (',', $excl);
 		$option = 'wp_biographia_' . $stub . '_exclusions';
 		$this->set_option ($option, $optval);
+	}
+	
+	function admin_clear_pointer () {
+		$user_id = get_current_user_id ();
+		$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
+		$key = array_search ('wp_biographia_pointer', $dismissed);
+		if ($key !== false) {
+			unset ($dismissed[$key]);
+			update_user_meta ($user_id, 'dismissed_wp_pointers', implode (',', $dismissed));
+		}
+	}
+	
+	function admin_is_pointer_set () {
+		$user_id = get_current_user_id ();
+		$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
+		return in_array ('wp_biographia_pointer', $dismissed);
 	}
 }
 
