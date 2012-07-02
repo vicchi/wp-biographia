@@ -203,8 +203,15 @@ class WP_BiographiaWidget extends WP_Widget {
 			
 			$content[] = $before_widget;
 			
+			while (have_posts ()) : the_post ();
+				$user = $post->post_author;
+				if (!in_array ($user, $users)) {
+					$users[] = $user;
+				}
+			endwhile;
+
 			$title = '';
-			if ($wp_query->post_count == 1 && $instance['show_title']) {
+			if (count ($users) == 1 && $instance['show_title']) {
 				if ($instance['single_title']) {
 					$title = $instance['single_title'];
 				}
@@ -216,17 +223,10 @@ class WP_BiographiaWidget extends WP_Widget {
 				}
 				
 			}
-			
+
 			if (!empty ($title)) {
 				$content[] = $before_title . $title . $after_title;
 			}
-			
-			while (have_posts ()) : the_post ();
-				$user = $post->post_author;
-				if (!in_array ($user, $users)) {
-					$users[] = $user;
-				}
-			endwhile;
 			
 			foreach ($users as $user) {
 				$widget_bio = $this->display ($user, $args, $instance);
