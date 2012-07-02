@@ -106,7 +106,9 @@ class WP_BiographiaPointers extends WP_PluginBase {
 		
 		$restart_tour = false;
 		if (isset ($_GET['wp_biographia_restart_tour'])) {
-			$restart_tour = true;
+			if (check_admin_referer ('wp-biographia-restart-tour')) {
+				$restart_tour = true;
+			}
 		}
 		
 		$function = '';

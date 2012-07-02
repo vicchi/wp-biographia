@@ -1330,8 +1330,10 @@ class WP_Biographia extends WP_PluginBase {
 		$skip_tour = $this->admin_is_pointer_set ();
 		
 		if (isset ($_GET['wp_biographia_restart_tour'])) {
-			$this->admin_clear_pointer ();
-			$skip_tour = false;
+			if (check_admin_referer ('wp-biographia-restart-tour')) {
+				$this->admin_clear_pointer ();
+				$skip_tour = false;
+			}
 		}
 
 		if (!$skip_tour) {
@@ -2978,6 +2980,7 @@ class WP_Biographia extends WP_PluginBase {
 		$email_address = antispambot ("gary@vicchi.org");
 		$restart_url = admin_url ('options-general.php');
 		$restart_url .= '?page=wp-biographia/wp-biographia.php&tab=display&wp_biographia_restart_tour';
+		$restart_url = wp_nonce_url ($restart_url, 'wp-biographia-restart-tour');
 		
 		$content = array ();
 
@@ -3056,13 +3059,14 @@ class WP_Biographia extends WP_PluginBase {
 	 */
 
 	function admin_validate_tab () {
-		$tab = 'display';
-		if (isset ($_GET['tab'])) {
-			if (array_key_exists ($_GET['tab'], self::$admin_tab_names)) {
-				$tab = $_GET['tab'];
+		$tab = filter_input (INPUT_GET, 'tab', FILTER_SANITIZE_STRING);
+		if ($tab !== FALSE && $tab !== null) {
+			if (array_key_exists ($tab, self::$admin_tab_names)) {
+				return $tab;
 			}
 		}
 
+		$tab = 'display';
 		return $tab;
 	}
 
