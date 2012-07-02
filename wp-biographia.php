@@ -574,7 +574,7 @@ class WP_Biographia extends WP_PluginBase {
 	 */
 
 	function style () {
-		wp_enqueue_style ('wp-biographia-bio', PLUGIN_URL . 'css/wp-biographia.css');	
+		wp_enqueue_style ('wp-biographia-bio', PLUGIN_URL . 'css/wp-biographia.min.css');	
 	}
 	
 	/**
@@ -1298,7 +1298,7 @@ class WP_Biographia extends WP_PluginBase {
 			wp_enqueue_script ('postbox');
 			wp_enqueue_script ('dashboard');
 			wp_enqueue_script ('custom-background');
-			wp_enqueue_script ('wp-biographia_admin-script', PLUGIN_URL . 'js/wp-biographia-admin.js');
+			wp_enqueue_script ('wp-biographia_admin-script', PLUGIN_URL . 'js/wp-biographia-admin.min.js');
 		}
 	}
 	
@@ -1316,7 +1316,7 @@ class WP_Biographia extends WP_PluginBase {
 			wp_enqueue_style ('global');
 			wp_enqueue_style ('wp-admin');
 			wp_enqueue_style ('farbtastic');
-			wp_enqueue_style ('wp-biographia-admin', PLUGIN_URL . 'css/wp-biographia-admin.css');	
+			wp_enqueue_style ('wp-biographia-admin', PLUGIN_URL . 'css/wp-biographia-admin.min.css');	
 		}
 	}
 	
