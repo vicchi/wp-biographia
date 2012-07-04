@@ -8,11 +8,11 @@ Stable tag: 3.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Add and display a customisable user biography for all single post types, in RSS feeds, in archives and on each entry on the landing page.
+Add and display a customisable user biography to the front page, single post types, archives and RSS feeds as well as via a widget in your sidebar.
 
 == Description ==
 
-This plugin allows you to add a customisable biography to posts, to RSS feeds, to pages, to archives and to each post on your blog's landing page. It integrates out of the box with the information that can be provided in each user's profile and supports custom post types. Display of the Biography Box can be hidden on a global or per user basis for posts, pages and custom post types as well as on a per category basis.
+This plugin allows you to add a customisable biography to posts, to RSS feeds, to pages, to archives and to each post on your blog's landing page as well as via a widget in your sidebar. It integrates out of the box with the information that can be provided in each user's profile and supports custom post types. Display of the Biography Box can be hidden on a global or per user basis for posts, pages and custom post types as well as on a per category basis.
 
 Settings and options include:
 
@@ -22,12 +22,15 @@ Settings and options include:
 1. Choose the avatar image size
 1. Choose to display the Biography Box at the top or the bottom of content (universally)
 1. Choose to hide the display of the Biography Box for pages, posts and posts/pages on a per user basis
+1. Choose whether to display the Biography Box in the sidebar of your blog.
 
 The plugin expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn, Google+, Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles. Your Contact Info links can then be displayed as part of the Biography Box, either as plain text links or as icon links. Further contact links can easily be added to the Biography Box by using the `wp_biographia_contact_info` and `wp_biographia_link_items` filters.
 
 The position of the Biography Box can be controlled by the plugin's supported settings and options, or manually via the plugin's shortcode (`[wp_biographia]`). See the *Shortcode Support And Usage* section for more information.
 
 The position and content of the Biography Box, including adding support for new contact links, changing the content of the Biography Box when displayed via the shortcode, the format of the contact links and the overall format of the Biography Box can be modified by the plugin's filters. See the *Filter Support And Usage* section for more information.
+
+The plugin also supports displaying a reduced version of the Biography Box via a sidebar widget and provides a shorter, more terse, biography in the user's Profile to prevent the full length biography text taking up too much space on the sidebar.
 
 == Installation ==
 
@@ -175,6 +178,8 @@ WP Biographia is named after the etymology of the modern English word biography.
 1. Settings and Options: Colophon Tab - User Configuration Settings
 1. Sample Biography Box; contact links shown as text
 1. Sample Biography Box; contact links shown as icons
+1. Widget Settings and Options
+1. Sample Widget Output
 
 == Changelog ==
 
@@ -194,6 +199,7 @@ The current version is 3.2.0 (2012.07.02)
 * Fixed: Formatting of HTML for the Biography Box post/page hiding options in the user's profile.
 * Fixed: Use the term "hide" consistently across the plugin and documentation; previous versions used "hide" and "suppress" interchangeably.
 * Fixed: Use the term "user" consistently across the plugin and documentation; previous versions used "author" and "user" interchangeably.
+* Fixed: Bug where the last page of a multiply paged post was not correctly detected, resulting in the Biography Box being displayed for all pages.
 
 = 3.1 =
 * Released 2012.05.03
