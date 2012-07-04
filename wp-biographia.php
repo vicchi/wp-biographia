@@ -350,12 +350,8 @@ class WP_Biographia extends WP_PluginBase {
 		global $page;
 		global $numpages;
 		global $multipage;
-		
-		if (is_single()) {
-			return true;
-		}
 
-		elseif ($multipage) {
+		if ($multipage) {
 			return ($page == $numpages) ? true : false;
 		}
 
