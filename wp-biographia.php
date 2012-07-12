@@ -263,7 +263,7 @@ class WP_Biographia extends WP_PluginBase {
 	function user_contactmethods ($contactmethods) {
 
 		foreach ($this->defaults () as $key => $data) {
-			if ($data['contactmethod']) {
+			if (isset ($data['contactmethod']) && !empty ($data['contactmethod'])) {
 				$contactmethods[$key] = $data['contactmethod'];
 			}
 		}	// end-foreach (...)
@@ -1091,15 +1091,29 @@ class WP_Biographia extends WP_PluginBase {
 			$content[] = "<p>" . $author['bio'] . "</p>";
 		}
 
-		$display_icons = (!empty ($settings['wp_biographia_content_icons']) &&
-			 ($settings['wp_biographia_content_icons'] == 'on')) ? 'icon' : 'text';
+		// If this Biography Box is for a feed, override/ignore the "display links as icons"
+		// setting ...
+		
+		if ($this->for_feed) {
+			$display_icons = false;
+		}
+		
+		else {
+			$display_icons = (!empty ($settings['wp_biographia_content_icons']) &&
+			 	($settings['wp_biographia_content_icons'] == 'on')) ? 'icon' : 'text';
+		}
 
 		if (($display_icons) && (!empty ($settings['wp_biographia_content_alt_icons']) && $settings['wp_biographia_content_alt_icons'] == 'on' && !empty ($settings['wp_biographia_content_icon_url']))) {
 			$this->icon_dir_url = $settings['wp_biographia_content_icon_url'];
 		}
 
 		$link_items = $this->link_items ();
-		$item_stub = ($display_icons == "icon") ? '<li><a href="%s" %s title="%s" class="%s"><img src="%s" class="%s" /></a></li>' : '<li><a href="%s" %s title="%s" class="%s">%s</a></li>';
+		if ($this->for_feed) {
+			$item_stub = '<a href="%s" %s title="%s" class="%s">%s</a>';
+		}
+		else {
+			$item_stub = ($display_icons == "icon") ? '<li><a href="%s" %s title="%s" class="%s"><img src="%s" class="%s" /></a></li>' : '<li><a href="%s" %s title="%s" class="%s">%s</a></li>';
+		}
 		$title_name_stub = __('%1$s On %2$s', 'wp-biographia');
 		$title_noname_stub = __('On %s', 'wp-biographia');
 		
@@ -1184,8 +1198,15 @@ class WP_Biographia extends WP_PluginBase {
 		$list_class = "wp-biographia-list-" . $display_icons;
 
 		if (!empty ($links)) {
-			$prefix = '<div class="wp-biographia-links"><small><ul class="wp-biographia-list ' . $list_class . '">';
-			$postfix = '</ul></small></div>';
+			if ($this->for_feed) {
+				$prefix = '<div class="wp-biographia-links"><small>';
+				$postfix = '</small></div>';
+			}
+			
+			else {
+				$prefix = '<div class="wp-biographia-links"><small><ul class="wp-biographia-list ' . $list_class . '">';
+				$postfix = '</ul></small></div>';
+			}
 			
 			$params = array (
 				'glue' => $item_glue,
@@ -1224,11 +1245,9 @@ class WP_Biographia extends WP_PluginBase {
 		else {
 			if (!empty ($settings['wp_biographia_content_image']) &&
 					 ($settings['wp_biographia_content_image'] == 'on')) {
-				$biography[] = '<p>';
-				$biography[] = '<div style="float:left; text-align:left;>'.$author_pic.'</div>';
-				$biography[] = $content.'</p>';	
+				$biography[] = '<p>' . $author_pic . '</p>';
 			}
-
+			$biography[] = '<p>' . implode ('', $content) . '</p>';	
 			$biography[] = apply_filters ('wp_biographia_feed' , '<div class="wp-biographia-text">'
 				. implode ('', $content)
 				. '</div></div>' , $content , $settings);
