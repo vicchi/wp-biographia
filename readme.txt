@@ -194,6 +194,7 @@ The current version is 3.2.0 (2012.07.02)
 * Added: Custom meta boxes to the post/page/custom-post creation/editing screens to hide the Biography Box, making it easier to define the Admin screen's Exclusion settings.
 * Added: Support for the shortcode's `user` attribute; deprecating support for the `author` attribute.
 * Added: Increased the width of text and select boxes for the Admin and Exclusion admin tabs to allow for longer category names and longer lists of post IDs to be displayed.
+* Fixed: The layout of the Biography Box for feeds now ignore displaying contact links as icons and formats them as plain text.
 * Fixed: Example use of the `wp_biographia_feed` filter in `readme.txt`.
 * Fixed: Bug where the `wp_biographia_feed` filter was never called in the context of a feed.
 * Fixed: Formatting of HTML for the Biography Box post/page hiding options in the user's profile.
