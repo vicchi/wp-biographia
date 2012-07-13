@@ -7,7 +7,7 @@ class WP_BiographiaPointers extends WP_PluginBase {
 	}
 
 	function admin_enqueue_scripts () {
-		$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
+		$dismissed = explode (',', get_user_meta (wp_get_current_user ()->ID, 'dismissed_wp_pointers', true));
 		$do_tour = !in_array ('wp_biographia_pointer', $dismissed);
 		if ($do_tour) {
 			wp_enqueue_style ('wp-pointer');
@@ -118,7 +118,7 @@ class WP_BiographiaPointers extends WP_PluginBase {
 		
 		if ($restart_tour || ('options-general.php' != $pagenow || !array_key_exists ($tab, $tour))) {
 			$show_pointer = true;
-			$id = '#menu-plugins';
+			$id = '#menu-settings';
 			$content = '<h3>' . sprintf (__('What\'s New In WP Biographia %s?', 'wp-biographia'), WP_Biographia::DISPLAY_VERSION) . '</h3>';
 			$content .= '<p>' . __('Support for WordPress Pointers to display <em>what\'s new</em> information post install or upgrade and to provide a <em>guided tour</em> of the plugin\'s settings and options.', 'wp-biographia') . '</p>';
 			$content .= '<p>' . __('Display the Biography Box as a widget.', 'wp-biographia') . '</p>';

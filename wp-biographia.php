@@ -1973,12 +1973,16 @@ class WP_Biographia extends WP_PluginBase {
 					<small>' . __('Hides the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
 
 				foreach ($pts as $pt) {
+					$key = 'wp_biographia_' . $pt->name . '_exclusions';
+					$value = ($this->check_option ($settings, $key) ? $settings[$key] : '');
 					$exclusion_settings[] = '<p><strong>' . sprintf (__('Exclude From Single %1$s (via %2$s ID)', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
-						<input type="text" name="wp_biographia_' . $pt->name .'_exclusions" id="wp_biographia_'. $pt->name .'_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_' . $pt->name . '_exclusions'] . '" /><br />
+						<input type="text" name="wp_biographia_' . $pt->name .'_exclusions" id="wp_biographia_'. $pt->name .'_exclusions" class="wp-biographia-exclusions-input" value="' . $value . '" /><br />
 						<small>' . sprintf (__('Hides the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name) . '</small></p>';
 
+					$key = 'wp_biographia_global_' . $pt->name . '_exclusions';
+					$value = ($this->check_option ($settings, $key) ? $settings[$key] : '');
 					$exclusion_settings[] = '<p><strong>' . sprintf (__('Globally Exclude From %1$s (via %2$s ID).', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
-						<input type="text" name="wp_biographia_global_' . $pt->name . '_exclusions" id="wp_biographia_global_' . $pt->name . '_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_global_' . $pt->name . '_exclusions'] . '" /><br />
+						<input type="text" name="wp_biographia_global_' . $pt->name . '_exclusions" id="wp_biographia_global_' . $pt->name . '_exclusions" class="wp-biographia-exclusions-input" value="' . $value . '" /><br />
 						<small>' . sprintf (__('Hides the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name)  . '</small></p>';
 				}
 
@@ -2471,12 +2475,16 @@ class WP_Biographia extends WP_PluginBase {
 				$display_settings[] = '</div>';
 
 				foreach ($pts as $pt) {
+					$key = 'wp_biographia_display_' . $pt->name;
+					$value = ($this->check_option ($settings, $key) ? $settings[$key] : '');
 					$display_settings[] = '<p><strong>' . sprintf (__('Display On Individual %s', 'wp-biographia'), $pt->labels->name) . '</strong><br /> 
-							<input type="checkbox" name="wp_biographia_display_' . $pt->name . '" ' . checked ($settings['wp_biographia_display_' . $pt->name], 'on', false) . ' />
+							<input type="checkbox" name="wp_biographia_display_' . $pt->name . '" ' . checked ($value, 'on', false) . ' />
 							<small>' . sprintf (__('Displays the Biography Box on individual instances of custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';
 
+					$key = 'wp_biographia_display_archives_' . $pt->name;
+					$value = ($this->check_option ($settings, $key) ? $settings[$key] : '');
 					$display_settings[] = '<p><strong>' . sprintf (__('Display On %s Archives', 'wp-biographia'), $pt->labels->singular_name) . '</strong><br /> 
-							<input type="checkbox" name="wp_biographia_display_archives_' . $pt->name . '" ' . checked ($settings['wp_biographia_display_archives_'.$pt->name], 'on', false) . ' />
+							<input type="checkbox" name="wp_biographia_display_archives_' . $pt->name . '" ' . checked ($value, 'on', false) . ' />
 							<small>' . sprintf (__('Displays the Biography Box on Archive pages for custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';	
 				}	// end-foreach (...)
 
@@ -2700,10 +2708,10 @@ class WP_Biographia extends WP_PluginBase {
 						
 						// Per user suppression of the Biography Box on posts and on pages
 
-						$enabled_post_users = $_POST['wp-biographia-enabled-post-users'];
-						$suppressed_post_users = $_POST['wp-biographia-suppressed-post-users'];
-						$enabled_page_users = $_POST['wp-biographia-enabled-page-users'];
-						$suppressed_page_users = $_POST['wp-biographia-suppressed-page-users'];
+						$enabled_post_users = $this->admin_option ('wp-biographia-enabled-post-users');
+						$suppressed_post_users = $this->admin_option ('wp-biographia-suppressed-post-users');
+						$enabled_page_users = $this->admin_option ('wp-biographia-enabled-page-users');
+						$suppressed_page_users = $this->admin_option ('wp-biographia-suppressed-page-users');
 
 						$this->admin_meta_option ($enabled_post_users,
 													'wp_biographia_suppress_posts',
@@ -3404,6 +3412,19 @@ class WP_Biographia extends WP_PluginBase {
 		$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
 		return in_array ('wp_biographia_pointer', $dismissed);
 	}
+	
+	/**
+	 * Helper function to check whether a settings/options value exists
+	 *
+	 * @param array $settings Current settings/options array
+	 * @param string $key Name of setting to check
+	 * @return boolean Returns true if the setting exists and is not empty
+	 */
+	
+	function check_option (&$settings, $key) {
+		return (isset ($settings[$key]) && !empty ($settings[$key]));
+	}
+	
 }
 
 $__wp_biographia_instance = new WP_Biographia;
