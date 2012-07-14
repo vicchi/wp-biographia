@@ -48,24 +48,24 @@ class WP_BiographiaWidget extends WP_Widget {
 		$instance = wp_parse_args (
 			(array)$instance,
 			array (
-				'show_title' => true,
+				'show_title' => 'on',
 				'single_title' => __('Written By'),
 				'multi_title' => __('Contributors'),
 				'name_prefix' => __('About'),
 				'name_options' => 'display-name',
-				'show_avatar' => true,
+				'show_avatar' => 'on',
 				'avatar_size' => 100,
-				'show_bio' => true,
-				'short_bio' => false,
-				'wrap_bio' => false,
-				'show_about_link' => true
+				'show_bio' => 'on',
+				'short_bio' => '',
+				'wrap_bio' => '',
+				'show_about_link' => 'on'
 			)
 		);
 
 		$content[] = sprintf ($check_stub,
 			$this->get_field_id ('show_title'),
 			$this->get_field_name ('show_title'),
-			checked ($instance['show_title'], true, false),
+			checked ($instance['show_title'], 'on', false),
 			$this->get_field_id ('show_title'),
 			__('Show Widget Title')
 			);
@@ -75,7 +75,7 @@ class WP_BiographiaWidget extends WP_Widget {
 			__('Single User Title:'),
 			$this->get_field_id ('single_title'),
 			$this->get_field_name ('single_title'),
-			attribute_escape ($instance['single_title'])
+			esc_attr ($instance['single_title'])
 			);
 
 		$content[] = sprintf ($text_stub,
@@ -83,7 +83,7 @@ class WP_BiographiaWidget extends WP_Widget {
 			__('Multiple User Title:'),
 			$this->get_field_id ('multi_title'),
 			$this->get_field_name ('multi_title'),
-			attribute_escape ($instance['multi_title'])
+			esc_attr ($instance['multi_title'])
 			);
 
 		$content[] = sprintf ($text_stub,
@@ -91,7 +91,7 @@ class WP_BiographiaWidget extends WP_Widget {
 			__('Name Prefix:'),
 			$this->get_field_id ('name_prefix'),
 			$this->get_field_name ('name_prefix'),
-			attribute_escape ($instance['name_prefix'])
+			esc_attr ($instance['name_prefix'])
 			);
 			
 		$content[] = '<p>';
@@ -121,7 +121,7 @@ class WP_BiographiaWidget extends WP_Widget {
 		$content[] = sprintf ($check_stub,
 			$this->get_field_id ('show_avatar'),
 			$this->get_field_name ('show_avatar'),
-			checked ($instance['show_avatar'], true, false),
+			checked ($instance['show_avatar'], 'on', false),
 			$this->get_field_id ('show_avatar'),
 			__('Show User\'s Avatar')
 			);
@@ -131,13 +131,13 @@ class WP_BiographiaWidget extends WP_Widget {
 			__('User\'s Avatar Size:'),
 			$this->get_field_id ('avatar_size'),
 			$this->get_field_name ('avatar_size'),
-			attribute_escape ($instance['avatar_size'])
+			esc_attr ($instance['avatar_size'])
 			);
 
 		$content[] = sprintf ($check_stub,
 			$this->get_field_id ('show_bio'),
 			$this->get_field_name ('show_bio'),
-			checked ($instance['show_bio'], true, false),
+			checked ($instance['show_bio'], 'on', false),
 			$this->get_field_id ('show_bio'),
 			__('Show User\'s Biography')
 			);
@@ -145,7 +145,7 @@ class WP_BiographiaWidget extends WP_Widget {
 		$content[] = sprintf ($check_stub,
 			$this->get_field_id ('short_bio'),
 			$this->get_field_name ('short_bio'),
-			checked ($instance['short_bio'], true, false),
+			checked ($instance['short_bio'], 'on', false),
 			$this->get_field_id ('short_bio'),
 			__('Use User\'s Short Biography')
 			);
@@ -153,7 +153,7 @@ class WP_BiographiaWidget extends WP_Widget {
 		$content[] = sprintf ($check_stub,
 			$this->get_field_id ('wrap_bio'),
 			$this->get_field_name ('wrap_bio'),
-			checked ($instance['wrap_bio'], true, false),
+			checked ($instance['wrap_bio'], 'on', false),
 			$this->get_field_id ('wrap_bio'),
 			__('Wrap Biography Around Avatar')
 			);
@@ -161,7 +161,7 @@ class WP_BiographiaWidget extends WP_Widget {
 		$content[] = sprintf ($check_stub,
 			$this->get_field_id ('show_about_link'),
 			$this->get_field_name ('show_about_link'),
-			checked ($instance['show_about_link'], true, false),
+			checked ($instance['show_about_link'], 'on', false),
 			$this->get_field_id ('show_about_link'),
 			__('Show "About" Link In User\'s Name')
 			);
@@ -172,19 +172,26 @@ class WP_BiographiaWidget extends WP_Widget {
 	function update ($new_instance, $old_instance) {
 		$instance = $old_instance;
 
-		$instance['show_title'] = (bool) strip_tags ($new_instance['show_title']);
-		$instance['single_title'] = strip_tags ($new_instance['single_title']);
-		$instance['multi_title'] = strip_tags ($new_instance['multi_title']);
-		$instance['name_prefix'] = strip_tags ($new_instance['name_prefix']);
-		$instance['name_options'] = strip_tags ($new_instance['name_options']);
-		$instance['show_avatar'] = (bool) strip_tags ($new_instance['show_avatar']);
-		$instance['avatar_size'] = (int) strip_tags ($new_instance['avatar_size']);
-		$instance['show_bio'] = (bool) strip_tags ($new_instance['show_bio']);
-		$instance['short_bio'] = (bool) strip_tags ($new_instance['short_bio']);
-		$instance['wrap_bio'] = (bool) strip_tags ($new_instance['wrap_bio']);
-		$instance['show_about_link'] = (bool) strip_tags ($new_instance['show_about_link']);
+		$instance['show_title'] = $this->update_arg ($new_instance, 'show_title');
+		$instance['single_title'] = $this->update_arg ($new_instance, 'single_title');
+		$instance['multi_title'] = $this->update_arg ($new_instance, 'multi_title');
+		$instance['name_prefix'] = $this->update_arg ($new_instance, 'name_prefix');
+		$instance['name_options'] = $this->update_arg ($new_instance, 'name_options');
+		$instance['show_avatar'] = $this->update_arg ($new_instance, 'show_avatar');
+		$instance['avatar_size'] = $this->update_arg ($new_instance, 'avatar_size');
+		$instance['show_bio'] = $this->update_arg ($new_instance, 'show_bio');
+		$instance['short_bio'] = $this->update_arg ($new_instance, 'short_bio');
+		$instance['wrap_bio'] = $this->update_arg ($new_instance, 'wrap_bio');
+		$instance['show_about_link'] = $this->update_arg ($new_instance, 'show_about_link');
 
 		return $instance;
+	}
+	
+	function update_arg (&$src, $key) {
+		if (isset ($src[$key]) && !empty ($src[$key])) {
+			return strip_tags ($src[$key]);
+		}
+		return '';
 	}
 	
 	function widget ($args, $instance) {
