@@ -67,6 +67,7 @@ $this->display
 */
 
 define ('WPBIOGRAPHIA_PATH', plugin_dir_path (__FILE__));
+define ('WPBIOGRAPHIA_URL', plugin_dir_url (__FILE__));
 
 require_once (WPBIOGRAPHIA_PATH . '/wp-plugin-base/wp-plugin-base.php');
 require_once (WPBIOGRAPHIA_PATH . '/includes/wp-biographia-widget.php');
@@ -85,8 +86,6 @@ class WP_Biographia extends WP_PluginBase {
 	const OPTIONS = 'wp_biographia_settings';
 	const VERSION = '320';
 	const DISPLAY_VERSION = 'v3.2.0';
-	const PLUGIN_URL = '';
-	const PLUGIN_PATH = '';
 	const PRIORITY = 10;
 	
 	/**
@@ -104,12 +103,10 @@ class WP_Biographia extends WP_PluginBase {
 			'defaults' => 'Defaults',
 			'colophon' => 'Colophon'
 			);
-		define ('PLUGIN_URL', plugin_dir_url (__FILE__));
-		define ('PLUGIN_PATH', plugin_dir_path (__FILE__));
 		$this->author_id = NULL;
 		$this->override = NULL;
 		$this->hook ('plugins_loaded');
-		$this->icon_dir_url = PLUGIN_URL . 'images/';
+		$this->icon_dir_url = WPBIOGRAPHIA_URL . 'images/';
 	}
 	
 	/**
@@ -134,11 +131,7 @@ class WP_Biographia extends WP_PluginBase {
 		$this->hook ('wp_enqueue_scripts', 'style');
 		$this->hook ('init');
 		$this->hook ('widgets_init');
-		$this->hook ('the_excerpt', 'insert', intval($excerpt_priority));
-		$this->hook ('the_content', 'insert', intval ($content_priority));
 		$this->hook ('user_contactmethods');
-		
-		add_shortcode ('wp_biographia', array ($this, 'shortcode'));
 
 		if (is_admin ()) {
 			$this->hook ('admin_menu');
@@ -155,6 +148,11 @@ class WP_Biographia extends WP_PluginBase {
 			$this->hook ('add_meta_boxes', 'admin_add_meta_boxes');
 			$this->hook ('save_post', 'admin_save_meta_boxes');
 			$this->hook ('before_delete_post', 'admin_before_delete_post');
+		}
+		else {
+			$this->hook ('the_content', 'insert', intval ($content_priority));
+			$this->hook ('the_excerpt', 'insert', intval($excerpt_priority));
+			add_shortcode ('wp_biographia', array ($this, 'shortcode'));
 		}
 	}
 	
@@ -570,7 +568,7 @@ class WP_Biographia extends WP_PluginBase {
 	 */
 
 	function style () {
-		wp_enqueue_style ('wp-biographia-bio', PLUGIN_URL . 'css/wp-biographia.min.css');	
+		wp_enqueue_style ('wp-biographia-bio', WPBIOGRAPHIA_URL . 'css/wp-biographia.min.css');	
 	}
 	
 	/**
@@ -1313,7 +1311,7 @@ class WP_Biographia extends WP_PluginBase {
 			wp_enqueue_script ('postbox');
 			wp_enqueue_script ('dashboard');
 			wp_enqueue_script ('custom-background');
-			wp_enqueue_script ('wp-biographia_admin-script', PLUGIN_URL . 'js/wp-biographia-admin.min.js');
+			wp_enqueue_script ('wp-biographia_admin-script', WPBIOGRAPHIA_URL . 'js/wp-biographia-admin.min.js');
 		}
 	}
 	
@@ -1331,7 +1329,7 @@ class WP_Biographia extends WP_PluginBase {
 			wp_enqueue_style ('global');
 			wp_enqueue_style ('wp-admin');
 			wp_enqueue_style ('farbtastic');
-			wp_enqueue_style ('wp-biographia-admin', PLUGIN_URL . 'css/wp-biographia-admin.min.css');	
+			wp_enqueue_style ('wp-biographia-admin', WPBIOGRAPHIA_URL . 'css/wp-biographia-admin.min.css');	
 		}
 	}
 	
@@ -3227,7 +3225,7 @@ class WP_Biographia extends WP_PluginBase {
 		}
 
 		if (!empty ($content)) {
-			echo implode ('', $content);
+			echo implode (PHP_EOL, $content);
 		}
 	}
 	
@@ -3270,7 +3268,7 @@ class WP_Biographia extends WP_PluginBase {
 			default:
 				return $post_id;
 		}
-
+		
 		if ($post_type->name == 'page') {
 			$stub = $post_type->name;
 			$field = 'wp_biographia_admin_meta_page_hide';
