@@ -72,6 +72,12 @@ define ('WPBIOGRAPHIA_URL', plugin_dir_url (__FILE__));
 require_once (WPBIOGRAPHIA_PATH . '/wp-plugin-base/wp-plugin-base.php');
 require_once (WPBIOGRAPHIA_PATH . '/includes/wp-biographia-widget.php');
 
+class WP_BiographiaFilterPriority {
+	public $has_filter = false;
+	public $original = WP_Biographia::PRIORITY;
+	public $new = WP_Biographia::PRIORITY;
+}	// end-class WP_BiographiaFilterPriority
+
 class WP_Biographia extends WP_PluginBase { 
 
 	static $instance;
@@ -82,6 +88,8 @@ class WP_Biographia extends WP_PluginBase {
 	public $for_feed = false;
 	public $is_shortcode = false;
 	public $icon_dir_url = '';
+	private $content_autop;
+	private $excerpt_autop;
 	
 	const OPTIONS = 'wp_biographia_settings';
 	const VERSION = '320';
@@ -107,6 +115,8 @@ class WP_Biographia extends WP_PluginBase {
 		$this->override = NULL;
 		$this->hook ('plugins_loaded');
 		$this->icon_dir_url = WPBIOGRAPHIA_URL . 'images/';
+		$this->content_autop = new WP_BiographiaFilterPriority;
+		$this->excerpt_autop = new WP_BiographiaFilterPriority;
 	}
 	
 	/**
@@ -150,9 +160,69 @@ class WP_Biographia extends WP_PluginBase {
 			$this->hook ('before_delete_post', 'admin_before_delete_post');
 		}
 		else {
+			$hook_to_loop = false;
+
 			$this->hook ('the_content', 'insert', intval ($content_priority));
+			if ($content_priority < self::PRIORITY) {
+				if (isset ($settings['wp_biographia_sync_content_wpautop']) &&
+							($settings['wp_biographia_sync_content_wpautop'] == 'on')) {
+					$hook_to_loop = true;
+				}
+			}
+
 			$this->hook ('the_excerpt', 'insert', intval($excerpt_priority));
+			if ($excerpt_priority < self::PRIORITY) {
+				if (isset ($settings['wp_biographia_sync_excerpt_wpautop']) &&
+							($settings['wp_biographia_sync_excerpt_wpautop'] == 'on')) {
+					error_log ('wp_biographia_sync_excerpt_wpautop is set');
+				}
+			}
+
+			if ($hook_to_loop) {
+				$this->hook ('loop_start');
+				$this->hook ('loop_end');
+			}
+
 			add_shortcode ('wp_biographia', array ($this, 'shortcode'));
+		}
+	}
+	
+	function loop_start () {
+		$settings = $this->get_option ();
+		if (isset ($settings['wp_biographia_sync_content_wpautop']) && ($settings['wp_biographia_sync_content_wpautop'] == 'on')) {
+			$priority = has_filter ('the_content', 'wpautop');
+			if ($priority !== false) {
+				$content_priority = $this->get_option ('wp_biographia_admin_content_priority');
+				$this->content_autop->has_filter = true;
+				$this->content_autop->original = $priority;
+				$this->content_autop->new = --$content_priority;
+
+				remove_filter ('the_content', 'wpautop', $this->content_autop->original);
+				add_filter ('the_content', 'wpautop', $this->content_autop->new);
+			}
+		}
+		if (isset ($settings['wp_biographia_sync_excerpt_wpautop']) && ($settings['wp_biographia_sync_excerpt_wpautop'] == 'on')) {
+			$priority = has_filter ('the_excerpt', 'wpautop');
+			if ($priority !== false) {
+				$excerpt_priority = $this->get_option ('wp_biographia_admin_content_priority');
+				$this->excerpt_autop->has_filter = true;
+				$this->excerpt_autop->original = $priority;
+				$this->excerpt_autop->new = --$excerpt_priority;
+
+				remove_filter ('the_excerpt', 'wpautop', $this->excerpt_autop->original);
+				add_filter ('the_excerpt', 'wpautop', $this->excerpt_autop->new);
+			}
+		}
+	}
+	
+	function loop_end () {
+		if ($this->content_autop->has_filter) {
+			remove_filter ('the_content', 'wpautop', $this->content_autop->new);
+			add_filter ('the_content', 'wpautop', $this->content_autop->original);
+		}
+		if ($this->excerpt_autop->has_filter) {
+			remove_filter ('the_excerpt', 'wpautop', $this->excerpt_autop->new);
+			add_filter ('the_excerpt', 'wpautop', $this->excerpt_autop->original);
 		}
 	}
 	
@@ -330,7 +400,9 @@ class WP_Biographia extends WP_PluginBase {
 					'wp_biographia_global_post_exclusions' => '',
 					'wp_biographia_page_exclusions' => '',
 					'wp_biographia_admin_content_priority' => self::PRIORITY,
-					'wp_biographia_admin_excerpt_priority' => self::PRIORITY
+					'wp_biographia_admin_excerpt_priority' => self::PRIORITY,
+					'wp_biographia_sync_content_wpautop' => '',
+					'wp_biographia_sync_excerpt_wpautop' => ''
 				) 
 			);
 			update_option (self::OPTIONS, $settings);
@@ -1666,6 +1738,8 @@ class WP_Biographia extends WP_PluginBase {
 			 *		wp_biographia_display_category_archives_posts = ""
 			 *		wp_biographia_display_date_archives_posts = ""
 			 *		wp_biographia_display_tag_archives_posts = ""
+			 *		wp_biographia_sync_content_wpautop = ""
+			 *		wp_biographia_sync_excerpt_wpautop = ""
 			 * v3.2 removed configuration settings ...
 			 *		wp_biographia_display_archives (replaced by wp_biographia_display_archive_posts)
 			 *		wp_biographia_display_front (replaces by wp_biographia_display_front_posts)
@@ -1787,6 +1861,8 @@ class WP_Biographia extends WP_PluginBase {
 						$this->admin_upgrade_option ($settings, 'display_date_archives_posts', $option);
 						$this->admin_upgrade_option ($settings, 'display_tag_archives_posts', $option);
 					}
+					$this->admin_upgrade_option ($settings, 'sync_content_wpautop');
+					$this->admin_upgrade_option ($settings, 'sync_excerpt_wpautop');
 					
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
@@ -1949,6 +2025,26 @@ class WP_Biographia extends WP_PluginBase {
 				$priority_settings[] = '<p><strong>' . __("Excerpt Filter Priority", 'wp-biographia') . '</strong><br />
 					<input type="text" name="wp_biographia_excerpt_priority" id="wp_biographia_excerpt_priority" value="' . $settings['wp_biographia_admin_excerpt_priority'] . '" /><br />
 					<small>' . __('Enter the priority to be used to display the Biography Box for the excerpt for posts, pages and custom post types, e.g. 10', 'wp-biographia') . '</small></p>';
+
+
+				$priority_settings[] = '<div class="wp-biographia-warning">';
+				$priority_settings[] = '<p>'
+					. sprintf (__('A default WordPress install runs an automatic paragraph formatter (<a href="%s" target="_blank"><code>wpautop</code></a>) via the <code>the_content</code> and <code>the_excerpt</code> at the default filter priority of 10. See the WordPress Codex post on <a href="%s" target="_blank">How WordPress Processes Post Content</a> for more information on why this happens.', 'wp-biographia'), 'http://codex.wordpress.org/Function_Reference/wpautop', 'http://codex.wordpress.org/How_WordPress_Processes_Post_Content')
+					. '</p>';
+				$priority_settings[] = '<p>'
+					. __('Lowering either the Content Filter Priority or the Excerpt Filter Priority to be a value below the default of 10, may result in the Biography Box being formatted incorrectly. This is because <code>wpautop</code> is now running after the Biography Box has been added to a post or an excerpt and is now changing the Biography Box output. To prevent this happening, WP Biographia can synchronise and lower the priority of <code>wpautop</code> being run via the_content or the_excerpt on your behalf to ensure it is run before the Biography Box is produced.', 'wp-biographia')
+					. '</p>';
+				$priority_settings[] = '<p>'
+					. __('If you set the Content Filter Priority or the Excerpt Filter Priority to a value of 3 or lower, you may see unexpected formatting issues in your posts and pages caused by <code>wpautop</code> being run too early.', 'wp-biographia')
+					. '</p>';
+				$priority_settings[] = '</div>';
+				
+				$priority_settings[] = '<p><strong>' . __("Synchronise Automatic Paragraph Formatting For Content", 'wp-biographia') . '</strong><br /> 
+						<input type="checkbox" name="wp_biographia_sync_content_wpautop" ' . checked ($settings['wp_biographia_sync_content_wpautop'], 'on', false) . ' />
+						<small>' . __('Ensure Automatic Paragraph Formatting runs before producing the Biography Box for the full content on posts, pages and custom post types.', 'wp-biographia') . '</small></p>';
+				$priority_settings[] = '<p><strong>' . __("Synchronise Automatic Paragraph Formatting For Excerpts", 'wp-biographia') . '</strong><br /> 
+						<input type="checkbox" name="wp_biographia_sync_excerpt_wpautop" ' . checked ($settings['wp_biographia_sync_excerpt_wpautop'], 'on', false) . ' />
+						<small>' . __('Ensure Automatic Paragraph Formatting runs before producing the Biography Box for the excerpt on posts, pages and custom post types.', 'wp-biographia') . '</small></p>';
 
 				/****************************************************************************
 			 	 * End of Admin tab content
@@ -2671,6 +2767,9 @@ class WP_Biographia extends WP_PluginBase {
 						if (is_numeric ($value)) {
 							$settings['wp_biographia_admin_excerpt_priority'] = $value;
 						}
+
+						$settings['wp_biographia_sync_content_wpautop'] = $this->admin_option ('wp_biographia_sync_content_wpautop');
+						$settings['wp_biographia_sync_excerpt_wpautop'] = $this->admin_option ('wp_biographia_sync_excerpt_wpautop');
 						break;
 					
 					case 'exclude':
