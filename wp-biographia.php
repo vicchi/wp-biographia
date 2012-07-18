@@ -88,6 +88,11 @@ class WP_Biographia extends WP_PluginBase {
 	public $for_feed = false;
 	public $is_shortcode = false;
 	public $icon_dir_url = '';
+	
+	private $has_hacked_content_autop_prio = false;
+	private $original_content_autop_prio = 10;
+	private $hacked_content_autop_prio = 10;
+	
 	private $content_autop;
 	private $excerpt_autop;
 	
@@ -95,6 +100,7 @@ class WP_Biographia extends WP_PluginBase {
 	const VERSION = '320';
 	const DISPLAY_VERSION = 'v3.2.0';
 	const PRIORITY = 10;
+	const META_NONCE = 'wp-biographia-meta-nonce';
 	
 	/**
 	 * Class constructor
@@ -3270,6 +3276,8 @@ class WP_Biographia extends WP_PluginBase {
 		$pt = get_post_type ();
 		$pto = get_post_type_object ($pt);
 
+		$content[] = wp_nonce_field (basename (__FILE__), self::META_NONCE);
+		
 		switch ($pt) {
 			case 'page':
 				$checked = false;
@@ -3368,6 +3376,10 @@ class WP_Biographia extends WP_PluginBase {
 				return $post_id;
 		}
 		
+		if (!isset ($_POST[self::META_NONCE]) || !check_admin_referer (basename (__FILE__), self::META_NONCE)) {
+			return $post_id;
+		}
+
 		if ($post_type->name == 'page') {
 			$stub = $post_type->name;
 			$field = 'wp_biographia_admin_meta_page_hide';
