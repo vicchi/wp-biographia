@@ -187,8 +187,9 @@ The current version is 3.2.0 (2012.07.02)
 
 = 3.2 =
 * Released 2012.07.02
+* Added: Support for synchronising the use of `wpautop` via the `the_content` and `the_excerpt` filters to ensure these filters fire before the Biography Box is produced when the plugin's filter priority is less than the default filter priority to avoid formatting issues for contact links.
 * Added: Support for WordPress Pointers to display "what's new" information post install or upgrade and to provide a "guided tour" of the plugin's settings and options.
-* Added: Support for displaying the Biography Box as a widget
+* Added: Support for displaying the Biography Box as a widget.
 * Added: Support for a shorter biography to the user's profile to be used in conjunction with the Biography Box widget.
 * Added: Support to display the Biography Box for all types of archive page; author, category, date and tag.
 * Added: Custom meta boxes to the post/page/custom-post creation/editing screens to hide the Biography Box, making it easier to define the Admin screen's Exclusion settings.
