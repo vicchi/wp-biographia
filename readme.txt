@@ -183,10 +183,10 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 3.2.0 (2012.07.02)
+The current version is 3.2.0 (2012.07.23)
 
 = 3.2 =
-* Released 2012.07.02
+* Released 2012.07.23
 * Added: Support for synchronising the use of `wpautop` via the `the_content` and `the_excerpt` filters to ensure these filters fire before the Biography Box is produced when the plugin's filter priority is less than the default filter priority to avoid formatting issues for contact links.
 * Added: Support for WordPress Pointers to display "what's new" information post install or upgrade and to provide a "guided tour" of the plugin's settings and options.
 * Added: Support for displaying the Biography Box as a widget.
@@ -195,6 +195,7 @@ The current version is 3.2.0 (2012.07.02)
 * Added: Custom meta boxes to the post/page/custom-post creation/editing screens to hide the Biography Box, making it easier to define the Admin screen's Exclusion settings.
 * Added: Support for the shortcode's `user` attribute; deprecating support for the `author` attribute.
 * Added: Increased the width of text and select boxes for the Admin and Exclusion admin tabs to allow for longer category names and longer lists of post IDs to be displayed.
+* Added: Wrap the plugin's avatars (if present) in plugin specific CSS code to prevent theme specific CSS bleeding into the Biography Box.
 * Fixed: The layout of the Biography Box for feeds now ignore displaying contact links as icons and formats them as plain text.
 * Fixed: Example use of the `wp_biographia_feed` filter in `readme.txt`.
 * Fixed: Bug where the `wp_biographia_feed` filter was never called in the context of a feed.
