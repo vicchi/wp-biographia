@@ -308,7 +308,7 @@ class WP_BiographiaWidget extends WP_Widget {
 	
 	function change_avatar_css ($class) {
 		if ($this->widget_sem) {
-			$css = 'class=\'avatar ' . 'wp-biographia-avatar-' . ($this->wrap_bio ? 'wrap' : 'nowrap');
+			$css = 'class=\'wp-biographia-avatar wp-biographia-avatar-' . ($this->wrap_bio ? 'wrap' : 'nowrap');
 			$class = str_replace ("class='avatar", $css, $class);
 		}
 		return $class;

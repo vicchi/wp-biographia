@@ -95,6 +95,7 @@ class WP_Biographia extends WP_PluginBase {
 	
 	private $content_autop;
 	private $excerpt_autop;
+	private $sentry = false;
 	
 	const OPTIONS = 'wp_biographia_settings';
 	const VERSION = '320';
@@ -189,10 +190,15 @@ class WP_Biographia extends WP_PluginBase {
 				$this->hook ('loop_end');
 			}
 
+			$this->hook ('get_avatar', 'get_avatar', 10, 5);
 			add_shortcode ('wp_biographia', array ($this, 'shortcode'));
 		}
 	}
 	
+	/**
+	 * "loop_start" action hook; called before the start of the Loop.
+	 */
+
 	function loop_start () {
 		$settings = $this->get_option ();
 		if (isset ($settings['wp_biographia_sync_content_wpautop']) && ($settings['wp_biographia_sync_content_wpautop'] == 'on')) {
@@ -221,6 +227,10 @@ class WP_Biographia extends WP_PluginBase {
 		}
 	}
 	
+	/**
+	 * "loop_end" action hook; called after the end of the Loop.
+	 */
+
 	function loop_end () {
 		if ($this->content_autop->has_filter) {
 			remove_filter ('the_content', 'wpautop', $this->content_autop->new);
@@ -415,6 +425,24 @@ class WP_Biographia extends WP_PluginBase {
 		}
 	}
 	
+	/**
+	 * "get_avatar" filter hook; filters and augments the return from get_avatar().
+	 *
+	 * @param string avatar String containing the IMG tag returned by get_avatar().
+	 * @return string String containing the (modified) avatar IMG tag
+	 */
+
+	function get_avatar ($avatar, $id_or_email, $size, $default, $alt) {
+		if ($this->sentry) {
+			$pos = strpos ($avatar, "class='avatar ");
+			if ($pos !== false) {
+				$count = 1;
+				$avatar = str_replace ("class='avatar ", "class='wp-biographia-avatar ", $avatar, $count);
+			}
+		}
+		return $avatar;
+	}
+
 	/**
 	 * Determines whether the current page is the last page
 	 *
@@ -1104,8 +1132,10 @@ class WP_Biographia extends WP_PluginBase {
 			 (isset ($settings['wp_biographia_content_image_size'])) ?
 				$this->get_option ('wp_biographia_content_image_size') : '100';
 
+		$this->sentry = true;
 		$author_pic = get_avatar ($author['email'], $author_pic_size);
-
+		$this->sentry = false;
+		
 		if (!empty ($settings['wp_biographia_content_prefix']) ||
 			!empty ($settings['wp_biographia_content_name'])) {
 			$content[] = '<h3>';
