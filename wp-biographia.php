@@ -1897,8 +1897,8 @@ class WP_Biographia extends WP_PluginBase {
 						$this->admin_upgrade_option ($settings, 'display_date_archives_posts', $option);
 						$this->admin_upgrade_option ($settings, 'display_tag_archives_posts', $option);
 					}
-					$this->admin_upgrade_option ($settings, 'sync_content_wpautop');
-					$this->admin_upgrade_option ($settings, 'sync_excerpt_wpautop');
+					$this->admin_upgrade_option ($settings, 'sync_content_wpautop', '');
+					$this->admin_upgrade_option ($settings, 'sync_excerpt_wpautop', '');
 					
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
