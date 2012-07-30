@@ -68,8 +68,8 @@ ul.wp-biographia-list-text li, ul.wp-biographia-list-icon li {
 }
 
 .wp-biographia-item-icon {
-	height: 32px;
-	width: 32px;
+	height: 32px !important;
+	width: 32px !important;
 }
 
 .idevice .wp-biographia-container-top,
