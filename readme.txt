@@ -4,7 +4,7 @@ Donate link: http://www.vicchi.org/codeage/donate/
 Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, user, about author, user box, author box, contributors, author biography, user biography, avatar, gravatar
 Requires at least: 3.4
 Tested up to: 3.4.1
-Stable tag: 3.2.0
+Stable tag: 3.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -134,6 +134,10 @@ See the *Filter Support And Usage* section for more information on the plugin's 
 
 The HTML and CSS classes that the plugin emits follows a consistent structure and naming convention. See [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/2012/04/05/hacking-wp-biographias-appearance-with-css/) for more information.
 
+= I've changed the Biography Box CSS but my changes aren't showing up; what's happening? =
+
+WP Biographia uses *minified* CSS files to improve the speed at which a page loads. If you make changes to the plugin's CSS in `/wp-content/plugins/wp-biographia/css/wp-biographia.css` the plugin will still load the minified version in `/wp-content/plugins/wp-biographia/css/wp-biographia.min.css`. So if you make any site specific changes to the plugin's CSS, which isn't recommended (see [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/2012/04/05/hacking-wp-biographias-appearance-with-css/)), you'll need to ensure you (re)minify the master CSS to get the changes to be picked up by the plugin.
+
 = WP Biographia doesn't support social network FOO; can you add this to the next version? =
 *Yes*. But also *no*. One of the wonderful things about today's web is the vast amount of ways we have to interact with each other. I can't keep up. No, really. In practical terms, this would mean that the plugin's settings and options panels would soon get out of hand, plus the overhead of adding, testing and releasing a new version of the plugin would get out of hand before the settings and options do. But ... see the next FAQ for the answer.
 
@@ -183,7 +187,12 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 3.2.0 (2012.07.23)
+The current version is 3.2.1 (2012.07.31)
+
+= 3.2.1 =
+* Released 2012.07.31
+* Added: Stopped other themes and/or plugins overriding the size of the contact links icons via the !important CSS specifier.
+* Fixed: Fixed bug that caused the Biography Box to be duplicated in some RSS feeds.
 
 = 3.2 =
 * Released 2012.07.23
@@ -313,6 +322,9 @@ The current version is 3.2.0 (2012.07.23)
 * First version of WP Biographia released
 
 == Upgrade Notice ==
+
+= 3.2.1 =
+This version fixes an issue for RSS feeds where the Biography Box could be duplicated and locks the size of the contact link icons, if used.
 
 = 3.2 =
 This version adds support for the Biography Box as a widget and to select display of the Biography Box for all archive types (author, category, date), plus bug fixes.
