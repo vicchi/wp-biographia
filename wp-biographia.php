@@ -3,7 +3,7 @@
 Plugin Name: WP Biographia
 Plugin URI: http://www.vicchi.org/codeage/wp-biographia/
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page and much more.
-Version: 3.2
+Version: 3.2.1
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
@@ -98,8 +98,8 @@ class WP_Biographia extends WP_PluginBase {
 	private $sentry = false;
 	
 	const OPTIONS = 'wp_biographia_settings';
-	const VERSION = '320';
-	const DISPLAY_VERSION = 'v3.2.0';
+	const VERSION = '321';
+	const DISPLAY_VERSION = 'v3.2.1';
 	const PRIORITY = 10;
 	const META_NONCE = 'wp-biographia-meta-nonce';
 	
@@ -1779,6 +1779,9 @@ class WP_Biographia extends WP_PluginBase {
 			 * v3.2 removed configuration settings ...
 			 *		wp_biographia_display_archives (replaced by wp_biographia_display_archive_posts)
 			 *		wp_biographia_display_front (replaces by wp_biographia_display_front_posts)
+			 *
+			 * v3.2.1 changed default configuration settings ...
+			 *		wp_biographia_version = "321"
 			 */
 
 			switch ($current_plugin_version) {
@@ -1900,6 +1903,7 @@ class WP_Biographia extends WP_PluginBase {
 					$this->admin_upgrade_option ($settings, 'sync_content_wpautop', '');
 					$this->admin_upgrade_option ($settings, 'sync_excerpt_wpautop', '');
 					
+				case '321':
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
 
