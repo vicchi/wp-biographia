@@ -1138,8 +1138,8 @@ class WP_Biographia extends WP_PluginBase {
 		
 		if (!empty ($settings['wp_biographia_content_prefix']) ||
 			!empty ($settings['wp_biographia_content_name'])) {
-			$content[] = '<h3>';
-
+			$title = array ();
+			
 			$name_prefix = "";
 			if ((!empty ($this->override)) && (!empty ($this->override['prefix']))) {
 				$name_prefix = $this->override['prefix'];
@@ -1150,7 +1150,7 @@ class WP_Biographia extends WP_PluginBase {
 			}
 
 			if (!empty ($name_prefix)) {
-				$content[] = $name_prefix . ' ';
+				$title[] = $name_prefix . ' ';
 			}
 
 			$display_name = "";
@@ -1182,14 +1182,16 @@ class WP_Biographia extends WP_PluginBase {
 				}
 				
 				if (!empty ($settings['wp_biographia_content_authorpage']) && ($settings['wp_biographia_content_authorpage'] == 'on')) {
-					$content[] = '<a href="' . $author['posts_url']	. '" title="' . $formatted_name . '">' . $formatted_name . '</a>';
+					$title[] = '<a href="' . $author['posts_url']	. '" title="' . $formatted_name . '">' . $formatted_name . '</a>';
 				}
 
 				else {
-					$content[] = $formatted_name;
+					$title[] = $formatted_name;
 				}
 			}
 
+			$content[] = '<h3>';
+			$content[] = apply_filters ('wp_biographia_content_title', implode ('', $title), $name_prefix, $formatted_name);
 			$content[] = '</h3>';
 		}
 
@@ -1418,7 +1420,7 @@ class WP_Biographia extends WP_PluginBase {
 				strstr ($_GET['page'],"wp-biographia")) {
 			wp_enqueue_script ('postbox');
 			wp_enqueue_script ('dashboard');
-			wp_enqueue_script ('custom-background');
+			wp_enqueue_script ('farbtastic');
 			wp_enqueue_script ('wp-biographia_admin-script', WPBIOGRAPHIA_URL . 'js/wp-biographia-admin.min.js');
 		}
 	}
