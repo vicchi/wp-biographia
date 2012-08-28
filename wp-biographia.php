@@ -198,16 +198,15 @@ class WP_Biographia extends WP_PluginBase {
 				$this->hook ('loop_end');
 			}
 
-			// If the Simple Local Avatars plugin is installed and active, allow this plugin
-			// to monopolise the 'get_avatar' hook and hook into that plugin's 'simple_local_avatar'
-			// hook to fixup the Avatar's IMG tags CSS.
+			// If the Simple Local Avatars plugin is installed and active, hook into that
+			// plugin's 'simple_local_avatar' filter to fix up the Avatar's IMG tag's CSS,
+			// if not already fixed up by the 'get_avatar' filter.
 			
 			if ($this->is_sla_plugin_active) {
 				$this->hook ('simple_local_avatar');
 			}
-			else {
-				$this->hook ('get_avatar', 'get_avatar', 10, 5);
-			}
+			$this->hook ('get_avatar', 'get_avatar', 10, 5);
+
 			add_shortcode ('wp_biographia', array ($this, 'shortcode'));
 		}
 	}
