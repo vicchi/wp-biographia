@@ -96,6 +96,7 @@ class WP_Biographia extends WP_PluginBase {
 	private $content_autop;
 	private $excerpt_autop;
 	private $sentry = false;
+	private $is_sla_plugin_active = false;
 	
 	const OPTIONS = 'wp_biographia_settings';
 	const VERSION = '321';
@@ -120,6 +121,14 @@ class WP_Biographia extends WP_PluginBase {
 			);
 		$this->author_id = NULL;
 		$this->override = NULL;
+		
+		if (!is_admin ()) {
+			include_once (ABSPATH . 'wp-admin/includes/plugin.php');
+		}
+		$this->is_sla_plugin_active = is_plugin_active ('simple-local-avatars/simple-local-avatars.php');
+
+		register_activation_hook (__FILE__, array ($this, 'add_settings'));
+
 		$this->hook ('plugins_loaded');
 		$this->icon_dir_url = WPBIOGRAPHIA_URL . 'images/';
 		$this->content_autop = new WP_BiographiaFilterPriority;
@@ -134,7 +143,7 @@ class WP_Biographia extends WP_PluginBase {
 	 */
 	
 	function plugins_loaded () {
-		register_activation_hook (__FILE__, array ($this, 'add_settings'));
+		//register_activation_hook (__FILE__, array ($this, 'add_settings'));
 
 		$settings = $this->get_option ();
 		if (is_array ($settings) && isset ($settings['wp_biographia_version'])) {
@@ -190,7 +199,16 @@ class WP_Biographia extends WP_PluginBase {
 				$this->hook ('loop_end');
 			}
 
-			$this->hook ('get_avatar', 'get_avatar', 10, 5);
+			// If the Simple Local Avatars plugin is installed and active, allow this plugin
+			// to monopolise the 'get_avatar' hook and hook into that plugin's 'simple_local_avatar'
+			// hook to fixup the Avatar's IMG tags CSS.
+			
+			if ($this->is_sla_plugin_active) {
+				$this->hook ('simple_local_avatar');
+			}
+			else {
+				$this->hook ('get_avatar', 'get_avatar', 10, 5);
+			}
 			add_shortcode ('wp_biographia', array ($this, 'shortcode'));
 		}
 	}
@@ -434,12 +452,44 @@ class WP_Biographia extends WP_PluginBase {
 
 	function get_avatar ($avatar, $id_or_email, $size, $default, $alt) {
 		if ($this->sentry) {
+			if ($this->sentry) {
+				$avatar = $this->fixup_avatar_css ($avatar);
+			}
+		}
+		return $avatar;
+	}
+
+	/**
+	 * "simple_local_avatar" filter hook; filters and augments the return from get_avatar().
+	 *
+	 * @param string avatar String containing the IMG tag returned by get_avatar().
+	 * @return string String containing the (modified) avatar IMG tag
+	 */
+
+	function simple_local_avatar ($avatar) {
+		if ($this->sentry) {
+			$avatar = $this->fixup_avatar_css ($avatar);
+		}
+		return $avatar;
+	}
+	
+	/**
+	 * Called from the "get_avatar" or "simple_local_avatar" filter hooks; fixes up the
+	 * IMG tag returned by get_avatar() to use WP Biographia's avatar image placement CSS.
+     *
+	 * @param string avatar String containing the IMG tag returned by get_avatar().
+	 * @return string String containing the (modified) avatar IMG tag
+	 */
+
+	function fixup_avatar_css ($avatar) {
+		$pos = strpos ($avatar, 'wp-biographia-avatar');
+		if ($pos === false) {
 			$pos = strpos ($avatar, "class='avatar ");
 			if ($pos !== false) {
-				$count = 1;
 				$avatar = str_replace ("class='avatar ", "class='wp-biographia-avatar ", $avatar, $count);
 			}
 		}
+		
 		return $avatar;
 	}
 
@@ -1417,7 +1467,7 @@ class WP_Biographia extends WP_PluginBase {
 
 		if ($pagenow == 'options-general.php' &&
 				isset ($_GET['page']) &&
-				strstr ($_GET['page'],"wp-biographia")) {
+				strstr ($_GET['page'], "wp-biographia")) {
 			wp_enqueue_script ('postbox');
 			wp_enqueue_script ('dashboard');
 			wp_enqueue_script ('farbtastic');
@@ -1434,7 +1484,7 @@ class WP_Biographia extends WP_PluginBase {
 
 		if ($pagenow == 'options-general.php' &&
 				isset ($_GET['page']) &&
-				strstr ($_GET['page'],"wp-biographia")) {
+				strstr ($_GET['page'], "wp-biographia")) {
 			wp_enqueue_style ('dashboard');
 			wp_enqueue_style ('global');
 			wp_enqueue_style ('wp-admin');
@@ -3187,7 +3237,7 @@ class WP_Biographia extends WP_PluginBase {
 		$content[] = __('The v1.x and v2.x releases of WP Biographia were inspired and based on <a href="http://www.jonbishop.com">Jon Bishop\'s</a> <a href="http://wordpress.org/extend/plugins/wp-about-author/">WP About Author</a> plugin. WP Biographia has come a long way since v1.0, including a total rewrite in v3.0, but thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place.', 'wp-biographia');
 		$content[] = '</p>';
 
-		return $this->admin_postbox ('wo-biographia-acknowledgements',
+		return $this->admin_postbox ('wp-biographia-acknowledgements',
 			__('Acknowledgements', 'wp-biographia'),
 			implode ('', $content));
 	}
