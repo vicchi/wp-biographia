@@ -122,10 +122,9 @@ class WP_Biographia extends WP_PluginBase {
 		$this->author_id = NULL;
 		$this->override = NULL;
 		
-		if (!is_admin ()) {
-			include_once (ABSPATH . 'wp-admin/includes/plugin.php');
-		}
-		$this->is_sla_plugin_active = is_plugin_active ('simple-local-avatars/simple-local-avatars.php');
+		$this->is_sla_plugin_active = in_array (
+				'simple-local-avatars/simple-local-avatars.php',
+				apply_filters ('active_plugins', get_option ('active_plugins' )));
 
 		register_activation_hook (__FILE__, array ($this, 'add_settings'));
 
