@@ -1023,14 +1023,17 @@ class WP_Biographia extends WP_PluginBase {
 			'author' => '',
 			'prefix' => '',
 			'name' => '',
-			'role' => ''
+			'role' => '',
+			'order' => 'account-name'
 		), $atts));
 
 		$params = array ('mode' => $mode,
 			'user' => $user,
 			'author' => $author,
 			'prefix' => $prefix,
-			'name' => $name);
+			'name' => $name,
+			'role' => $role,
+			'order' => $order);
 
 		$this->is_shortcode = true;
 		$this->override = $shortcode_content = array ();
@@ -1038,6 +1041,17 @@ class WP_Biographia extends WP_PluginBase {
 			$this->override['prefix'] = $prefix;
 		}
 
+		// Check and validate values for the 'mode' attribute
+		switch ($mode) {
+			case 'raw':
+			case 'configured':
+				break;
+			default:
+				$mode = 'raw';
+				break;
+		}
+
+		// Check and validate the values for the 'name' attribute, if present
 		if (!empty ($name)) {
 			switch ($name) {
 				case 'account-name':
@@ -1051,7 +1065,22 @@ class WP_Biographia extends WP_PluginBase {
 					break;
 			}
 		}
-
+		
+		// Check and validate values for the 'order' attribute, if present
+		if (!empty ($order)) {
+			switch ($order) {
+				case 'account-name':
+				case 'first-name':
+				case 'last-name':
+				case 'nickname':
+				case 'display-name':
+				case 'login-id':
+					break;
+				default:
+					$order = 'account-name';
+					break;
+			}
+		}
 		// Handle legacy shortcode useage (before the introduction of the user attribute);
 		// if the 'author' attribute is present but no 'user' attribute exists, treat the
 		// 'author' attribute *as* the 'user' attribute.
@@ -1062,7 +1091,7 @@ class WP_Biographia extends WP_PluginBase {
 		
 		if (!empty ($user)) {
 			if ($user === "*") {
-				$contributors = array ();
+				$users = $contributors = array ();
 				
 				if (!empty ($role)) {
 					$valid_role = false;
@@ -1081,18 +1110,40 @@ class WP_Biographia extends WP_PluginBase {
 					}	// end-switch
 					
 					if ($valid_role) {
-						$contributors = $this->get_users ($role);
+						$users = $this->get_users ($role);
 					}
 				}
 				
 				else {
-					$contributors = $this->get_users ();
+					$users = $this->get_users ();
+				}
+				
+				if (!empty ($users)) {
+					$order_fields = array (
+						// order attribute value => meta value
+						'account-name' => 'user_login',
+						'first-name' => 'first_name',
+						'last-name' => 'last_name',
+						'nickname' => 'nickname',
+						'display-name' => 'display_name',
+						'login-id' => 'ID'
+					);
+						
+					foreach ($users as $user_obj) {
+						if ($order == 'login-id') {
+							$contributors[$user_obj->ID] = $user_obj->ID;
+						}
+						else {
+							$contributors[$user_obj->ID] = get_the_author_meta ($order_fields[$order], $user_obj->ID);
+						}
+					}
+					natcasesort ($contributors);
 				}
 
 				if (!empty ($contributors)) {
 					$shortcode_content[] = '<div class="wp-biographia-contributors">';
-					foreach ($contributors as $user_obj) {
-						$this->author_id = $user_obj->ID;
+					foreach ($contributors as $user_id => $user_value) {
+						$this->author_id = $user_id;
 						if ($mode == 'raw') {
 							$shortcode_content[] = $this->display ();
 						}

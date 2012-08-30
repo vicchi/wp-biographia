@@ -381,6 +381,7 @@ The shortcode also supports multiple *attributes* which allow you to customise t
 * the `user` attribute
 * the `author` attribute *(deprecated)*
 * the `role` attribute
+* the `order` attribute
 * the `prefix` attribute
 * the `name` attribute
 
@@ -412,7 +413,7 @@ In other words, if you use the shortcode and supply both the `author` and `user`
 
 Support for the `author` attribute will be likely be removed in a future release of the plugin to avoid confusion over the `author` and `user` attributes.
 
-= the "role" Attribute =
+= The "role" Attribute =
 
 Valid only when used in conjunction with the `user` attribute in *wildcard* mode, the `role` attribute allows you to filter the users that have user accounts on your blog according to their [WordPress Role](http://codex.wordpress.org/Roles_and_Capabilities). The `role` attribute takes a single argument which defines the WordPress role; at the time of writing, this can be one of:
 
@@ -425,6 +426,23 @@ Valid only when used in conjunction with the `user` attribute in *wildcard* mode
 For example, if you want to display the Biography Box for all users of your blog who have a role of `author` you can use the `role` attribute plus the `author` attribute in *wildcard* mode to do this, along the lines of `[wp_biographia user="*" role="author"]`.
 
 Specifying an invalid role (`[wp_biographia user="*" role="foo"])` will result in no Biography Box being displayed. Specifying the `role` attribute without the `user` attribute in *wildcard* mode will have no effect.
+
+= The "order" Attribute =
+
+Valid only when used in conjunction with the `user` attribute in *wildcard* mode, the `order` attribute allows you to specify the display order for the users that have user accounts on your blog. The `order` attribute takes a single argument which defines the sorting order; at the time of writing, this can be one of:
+
+* `account-name` *(the default)*
+* `first-name`
+* `last-name`
+* `nickname`
+* `display-name`
+* `login-id`
+
+For example, if you want to display the Biography Box for all users of your blog ordered according to their last name you can use the `order` attribute plus the `author` attribute in *wildcard* mode to do this, along the lines of `[wp_biographia user="*" order="last-name"]`.
+
+Specifying an invalid role (`[wp_biographia user="*" order="foo"])` will result in the default account name sort order being used. Specifying the `order` attribute without the `user` attribute in *wildcard* mode will have no effect.
+
+It's important to note that the in order to successfully sort by `first-name` or by `last-name`, the *First Name* and/or *Last Name* fields must be populated in each user's Profile; by default, these fields are not populated during the creation of a user's WordPress account. The sorting of the user accounts when the `order` attribute is specified uses [*natural order string comparison*](http://sourcefrog.net/projects/natsort/), which means than an empty *First Name* or *Last Name* will appear **before** a *First Name* or *Last Name* which actually contains a value. If your WordPress site doesn't have these name fields populated in your user's Profiles, you may not see the sorting results you expect.
 
 = The "prefix" Attribute =
 
