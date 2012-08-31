@@ -3,7 +3,7 @@
 Plugin Name: WP Biographia
 Plugin URI: http://www.vicchi.org/codeage/wp-biographia/
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page and much more.
-Version: 3.2.1
+Version: 3.3.0
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
@@ -99,8 +99,8 @@ class WP_Biographia extends WP_PluginBase {
 	private $is_sla_plugin_active = false;
 	
 	const OPTIONS = 'wp_biographia_settings';
-	const VERSION = '321';
-	const DISPLAY_VERSION = 'v3.2.1';
+	const VERSION = '330';
+	const DISPLAY_VERSION = 'v3.3.0';
 	const PRIORITY = 10;
 	const META_NONCE = 'wp-biographia-meta-nonce';
 	
@@ -434,7 +434,8 @@ class WP_Biographia extends WP_PluginBase {
 					'wp_biographia_admin_content_priority' => self::PRIORITY,
 					'wp_biographia_admin_excerpt_priority' => self::PRIORITY,
 					'wp_biographia_sync_content_wpautop' => '',
-					'wp_biographia_sync_excerpt_wpautop' => ''
+					'wp_biographia_sync_excerpt_wpautop' => '',
+					'wp_biographia_admin_guest_posts' => ''
 				) 
 			);
 			update_option (self::OPTIONS, $settings);
@@ -1883,6 +1884,11 @@ class WP_Biographia extends WP_PluginBase {
 			 *
 			 * v3.2.1 changed default configuration settings ...
 			 *		wp_biographia_version = "321"
+			 *
+			 * v3.3 changed default configuration settings ...
+			 *		wp_biographia_version = "330"
+			 * v3.3 added configuration settings ...
+			 *		wp_biographia_admin_guest_posts = ""
 			 */
 
 			switch ($current_plugin_version) {
@@ -2005,6 +2011,9 @@ class WP_Biographia extends WP_PluginBase {
 					$this->admin_upgrade_option ($settings, 'sync_excerpt_wpautop', '');
 					
 				case '321':
+				case '330':
+					$this->admin_upgrade_option ($settings, 'admin_guest_posts', '');
+
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
 
