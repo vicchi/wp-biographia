@@ -80,7 +80,7 @@ class WP_BiographiaFilterPriority {
 
 class WP_Biographia extends WP_PluginBase { 
 
-	static $instance;
+	private static $instance;
 	static $admin_tab_names;
 	public $author_id;
 	public $override;
@@ -108,8 +108,7 @@ class WP_Biographia extends WP_PluginBase {
 	 * Class constructor
 	 */
 	
-	function __construct() { 
-		self::$instance = $this;
+	private function __construct () { 
 		self::$admin_tab_names = array (
 			'display' => 'Display',
 			'admin' => 'Admin',
@@ -132,6 +131,16 @@ class WP_Biographia extends WP_PluginBase {
 		$this->icon_dir_url = WPBIOGRAPHIA_URL . 'images/';
 		$this->content_autop = new WP_BiographiaFilterPriority;
 		$this->excerpt_autop = new WP_BiographiaFilterPriority;
+		error_log ('WP_Biographia::__construct--');
+	}
+	
+	public static function get_instance () {
+		if (!isset (self::$instance)) {
+			$c = __CLASS__;
+			self::$instance = new $c ();
+		}
+
+		return self::$instance;
 	}
 	
 	/**
@@ -434,8 +443,8 @@ class WP_Biographia extends WP_PluginBase {
 					'wp_biographia_admin_content_priority' => self::PRIORITY,
 					'wp_biographia_admin_excerpt_priority' => self::PRIORITY,
 					'wp_biographia_sync_content_wpautop' => '',
-					'wp_biographia_sync_excerpt_wpautop' => '',
-					'wp_biographia_admin_guest_posts' => ''
+					'wp_biographia_sync_excerpt_wpautop' => ''
+					//'wp_biographia_admin_guest_posts' => ''
 				) 
 			);
 			update_option (self::OPTIONS, $settings);
@@ -2012,7 +2021,7 @@ class WP_Biographia extends WP_PluginBase {
 					
 				case '321':
 				case '330':
-					$this->admin_upgrade_option ($settings, 'admin_guest_posts', '');
+					//$this->admin_upgrade_option ($settings, 'admin_guest_posts', '');
 
 					$settings['wp_biographia_version'] = self::VERSION;
 					$upgrade_settings = true;
@@ -2038,6 +2047,7 @@ class WP_Biographia extends WP_PluginBase {
 
 		$wrapped_content = array ();
 		$display_settings = array ();
+		//$guest_settings = array ();
 		$role_settings = array ();
 		$profile_settings = array ();
 		$priority_settings = array ();
@@ -3680,6 +3690,6 @@ class WP_Biographia extends WP_PluginBase {
 	
 }
 
-$__wp_biographia_instance = new WP_Biographia;
+WP_Biographia::get_instance ();
 
 ?>
