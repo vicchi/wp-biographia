@@ -69,7 +69,7 @@ $this->display
 define ('WPBIOGRAPHIA_PATH', plugin_dir_path (__FILE__));
 define ('WPBIOGRAPHIA_URL', plugin_dir_url (__FILE__));
 
-require_once (WPBIOGRAPHIA_PATH . '/wp-plugin-base/wp-plugin-base.php');
+require_once (WPBIOGRAPHIA_PATH . '/includes/wp-plugin-base/wp-plugin-base.php');
 require_once (WPBIOGRAPHIA_PATH . '/includes/wp-biographia-widget.php');
 
 class WP_BiographiaFilterPriority {
@@ -131,7 +131,6 @@ class WP_Biographia extends WP_PluginBase {
 		$this->icon_dir_url = WPBIOGRAPHIA_URL . 'images/';
 		$this->content_autop = new WP_BiographiaFilterPriority;
 		$this->excerpt_autop = new WP_BiographiaFilterPriority;
-		error_log ('WP_Biographia::__construct--');
 	}
 	
 	public static function get_instance () {
