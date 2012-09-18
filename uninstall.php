@@ -8,8 +8,9 @@ if (defined('WP_UNINSTALL_PLUGIN')) {
 	// Remove the general WP Biographia options
 	delete_option ('wp_biographia_settings');
 	
-	// Remove the extended user profile metadata added by WP Biographia
 	foreach ($users as $user) {
+		// Remove the extended user profile metadata for each user
+		
 		delete_user_meta ($user->ID, 'wp_biographia_suppress_posts');
 		delete_user_meta ($user->ID, 'wp_biographia_suppress_pages');
 		delete_user_meta ($user->ID, 'twitter');
@@ -22,6 +23,14 @@ if (defined('WP_UNINSTALL_PLUGIN')) {
 		delete_user_meta ($user->ID, 'vimeo');
 		delete_user_meta ($user->ID, 'youtube');
 		delete_user_meta ($user->ID, 'reddit');
+		
+		// Remove the 'dismissed pointers' flag for each user
+		$dismissed = explode (',', get_user_meta ($user->ID, 'dismissed_wp_pointers', true));
+		$key = array_search ('wp_biographia_pointer', $dismissed);
+		if ($key !== false) {
+			unset ($dismissed[$key]);
+			update_user_meta ($user_id, 'dismissed_wp_pointers', implode (',', $dismissed));
+		}
 	}
 }
 
