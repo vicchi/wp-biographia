@@ -54,6 +54,11 @@
 	margin: 0 0 0 140px;
 }
 
+.wp-biographia-text-no-pic {
+	float: left;
+	margin: 0 0 0 0;
+}
+
 ul.wp-biographia-list-text li, ul.wp-biographia-list-icon li {
 	display: inline-block;
 	list-style-type: none;
