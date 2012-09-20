@@ -1023,8 +1023,8 @@ class WP_Biographia extends WP_PluginBase {
 	 * @return string String containing the Biography Box, providing that the current set
 	 * of settings/options permit this.
 	 */
-
-	function shortcode ($atts, $content=null) {
+	
+	function shortcode ($atts, $content=NULL) {
 		$this->for_feed = false;
 		
 		extract (shortcode_atts (array (
@@ -1037,21 +1037,29 @@ class WP_Biographia extends WP_PluginBase {
 			'order' => 'account-name'
 		), $atts));
 
-		$params = array ('mode' => $mode,
-			'user' => $user,
-			'author' => $author,
-			'prefix' => $prefix,
-			'name' => $name,
-			'role' => $role,
-			'order' => $order);
-
-		$this->is_shortcode = true;
-		$this->override = $shortcode_content = array ();
-		if (!empty ($prefix)) {
-			$this->override['prefix'] = $prefix;
+		// Handle legacy shortcode useage (before the introduction of the user attribute);
+		// if the 'author' attribute is present but no 'user' attribute exists, treat the
+		// 'author' attribute *as* the 'user' attribute.
+		
+		if (empty ($user) && !empty ($author)) {
+			$user = $author;
 		}
-
-		// Check and validate values for the 'mode' attribute
+		
+		$this->is_shortcode = true;
+		$ret = $this->biography_box ($mode, $user, $prefix, $name, $role, $order);
+		$this->is_shortcode = false;
+		
+		$content = $ret['content'];
+		$params = $ret['params'];
+		
+		return apply_filters ('wp_biographia_shortcode', implode ('', $content), $params);
+	}
+	
+	function biography_box ($mode='raw', $user=NULL, $prefix=NULL, $name=NULL, $role=NULL, $order='account-name') {
+		$this->override = array ();
+		$content = array ();
+		
+		// Check and validate the Biography Box display mode (raw/configured)
 		switch ($mode) {
 			case 'raw':
 			case 'configured':
@@ -1059,10 +1067,14 @@ class WP_Biographia extends WP_PluginBase {
 			default:
 				$mode = 'raw';
 				break;
+		}	// end-switch ($mode)
+		
+		if (isset ($prefix) && !empty ($prefix)) {
+			$this->override['prefix'] = $prefix;
 		}
-
-		// Check and validate the values for the 'name' attribute, if present
-		if (!empty ($name)) {
+		
+		// Check and validate the name display, if present ...
+		if (isset ($name) && !empty ($name)) {
 			switch ($name) {
 				case 'account-name':
 				case 'first-last-name':
@@ -1073,11 +1085,11 @@ class WP_Biographia extends WP_PluginBase {
 					break;
 				default:
 					break;
-			}
+			}	// end-switch ($name)
 		}
 		
-		// Check and validate values for the 'order' attribute, if present
-		if (!empty ($order)) {
+		// Check and validate the name (sort) order , if present ...
+		if (isset ($order) && !empty ($order)) {
 			switch ($order) {
 				case 'account-name':
 				case 'first-name':
@@ -1089,23 +1101,33 @@ class WP_Biographia extends WP_PluginBase {
 				default:
 					$order = 'account-name';
 					break;
-			}
-		}
-		// Handle legacy shortcode useage (before the introduction of the user attribute);
-		// if the 'author' attribute is present but no 'user' attribute exists, treat the
-		// 'author' attribute *as* the 'user' attribute.
-		
-		if (empty ($user) && !empty ($author)) {
-			$user = $author;
+			}	// end-switch ($order)
 		}
 		
-		if (!empty ($user)) {
-			if ($user === "*") {
-				$users = $contributors = array ();
+		// Setup the array of validated arguments to be passed to either the template tag
+		// or shortcode filter
+		
+		$params = array ('mode' => $mode,
+			'user' => $user,
+			'author' => $user,
+			'prefix' => $prefix,
+			'name' => $name,
+			'role' => $role,
+			'order' => $order);
+
+		// Is this Biography Box for a specific user (or all users in wildcard mode) ... ?
+		if (isset ($user) && !empty ($user)) {
+			// Wildcard user ... ?
+			if ($user === '*') {
+				$users = $contribs = array ();
 				
-				if (!empty ($role)) {
+				// Do we need to filter the users by role ... ?
+				if (isset ($role) && !empty ($role)) {
 					$valid_role = false;
 					$role = strtolower ($role);
+					
+					// TODO: This is fugly, we should really query the database to find the
+					// current list of defined roles and validate against that ...
 					
 					switch ($role) {
 						case 'administrator':
@@ -1117,13 +1139,14 @@ class WP_Biographia extends WP_PluginBase {
 							break;
 						default:
 							break;
-					}	// end-switch
+					}	// end-switch ($role)
 					
 					if ($valid_role) {
 						$users = $this->get_users ($role);
 					}
 				}
 				
+				// No role filtering needed, just grab 'em all ...
 				else {
 					$users = $this->get_users ();
 				}
@@ -1138,74 +1161,85 @@ class WP_Biographia extends WP_PluginBase {
 						'display-name' => 'display_name',
 						'login-id' => 'ID'
 					);
-						
-					foreach ($users as $user_obj) {
-						if ($order == 'login-id') {
-							$contributors[$user_obj->ID] = $user_obj->ID;
+
+					foreach ($users as $uo) {
+						if (isset ($order) && !empty ($order) && $order === 'login-id') {
+							$contribs[$uo->ID] = $uo->ID;
 						}
+
 						else {
-							$contributors[$user_obj->ID] = get_the_author_meta ($order_fields[$order], $user_obj->ID);
+							$contribs[$uo->ID] = get_the_author_meta ($order_fields[$order], $uo->ID);
 						}
-					}
-					natcasesort ($contributors);
+					}	// end-foreach ($users as $uo)
+					natcasesort ($contribs);
 				}
-
-				if (!empty ($contributors)) {
-					$shortcode_content[] = '<div class="wp-biographia-contributors">';
-					foreach ($contributors as $user_id => $user_value) {
-						$this->author_id = $user_id;
-						if ($mode == 'raw') {
-							$shortcode_content[] = $this->display ();
+				
+				if (!empty ($contribs)) {
+					$content[] = '<div class="wp-biographia-contributors">';
+					foreach ($contribs as $uid => $uval) {
+						$this->author_id = $uid;
+						// 'raw mode' ...
+						if ($mode === 'raw') {
+							$content[] = $this->display ();
 						}
-
-						elseif ($mode == 'configured') {
-							$placeholder_content = "";
-							$shortcode_content[] = $this->insert ($placeholder_content);
+						
+						// 'configured' mode ...
+						else {
+							$placeholder = '';
+							$content[] = $this->insert ($placeholder);
 						}
-					}
-
-					$shortcode_content[] = '</div>';
+					}	// end-foreach ($contribs ...)
+					$content[] = '</div>';
 				}
 			}
 			
+			// Specific user ... ?
 			else {
-				$user_obj = get_user_by ('login', $user);
-				
-				if ($user_obj) {
-					$this->author_id = $user_obj->ID;
-
-					if ($mode == 'raw') {
-						$shortcode_content[] = $this->display ();
+				$uo = get_user_by ('login', $user);
+				if ($uo) {
+					$this->author_id = $uo->ID;
+					
+					// 'raw' mode ...
+					if ($mode === 'raw') {
+						$content[] = $this->display ();
 					}
-
-					elseif ($mode == 'configured') {
-						$placeholder_content = "";
-						$shortcode_content[] = $this->insert ($placeholder_content);
+					
+					// 'configured' mode ...
+					else {
+						$placeholder = '';
+						$content[] = $this->insert ($placeholder);
 					}
 				}
 			}
 		}
 		
-		else {
+		// If there's no specific user or all users in wilcard mode ($user='*') then 
+		// queue the first post, so we have the $post global properly populated so,
+		// in turn, we can pluck out the user ID we need to display the Biography Box for ...
+
+		elseif (have_posts ()) {
+			the_post ();
+
 			global $post;
 			$this->author_id = $post->post_author;
-
-			if ($mode == 'raw') {
-				$shortcode_content[] = $this->display ();
-			}
-		
-			elseif ($mode == 'configured') {
-				$placeholder_content = "";
-				$this->is_shortcode = true;
 			
-				$shortcode_content[] = $this->insert ($placeholder_content);
+			// 'raw' mode ...
+			if ($mode === 'raw') {
+				$content[] = $this->display ();
 			}
-		}	
+			
+			// 'configured' mode ...
+			else {
+				$placeholder = '';
+				$content[] = $this->insert ($placeholder);
+			}
 
-		$this->is_shortcode = false;
-		return apply_filters ('wp_biographia_shortcode',
-								implode ('', $shortcode_content),
-								$params);
+			// Rewind/reset The Loop back to the beginning so if being called from a
+			// template, The Loop can be run properly, in full ...
+			rewind_posts ();
+		}
+		
+		return array ('content' => $content, 'params' => $params);
 	}
 	
 	/**
