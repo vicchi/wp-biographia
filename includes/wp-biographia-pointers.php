@@ -3,10 +3,21 @@
 if (!class_exists ('WP_BiographiaPointers')) {
 	class WP_BiographiaPointers extends WP_PluginBase {
 	
-		function __construct () {
+		private static $instance;
+		
+		private function __construct () {
 			$this->hook ('admin_enqueue_scripts');
 		}
 
+		public static function get_instance () {
+			if (!isset (self::$instance)) {
+				$c = __CLASS__;
+				self::$instance = new $c ();
+			}
+			
+			return self::$instance;
+		}
+		
 		function admin_enqueue_scripts () {
 			$dismissed = explode (',', get_user_meta (wp_get_current_user ()->ID, 'dismissed_wp_pointers', true));
 			$do_tour = !in_array ('wp_biographia_pointer', $dismissed);
@@ -212,6 +223,6 @@ if (!class_exists ('WP_BiographiaPointers')) {
 	}	// end-class WP_BiographiaPointers
 }	// end-if (!class_exists ('WP_BiographiaPointers'))
 
-$__wp_biographia_pointers_instance = new WP_BiographiaPointers;
+WP_BiographiaPointers::get_instance ();
 
 ?>
