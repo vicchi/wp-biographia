@@ -69,8 +69,9 @@ $this->display
 define ('WPBIOGRAPHIA_PATH', plugin_dir_path (__FILE__));
 define ('WPBIOGRAPHIA_URL', plugin_dir_url (__FILE__));
 
-require_once (WPBIOGRAPHIA_PATH . '/includes/wp-plugin-base/wp-plugin-base.php');
-require_once (WPBIOGRAPHIA_PATH . '/includes/wp-biographia-widget.php');
+require_once (WPBIOGRAPHIA_PATH . 'includes/wp-plugin-base/wp-plugin-base.php');
+require_once (WPBIOGRAPHIA_PATH . 'includes/wp-biographia-widget.php');
+require_once (WPBIOGRAPHIA_PATH . 'includes/wp-biographia-tags.php');
 
 if (!class_exists ('WP_BiographiaFilterPriority')) {
 	class WP_BiographiaFilterPriority {
@@ -1671,7 +1672,7 @@ if (!class_exists ('WP_Biographia')) {
 			}
 
 			if (!$skip_tour) {
-				require (WPBIOGRAPHIA_PATH . '/includes/wp-biographia-pointers.php');
+				require (WPBIOGRAPHIA_PATH . 'includes/wp-biographia-pointers.php');
 			}
 		}
 
@@ -3953,21 +3954,6 @@ if (!class_exists ('WP_Biographia')) {
 	
 	}	// end-class WP_Biographia
 }	// end-if (!class_exists ('WP_Biographia'))
-
-if (!function_exists ('wpb_get_biography_box')) {
-	function wpb_get_biography_box ($mode='raw', $user=NULL, $prefix=NULL, $name=NULL, $role=NULL, $order='account-name') {
-		$instance = WP_Biographia::get_instance ();
-		$ret = $instance->biography_box ($mode, $user, $prefix, $name, $role, $order);
-		$content = $ret['content'];
-		return implode ('', $content);
-	}	
-}
-
-if (!function_exists ('wpb_the_biography_box')) {
-	function wpb_the_biography_box ($mode='raw', $user=NULL, $prefix=NULL, $name=NULL, $role=NULL, $order='account-name') {
-		echo wpb_get_biography_box ($mode, $user, $prefix, $name, $role, $order);
-	}
-}
 
 WP_Biographia::get_instance ();
 
