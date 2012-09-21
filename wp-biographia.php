@@ -68,6 +68,7 @@ $this->display
 
 define ('WPBIOGRAPHIA_PATH', plugin_dir_path (__FILE__));
 define ('WPBIOGRAPHIA_URL', plugin_dir_url (__FILE__));
+define ('WPBIOGRAPHIA_INCLUDE_SENTRY', true);
 
 require_once (WPBIOGRAPHIA_PATH . 'includes/wp-plugin-base/wp-plugin-base.php');
 require_once (WPBIOGRAPHIA_PATH . 'includes/wp-biographia-widget.php');

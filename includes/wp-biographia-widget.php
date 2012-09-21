@@ -1,5 +1,9 @@
 <?php
 
+if (!defined('WPBIOGRAPHIA_INCLUDE_SENTRY')) {
+	die ('The way is shut. It was made by those who are dead, and the dead keep it. The way is shut.');
+}
+
 if (!class_exists ('WP_BiographiaWidget')) {
 	class WP_BiographiaWidget extends WP_Widget {
 	
