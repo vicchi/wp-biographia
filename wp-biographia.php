@@ -104,8 +104,8 @@ if (!class_exists ('WP_Biographia')) {
 		private $is_sla_plugin_active = false;
 	
 		const OPTIONS = 'wp_biographia_settings';
-		const VERSION = '330b1';
-		const DISPLAY_VERSION = 'v3.3.0 beta 1';
+		const VERSION = '330b2';
+		const DISPLAY_VERSION = 'v3.3.0 beta 2';
 		const PRIORITY = 10;
 		const META_NONCE = 'wp-biographia-meta-nonce';
 	
@@ -374,10 +374,15 @@ if (!class_exists ('WP_Biographia')) {
 		 */
 	
 		function user_contactmethods ($contactmethods) {
-
+			$links = $this->get_option ('wp_biographia_admin_links');
 			foreach ($this->defaults () as $key => $data) {
 				if (isset ($data['contactmethod']) && !empty ($data['contactmethod'])) {
-					$contactmethods[$key] = $data['contactmethod'];
+					if (isset ($links[$key]) && $links[$key] == 'on') {
+						$contactmethods[$key] = $data['contactmethod'];
+					}
+					else {
+						unset ($contactmethods[$key]);
+					}
 				}
 			}	// end-foreach (...)
 
@@ -448,7 +453,8 @@ if (!class_exists ('WP_Biographia')) {
 						'wp_biographia_admin_excerpt_priority' => self::PRIORITY,
 						'wp_biographia_sync_content_wpautop' => '',
 						'wp_biographia_sync_excerpt_wpautop' => '',
-						'wp_biographia_admin_post_overrides' => ''
+						'wp_biographia_admin_post_overrides' => '',
+						'wp_biographia_admin_links' => array ()
 					) 
 				);
 				update_option (self::OPTIONS, $settings);
@@ -1421,15 +1427,22 @@ if (!class_exists ('WP_Biographia')) {
 				// Now deal with the other links that follow the same format and can be "templatised" ...
 	
 				$supported_links = $this->supported_link_items ();
+				$config_links = $settings['wp_biographia_admin_links'];
 				foreach ($link_items as $link_key => $link_attrs) {
 					$display_link = false;
 					if (array_key_exists ($link_key, $supported_links)) {
 						$option_name = 'wp_biographia_content_' . $link_key;
-						$display_link = (!empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key])));
+						if ($link_key == 'web') {
+							$display_link = (!empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key])));
+						}
+						
+						else {
+							$display_link = (isset ($config_links[$link_key]) && $config_links[$link_key] == 'on' && !empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key])));
+						}
 					}
 
 					else {
-						$display_link = (!empty ($author[$link_key]));
+						$display_link = (isset ($config_links[$link_key]) && $config_links[$link_key] == 'on' && !empty ($author[$link_key]));
 					}
 
 					if ($display_link) {
@@ -1445,7 +1458,7 @@ if (!class_exists ('WP_Biographia')) {
 
 						$links[] = $this->link_item ($display_icons, $item_stub, $author[$link_key], $link_meta, $link_title, $link_body);
 					}
-				}
+				}	// end-foreach (...)
 
 				// Finally, deal with the "More Posts" link
 				if (!empty ($settings['wp_biographia_content_posts']) && ($settings['wp_biographia_content_posts'] != 'none') && ($author['posts'] > 0)) {
@@ -2149,9 +2162,10 @@ if (!class_exists ('WP_Biographia')) {
 					
 					case '321':
 					case '330b1':
+					case '330b2':
 					case '330':
 						$this->admin_upgrade_option ($settings, 'admin_post_overrides', '');
-
+						$this->admin_upgrade_option ($settings, 'admin_links', array ());
 						$settings['wp_biographia_version'] = self::VERSION;
 						$upgrade_settings = true;
 
@@ -2256,7 +2270,7 @@ if (!class_exists ('WP_Biographia')) {
 					$role_settings[] = '<div style="clear: both";><small>' . __('Select the roles for which new users should be automatically excluded from displaying the Biography Box. This setting only affects the creation of new users; individual users may be enabled to display the Biography Box on a per-user basis in the Exclusions Tab.', 'wp-biographia') . '</small></div></p>';
 
 					/****************************************************************************
-				 	 * Admin tab content - 2) Hide User Profile Settings By Role
+				 	 * Admin tab content - 2.1) Hide User Profile Settings By Role
 				 	 */
 
 					$profile_settings[] = '<p><em>' . __('If you want to stop users having the ability to stop the Biography Box being displayed on their posts and pages, you can control this according to the user\'s role below. An Administrator can still control the display of the Biography Box on a per-user basis in the Exclusions tab.', 'wp-biographia') . '</em></p>';
@@ -2300,7 +2314,25 @@ if (!class_exists ('WP_Biographia')) {
 					$profile_settings[] = '</span>';
 					$profile_settings[] = '<br />';
 					$profile_settings[] = '<div style="clear: both";><small>' . __('Select the roles for users who should have the Biography Box hidden or visible in their user profile.', 'wp-biographia') . '</small></div></p>';
+					
+					/****************************************************************************
+				 	 * Admin tab content - 2.2) Enable/Disable Contact Links
+				 	 */
 
+					$profile_settings[] = '<p><em>' . __('If you want to remove contact links from a user\'s profile you can do so below. Disabling a contact link removes it from the user\'s profile, from the Content tab and from the link being displayed in the Biography Box.', 'wp-biographia') . '</em></p>';
+
+					foreach ($this->defaults () as $key => $data) {
+						if (isset ($data['contactmethod']) && !empty ($data['contactmethod'])) {
+							$name = 'wp_biographia_admin_enable_' . $key;
+							$id = 'wp-biographia-admin-enable-' . $key;
+							$text = sprintf (__('Enable support for %s', 'wp-biographia'), $data['contactmethod']);
+							$checked = $settings['wp_biographia_admin_links'][$key];
+
+							$profile_settings[] = '<p><input type="checkbox" name="' . $name . '" id="' . $id . '" ' . checked ($checked, 'on', false) . ' />
+								<small>' . $text . '</small></p>';
+						}
+					}	// end-foreach (...)
+					
 					/****************************************************************************
 				 	 * Admin tab content - 3) Set Post Content And Excerpt Priority
 				 	 */
@@ -2662,65 +2694,23 @@ if (!class_exists ('WP_Biographia')) {
 						. '/>
 						<small>' . __('Display the user\'s website details?', 'wp-biographia') . '</small></p>';
 
-					$content_settings[] = '<p><strong>' . __("Show User's Twitter Link", 'wp-biographia') . '</strong><br />
-						<input type="checkbox" name="wp_biographia_content_twitter" '
-						. checked ($settings['wp_biographia_content_twitter'], 'on', false)
-						. '/>
-						<small>' . __('Display the user\'s Twitter details?', 'wp-biographia') . '</small></p>';
+					$links = $settings['wp_biographia_admin_links'];
+					foreach ($this->defaults () as $key => $data) {
+						if (isset ($data['contactmethod']) && !empty ($data['contactmethod']) &&
+								isset ($links[$key]) && $links[$key] == 'on') {
+							$name = 'wp_biographia_content_' . $key;
+							$id = 'wp-biographia-content-' . $key;
+							$title = sprintf (__('Show User\'s %s Link', 'wp-biographia'), $data['contactmethod']);
+							$descr = sprintf (__('Display the user\'s %s details?', 'wp-biographia'), $data['contactmethod']);
+							$checked = (isset ($settings[$name]) ? $settings[$name] : '');
 
-					$content_settings[] = '<p><strong>' . __("Show User's Facebook Link", 'wp-biographia') . '</strong><br />
-						<input type="checkbox" name="wp_biographia_content_facebook" '
-						. checked ($settings['wp_biographia_content_facebook'], 'on', false)
-						. '/>
-						<small>' . __('Display the user\'s Facebook details?', 'wp-biographia') . '</small></p>';
-
-					$content_settings[] = '<p><strong>' . __("Show User's LinkedIn Link", 'wp-biographia') . '</strong><br />
-						<input type="checkbox" name="wp_biographia_content_linkedin" '
-						. checked ($settings['wp_biographia_content_linkedin'], 'on', false)
-						. '/>
-						<small>' . __('Display the user\'s LinkedIn details?', 'wp-biographia') . '</small></p>';
-
-					$content_settings[] = '<p><strong>' . __("Show User's Google+ Link", 'wp-biographia') . '</strong><br />
-						<input type="checkbox" name="wp_biographia_content_googleplus" '
-						. checked ($settings['wp_biographia_content_googleplus'], 'on', false)
-						. '/>
-						<small>' . __('Display the user\'s Google+ details?', 'wp-biographia') . '</small></p>';
-
-					$content_settings[] = '<p><strong>' . __("Show User's Delicious Link", 'wp-biographia') . '</strong><br />
-						<input type="checkbox" name="wp_biographia_content_delicious" '
-						. checked ($settings['wp_biographia_content_delicious'], 'on', false)
-						. '/>
-						<small>' . __('Display the user\'s Delicious details?', 'wp-biographia') . '</small></p>';
-
-					$content_settings[] = '<p><strong>' . __("Show User's Flickr Link", 'wp-biographia') . '</strong><br />
-						<input type="checkbox" name="wp_biographia_content_flickr" '
-						. checked ($settings['wp_biographia_content_flickr'], 'on', false)
-						. '/>
-						<small>' . __('Display the user\'s Flickr details?', 'wp-biographia') . '</small></p>';
-
-					$content_settings[] = '<p><strong>' . __("Show User's Picasa Link", 'wp-biographia') . '</strong><br />
-						<input type="checkbox" name="wp_biographia_content_picasa" '
-						. checked ($settings['wp_biographia_content_picasa'], 'on', false)
-						. '/>
-						<small>' . __('Display the user\'s Picasa details?', 'wp-biographia') . '</small></p>';
-
-					$content_settings[] = '<p><strong>' . __("Show User's Vimeo Link", 'wp-biographia') . '</strong><br />
-						<input type="checkbox" name="wp_biographia_content_vimeo" '
-						. checked ($settings['wp_biographia_content_vimeo'], 'on', false)
-						. '/>
-						<small>' . __('Display the user\'s Vimeo details?' , 'wp-biographia') . '</small></p>';
-
-					$content_settings[] = '<p><strong>' . __("Show User's YouTube Link", 'wp-biographia') . '</strong><br />
-						<input type="checkbox" name="wp_biographia_content_youtube" '
-						. checked ($settings['wp_biographia_content_youtube'], 'on', false)
-						. '/>
-						<small>' . __('Display the user\'s YouTube details?', 'wp-biographia') . '</small></p>';
-
-					$content_settings[] = '<p><strong>' . __("Show User's Reddit Link", 'wp-biographia') . '</strong><br />
-						<input type="checkbox" name="wp_biographia_content_reddit" '
-						. checked ($settings['wp_biographia_content_reddit'], 'on', false)
-						. '/>
-						<small>' . __('Display the user\'s Reddit details?', 'wp-biographia') . '</small></p>';
+							$content_settings[] = '<p><strong>' . $title . '</strong><br />
+								<input type="checkbox" name="' . $name . '" id="' . $id . '"'
+								. checked ($checked, 'on', false)
+								. '/>
+								<small>' . $descr . '</small></p>';
+						}
+					}	// end-foreach ($this->defaults () ... )
 
 					$content_settings[] = '<p><strong>' . __("Show More Posts Link", 'wp-biographia') . '</strong><br />
 						<input type="radio" name="wp_biographia_content_posts" id="wp-biographia-content-posts" value="basic" '
@@ -3061,6 +3051,16 @@ if (!class_exists ('WP_Biographia')) {
 								$settings['wp_biographia_admin_hide_profiles'] = '';
 							}
 
+							$links = $settings['wp_biographia_admin_links'];
+							foreach ($this->defaults () as $key => $data) {
+								if (isset ($data['contactmethod']) && !empty ($data['contactmethod'])) {
+									$setting_key = 'wp_biographia_admin_enable_' . $key;
+									$setting_value = $this->admin_option ($setting_key);
+									$links[$key] = $setting_value;
+								}
+							}	// end-foreach ($this->defaults () ... )
+							$settings['wp_biographia_admin_links'] = $links;
+							
 							$value = $this->admin_option ('wp_biographia_content_priority');
 							if (is_numeric ($value)) {
 								$settings['wp_biographia_admin_content_priority'] = $value;
