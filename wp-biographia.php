@@ -2848,11 +2848,11 @@ if (!class_exists ('WP_Biographia')) {
 					$display_settings[] = '<p><strong>' . __("Display On Tag Archives", 'wp-biographia') . '</strong><br /> 
 							<input type="checkbox" name="wp_biographia_display_tag_archives_posts" ' . checked ($settings['wp_biographia_display_tag_archives_posts'], 'on', false) . ' id="wp-biographia-display-tag-archives-posts" />
 							<small>' . __('Displays the Biography Box for each post on Tag Archive pages.', 'wp-biographia') . '</small></p>';
+					$display_settings[] = '</div>';
 
 					$display_settings[] = '<p><strong>' . __("Display On Individual Pages", 'wp-biographia') . '</strong><br /> 
 							<input type="checkbox" name="wp_biographia_display_pages" ' . checked ($settings['wp_biographia_display_pages'], 'on', false) . ' />
 							<small>' . __('Displays the Biography Box for individual pages.', 'wp-biographia') . '</small></p>';
-					$display_settings[] = '</div>';
 
 					foreach ($pts as $pt) {
 						$key = 'wp_biographia_display_' . $pt->name;
