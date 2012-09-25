@@ -1128,24 +1128,12 @@ if (!class_exists ('WP_Biographia')) {
 				
 					// Do we need to filter the users by role ... ?
 					if (isset ($role) && !empty ($role)) {
+						global $wp_roles;
+						
+						$defined_roles = $wp_roles->get_names ();
 						$valid_role = false;
 						$role = strtolower ($role);
-					
-						// TODO: This is fugly, we should really query the database to find the
-						// current list of defined roles and validate against that ...
-					
-						switch ($role) {
-							case 'administrator':
-							case 'editor':
-							case 'author':
-							case 'contributor':
-							case 'subscriber':
-								$valid_role = true;
-								break;
-							default:
-								break;
-						}	// end-switch ($role)
-					
+						$valid_role = array_key_exists ($role, $defined_roles);
 						if ($valid_role) {
 							$users = $this->get_users ($role);
 						}
