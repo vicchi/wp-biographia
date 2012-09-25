@@ -1133,10 +1133,23 @@ if (!class_exists ('WP_Biographia')) {
 						$defined_roles = $wp_roles->get_names ();
 						$valid_role = false;
 						$role = strtolower ($role);
-						$valid_role = array_key_exists ($role, $defined_roles);
-						if ($valid_role) {
-							$users = $this->get_users ($role);
-						}
+						
+						$supplied_roles = explode (',', $role);
+						foreach ($supplied_roles as $current_role) {
+							$valid_role = array_key_exists ($current_role, $defined_roles);
+							if ($valid_role) {
+								// CODE HEALTH WARNING
+								// The WP back-end supports multiple roles per user but the
+								// front-end (as of WP 3.4.2) doesn't. If this changes, or if
+								// there's some clever plugin at work (note to self: test) then
+								// this code may break in strange and unexpected ways ...
+
+								$user_set = $this->get_users ($current_role);
+								if (!empty ($user_set)) {
+									$users = array_merge ($users, $user_set);
+								}
+							}
+						}	// end-foreach ($role ...)
 					}
 				
 					// No role filtering needed, just grab 'em all ...
