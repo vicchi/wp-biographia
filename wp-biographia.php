@@ -69,6 +69,7 @@ $this->display
 define ('WPBIOGRAPHIA_PATH', plugin_dir_path (__FILE__));
 define ('WPBIOGRAPHIA_URL', plugin_dir_url (__FILE__));
 define ('WPBIOGRAPHIA_INCLUDE_SENTRY', true);
+//define ('WPBIOGRAPHIA_DEBUG', true);
 
 require_once (WPBIOGRAPHIA_PATH . 'includes/wp-plugin-base/wp-plugin-base.php');
 require_once (WPBIOGRAPHIA_PATH . 'includes/wp-biographia-widget.php');
@@ -742,8 +743,14 @@ if (!class_exists ('WP_Biographia')) {
 		 */
 
 		function style () {
-			//wp_enqueue_style ('wp-biographia-bio', WPBIOGRAPHIA_URL . 'css/wp-biographia.css');	
-			wp_enqueue_style ('wp-biographia-bio', WPBIOGRAPHIA_URL . 'css/wp-biographia.min.css');	
+			if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
+				$css_url = 'css/wp-biographia.css';
+			}
+			
+			else {
+				$css_url = 'css/wp-biographia.min.css';
+			}
+			wp_enqueue_style ('wp-biographia-bio', WPBIOGRAPHIA_URL . $css_url);
 		}
 	
 		/**
@@ -1626,8 +1633,14 @@ if (!class_exists ('WP_Biographia')) {
 				wp_enqueue_script ('postbox');
 				wp_enqueue_script ('dashboard');
 				wp_enqueue_script ('farbtastic');
-				//wp_enqueue_script ('wp-biographia-admin-script', WPBIOGRAPHIA_URL . 'js/wp-biographia-admin.js');
-				wp_enqueue_script ('wp-biographia-admin-script', WPBIOGRAPHIA_URL . 'js/wp-biographia-admin.min.js');
+				if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
+					$js_url = 'js/wp-biographia-admin.js';
+				}
+				
+				else {
+					$js_url = 'js/wp-biographia-admin.min.js';
+				}
+				wp_enqueue_script ('wp-biographia-admin-script', WPBIOGRAPHIA_URL . $js_url);
 			}
 		
 			elseif ($pagenow == 'post.php' || $pagenow == 'post-new.php') {
@@ -1635,8 +1648,15 @@ if (!class_exists ('WP_Biographia')) {
 				if (isset ($post_override) && !empty ($post_override) && $post_override == 'on') {
 					// Only enqueue the admin edit JS if post overrides are enabled
 
-					//wp_enqueue_script ('wp-biographia-edit-script', WPBIOGRAPHIA_URL . 'js/wp-biographia-edit.js');
-					wp_enqueue_script ('wp-biographia-edit-script', WPBIOGRAPHIA_URL . 'js/wp-biographia-edit.min.js');
+					if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
+						$js_url = 'js/wp-biographia-edt.js';
+					}
+
+					else {
+						$js_url = 'js/wp-biographia-edit.min.js';
+					}
+
+					wp_enqueue_script ('wp-biographia-edit-script', WPBIOGRAPHIA_URL . $js_url);
 				}
 			}
 		}
@@ -1655,8 +1675,14 @@ if (!class_exists ('WP_Biographia')) {
 				wp_enqueue_style ('global');
 				wp_enqueue_style ('wp-admin');
 				wp_enqueue_style ('farbtastic');
-				//wp_enqueue_style ('wp-biographia-admin', WPBIOGRAPHIA_URL . 'css/wp-biographia-admin.css');	
-				wp_enqueue_style ('wp-biographia-admin', WPBIOGRAPHIA_URL . 'css/wp-biographia-admin.min.css');	
+				if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
+					$css_url = 'css/wp-biographia-admin.css';
+				}
+				
+				else {
+					$css_url = 'css/wp-biographia-admin.min.css';
+				}
+				wp_enqueue_style ('wp-biographia-admin', WPBIOGRAPHIA_URL . $css_url);	
 			}
 		
 			elseif ($pagenow == 'post.php' || $pagenow == 'post-new.php') {
@@ -1664,8 +1690,14 @@ if (!class_exists ('WP_Biographia')) {
 				if (isset ($post_override) && !empty ($post_override) && $post_override == 'on') {
 					// Only enqueue the admin edit JS if post overrides are enabled
 			
-					//wp_enqueue_style ('wp-biographia-edit', WPBIOGRAPHIA_URL . 'css/wp-biographia-edit.css');
-					wp_enqueue_style ('wp-biographia-edit', WPBIOGRAPHIA_URL . 'css/wp-biographia-edit.min.css');
+					if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
+						$css_url = 'css/wp-biographia-edit.css';
+					}
+
+					else {
+						$css_url = 'css/wp-biographia-edit.min.css';
+					}
+					wp_enqueue_style ('wp-biographia-edit', WPBIOGRAPHIA_URL . $css_url);
 				}
 			}
 		}
