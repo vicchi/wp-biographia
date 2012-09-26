@@ -63,8 +63,15 @@ ul.wp-biographia-list-text li, ul.wp-biographia-list-icon li {
 	display: inline-block;
 	list-style-type: none;
 	background: none;
-	margin: 0;
 	padding: 0 0 5px;
+}
+
+ul.wp-biographia-list-text li {
+	margin: 0;
+}
+
+ul.wp-biographia-list-icon li {
+	margin: 0 5px 0 0;
 }
 
 .wp-biographia-list-icon a:link, .wp-biographia-list-icon a:visited {
