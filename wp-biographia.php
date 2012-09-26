@@ -1741,67 +1741,55 @@ if (!class_exists ('WP_Biographia')) {
 					}
 				}	// end-foreach;
 			}
-		
-		
-			$filter = function ($element) {
-				return (strpos ($element, 'wp_biographiawidget') !== false);
-			};
 
-			$has_active_widget = false;
-			$sidebars = get_option ('sidebars_widgets');
-
-			foreach ($sidebars as $name => $list) {
-				if (is_array ($list)) {
-					if ($name !== 'wp_inactive_widgets') {
-						$instances = array_filter ($list, $filter);
-						if (!empty ($instances)) {
-							$has_active_widget = true;
-						}
-					}
+			$bio_excerpt = get_user_meta ($user->ID, 'wp_biographia_short_bio', true);
+			if (!isset ($bio_excerpt) || empty ($bio_excerpt)) {
+				$description = get_user_meta ($user->ID, 'description', true);
+				if (isset ($description) && !empty ($description)) {
+					$bio_excerpt = $description;
+				}
+				else {
+					$bio_excerpt = '';
 				}
 			}
+			
+			$content[] = '<h3>' . __('Biography Options', 'wp-biographia') . '</h3>';
+			$content[] = '<table class="form-table">';
+			$content[] = '<tbody>';
 		
-			if ($has_active_widget || !$hide_suppress_settings) {
-				$content[] = '<h3>' . __('Biography Box Settings', 'wp-biographia') . '</h3>';
-				$content[] = '<table class="form-table">';
-				$content[] = '<tbody>';
-			
-				if ($has_active_widget) {
-					$content[] = '<tr>';
-					$content[] = '<th>';
-					$content[] = '<label for="wp_biographia_short_bio">' . __('Short Biography', 'wp-biographia') . '</label>';
-					$content[] = '</th>';
-					$content[] = '<td>';
-					$content[] = '<textarea name="wp_biographia_short_bio" id="description" rows="5" cols="30">' . get_user_meta ($user->ID, 'wp_biographia_short_bio', true) . '</textarea><br>';
-					$content[] = '<span class="description">' . __('Share a shorter biography to be used on WP Biographia\'s sidebar widget.', 'wp-biographia') . '</span>';
-					$content[] = '</td>';
-					$content[] = '</tr>';
-				}
-			
-				if (!$hide_suppress_settings) {
-					$content[] = '<tr>';
-					$content[] = '<th>';
-					$content[] = '<label for="wp_biographia_suppress_posts">' . __('Hide On Posts', 'wp-biographia') . '</label>';
-					$content[] = '</th>';
-					$content[] = '<td>';
-					$content[] = '<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" ' . checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on') . ' ' . disabled (current_user_can ('manage_options'), false) . ' />&nbsp;' . __('Don\'t show the Biography Box on your posts', 'wp-biographia');
-					$content[] = '</td>';
-					$content[] = '</tr>';
-					$content[] = '<tr>';
-					$content[] = '<th>';
-					$content[] = '<label for="wp_biographia_suppress_pages">' . __('Hide On Pages', 'wp-biographia') . '</label>';
-					$content[] = '</th>';
-					$content[] = '<td>';
-					$content[] = '<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" ' . checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on') . ' ' . disabled (current_user_can ('manage_options'), false) . '/>&nbsp;' . __('Don\'t show the Biography Box on your pages', 'wp-biographia');
-					$content[] = '</td>';
-					$content[] = '</tr>';
-				}
-			
-				$content[] = '</tbody>';
-				$content[] = '</table>';
-			
-				echo implode (PHP_EOL, $content);
+			$content[] = '<tr>';
+			$content[] = '<th>';
+			$content[] = '<label for="wp_biographia_short_bio">' . __('Biographical Excerpt', 'wp-biographia') . '</label>';
+			$content[] = '</th>';
+			$content[] = '<td>';
+			$content[] = '<textarea name="wp_biographia_short_bio" id="description" rows="5" cols="30">' . $bio_excerpt . '</textarea><br>';
+			$content[] = '<span class="description">' . __('Share an excerpt of your biography which can be used by the WP Biographia shortcode, template tags, sidebar widget and configured to be used in place of the standard biography for differing template types.', 'wp-biographia') . '</span>';
+			$content[] = '</td>';
+			$content[] = '</tr>';
+		
+			if (!$hide_suppress_settings) {
+				$content[] = '<tr>';
+				$content[] = '<th>';
+				$content[] = '<label for="wp_biographia_suppress_posts">' . __('Hide The Biography Box On Posts', 'wp-biographia') . '</label>';
+				$content[] = '</th>';
+				$content[] = '<td>';
+				$content[] = '<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" ' . checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on') . ' ' . disabled (current_user_can ('manage_options'), false) . ' />&nbsp;' . __('Don\'t show the Biography Box on your posts', 'wp-biographia');
+				$content[] = '</td>';
+				$content[] = '</tr>';
+				$content[] = '<tr>';
+				$content[] = '<th>';
+				$content[] = '<label for="wp_biographia_suppress_pages">' . __('Hide The Biography Box On Pages', 'wp-biographia') . '</label>';
+				$content[] = '</th>';
+				$content[] = '<td>';
+				$content[] = '<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" ' . checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on') . ' ' . disabled (current_user_can ('manage_options'), false) . '/>&nbsp;' . __('Don\'t show the Biography Box on your pages', 'wp-biographia');
+				$content[] = '</td>';
+				$content[] = '</tr>';
 			}
+		
+			$content[] = '</tbody>';
+			$content[] = '</table>';
+		
+			echo implode (PHP_EOL, $content);
 		}
 
 		/**
