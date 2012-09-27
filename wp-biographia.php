@@ -1857,7 +1857,7 @@ if (!class_exists ('WP_Biographia')) {
 		 */
 
 		function admin_settings_link($links) {
-			$settings_link = '<a href="options-general.php?page=wp-biographia/wp-biographia.php">'
+			$settings_link = '<a href="' . $this->admin_get_options_url () . '">'
 				. __('Settings', 'wp-biographia')
 				. '</a>';
 			array_unshift ($links, $settings_link);
@@ -3345,11 +3345,7 @@ if (!class_exists ('WP_Biographia')) {
 		 */
 
 		function admin_wrap ($tab, $title, $content) {
-			$action = admin_url ('options-general.php');
-			$action .= '?page=wp-biographia/wp-biographia.php&tab=' . $tab;
-			/*
-			$action .= '&noheader=true';
-			*/
+			$action = $this->admin_get_options_url ($tab);
 		?>
 		    <div class="wrap">
 		        <h2><?php echo $title; ?></h2>
@@ -3422,8 +3418,8 @@ if (!class_exists ('WP_Biographia')) {
 
 		function admin_help_and_support () {
 			$email_address = antispambot ("gary@vicchi.org");
-			$restart_url = admin_url ('options-general.php');
-			$restart_url .= '?page=wp-biographia/wp-biographia.php&tab=display&wp_biographia_restart_tour';
+			$restart_url = $this->admin_get_options_url ('display');
+			$restart_url .= '&wp_biographia_restart_tour';
 			$restart_url = wp_nonce_url ($restart_url, 'wp-biographia-restart-tour');
 		
 			$content = array ();
@@ -3490,7 +3486,11 @@ if (!class_exists ('WP_Biographia')) {
 		
 			foreach (self::$admin_tab_names as $tab => $name) {
 				$class = ($tab == $current) ? ' nav-tab-active' : '';
-				$content[] = "<a class='nav-tab$class' id='wp-biographia-tab-$tab' href='options-general.php?page=wp-biographia/wp-biographia.php&tab=$tab'>$name</a>";
+				$content[] = sprintf ('<a class="nav-tab%s" id="wp-biographia-tab-%s" href="%s">%s</a>',
+								$class,
+								$tab,
+								$this->admin_get_options_url ($tab),
+								$name);
 			}	// end-foreach (...)
 		
 			$content[] = '</h2>';
@@ -3963,6 +3963,17 @@ if (!class_exists ('WP_Biographia')) {
 			return in_array ('wp_biographia_pointer', $dismissed);
 		}
 	
+		function admin_get_options_url ($tab=NULL) {
+			$url = array ();
+			$url[] = admin_url ('options-general.php');
+			$url[] = '?page=wp-biographia/wp-biographia.php';
+			if (isset ($tab) && !empty ($tab)) {
+				$url[] = '&tab=' . $tab;
+			}
+			
+			return implode ('', $url);
+		}
+
 		/**
 		 * Helper function to check whether a settings/options value exists
 		 *
