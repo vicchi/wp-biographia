@@ -1063,6 +1063,7 @@ if (!class_exists ('WP_Biographia')) {
 				'prefix' => '',
 				'name' => '',
 				'role' => '',
+				'type' => 'full',
 				'order' => 'account-name'
 			), $atts));
 
@@ -1075,7 +1076,7 @@ if (!class_exists ('WP_Biographia')) {
 			}
 		
 			$this->is_shortcode = true;
-			$ret = $this->biography_box ($mode, $user, $prefix, $name, $role, $order);
+			$ret = $this->biography_box ($mode, $user, $prefix, $name, $role, $type, $order);
 			$this->is_shortcode = false;
 		
 			$content = $ret['content'];
@@ -1084,7 +1085,7 @@ if (!class_exists ('WP_Biographia')) {
 			return apply_filters ('wp_biographia_shortcode', implode ('', $content), $params);
 		}
 	
-		function biography_box ($mode='raw', $user=NULL, $prefix=NULL, $name=NULL, $role=NULL, $order='account-name') {
+		function biography_box ($mode='raw', $user=NULL, $prefix=NULL, $name=NULL, $role=NULL, $type='full', $order='account-name') {
 			$this->override = array ();
 			$content = array ();
 		
@@ -1101,6 +1102,19 @@ if (!class_exists ('WP_Biographia')) {
 			if (isset ($prefix) && !empty ($prefix)) {
 				$this->override['prefix'] = $prefix;
 			}
+
+			// Check and validate the biography text type, if present ...
+			if (isset ($type) && !empty ($type)) {
+				switch ($type) {
+					case 'full':
+					case 'excerpt':
+						$this->override['type'] = $type;
+						break;
+					default:
+						$type = 'full';
+						break;
+				}
+			}	// end-switch ($type)
 		
 			// Check and validate the name display, if present ...
 			if (isset ($name) && !empty ($name)) {
@@ -1142,6 +1156,7 @@ if (!class_exists ('WP_Biographia')) {
 				'prefix' => $prefix,
 				'name' => $name,
 				'role' => $role,
+				'type' => $type,
 				'order' => $order);
 
 			// Is this Biography Box for a specific user (or all users in wildcard mode) ... ?
@@ -1278,20 +1293,11 @@ if (!class_exists ('WP_Biographia')) {
 
 		function display () {
 			global $post;
-		
+
 			$settings = $this->get_option ();
 			$post_bio_override = $post_title_override = $post_suppress_avatar = $post_suppress_links = false;
 			$post_bio_text = $post_title_text = '';
 
-			$post_override = ($settings['wp_biographia_admin_post_overrides'] == 'on');
-			if ($post_override) {
-				$post_bio_override = (get_post_meta ($post->ID, '_wp_biographia_bio_override', true) == 'on');
-				$post_bio_text = get_post_meta ($post->ID, '_wp_biographia_bio_text', true);
-				$post_title_override = (get_post_meta ($post->ID, '_wp_biographia_title_override', true) == 'on');
-				$post_title_text = get_post_meta ($post->ID, '_wp_biographia_title_text', true);
-				$post_suppress_avatar = (get_post_meta ($post->ID, '_wp_biographia_suppress_avatar', true) == 'on');
-				$post_suppress_links = (get_post_meta ($post->ID, '_wp_biographia_suppress_links', true) == 'on');
-			}
 
 			if (!$this->author_id || $this->author_id == 0) {
 				$this->author_id = $post->post_author;
@@ -1308,10 +1314,28 @@ if (!class_exists ('WP_Biographia')) {
 					$author[$key] = get_the_author_meta('first_name', $this->author_id) . ' ' . get_the_author_meta ('last_name', $this->author_id);
 				}
 			}
+
+			$post_override = ($settings['wp_biographia_admin_post_overrides'] == 'on');
+			if ($post_override) {
+				$post_bio_override = (get_post_meta ($post->ID, '_wp_biographia_bio_override', true) == 'on');
+				$post_bio_text = get_post_meta ($post->ID, '_wp_biographia_bio_text', true);
+				$post_title_override = (get_post_meta ($post->ID, '_wp_biographia_title_override', true) == 'on');
+				$post_title_text = get_post_meta ($post->ID, '_wp_biographia_title_text', true);
+				$post_suppress_avatar = (get_post_meta ($post->ID, '_wp_biographia_suppress_avatar', true) == 'on');
+				$post_suppress_links = (get_post_meta ($post->ID, '_wp_biographia_suppress_links', true) == 'on');
+			}
+
 			if ($post_override && $post_bio_override) {
 				$author['bio'] = $post_bio_text;
 			}
 
+			elseif (!empty ($this->override) && !empty ($this->override['type']) && $this->override['type'] == 'excerpt') {
+				$excerpt = get_user_meta ($this->author_id, 'wp_biographia_short_bio', true);
+				if (!empty ($excerpt)) {
+					$author['bio'] = $excerpt;
+				}
+			}
+			
 			$author['posts'] = (int)count_user_posts ($this->author_id);
 			$author['posts_url'] = get_author_posts_url ($this->author_id);
 
@@ -1661,7 +1685,7 @@ if (!class_exists ('WP_Biographia')) {
 					// Only enqueue the admin edit JS if post overrides are enabled
 
 					if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
-						$js_url = 'js/wp-biographia-edt.js';
+						$js_url = 'js/wp-biographia-edit.js';
 					}
 
 					else {
