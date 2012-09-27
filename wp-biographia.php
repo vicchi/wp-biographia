@@ -546,46 +546,57 @@ if (!class_exists ('WP_Biographia')) {
 				'twitter' => array (
 					'field' => 'twitter',
 					'contactmethod' => __('Twitter', 'wp-biographia'),
+					'url' => 'http://twitter.com/%s'
 				),
 				'facebook' => array (
 					'field' => 'facebook',
-					'contactmethod' => __('Facebook', 'wp-biographia'),				
+					'contactmethod' => __('Facebook', 'wp-biographia'),
+					'url' => 'http://www.facebook.com/%s'
 				),
 				'linkedin' => array (
 					'field' => 'linkedin',
-					'contactmethod' => __('LinkedIn', 'wp-biographia'),				
+					'contactmethod' => __('LinkedIn', 'wp-biographia'),
+					'url' => 'http://www.linkedin.com/in/%s'
 				),
 				'googleplus' => array (
 					'field' => 'googleplus',
-					'contactmethod' => __('Google+', 'wp-biographia'),					
+					'contactmethod' => __('Google+', 'wp-biographia'),
+					'url' => 'http://plus.google.com/%s'
 				),
 				'delicious' => array (
 					'field' => 'delicious',
-					'contactmethod' => __('Delicious', 'wp-biographia'),					
+					'contactmethod' => __('Delicious', 'wp-biographia'),
+					'url' => 'http://www.delicious.com/%s'
 				),
 				'flickr' => array (
 					'field' => 'flickr',
-					'contactmethod' => __('Flickr', 'wp-biographia'),					
+					'contactmethod' => __('Flickr', 'wp-biographia'),
+					'url' => 'http://www.flickr.com/photos/%s'
 				),
 				'picasa' => array (
 					'field' => 'picasa',
 					'contactmethod' => __('Picasa', 'wp-biographia'),
+					'url' => 'http://picasaweb.google.com/%s'
 				),
 				'vimeo' => array (
 					'field' => 'vimeo',
 					'contactmethod' => __('Vimeo', 'wp-biographia'),
+					'url' => 'http://vimeo.com/%s'
 				),
 				'youtube' => array (
 					'field' => 'youtube',
 					'contactmethod' => __('YouTube', 'wp-biographia'),
+					'url' => 'http://www.youtube.com/user/%s'
 				),
 				'reddit' => array (
 					'field' => 'reddit',
 					'contactmethod' => __('Reddit', 'wp-biographia'),
+					'url' => 'http://www.reddit.com/user/%s'
 				),
 				'yim' => array (
 					'field' => 'yim',
 					'contactmethod' => __('Yahoo IM', 'wp-biographia'),
+					'url' => 'http://profiles.yahoo.com/%s'
 				),
 				'aim' => array (
 					'field' => 'aim',
@@ -1722,8 +1733,94 @@ if (!class_exists ('WP_Biographia')) {
 			if (!$skip_tour) {
 				require (WPBIOGRAPHIA_PATH . 'includes/wp-biographia-pointers.php');
 			}
+			
+			global $pagenow;
+			
+			if ($pagenow == 'profile.php' ||
+					$pagenow == 'user-edit.php' ||
+					($pagenow == 'options-general.php' &&
+						isset ($_GET['page']) &&
+						strstr ($_GET['page'], "wp-biographia"))) {
+				$this->hook ('admin_notices');
+			}
 		}
 
+
+		function admin_notices () {
+			global $pagenow;
+			global $current_user;
+			$user_id = NULL;
+			$notices = array ();
+			
+			if ($pagenow == 'profile.php') {
+				$user_id = $current_user->ID;
+				$invalid = $this->admin_validate_contacts ($user_id);
+				if (!empty ($invalid)) {
+					$notices[] = sprintf (__('There is a problem with %d of your contact links!', 'wp-biographia'), count ($invalid));
+					$notice = $this->admin_create_notice ($invalid, $user_id);
+					$notices = array_merge ($notices, $notice);
+				}
+			}
+			
+			elseif ($pagenow == 'user-edit.php') {
+				if (isset ($_GET['user_id']) && !empty ($_GET['user_id'])) {
+					$user_id = $_GET['user_id'];
+				}
+
+				else {
+					$user_id = $current_user->ID;
+				}
+				$invalid = $this->admin_validate_contacts ($user_id);
+				if (!empty ($invalid)) {
+					$notices[] = sprintf (__('There is a problem with %d of this user\'s contact links!', 'wp-biographia'), count ($invalid));
+					$notice = $this->admin_create_notice ($invalid, $user_id);
+					$notices = array_merge ($notices, $notice);
+				}
+			}
+			
+			elseif ($pagenow == 'options-general.php' && isset ($_GET['page']) && strstr ($_GET['page'], 'wp-biographia')) {
+				$user_id = $current_user->ID;
+				$invalid = $this->admin_validate_contacts ($user_id);
+				if (!empty ($invalid)) {
+					$notices[] = sprintf (__('There is a problem with %d of your contact links; you probably want to <a href="%s">edit your profile</a> to fix this', 'wp-biographia'), count ($invalid), admin_url ('profile.php'));
+				}
+			}
+
+			if (!empty ($notices)) {
+				echo '<div class="error">' . PHP_EOL;
+				echo '<p>' . implode ('<br />', $notices) . '</p>';
+				echo '</div>' . PHP_EOL;
+			}
+		}
+
+		function admin_create_notice ($contacts, $user_id) {
+			$user = get_userdata ($user_id);
+			$notices = array ();
+			foreach ($contacts as $key => $data) {
+				$url = sprintf ($data['url'], $user->user_login);
+				$notices[] = sprintf (__('The %s URL doesn\'t look right; it should look something like %s', 'wp-biographia'),
+					$data['contactmethod'], $url);
+			}
+			
+			return $notices;
+		}
+
+		function admin_validate_contacts ($user_id) {
+			$invalid = array ();
+			foreach ($this->defaults () as $key => $data) {
+				if (isset ($data['url']) && !empty ($data['url'])) {
+					$url = get_the_author_meta ($data['field'], $user_id);
+					if (isset ($url) && !empty ($url)) {
+						$valid = filter_var ($url, FILTER_VALIDATE_URL, FILTER_FLAG_HOST_REQUIRED);
+						if (!$valid) {
+							$invalid[$key] = $data;
+						}
+					}
+				}
+			}
+			return $invalid;
+		}
+		
 		/**
 		 * "show_user_profile" and "edit_user_profile" action hooks; called to add fields to
 		 * the admin user profile screen.
