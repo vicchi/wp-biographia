@@ -1633,6 +1633,7 @@ if (!class_exists ('WP_Biographia')) {
 				wp_enqueue_script ('postbox');
 				wp_enqueue_script ('dashboard');
 				wp_enqueue_script ('farbtastic');
+				wp_enqueue_script ('custom-background');
 				if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
 					$js_url = 'js/wp-biographia-admin.js';
 				}
