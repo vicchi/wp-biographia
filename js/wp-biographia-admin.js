@@ -38,6 +38,42 @@
 			return !$('#wp-biographia-excluded-categories option:selected').remove().appendTo('#wp-biographia-enabled-categories');
 		});
 		
+		$('#wp-biographia-display-front-posts').click(function() {
+			$('#wp-biographia-front-bio-wrapper').toggle('slow');
+		});
+
+		$('#wp-biographia-display-posts').click(function() {
+			$('#wp-biographia-posts-bio-wrapper').toggle('slow');
+		});
+		
+		$('#wp-biographia-display-archives-posts').click(function() {
+			$('#wp-biographia-archives-bio-wrapper').toggle('slow');
+		});
+
+		$('#wp-biographia-display-author-archives-posts').click(function() {
+			$('#wp-biographia-author-bio-wrapper').toggle('slow');
+		});
+
+		$('#wp-biographia-display-category-archives-posts').click(function() {
+			$('#wp-biographia-category-bio-wrapper').toggle('slow');
+		});
+
+		$('#wp-biographia-display-date-archives-posts').click(function() {
+			$('#wp-biographia-date-bio-wrapper').toggle('slow');
+		});
+
+		$('#wp-biographia-display-tag-archives-posts').click(function() {
+			$('#wp-biographia-tag-bio-wrapper').toggle('slow');
+		});
+
+		$('#wp-biographia-display-pages').click(function() {
+			$('#wp-biographia-pages-bio-wrapper').toggle('slow');
+		});
+
+		$('#wp-biographia-display-feed').click(function() {
+			$('#wp-biographia-feed-bio-wrapper').toggle('slow');
+		});
+
 		$('#wp-biographia-display-archives-posts').click(function () {
 			if ($('#wp-biographia-display-archives-posts').attr('checked')) {
 				$('#wp-biographia-display-author-archives-posts').attr('checked', true);
