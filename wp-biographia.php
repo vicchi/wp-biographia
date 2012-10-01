@@ -2991,11 +2991,15 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
+
+					$full_id = 'wp-biographia-display-front-bio-full';
+					$excerpt_id = 'wp-biographia-display-front-bio-excerpt';
+
 					$display_settings[] = '<p><strong>' . __("Front Page Biography Text", 'wp-biographia') . '</strong><br />
-						<input type="radio" name="wp_biographia_display_front_bio" id="wp-biographia-display-front-bio" value="full" '
+						<input type="radio" name="wp_biographia_display_front_bio" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_front_bio'], 'full', false)
 						.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
-						<input type="radio" name="wp_biographia_display_front_bio" id="wp-biographia-display-front-bio" value="excerpt" '
+						<input type="radio" name="wp_biographia_display_front_bio" id="' . $excerpt_id . '" value="excerpt" '
 						. checked ($settings['wp_biographia_display_front_bio'], 'excerpt', false)
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
@@ -3009,11 +3013,15 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
+					
+					$full_id = 'wp-biographia-display-posts-bio-full';
+					$excerpt_id = 'wp-biographia-display-posts-bio-excerpt';
+					
 					$display_settings[] = '<p><strong>' . __("Individual Posts Biography Text", 'wp-biographia') . '</strong><br />
-						<input type="radio" name="wp_biographia_display_posts_bio" id="wp-biographia-display-posts-bio" value="full" '
+						<input type="radio" name="wp_biographia_display_posts_bio" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_posts_bio'], 'full', false)
 						.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
-						<input type="radio" name="wp_biographia_display_posts_bio" id="wp-biographia-display-posts-bio" value="excerpt" '
+						<input type="radio" name="wp_biographia_display_posts_bio" id="' . $excerpt_id . '" value="excerpt" '
 						. checked ($settings['wp_biographia_display_posts_bio'], 'excerpt', false)
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
@@ -3027,11 +3035,15 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
+					
+					$full_id = 'wp-biographia-display-archives-bio-full';
+					$excerpt_id = 'wp-biographia-display-archives-bio-excerpt';
+					
 					$display_settings[] = '<p><strong>' . __("All Post Archives Biography Text", 'wp-biographia') . '</strong><br />
-						<input type="radio" name="wp_biographia_display_archives_bio" id="wp-biographia-display-archives-bio" value="full" '
+						<input type="radio" name="wp_biographia_display_archives_bio" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_archives_bio'], 'full', false)
 						.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
-						<input type="radio" name="wp_biographia_display_archives_bio" id="wp-biographia-display-archives-bio" value="excerpt" '
+						<input type="radio" name="wp_biographia_display_archives_bio" id="' . $excerpt_id . '" value="excerpt" '
 						. checked ($settings['wp_biographia_display_archives_bio'], 'excerpt', false)
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
@@ -3051,11 +3063,15 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
+					
+					$full_id = 'wp-biographia-display-author-archives-bio-full';
+					$excerpt_id = 'wp-biographia-display-author-archives-bio-excerpt';
+					
 					$display_settings[] = '<p><strong>' . __("Author Archive Posts Biography Text", 'wp-biographia') . '</strong><br />
-						<input type="radio" name="wp_biographia_display_author_archives_bio" id="wp-biographia-display-author-archives-bio" value="full" '
+						<input type="radio" name="wp_biographia_display_author_archives_bio" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_author_archives_bio'], 'full', false)
 						.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
-						<input type="radio" name="wp_biographia_display_author_archives_bio" id="wp-biographia-display-author-archives-bio" value="excerpt" '
+						<input type="radio" name="wp_biographia_display_author_archives_bio" id="' . $excerpt_id . '" value="excerpt" '
 						. checked ($settings['wp_biographia_display_author_archives_bio'], 'excerpt', false)
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
@@ -3069,11 +3085,15 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
+					
+					$full_id = 'wp-biographia-display-category-archives-bio-full';
+					$excerpt_id = 'wp-biographia-display-category-archives-bio-excerpt';
+					
 					$display_settings[] = '<p><strong>' . __("Category Archive Posts Biography Text", 'wp-biographia') . '</strong><br />
-						<input type="radio" name="wp_biographia_display_category_archives_bio" id="wp-biographia-display-category-archives-bio" value="full" '
+						<input type="radio" name="wp_biographia_display_category_archives_bio" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_category_archives_bio'], 'full', false)
 						.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
-						<input type="radio" name="wp_biographia_display_category_archives_bio" id="wp-biographia-display-category-archives-bio" value="excerpt" '
+						<input type="radio" name="wp_biographia_display_category_archives_bio" id="' . $excerpt_id . '" value="excerpt" '
 						. checked ($settings['wp_biographia_display_category_archives_bio'], 'excerpt', false)
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
@@ -3087,11 +3107,15 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
+					
+					$full_id = 'wp-biographia-display-date-archives-bio-full';
+					$excerpt_id = 'wp-biographia-display-date-archives-bio-excerpt';
+					
 					$display_settings[] = '<p><strong>' . __("Date Archive Posts Biography Text", 'wp-biographia') . '</strong><br />
-						<input type="radio" name="wp_biographia_display_date_archives_bio" id="wp-biographia-display-date-archives-bio" value="full" '
+						<input type="radio" name="wp_biographia_display_date_archives_bio" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_date_archives_bio'], 'full', false)
 						.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
-						<input type="radio" name="wp_biographia_display_date_archives_bio" id="wp-biographia-display-date-archives-bio" value="excerpt" '
+						<input type="radio" name="wp_biographia_display_date_archives_bio" id="' . $excerpt_id . '" value="excerpt" '
 						. checked ($settings['wp_biographia_display_date_archives_bio'], 'excerpt', false)
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
@@ -3105,11 +3129,15 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
+					
+					$full_id = 'wp-biographia-display-tag-archives-bio-full';
+					$excerpt_id = 'wp-biographia-display-tag-archives-bio-excerpt';
+					
 					$display_settings[] = '<p><strong>' . __("Tag Archive Posts Biography Text", 'wp-biographia') . '</strong><br />
-						<input type="radio" name="wp_biographia_display_tag_archives_bio" id="wp-biographia-display-tag-archives-bio" value="full" '
+						<input type="radio" name="wp_biographia_display_tag_archives_bio" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_tag_archives_bio'], 'full', false)
 						.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
-						<input type="radio" name="wp_biographia_display_tag_archives_bio" id="wp-biographia-display-tag-archives-bio" value="excerpt" '
+						<input type="radio" name="wp_biographia_display_tag_archives_bio" id="' . $excerpt_id . '" value="excerpt" '
 						. checked ($settings['wp_biographia_display_tag_archives_bio'], 'excerpt', false)
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
@@ -3125,11 +3153,15 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
+					
+					$full_id = 'wp-biographia-display-pages-bio-full';
+					$excerpt_id = 'wp-biographia-display-pages-bio-excerpt';
+					
 					$display_settings[] = '<p><strong>' . __("Individual Pages Biography Text", 'wp-biographia') . '</strong><br />
-						<input type="radio" name="wp_biographia_display_pages_bio" id="wp-biographia-display-pages-bio" value="full" '
+						<input type="radio" name="wp_biographia_display_pages_bio" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_pages_bio'], 'full', false)
 						.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
-						<input type="radio" name="wp_biographia_display_pages_bio" id="wp-biographia-display-pages-bio" value="excerpt" '
+						<input type="radio" name="wp_biographia_display_pages_bio" id="' . $excerpt_id . '" value="excerpt" '
 						. checked ($settings['wp_biographia_display_pages_bio'], 'excerpt', false)
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
@@ -3150,14 +3182,15 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = '>';
 
 						$name = 'wp_biographia_display_' . $pt->name . '_posts_bio';
-						$id = 'wp-biographia-display-' . $pt->name . '-posts-bio';
-						$value = ($this->check_option ($settings, $name) ? $settings[$name] : '');
+						$full_id = 'wp-biographia-display-' . $pt->name . '-posts-bio-full';
+						$excerpt_id = 'wp-biographia-display-' . $pt->name . '-posts-bio-excerpt';
+						$value = ($this->check_option ($settings, $name) ? $settings[$name] : 'full');
 
 						$display_settings[] = '<p><strong>' . sprintf (__("Individual %s Biography Text", 'wp-biographia'), $pt->labels->name) . '</strong><br />
-							<input type="radio" name="' . $name . '" id="' . $id . '" value="full" '
+							<input type="radio" name="' . $name . '" id="' . $full_id . '" value="full" '
 							. checked ($value, 'full', false)
 							.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
-							<input type="radio" name="' . $name . '" id="' . $id . '" value="excerpt" '
+							<input type="radio" name="' . $name . '" id="' . $excerpt_id . '" value="excerpt" '
 							. checked ($value, 'excerpt', false)
 							. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 						$display_settings[] = '</div>';
@@ -3177,14 +3210,15 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = '>';
 
 						$name = 'wp_biographia_display_' . $pt->name . '_archives_bio';
-						$id = 'wp-biographia-display-' . $pt->name . '-archives-bio';
-						$value = ($this->check_option ($settings, $name) ? $settings[$name] : '');
+						$full_id = 'wp-biographia-display-' . $pt->name . '-archives-bio-full';
+						$excerpt_id = 'wp-biographia-display-' . $pt->name . '-archives-bio-excerpt';
+						$value = ($this->check_option ($settings, $name) ? $settings[$name] : 'full');
 
 						$display_settings[] = '<p><strong>' . sprintf (__("%s Archives Biography Text", 'wp-biographia'), $pt->labels->name) . '</strong><br />
-							<input type="radio" name="' . $name . '" id="' . $id . '" value="full" '
+							<input type="radio" name="' . $name . '" id="' . $full_id . '" value="full" '
 							. checked ($value, 'full', false)
 							.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
-							<input type="radio" name="' . $name . '" id="' . $id . '" value="excerpt" '
+							<input type="radio" name="' . $name . '" id="' . $excerpt_id . '" value="excerpt" '
 							. checked ($value, 'excerpt', false)
 							. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 						$display_settings[] = '</div>';
@@ -3200,11 +3234,15 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
+					
+					$full_id = 'wp-biographia-display-feed-bio-full';
+					$excerpt_id = 'wp-biographia-display-feed-bio-excerpt';
+					
 					$display_settings[] = '<p><strong>' . __("RSS Feeds Biography Text", 'wp-biographia') . '</strong><br />
-						<input type="radio" name="wp_biographia_display_feed_bio" id="wp-biographia-display-feed-bio" value="full" '
+						<input type="radio" name="wp_biographia_display_feed_bio" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_feed_bio'], 'full', false)
 						.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
-						<input type="radio" name="wp_biographia_display_feed_bio" id="wp-biographia-display-feed-bio" value="excerpt" '
+						<input type="radio" name="wp_biographia_display_feed_bio" id="' . $excerpt_id . '" value="excerpt" '
 						. checked ($settings['wp_biographia_display_feed_bio'], 'excerpt', false)
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
@@ -3562,35 +3600,56 @@ if (!class_exists ('WP_Biographia')) {
 						case 'display':
 							$settings['wp_biographia_display_front_posts'] =
 								$this->admin_option ('wp_biographia_display_front_posts');
-
+							$settings['wp_biographia_display_front_bio'] = 
+								$this->admin_option ('wp_biographia_display_front_bio');
+								
 							$settings['wp_biographia_display_posts'] =
 								$this->admin_option ('wp_biographia_display_posts');
-
+							$settings['wp_biographia_display_posts_bio'] = 
+								$this->admin_option ('wp_biographia_display_posts_bio');
+								
 							$settings['wp_biographia_display_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_archives_posts');
-
+							$settings['wp_biographia_display_archives_posts'] = 
+								$this->admin_option ('wp_biographia_display_archives_posts');
+								
 							$settings['wp_biographia_display_author_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_author_archives_posts');
-
+							$settings['wp_biographia_display_author_archives_bio'] = 
+								$this->admin_option ('wp_biographia_display_author_archives_bio');
+								
 							$settings['wp_biographia_display_category_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_category_archives_posts');
-
+							$settings['wp_biographia_display_category_archives_bio'] = 
+								$this->admin_option ('wp_biographia_display_category_archives_bio');
+								
 							$settings['wp_biographia_display_date_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_date_archives_posts');
-
+							$settings['wp_biographia_display_date_archives_bio'] = 
+								$this->admin_option ('wp_biographia_display_date_archives_bio');
+								
 							$settings['wp_biographia_display_tag_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_tag_archives_posts');
-
+							$settings['wp_biographia_display_tag_archives_bio'] = 
+								$this->admin_option ('wp_biographia_display_tag_archives_bio');
+								
 							$settings['wp_biographia_display_pages'] =
-									$this->admin_option ('wp_biographia_display_pages');
+								$this->admin_option ('wp_biographia_display_pages');
+							$settings['wp_biographia_display_pages_bio'] = 
+								$this->admin_option ('wp_biographia_display_pages_bio');
 
 							foreach ($pts as $pt) {
-								$settings['wp_biographia_display_archives_' . $pt->name] =
-									$this->admin_option ('wp_biographia_display_archives_' . $pt->name);
+								$name = 'wp_biographia_display_' . $pt->name;
+								$settings[$name] = $this->admin_option ($name);
+								
+								$name = 'wp_biographia_display_' . $pt->name . '_bio';
+								$settings[$name] = $this->admin_option ($name);
+								
+								$name = 'wp_biographia_display_archives_' . $pt->name;
+								$settings[$name] = $this->admin_option ($name);
 
-								$settings['wp_biographia_display_' . $pt->name] =
-									$this->admin_option ('wp_biographia_display_' . $pt->name);
-
+								$name = 'wp_biographia_display_' . $pt->name . '_archives_bio';
+								$settings[$name] = $this->admin_option ($name);
 							}	// end-foreach (...)
 
 							$settings['wp_biographia_display_feed'] =
