@@ -3747,6 +3747,8 @@ if (!class_exists ('WP_Biographia')) {
 		                    </div>
 		                </div>
 		            </div>
+					<?php wp_nonce_field ('closedpostboxes', 'closedpostboxesnonce', false); ?>
+					<?php wp_nonce_field ('meta-box-order', 'meta-box-order-nonce', false); ?>
 		        </form>
 		    </div>
 		<?php
