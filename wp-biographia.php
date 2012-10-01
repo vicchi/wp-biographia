@@ -3135,17 +3135,60 @@ if (!class_exists ('WP_Biographia')) {
 					$display_settings[] = '</div>';
 
 					foreach ($pts as $pt) {
-						$key = 'wp_biographia_display_' . $pt->name;
-						$value = ($this->check_option ($settings, $key) ? $settings[$key] : '');
+						$name = 'wp_biographia_display_' . $pt->name;
+						$id = 'wp-biographia-custom-display-' . $pt->name;
+						$value = ($this->check_option ($settings, $name) ? $settings[$name] : '');
 						$display_settings[] = '<p><strong>' . sprintf (__('Display On Individual %s', 'wp-biographia'), $pt->labels->name) . '</strong><br /> 
-								<input type="checkbox" name="wp_biographia_display_' . $pt->name . '" ' . checked ($value, 'on', false) . ' />
+								<input type="checkbox" name="' . $name . '" ' . checked ($value, 'on', false) . ' id="' . $id . '" />
 								<small>' . sprintf (__('Displays the Biography Box on individual instances of custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';
 
-						$key = 'wp_biographia_display_archives_' . $pt->name;
-						$value = ($this->check_option ($settings, $key) ? $settings[$key] : '');
+						$id = 'wp-biographia-custom-' . $pt->name . '-bio-wrapper';
+						$display_settings[] = '<div id="' . $id . '"';
+						if ($value != 'on') {
+							$display_settings[] = ' style="display:none;"';
+						}
+						$display_settings[] = '>';
+
+						$name = 'wp_biographia_display_' . $pt->name . '_posts_bio';
+						$id = 'wp-biographia-display-' . $pt->name . '-posts-bio';
+						$value = ($this->check_option ($settings, $name) ? $settings[$name] : '');
+
+						$display_settings[] = '<p><strong>' . sprintf (__("Individual %s Biography Text", 'wp-biographia'), $pt->labels->name) . '</strong><br />
+							<input type="radio" name="' . $name . '" id="' . $id . '" value="full" '
+							. checked ($value, 'full', false)
+							.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
+							<input type="radio" name="' . $name . '" id="' . $id . '" value="excerpt" '
+							. checked ($value, 'excerpt', false)
+							. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
+						$display_settings[] = '</div>';
+
+						$name = 'wp_biographia_display_archives_' . $pt->name;
+						$id = 'wp-biographia-custom-display-archives-' . $pt->name;
+						$value = ($this->check_option ($settings, $name) ? $settings[$name] : '');
 						$display_settings[] = '<p><strong>' . sprintf (__('Display On %s Archives', 'wp-biographia'), $pt->labels->singular_name) . '</strong><br /> 
-								<input type="checkbox" name="wp_biographia_display_archives_' . $pt->name . '" ' . checked ($value, 'on', false) . ' />
+								<input type="checkbox" name="' . $name . '" ' . checked ($value, 'on', false) . ' id="' . $id . '" />
 								<small>' . sprintf (__('Displays the Biography Box on Archive pages for custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';	
+
+						$id = 'wp-biographia-custom-archives-' . $pt->name . '-bio-wrapper';
+						$display_settings[] = '<div id="' . $id . '"';
+						if ($value != 'on') {
+							$display_settings[] = ' style="display:none;"';
+						}
+						$display_settings[] = '>';
+
+						$name = 'wp_biographia_display_' . $pt->name . '_archives_bio';
+						$id = 'wp-biographia-display-' . $pt->name . '-archives-bio';
+						$value = ($this->check_option ($settings, $name) ? $settings[$name] : '');
+
+						$display_settings[] = '<p><strong>' . sprintf (__("%s Archives Biography Text", 'wp-biographia'), $pt->labels->name) . '</strong><br />
+							<input type="radio" name="' . $name . '" id="' . $id . '" value="full" '
+							. checked ($value, 'full', false)
+							.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
+							<input type="radio" name="' . $name . '" id="' . $id . '" value="excerpt" '
+							. checked ($value, 'excerpt', false)
+							. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
+						$display_settings[] = '</div>';
+
 					}	// end-foreach (...)
 
 					$display_settings[] = '<p><strong>' . __("Display In RSS Feeds", 'wp-biographia') . '</strong><br />

@@ -66,6 +66,13 @@
 			$('#wp-biographia-tag-bio-wrapper').toggle('slow');
 		});
 
+		$('[id^=wp-biographia-custom-display]').click(function() {
+			var src_id = $(this).attr ('id');
+			var post_type = src_id.split('wp-biographia-custom-display-').slice(1).join('');
+			var dst_id = '#wp-biographia-custom-' + post_type + '-bio-wrapper';
+			$(dst_id).toggle('slow');
+		});
+
 		$('#wp-biographia-display-pages').click(function() {
 			$('#wp-biographia-pages-bio-wrapper').toggle('slow');
 		});
