@@ -2326,15 +2326,15 @@ if (!class_exists ('WP_Biographia')) {
 						$this->admin_upgrade_option ($settings, 'admin_post_overrides', '');
 						$this->admin_upgrade_option ($settings, 'admin_links', array ());
 
-						$this->admin_upgrade_option ($settings, 'display_front_bio', 'full');
-						$this->admin_upgrade_option ($settings, 'display_archives_bio', 'full');
-						$this->admin_upgrade_option ($settings, 'display_author_archives_bio', 'full');
-						$this->admin_upgrade_option ($settings, 'display_category_archives_bio', 'full');
-						$this->admin_upgrade_option ($settings, 'display_date_archives_bio', 'full');
-						$this->admin_upgrade_option ($settings, 'display_tag_archives_bio', 'full');
-						$this->admin_upgrade_option ($settings, 'display_posts_bio', 'full');
-						$this->admin_upgrade_option ($settings, 'display_pages_bio', 'full');
-						$this->admin_upgrade_option ($settings, 'display_feed_bio', 'full');
+						$this->admin_upgrade_option ($settings, 'display_front_bio_posts', 'full');
+						$this->admin_upgrade_option ($settings, 'display_archives_bio_posts', 'full');
+						$this->admin_upgrade_option ($settings, 'display_author_archives_bio_posts', 'full');
+						$this->admin_upgrade_option ($settings, 'display_category_archives_bio_posts', 'full');
+						$this->admin_upgrade_option ($settings, 'display_date_archives_bio_posts', 'full');
+						$this->admin_upgrade_option ($settings, 'display_tag_archives_bio_posts', 'full');
+						$this->admin_upgrade_option ($settings, 'display_bio_posts', 'full');
+						$this->admin_upgrade_option ($settings, 'display_bio_pages', 'full');
+						$this->admin_upgrade_option ($settings, 'display_bio_feed', 'full');
 
 
 						$settings['wp_biographia_version'] = self::VERSION;
