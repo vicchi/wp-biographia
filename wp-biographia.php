@@ -2577,13 +2577,13 @@ if (!class_exists ('WP_Biographia')) {
 						$value = ($this->check_option ($settings, $key) ? $settings[$key] : '');
 						$exclusion_settings[] = '<p><strong>' . sprintf (__('Exclude From Single %1$s (via %2$s ID)', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
 							<input type="text" name="wp_biographia_' . $pt->name .'_exclusions" id="wp_biographia_'. $pt->name .'_exclusions" class="wp-biographia-exclusions-input" value="' . $value . '" /><br />
-							<small>' . sprintf (__('Hides the Biography Box whenever a %1$s is displayed; singly, on archive pages or on the front page. Enter the %2$s IDs to globally hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name) . '</small></p>';
+							<small>' . sprintf (__('Hides the Biography Box whenever a %1$s is displayed using the Single %1$s Template. Enter the %1$s IDs to hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name) . '</small></p>';
 
 						$key = 'wp_biographia_global_' . $pt->name . '_exclusions';
 						$value = ($this->check_option ($settings, $key) ? $settings[$key] : '');
 						$exclusion_settings[] = '<p><strong>' . sprintf (__('Globally Exclude From %1$s (via %2$s ID).', 'wp-biographia'), $pt->labels->name, $pt->labels->singular_name) . '</strong><br />
 							<input type="text" name="wp_biographia_global_' . $pt->name . '_exclusions" id="wp_biographia_global_' . $pt->name . '_exclusions" class="wp-biographia-exclusions-input" value="' . $value . '" /><br />
-							<small>' . sprintf (__('Hides the Biography Box whenever a %1$s is displayed. Enter the %2$s IDs to globally hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name, $pt->labels->singular_name)  . '</small></p>';
+							<small>' . sprintf (__('Hides the Biography Box whenever a %1$s is displayed; singly, on archives pages or on the front page. Enter the %1$s IDs to globally hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia'), $pt->labels->singular_name)  . '</small></p>';
 					}
 
 					$exclusion_settings[] = '<p><strong>' . __("Exclude Pages (via Page ID)", 'wp-biographia') . '</strong><br />
