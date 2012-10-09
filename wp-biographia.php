@@ -109,6 +109,8 @@ if (!class_exists ('WP_Biographia')) {
 		const DISPLAY_VERSION = 'v3.3.0 beta 3';
 		const PRIORITY = 10;
 		const META_NONCE = 'wp-biographia-meta-nonce';
+		const DISPLAY_CONTEXT = 'display';
+		const ARCHIVE_CONTEXT = 'archive';
 	
 		/**
 		 * Class constructor
@@ -816,7 +818,7 @@ if (!class_exists ('WP_Biographia')) {
 			}
 
 			if (is_front_page ()) {
-				$new_content = $this->insert_biographia ('frontpage', $content, $pattern);
+				$new_content = $this->insert_biographia ('front', $content, $pattern);
 			}
 
 			elseif (is_archive () || is_post_type_archive ()) {
@@ -841,13 +843,13 @@ if (!class_exists ('WP_Biographia')) {
 		/**
 		 * Cycles through all default and currently defined custom post types
 		 *
-		 * @param string optstub Settings option stub to determine whether the Biography Box is to be displayed
+		 * @param array options Settings option stubs to determine whether the Biography Box is to be displayed
 		 * @param string content Source post content
 		 * @param string pattern Pattern to be used for output
 		 * @return string String containing the modified source post content
 		 */
 
-		function post_types_cycle ($optstub, $content='', $pattern='') {
+		function post_types_cycle ($options, $content='', $pattern='') {
 			global $post;
 			$new_content = $content;
 			$bio_content = $this->display ();
@@ -867,9 +869,29 @@ if (!class_exists ('WP_Biographia')) {
 				}
 
 				if ($post->post_type == $post_type) {
-					$option = $optstub . $post_type_name;
-					$optval = $this->get_option ($option);
-					if ((isset ($optval) && $optval) || $this->is_shortcode) {
+					$do_display = false;
+					
+					$optname = $options[self::DISPLAY_CONTEXT] . $post_type_name;
+					$optval = $this->get_option ($optname);
+					error_log ($optname . ': "' . $optval . '"');
+					if (!empty ($optval) && $optval === 'on') {
+						$do_display = true;
+					}
+					
+					elseif (isset ($options[self::ARCHIVE_CONTEXT])) {
+						$optname = $options[self::ARCHIVE_CONTEXT] . $post_type_name;
+						$optval = $this->get_option ($optname);
+						error_log ($optname . ': "' . $optval . '"');
+						if (!empty ($optval) && $optval === 'on') {
+							$do_display = true;
+						}
+					}
+
+					//$option = $optstub . $post_type_name;
+					//$optval = $this->get_option ($option);
+					//if ((isset ($optval) && $optval) || $this->is_shortcode) {
+					if ($do_display || $this->is_shortcode) {
+						error_log ('do_display: ' . $do_display . ', is_shortcode: ' . $this->is_shortcode);
 						// check exclusions
 						$post_option = 'wp_biographia_' . $post_type . '_exclusions';
 						$global_option = 'wp_biographia_global_' . $post_type . '_exclusions';
@@ -919,7 +941,7 @@ if (!class_exists ('WP_Biographia')) {
 		/**
 		 * Emits the Biography Box according to the current page content and settings/options.
 		 *
-		 * @param string context Current page context; frontpage|archive|page|single|feed
+		 * @param string context Current page context; front|archive|page|single|feed
 		 * @param string content Original post content
 		 * @param string pattern Biography Box location formatting pattern
 		 * @return string String containing the configured Biography Box or the original contents
@@ -932,6 +954,7 @@ if (!class_exists ('WP_Biographia')) {
 			$this->display_bio = false;
 			$settings = $this->get_option ();
 			$excluded = false;
+			$options = array ();
 
 			if ((get_user_meta ($this->author_id,
 						'wp_biographia_suppress_posts',
@@ -953,10 +976,11 @@ if (!class_exists ('WP_Biographia')) {
 			}
 
 			switch ($context) {
-				case "frontpage":
+				case "front":
 					$option = 'wp_biographia_display_front_';
 					if (!$excluded || $this->is_shortcode) {
-						$new_content = $this->post_types_cycle ($option, $content, $pattern);
+						$options[self::DISPLAY_CONTEXT] = 'wp_biographia_display_front_';
+						$new_content = $this->post_types_cycle ($options, $content, $pattern);
 					}
 					else {
 						$new_content = $content;
@@ -964,26 +988,28 @@ if (!class_exists ('WP_Biographia')) {
 					break;
 
 				case "archive":
-					if (is_post_type_archive ()) {
-						$option = 'wp_biographia_display_archives_';
-					}
-					else {
-						if (is_author ()) {
-							$option = 'wp_biographia_display_author_archives_';
-						}
-						else if (is_category ()) {
-							$option = 'wp_biographia_display_category_archives_';
-						}
-						else if (is_date ()) {
-							$option = 'wp_biographia_display_date_archives_';
-						}
-						else if (is_tag ()) {
-							$option = 'wp_biographia_display_tag_archives_';
-						}
-					}
-
 					if (!$excluded || $this->is_shortcode) {
-						$new_content = $this->post_types_cycle ($option, $content, $pattern);
+						if (is_post_type_archive ()) {
+							$options[self::DISPLAY_CONTEXT] = 'wp_biographia_display_archives_';
+						}
+						else {
+							$options[self::DISPLAY_CONTEXT] = 'wp_biographia_display_archives_';
+
+							if (is_author ()) {
+								$options[self::ARCHIVE_CONTEXT] = 'wp_biographia_display_author_archives_';
+							}
+							else if (is_category ()) {
+								$options[self::ARCHIVE_CONTEXT] = 'wp_biographia_display_category_archives_';
+							}
+							else if (is_date ()) {
+								$options[self::ARCHIVE_CONTEXT] = 'wp_biographia_display_date_archives_';
+							}
+							else if (is_tag ()) {
+								$options[self::ARCHIVE_CONTEXT] = 'wp_biographia_display_tag_archives_';
+							}
+						}
+						
+						$new_content = $this->post_types_cycle ($options, $content, $pattern);
 					}
 					else {
 						$new_content = $content;
@@ -1018,8 +1044,8 @@ if (!class_exists ('WP_Biographia')) {
 				case "single":
 					// Cycle through Custom Post Types
 					if (!$excluded) {
-						$option = 'wp_biographia_display_';
-						$new_content = $this->post_types_cycle ($option, $content, $pattern);
+						$options[self::DISPLAY_CONTEXT] = 'wp_biographia_display_';
+						$new_content = $this->post_types_cycle ($options, $content, $pattern);
 					}
 
 					else {
