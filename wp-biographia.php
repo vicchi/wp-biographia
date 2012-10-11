@@ -109,8 +109,10 @@ if (!class_exists ('WP_Biographia')) {
 		const DISPLAY_VERSION = 'v3.3.0 beta 3';
 		const PRIORITY = 10;
 		const META_NONCE = 'wp-biographia-meta-nonce';
-		const DISPLAY_CONTEXT = 'display';
-		const ARCHIVE_CONTEXT = 'archive';
+		const DISPLAY_STUB = 'display';
+		const ARCHIVE_STUB = 'archive';
+		const BIOGRAPHY_STUB = 'biography';
+		const ARCHIVE_BIOGRAPHY_STUB = 'archive-biography';
 	
 		/**
 		 * Class constructor
@@ -852,7 +854,6 @@ if (!class_exists ('WP_Biographia')) {
 		function post_types_cycle ($options, $content='', $pattern='') {
 			global $post;
 			$new_content = $content;
-			$bio_content = $this->display ();
 			$post_types = get_post_types (array (), 'objects');
 
 			foreach ($post_types as $post_type => $post_data) {
@@ -870,28 +871,35 @@ if (!class_exists ('WP_Biographia')) {
 
 				if ($post->post_type == $post_type) {
 					$do_display = false;
+					$bio_stub = NULL;
 					
-					$optname = $options[self::DISPLAY_CONTEXT] . $post_type_name;
+					$optname = $options[self::DISPLAY_STUB] . $post_type_name;
 					$optval = $this->get_option ($optname);
-					error_log ($optname . ': "' . $optval . '"');
 					if (!empty ($optval) && $optval === 'on') {
 						$do_display = true;
+						$bio_stub = self::BIOGRAPHY_STUB;
 					}
 					
-					elseif (isset ($options[self::ARCHIVE_CONTEXT])) {
-						$optname = $options[self::ARCHIVE_CONTEXT] . $post_type_name;
+					elseif (isset ($options[self::ARCHIVE_STUB])) {
+						$optname = $options[self::ARCHIVE_STUB] . $post_type_name;
 						$optval = $this->get_option ($optname);
-						error_log ($optname . ': "' . $optval . '"');
 						if (!empty ($optval) && $optval === 'on') {
 							$do_display = true;
+							$bio_stub = self::ARCHIVE_BIOGRAPHY_STUB;
 						}
 					}
 
-					//$option = $optstub . $post_type_name;
-					//$optval = $this->get_option ($option);
-					//if ((isset ($optval) && $optval) || $this->is_shortcode) {
 					if ($do_display || $this->is_shortcode) {
-						error_log ('do_display: ' . $do_display . ', is_shortcode: ' . $this->is_shortcode);
+						if (isset ($bio_stub) && isset ($options[$bio_stub])) {
+							$optname = $options[$bio_stub] . $post_type_name;
+							$optval = $this->get_option ($optname);
+							if (!empty ($optval) && $optval === 'excerpt') {
+								$this->override['type'] = $optval;
+							}
+						}
+
+						$bio_content = $this->display ();
+
 						// check exclusions
 						$post_option = 'wp_biographia_' . $post_type . '_exclusions';
 						$global_option = 'wp_biographia_global_' . $post_type . '_exclusions';
@@ -979,7 +987,8 @@ if (!class_exists ('WP_Biographia')) {
 				case "front":
 					$option = 'wp_biographia_display_front_';
 					if (!$excluded || $this->is_shortcode) {
-						$options[self::DISPLAY_CONTEXT] = 'wp_biographia_display_front_';
+						$options[self::DISPLAY_STUB] = 'wp_biographia_display_front_';
+						$options[self::BIOGRAPHY_STUB] = 'wp_biographia_display_front_bio_';
 						$new_content = $this->post_types_cycle ($options, $content, $pattern);
 					}
 					else {
@@ -990,22 +999,28 @@ if (!class_exists ('WP_Biographia')) {
 				case "archive":
 					if (!$excluded || $this->is_shortcode) {
 						if (is_post_type_archive ()) {
-							$options[self::DISPLAY_CONTEXT] = 'wp_biographia_display_archives_';
+							$options[self::DISPLAY_STUB] = 'wp_biographia_display_archives_';
+							$options[self::BIOGRAPHY_STUB] = 'wp_biographia_display_archives_bio_';
 						}
 						else {
-							$options[self::DISPLAY_CONTEXT] = 'wp_biographia_display_archives_';
+							$options[self::DISPLAY_STUB] = 'wp_biographia_display_archives_';
+							$options[self::BIOGRAPHY_STUB] = 'wp_biographia_display_archives_bio_';
 
 							if (is_author ()) {
-								$options[self::ARCHIVE_CONTEXT] = 'wp_biographia_display_author_archives_';
+								$options[self::ARCHIVE_STUB] = 'wp_biographia_display_author_archives_';
+								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'wp_biographia_display_author_archives_bio_';
 							}
 							else if (is_category ()) {
-								$options[self::ARCHIVE_CONTEXT] = 'wp_biographia_display_category_archives_';
+								$options[self::ARCHIVE_STUB] = 'wp_biographia_display_category_archives_';
+								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'wp_biographia_display_category_archives_bio_';
 							}
 							else if (is_date ()) {
-								$options[self::ARCHIVE_CONTEXT] = 'wp_biographia_display_date_archives_';
+								$options[self::ARCHIVE_STUB] = 'wp_biographia_display_date_archives_';
+								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'wp_biographia_display_date_archives_bio_';
 							}
 							else if (is_tag ()) {
-								$options[self::ARCHIVE_CONTEXT] = 'wp_biographia_display_tag_archives_';
+								$options[self::ARCHIVE_STUB] = 'wp_biographia_display_tag_archives_';
+								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'wp_biographia_display_tag_archives_bio_';
 							}
 						}
 						
@@ -1032,6 +1047,10 @@ if (!class_exists ('WP_Biographia')) {
 					}
 
 					if (!$excluded && $this->display_bio) {
+						$option = $this->get_option ('wp_biographia_display_bio_pages');
+						if (!empty ($option) && $option === 'excerpt') {
+							$this->override['type'] = $option;
+						}
 						$bio_content = $this->display ();
 						$new_content = sprintf ($pattern, $content, $bio_content);
 					}
@@ -1044,7 +1063,8 @@ if (!class_exists ('WP_Biographia')) {
 				case "single":
 					// Cycle through Custom Post Types
 					if (!$excluded) {
-						$options[self::DISPLAY_CONTEXT] = 'wp_biographia_display_';
+						$options[self::DISPLAY_STUB] = 'wp_biographia_display_';
+						$options[self::BIOGRAPHY_STUB] = 'wp_biographia_display_bio_';
 						$new_content = $this->post_types_cycle ($options, $content, $pattern);
 					}
 
@@ -1065,6 +1085,10 @@ if (!class_exists ('WP_Biographia')) {
 
 					if (!$excluded && $this->display_bio) {
 						$this->for_feed = true;
+						$option = $this->get_option ('wp_biographia_display_bio_feed');
+						if (!empty ($option) && $option === 'excerpt') {
+							$this->override['type'] = $option;
+						}
 						$bio_content = $this->display ();
 						$new_content = sprintf ($pattern, $content, $bio_content);
 					}
@@ -3077,7 +3101,7 @@ if (!class_exists ('WP_Biographia')) {
 					$excerpt_id = 'wp-biographia-display-archives-bio-excerpt';
 					
 					$display_settings[] = '<p><strong>' . __("All Post Archives Biography Text", 'wp-biographia') . '</strong><br />
-						<input type="radio" name="wp_biographia_display_archives_bio_posys" id="' . $full_id . '" value="full" '
+						<input type="radio" name="wp_biographia_display_archives_bio_posts" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_archives_bio_posts'], 'full', false)
 						.' />&nbsp;<small>' . __('Display the full text of the user\'s biography', 'wp-biographia') . '</small><br />
 						<input type="radio" name="wp_biographia_display_archives_bio_posts" id="' . $excerpt_id . '" value="excerpt" '
@@ -3639,60 +3663,63 @@ if (!class_exists ('WP_Biographia')) {
 						case 'display':
 							$settings['wp_biographia_display_front_posts'] =
 								$this->admin_option ('wp_biographia_display_front_posts');
-							$settings['wp_biographia_display_front_bio'] = 
-								$this->admin_option ('wp_biographia_display_front_bio');
+							$settings['wp_biographia_display_front_bio_posts'] = 
+								$this->admin_option ('wp_biographia_display_front_bio_posts');
 								
 							$settings['wp_biographia_display_posts'] =
 								$this->admin_option ('wp_biographia_display_posts');
-							$settings['wp_biographia_display_posts_bio'] = 
-								$this->admin_option ('wp_biographia_display_posts_bio');
+							$settings['wp_biographia_display_bio_posts'] = 
+								$this->admin_option ('wp_biographia_display_bio_posts');
 								
 							$settings['wp_biographia_display_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_archives_posts');
-							$settings['wp_biographia_display_archives_posts'] = 
-								$this->admin_option ('wp_biographia_display_archives_posts');
+							$settings['wp_biographia_display_archives_bio_posts'] = 
+								$this->admin_option ('wp_biographia_display_archives_bio_posts');
 								
 							$settings['wp_biographia_display_author_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_author_archives_posts');
-							$settings['wp_biographia_display_author_archives_bio'] = 
-								$this->admin_option ('wp_biographia_display_author_archives_bio');
+							$settings['wp_biographia_display_author_archives_bio_posts'] = 
+								$this->admin_option ('wp_biographia_display_author_archives_bio_posts');
 								
 							$settings['wp_biographia_display_category_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_category_archives_posts');
-							$settings['wp_biographia_display_category_archives_bio'] = 
-								$this->admin_option ('wp_biographia_display_category_archives_bio');
+							$settings['wp_biographia_display_category_archives_bio_posts'] = 
+								$this->admin_option ('wp_biographia_display_category_archives_bio_posts');
 								
 							$settings['wp_biographia_display_date_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_date_archives_posts');
-							$settings['wp_biographia_display_date_archives_bio'] = 
-								$this->admin_option ('wp_biographia_display_date_archives_bio');
+							$settings['wp_biographia_display_date_archives_bio_posts'] = 
+								$this->admin_option ('wp_biographia_display_date_archives_bio_posts');
 								
 							$settings['wp_biographia_display_tag_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_tag_archives_posts');
-							$settings['wp_biographia_display_tag_archives_bio'] = 
-								$this->admin_option ('wp_biographia_display_tag_archives_bio');
+							$settings['wp_biographia_display_tag_archives_bio_posts'] = 
+								$this->admin_option ('wp_biographia_display_tag_archives_bio_posts');
 								
 							$settings['wp_biographia_display_pages'] =
 								$this->admin_option ('wp_biographia_display_pages');
-							$settings['wp_biographia_display_pages_bio'] = 
-								$this->admin_option ('wp_biographia_display_pages_bio');
+							$settings['wp_biographia_display_bio_pages'] = 
+								$this->admin_option ('wp_biographia_display_bio_pages');
 
 							foreach ($pts as $pt) {
 								$name = 'wp_biographia_display_' . $pt->name;
 								$settings[$name] = $this->admin_option ($name);
 								
-								$name = 'wp_biographia_display_' . $pt->name . '_bio';
+								$name = 'wp_biographia_display_bio_' . $pt->name;
 								$settings[$name] = $this->admin_option ($name);
 								
 								$name = 'wp_biographia_display_archives_' . $pt->name;
 								$settings[$name] = $this->admin_option ($name);
 
-								$name = 'wp_biographia_display_' . $pt->name . '_archives_bio';
+								$name = 'wp_biographia_display_archives_bio_' . $pt->name;
 								$settings[$name] = $this->admin_option ($name);
 							}	// end-foreach (...)
 
 							$settings['wp_biographia_display_feed'] =
 								$this->admin_option ('wp_biographia_display_feed');
+							$settings['wp_biographia_display_bio_feed'] =
+								$this->admin_option ('wp_biographia_display_bio_feed');
+
 							$settings['wp_biographia_display_location'] =
 								$this->admin_option ('wp_biographia_display_location');
 							break;
