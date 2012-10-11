@@ -105,8 +105,8 @@ if (!class_exists ('WP_Biographia')) {
 		private $is_sla_plugin_active = false;
 	
 		const OPTIONS = 'wp_biographia_settings';
-		const VERSION = '330b3';
-		const DISPLAY_VERSION = 'v3.3.0 beta 3';
+		const VERSION = '330b4';
+		const DISPLAY_VERSION = 'v3.3.0 beta 4';
 		const PRIORITY = 10;
 		const META_NONCE = 'wp-biographia-meta-nonce';
 		const DISPLAY_STUB = 'display';
@@ -475,7 +475,8 @@ if (!class_exists ('WP_Biographia')) {
 						'wp_biographia_display_tag_archives_bio_posts' => 'full',
 						'wp_biographia_display_bio_posts' => 'full',
 						'wp_biographia_display_bio_pages' => 'full',
-						'wp_biographia_display_bio_feed' => 'full'
+						'wp_biographia_display_bio_feed' => 'full',
+						'wp_biographia_admin_lock_to_loop' => ''
 					) 
 				);
 				update_option (self::OPTIONS, $settings);
@@ -796,6 +797,13 @@ if (!class_exists ('WP_Biographia')) {
 		 */
 
 		function insert ($content) {
+			$option = $this->get_option ('wp_biographia_admin_lock_to_loop');
+			if ($option === 'on') {
+				if (!in_the_loop () || !is_main_query ()) {
+					return $content;
+				}
+			}
+
 			global $post;
 			$new_content = $content;
 		
@@ -2385,7 +2393,7 @@ if (!class_exists ('WP_Biographia')) {
 						$this->admin_upgrade_option ($settings, 'display_bio_posts', 'full');
 						$this->admin_upgrade_option ($settings, 'display_bio_pages', 'full');
 						$this->admin_upgrade_option ($settings, 'display_bio_feed', 'full');
-
+						$this->admin_upgrade_option ($settings, 'admin_lock_to_loop', '');
 
 						$settings['wp_biographia_version'] = self::VERSION;
 						$upgrade_settings = true;
@@ -2591,6 +2599,16 @@ if (!class_exists ('WP_Biographia')) {
 					$priority_settings[] = '<p><strong>' . __("Synchronise Automatic Paragraph Formatting For Excerpts", 'wp-biographia') . '</strong><br /> 
 							<input type="checkbox" name="wp_biographia_sync_excerpt_wpautop" ' . checked ($settings['wp_biographia_sync_excerpt_wpautop'], 'on', false) . ' />
 							<small>' . __('Ensure Automatic Paragraph Formatting runs before producing the Biography Box for the excerpt on posts, pages and custom post types.', 'wp-biographia') . '</small></p>';
+							
+					$priority_settings[] = '<div class="wp-biographia-warning">';
+					$priority_settings[] = '<p>'
+						. __('Some plugins and themes use the <code>the_content</code> or <code>the_excerpt</code> filters or secondary query loops to show content in the sidebar or in the footer. If you\'re seeing the Biography Box as part of a widget\'s output, in the footer or elsewhere, locking the plugin to operate within the context of the main WordPress Loop may stop this happening, depending on the specific set of plugins and theme being used.', 'wp-biographia')
+						. '</p>';
+					$priority_settings[] = '</div>';
+					
+					$priority_settings[] = '<p><strong>' . __('Lock Display Of The Biography Box To The Main Loop', 'wp-biographia') . '</strong><br />
+						<input type="checkbox" name="wp_biographia_admin_lock_to_loop" ' . checked($settings['wp_biographia_admin_lock_to_loop'], 'on', false) . ' />
+						<small>' . __('Restrict the plugin to operating on the post content or post excerpt only when in the main WordPress Loop', 'wp-biographia') . '</small></p>';
 
 					/****************************************************************************
 				 	 * Admin tab content - 4) Biography Box Settings
@@ -3354,7 +3372,7 @@ if (!class_exists ('WP_Biographia')) {
 						__('User Profile Settings', 'wp-biographia'),
 						implode ('', $profile_settings));
 					$wrapped_content[] = $this->admin_postbox ('wp-biographia-priority-settings',
-						__('Content And Excerpt Priority Settings', 'wp-biographia'),
+						__('Content And Excerpt Settings', 'wp-biographia'),
 						implode ('', $priority_settings));
 					$wrapped_content[] = $this->admin_postbox ('wp-biographia-biography-settings',
 						__('Biography Box Override Settings', 'wp-biographia'),
@@ -3508,6 +3526,7 @@ if (!class_exists ('WP_Biographia')) {
 							$settings['wp_biographia_sync_content_wpautop'] = $this->admin_option ('wp_biographia_sync_content_wpautop');
 							$settings['wp_biographia_sync_excerpt_wpautop'] = $this->admin_option ('wp_biographia_sync_excerpt_wpautop');
 							$settings['wp_biographia_admin_post_overrides'] = $this->admin_option ('wp_biographia_admin_post_overrides');
+							$settings['wp_biographia_admin_lock_to_loop'] = $this->admin_option ('wp_biographia_admin_lock_to_loop');
 							break;
 					
 						case 'exclude':
