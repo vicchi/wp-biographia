@@ -105,8 +105,8 @@ if (!class_exists ('WP_Biographia')) {
 		private $is_sla_plugin_active = false;
 	
 		const OPTIONS = 'wp_biographia_settings';
-		const VERSION = '330b4';
-		const DISPLAY_VERSION = 'v3.3.0 beta 4';
+		const VERSION = '330b5';
+		const DISPLAY_VERSION = 'v3.3.0 beta 5';
 		const PRIORITY = 10;
 		const META_NONCE = 'wp-biographia-meta-nonce';
 		const DISPLAY_STUB = 'display';
@@ -476,7 +476,8 @@ if (!class_exists ('WP_Biographia')) {
 						'wp_biographia_display_bio_posts' => 'full',
 						'wp_biographia_display_bio_pages' => 'full',
 						'wp_biographia_display_bio_feed' => 'full',
-						'wp_biographia_admin_lock_to_loop' => ''
+						'wp_biographia_admin_lock_to_loop' => '',
+						'wp_biographia_style_border_color' => '#000000'
 					) 
 				);
 				update_option (self::OPTIONS, $settings);
@@ -1629,11 +1630,25 @@ if (!class_exists ('WP_Biographia')) {
 			}
 		
 			if (!$this->for_feed) {
-				$biography[] = '<div class="wp-biographia-container-'
-					. $settings['wp_biographia_style_border']
-					. '" style="background-color:'
-					. $settings['wp_biographia_style_bg']
-					. ';">';
+				$border_type = $settings['wp_biographia_style_border'];
+				$border_color = $settings['wp_biographia_style_border_color'];
+				$bg_color = $settings['wp_biographia_style_bg'];
+				$class = 'wp-biographia-container-' . $border_type;
+				$style = 'background-color: ' . $bg_color . ';';
+				
+				switch ($border_type) {
+					case 'top':
+						$style .= ' border-top: 4px solid ' . $border_color . ';';
+						break;
+					case 'around':
+						$style .= ' border: 1px solid ' . $border_color . ';';
+						break;
+					case 'none':
+					default:
+						break;
+				}	// end-switch ($border_type)
+				
+				$biography[] = '<div class="' . $class . '" style="' . $style . '">';
 
 				$display_avatar = (!empty ($settings['wp_biographia_content_image']) &&
 						 ($settings['wp_biographia_content_image'] == 'on'));
@@ -1742,7 +1757,6 @@ if (!class_exists ('WP_Biographia')) {
 				wp_enqueue_script ('postbox');
 				wp_enqueue_script ('dashboard');
 				wp_enqueue_script ('farbtastic');
-				wp_enqueue_script ('custom-background');
 				if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
 					$js_url = 'js/wp-biographia-admin.js';
 				}
@@ -2380,6 +2394,8 @@ if (!class_exists ('WP_Biographia')) {
 					case '330b1':
 					case '330b2':
 					case '330b3':
+					case '330b4':
+					case '330b5':
 					case '330':
 						$this->admin_upgrade_option ($settings, 'admin_post_overrides', '');
 						$this->admin_upgrade_option ($settings, 'admin_links', array ());
@@ -2394,7 +2410,7 @@ if (!class_exists ('WP_Biographia')) {
 						$this->admin_upgrade_option ($settings, 'display_bio_pages', 'full');
 						$this->admin_upgrade_option ($settings, 'display_bio_feed', 'full');
 						$this->admin_upgrade_option ($settings, 'admin_lock_to_loop', '');
-
+						$this->admin_upgrade_option ($settings, 'style_border_color', '#000000');
 						$settings['wp_biographia_version'] = self::VERSION;
 						$upgrade_settings = true;
 
@@ -2802,16 +2818,21 @@ if (!class_exists ('WP_Biographia')) {
 					$style_settings[] = '<p><em>' . __('This tab contains broad level settings to control how the Biography Box is styled; its background colour and border. The Biography Box is fully style-able but this needs knowledge of how to write CSS.', 'wp-biographia') . '</em></p>';
 
 					$style_settings[] = '<p><strong>' . __("Box Background Color", 'wp-biographia') . '</strong><br /> 
-								<input type="text" name="wp_biographia_style_bg" id="background-color" value="' . $settings['wp_biographia_style_bg'] . '" />
-								<a class="hide-if-no-js" href="#" id="pickcolor">' . __('Select a Color', 'wp-biographia') . '</a>
-								<div id="colorPickerDiv" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div>
+								<input type="text" name="wp_biographia_style_bg" id="wp-biographia-background-color" value="' . $settings['wp_biographia_style_bg'] . '" />
+								<a class="hide-if-no-js" href="#" id="wp-biographia-pick-background-color">' . __('Select a Color', 'wp-biographia') . '</a>
+								<div id="wp-biographia-background-color-picker" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div>
 								<small>' . __('By default, the background color of the Biography Box is a yellowish tone.', 'wp-biographia') . '</small></p>';
 					$style_settings[] = '<p><strong>' . __("Box Border", 'wp-biographia') . '</strong><br /> 
 				                <select name="wp_biographia_style_border">
-				                  <option value="top" ' .selected($settings['wp_biographia_style_border'], 'top', false) . '>' . __('Thick Top Border', 'wp-biographia') . '</option>
-				                  <option value="around" ' .selected($settings['wp_biographia_style_border'], 'around', false) . '>' . __('Thin Surrounding Border', 'wp-biographia') . '</option>
-				                  <option value="none" ' .selected($settings['wp_biographia_style_border'], 'none', false) . '>' . __('No Border', 'wp-biographia') . '</option>
+				                  <option value="top" ' .selected ($settings['wp_biographia_style_border'], 'top', false) . '>' . __('Thick Top Border', 'wp-biographia') . '</option>
+				                  <option value="around" ' .selected ($settings['wp_biographia_style_border'], 'around', false) . '>' . __('Thin Surrounding Border', 'wp-biographia') . '</option>
+				                  <option value="none" ' .selected ($settings['wp_biographia_style_border'], 'none', false) . '>' . __('No Border', 'wp-biographia') . '</option>
 				                </select><br /><small>' . __('By default, a thick black line is displayed above the Biography Box.', 'wp-biographia') . '</small></p>';
+					$style_settings[] = '<p><strong>' . __("Box Border Color", 'wp-biographia') . '</strong><br /> 
+								<input type="text" name="wp_biographia_style_border_color" id="wp-biographia-border-color" value="' . $settings['wp_biographia_style_border_color'] . '" />
+								<a class="hide-if-no-js" href="#" id="wp-biographia-pick-border-color">' . __('Select a Color', 'wp-biographia') . '</a>
+								<div id="wp-biographia-border-color-picker" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div>
+								<small>' . __('By default, the border color of the Biography Box is black.', 'wp-biographia') . '</small></p>';
 				
 					/****************************************************************************
 			 	 	* End of Style tab content
@@ -3592,6 +3613,12 @@ if (!class_exists ('WP_Biographia')) {
 
 							$settings['wp_biographia_style_border'] = 
 								$this->admin_option ('wp_biographia_style_border');
+
+							$field = 'wp_biographia_style_border_color';
+							$color = preg_replace ('/[^0-9a-fA-F]/', '', $_POST[$field]);
+							if ((strlen ($color) == 6 || strlen ($color) == 3) && isset ($_POST[$field])) {
+									$settings[$field] = $_POST[$field];
+							}
 							break;
 
 						case 'content':

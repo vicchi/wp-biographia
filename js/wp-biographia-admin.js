@@ -134,7 +134,46 @@
 				$(this).attr("selected", "selected");
 			})
 		});
+		
+		$('#wp-biographia-pick-border-color,#wp-biographia-pick-background-color').click(function() {
+			var src_id = $(this).attr ('id');
+			switch (src_id) {
+				case 'wp-biographia-pick-border-color':
+					$('#wp-biographia-border-color-picker').show();
+					break;
+				case 'wp-biographia-pick-background-color':
+					$('#wp-biographia-background-color-picker').show();
+					break;
+			}
+			return false;
+		});
 
+		var background_picker;
+		var border_picker;
+		
+		background_picker = $.farbtastic('#wp-biographia-background-color-picker', function(color){
+			color = color.toUpperCase ();
+			background_picker.setColor(color);
+			$('#wp-biographia-background-color').val(color);
+		});
+		
+		border_picker = $.farbtastic('#wp-biographia-border-color-picker', function(color){
+			color = color.toUpperCase ();
+			border_picker.setColor(color);
+			$('#wp-biographia-border-color').val(color);
+		});
+
+		border_picker.setColor($('#wp-biographia-border-color').val());
+		background_picker.setColor($('#wp-biographia-background-color').val());
+
+		$(document).mousedown(function() {
+			$('#wp-biographia-border-color-picker,#wp-biographia-background-color-picker').each(function () {
+				var display = $(this).css('display');
+				if (display == 'block') {
+					$(this).fadeOut(2);
+				}
+			});
+		});
 	});	
 })(jQuery);
 
