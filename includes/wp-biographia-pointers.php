@@ -134,15 +134,25 @@ if (!class_exists ('WP_BiographiaPointers')) {
 		
 			if ($restart_tour || ('options-general.php' != $pagenow || !array_key_exists ($tab, $tour))) {
 				$show_pointer = true;
+				$file_error = true;
 				$id = '#menu-settings';
 				$content = '<h3>' . sprintf (__('What\'s New In WP Biographia %s?', 'wp-biographia'), WP_Biographia::DISPLAY_VERSION) . '</h3>';
-				$content .= '<p>' . __('Support for WordPress Pointers to display <em>what\'s new</em> information post install or upgrade and to provide a <em>guided tour</em> of the plugin\'s settings and options.', 'wp-biographia') . '</p>';
-				$content .= '<p>' . __('Display the Biography Box as a widget.', 'wp-biographia') . '</p>';
-				$content .= '<p>' . __('Add a shorter biography to your user profile to be used in conjunction with the Biography Box widget.', 'wp-biographia') . '</p>';
-				$content .= '<p>' . __('Display the Biography Box on all types of archive page; author, category, date and tag.', 'wp-biographia') . '</p>';
-				$content .= '<p>' . __('New custom meta boxes added to the post/page/custom-post creation/editing screens to hide the Biography Box.', 'wp-biographia') . '</p>';
-				$content .= '<p>' . __('New shortcode <code>user</code> attribute; the <code>author</code> attribute is now deprecated.', 'wp-biographia') . '</p>';
+
+				$whatsnew_file = WPBIOGRAPHIA_PATH . 'help/whatsnew-' . WP_Biographia::VERSION . '.html';
+				if (file_exists ($whatsnew_file)) {
+					$whatsnew = file_get_contents ($whatsnew_file);
+					if (isset ($whatsnew) && !empty ($whatsnew)) {
+						$file_error = false;
+						$content .= $whatsnew;
+					}
+				}
+				
+				if ($file_error) {
+					$content .= '<p>' . sprintf (__('Something seems to be wrong with your WP Biographia installation; the file %s could not be found', 'wp-biographia'), $whatsnew_file) . '</p>';
+				}
+
 				$content .= '<p>' . __('Want to know more? Look in the plugin\'s <code>readme.txt</code> or just click the <em>Find Out More</em> button below.', 'wp-biographia' ) . '</p>';
+
 				$options = array (
 					'content' => $content,
 					'position' => array ('edge' => 'left', 'align' => 'center')
