@@ -105,8 +105,8 @@ if (!class_exists ('WP_Biographia')) {
 		private $is_sla_plugin_active = false;
 	
 		const OPTIONS = 'wp_biographia_settings';
-		const VERSION = '330b5';
-		const DISPLAY_VERSION = 'v3.3.0 beta 5';
+		const VERSION = '330';
+		const DISPLAY_VERSION = 'v3.3.0';
 		const PRIORITY = 10;
 		const META_NONCE = 'wp-biographia-meta-nonce';
 		const DISPLAY_STUB = 'display';
@@ -757,7 +757,7 @@ if (!class_exists ('WP_Biographia')) {
 
 		/**
 		 * Defines the default set of contact link items for the Biography Box. The default set
-		 * of links are filterable via the 'wp_biographia_link_items filter hook.
+		 * of links are filterable via the 'wp_biographia_link_items' filter hook.
 		 *
 		 * @return array Array of default, filtered, Biography Box link items.
 		 */
@@ -1720,13 +1720,29 @@ if (!class_exists ('WP_Biographia')) {
 		function link_item ($display_icons, $format, $link_key, $link_meta, $link_title, $link_body) {
 			$item_class = "wp-biographia-item-" . $display_icons;
 			$link_class = "wp-biographia-link-" . $display_icons;
-		
+
+			$params = array (
+				'type' => $display_icons,
+				'format' => $format,
+				'url' => $link_key,
+				'meta' => $link_meta,
+				'title' => $link_title,
+				'body' => $link_body,
+				'link-class' => $link_class
+			);
+
 			if ($display_icons == 'icon') {
-				return sprintf ($format, $link_key, $link_meta, $link_title, $link_class, $link_body, $item_class);
+				$params['item-class'] = $item_class;
+				
+				return apply_filters ('wp_biographia_link_item', 
+					sprintf ($format, $link_key, $link_meta, $link_title, $link_class, $link_body, $item_class),
+					$params);
 			}
 		
 			else {
-				return sprintf ($format, $link_key, $link_meta, $link_title, $link_class, $link_body);
+				return apply_filters ('wp_biographia_link_item',
+					sprintf ($format, $link_key, $link_meta, $link_title, $link_class, $link_body),
+					$params);
 			}
 		}
 	
@@ -2269,6 +2285,18 @@ if (!class_exists ('WP_Biographia')) {
 				 *		wp_biographia_version = "330"
 				 * v3.3 added configuration settings ...
 				 *		wp_biographia_admin_post_overrides = ""
+				 *		wp_biographia_admin_links = array ()
+				 *		wp_biographia_display_front_bio_posts = "full"
+				 *		wp_biographia_display_archives_bio_posts = "full"
+				 *		wp_biographia_display_author_archives_bio_posts = "full"
+				 *		wp_biographia_display_category_archives_bio_posts = "full"
+				 *		wp_biographia_display_date_archives_bio_posts = "full"
+				 *		wp_biographia_display_tag_archives_bio_posts = "full"
+				 *		wp_biographia_display_bio_posts = "full"
+				 *		wp_biographia_display_bio_pages = "full"
+				 *		wp_biographia_display_bio_feed = "full"
+				 *		wp_biographia_admin_lock_to_loop = ""
+				 *		wp_biographia_style_border_color = "#000000"
 				 */
 
 				switch ($current_plugin_version) {

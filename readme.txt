@@ -3,8 +3,8 @@ Contributors: vicchi, wpsmith
 Donate link: http://www.vicchi.org/codeage/donate/
 Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, user, about author, user box, author box, contributors, author biography, user biography, avatar, gravatar
 Requires at least: 3.4
-Tested up to: 3.4.1
-Stable tag: 3.2.1
+Tested up to: 3.4.2
+Stable tag: 3.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,6 +149,10 @@ With the cunning use of the filters that WP Biographia supports, you can add sup
 
 See the *Filter Support And Usage* section for a working example of these two filters to add support for a new contact link.
 
+= The "More Posts" link in the Biography Box links to my site's landing page and not an author's archive page; what's happening? =
+
+If you're using an SEO plugin, this might be optimising out the *More Posts* link. Specifically, [Yoast's WordPress SEO](http://wordpress.org/extend/plugins/wordpress-seo/) plugin has this side effect as this plugin allows you to enable/disable author archive pages. Thankfully, the SEO plugin has a setting called *Disable Author Archives* that, if disabled, allows WP Biographia to successfully link to an author's archive page.
+
 = WP Biographia isn't available in my language; can I submit a translation? =
 
 WordPress and this plugin use the gettext tools to support internationalisation. The source file containing each string that needs to be translated ships with the plugin in `wp-biographia/lang/src/wp-biographia.po`. See the [I18n for WordPress Developers](http://codex.wordpress.org/I18n_for_WordPress_Developers) page for more information or get in touch for help and hand-holding.
@@ -188,6 +192,31 @@ WP Biographia is named after the etymology of the modern English word biography.
 == Changelog ==
 
 The current version is 3.2.1 (2012.07.31)
+
+= 3.3 =
+* Released
+* Added: `wp_biographia_content_title` filter; allow the Biography Boxes's title to be changed.
+* Added: Support for sites using the Simple Local Avatars plugin. If installed/active use the `simple_local_avatars` filter to fixup the avatar's CSS; hook into both `simple_local_avatars` and `get_avatars` to support site with mixed Gravatars and locally hosted avatars.
+* Added: Support for the shortcode's `order` attribute; allow custom sort orders when in wildcard mode.
+* Added: Support for post specific Biography Box overrides.
+* Added: Two new template tags: `wpb_get_biography_box` and `wpb_the_biography_box`.
+* Added: Multiple, comma separated, roles can now be specified for the shortcode and template tags.
+* Added: Support for enabling/disabling contact links in the user's profile, in the *Admin* and *Display* tabs and when rendering the Biography Box.
+* Added: 5px spacing between contact link icons to support custom icon sets with no border.
+* Added: The contact links in a user's profile are now validated to check that they are valid URLs; an admin error message is now displayed if a link is deemed to be invalid.
+* Added: Support for displaying the full or excerpt biography text.
+* Added: The display of the Biography Box can now be locked to the main WordPress Loop to prevent it being displayed in the sidebar or when `the_content` or `the_excerpt` are used as part of themes or other plugins.
+* Added: The colour of the Biography Box border can now be selected from the plugin's *Style* tab.
+* Added: `wp_biographia_link_item` filter; allow the constituent elements of each contact link to be overriden.
+* Fixed: The dismissed pointers flag is now removed for each user when the plugin is uninstalled.
+* Fixed: The Biography Box is now styled correctly when no avatar image is present.
+* Fixed: Shortcode and template tag roles are now validated against `$wp_roles` and not against a hard-coded roles list.
+* Fixed: Bug which hid the *Display On Individual Pages* setting on the *Display* tab when *Display On All Post Archives* was checked.
+* Fixed: The contact links in the Biography Box now align with the left hand edge of the biography text.
+* Other: Moved all support source files into the `includes` directory.
+* Other: Ensure plugin source files are being invoked within the context of the plugin itself, otherwise die.
+* Other: The non-minified versions of the plugin's CSS and JS files and now enqueued if `WP_DEBUG` is set to `true` or if `WPBIOGRAPHIA_DEBUG` is defined.
+* Other: Cleaned up wording for the biography section of a user's profile; repurposed the *shorter biography* text box to be the *biography excerpt* for use by the shortcode, template tags, widget and biography selection settings.
 
 = 3.2.1 =
 * Released 2012.07.31
@@ -538,7 +567,7 @@ function insert_biography_header ($pattern) {
 
 = wp_biographia_pre =
 
-Allows display of the Biography Box to be hidden ed under user-defined circumstances. This only affects the display of the Biography Box that is configured via the plugin's admin screen or via the shortcode in configured mode.
+Allows display of the Biography Box to be hidden under user-defined circumstances. This only affects the display of the Biography Box that is configured via the plugin's admin screen or via the shortcode in configured mode.
 
 *Example:* Hide the Biography Box
 
@@ -561,6 +590,17 @@ function add_shortcode_css ($content, $params) {
 						name => name-option)
 
 	return '<div class="custom-shortcode-css">' . $content . '</div>';
+}`
+
+= wp_biographia_content_title =
+
+Applied to the title of the Biography Box.
+
+*Example:* Override the name prefix for all uses of the Biography Box.
+
+`add_filter ('wp_biographia_content_title', 'override_name_prefix', 10, 3);
+function override_name_prefix ($content, $name_prefix, $formatted_name) {
+	return 'This is ' . $formatted_name;
 }`
 
 = wp_biographia_links =
@@ -592,6 +632,43 @@ function wrap_links ($content, $links, $params) {
 	$new_postfix = $params['postfix'] . '</div>';
 	
 	return $new_prefix . implode ($params['glue'], $links) . $new_postfix;
+}`
+
+= wp_biographia_link_item =
+
+Applied to each active contact link, in the order in which they are processed by the plugin.
+
+*Example:* Force all links that point to the current site to open in a new window.
+
+`add_filter ('wp_biographia_link_item', 'filter_link_item', 10, 2);
+
+function filter_link_item ($content, $params) {
+	// $params = array (
+	//		'type' => 'link type (icon|text)',
+	//		'format' => 'link format string',
+	//		'meta' => 'additional anchor attributes',
+	//		'title' => 'link title',
+	//		'url' => 'link URL',
+	//		'body' => 'link body text',
+	//		'link-class' => 'link CSS class name',
+	//		'item-class' => 'link item CSS class name (icons only)'
+	//	);
+	
+	$site_url = site_url ();
+	$pos = strpos ($params['url'], $site_url);
+	if ($pos !== false) {
+		$params['meta'] = 'target="_blank"';
+	}
+	
+	if ($params['type'] === 'icon') {
+		$content = sprintf ($params['format'], $params['url'], $params['meta'], $params['title'], $params['link-class'], $params['body'], $params['item-class']);
+	}
+	
+	else {
+		$content = sprintf ($params['format'], $params['url'], $params['meta'], $params['title'], $params['link-class'], $params['body']);
+	}
+
+	return $content;
 }`
 
 = wp_biographia_feed =
