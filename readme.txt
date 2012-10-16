@@ -26,7 +26,7 @@ Settings and options include:
 
 The plugin expands and enhances the Contact Info section of your user profile, adding support for Twitter, Facebook, LinkedIn, Google+, Delicious, Flickr, Picasa, Vimeo, YouTube and Reddit profile links as well as Yahoo! Messenger, AIM, Windows Live Messenger and Jabber/Google Talk instant messaging profiles. Your Contact Info links can then be displayed as part of the Biography Box, either as plain text links or as icon links. Further contact links can easily be added to the Biography Box by using the `wp_biographia_contact_info` and `wp_biographia_link_items` filters.
 
-The position of the Biography Box can be controlled by the plugin's supported settings and options, or manually via the plugin's shortcode (`[wp_biographia]`). See the *Shortcode Support And Usage* section for more information.
+The position of the Biography Box can be controlled by the plugin's supported settings and options, or manually via the plugin's shortcode (`[wp_biographia]`) (see the *Shortcode Support And Usage* section for more information) or via template tags in your theme's template files (see the *Template Tags* section for more information).
 
 The position and content of the Biography Box, including adding support for new contact links, changing the content of the Biography Box when displayed via the shortcode, the format of the contact links and the overall format of the Biography Box can be modified by the plugin's filters. See the *Filter Support And Usage* section for more information.
 
@@ -191,7 +191,7 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 3.2.1 (2012.07.31)
+The current version is 3.3.0 (2012.07.31)
 
 = 3.3 =
 * Released
@@ -352,6 +352,9 @@ The current version is 3.2.1 (2012.07.31)
 
 == Upgrade Notice ==
 
+= 3.3 =
+This version fixes 5 bugs and adds 13 new features including new filters, template tags and per post overrides to support guest authors.
+
 = 3.2.1 =
 This version fixes an issue for RSS feeds where the Biography Box could be duplicated and locks the size of the contact link icons, if used.
 
@@ -413,6 +416,7 @@ The shortcode also supports multiple *attributes* which allow you to customise t
 * the `order` attribute
 * the `prefix` attribute
 * the `name` attribute
+* the `type` attribute
 
 = The "mode" Attribute =
 
@@ -444,7 +448,7 @@ Support for the `author` attribute will be likely be removed in a future release
 
 = The "role" Attribute =
 
-Valid only when used in conjunction with the `user` attribute in *wildcard* mode, the `role` attribute allows you to filter the users that have user accounts on your blog according to their [WordPress Role](http://codex.wordpress.org/Roles_and_Capabilities). The `role` attribute takes a single argument which defines the WordPress role; at the time of writing, this can be one of:
+Valid only when used in conjunction with the `user` attribute in *wildcard* mode, the `role` attribute allows you to filter the users that have user accounts on your blog according to their [WordPress Role](http://codex.wordpress.org/Roles_and_Capabilities). The `role` attribute takes one or more comma separated arguments which define the WordPress role(s); at the time of writing, these can be one of:
 
 * `administrator`
 * `editor`
@@ -452,7 +456,7 @@ Valid only when used in conjunction with the `user` attribute in *wildcard* mode
 * `contributor`
 * `subscriber`
 
-For example, if you want to display the Biography Box for all users of your blog who have a role of `author` you can use the `role` attribute plus the `author` attribute in *wildcard* mode to do this, along the lines of `[wp_biographia user="*" role="author"]`.
+For example, if you want to display the Biography Box for all users of your blog who have a role of `author` you can use the `role` attribute plus the `author` attribute in *wildcard* mode to do this, along the lines of `[wp_biographia user="*" role="author"]`. If you want to display the Biography Box for all users with a role of `author` or `contributor`, you can specify both roles, along the lines of `[wp_biographia user="*" role="author,contributor"]`.
 
 Specifying an invalid role (`[wp_biographia user="*" role="foo"])` will result in no Biography Box being displayed. Specifying the `role` attribute without the `user` attribute in *wildcard* mode will have no effect.
 
@@ -486,6 +490,10 @@ If the `name` attribute is omitted, which is the default, the Biography Box will
 * `nickname`
 * `display-name`
 * `none`
+
+= The "type" Attribute =
+
+If the `type` attribute is omitted, which is the default, the Biography Box will be displayed with the user's full biography text, taken from the *Biographical Info* field in the user's profile. If the `type` attribute is specified with a value of `full`, this is equivalent to the default behaviour. If the `type` attribute is specified with a value of `excerpt`, the *Biographical Excerpt* field in the user's profile will be used instead, providing the user has filled out this field in their profile. Specifying an invalid `type` attribute value (`[wp_biographia type="foo"]`) will result in the default behaviour of the full biography being used.
 
 == Filter Support And Usage ==
 
@@ -701,3 +709,46 @@ function replace_css_classes ($biography, $items) {
 	
 	return implode ('', $new_content);
 }`
+
+== Template Tags ==
+
+WP Biographia supports two template tags that can be used in your theme's template files. These are described in more detail below; for a full description of the use of each tag's argument, see the *Shortcode Support And Usage* section. The plugin's tags allow you to:
+
+* produce the Biography Box and assign the HTML for the Biography Box to a string.
+* produce the Biography Box and echo the results immediately.
+
+= wpb_get_biography_box =
+
+*Description:* Retrieves the Biography Box. This template tags renders the Biography Box and returns it to the caller as a string. To display the Biography Box immediately, use the `wpb_the_biography_box` template tag.
+
+*Usage:*
+
+`<?php $biography_box = wpb_get_biography_box ($mode, $user, $prefix, $name, $role, $type, $order); ?>`
+
+*Parameters:*
+
+*   `$mode` - (string) (*optional*) Override the Biography Box mode (`raw`|`configured`). Default: `raw`.
+*   `$user` - (string) (*optional*) Override the source user (`login-name`|`*`). Default: the current user's login name.
+*   `$prefix` - (string) (*optional*) Override the Biography Box title prefix. Default: use the plugin's settings.
+*   `$name` - (string) (*optional*) Override the selected user's name format (`account-name`|`first-last-name`|`nickname`|`display-name`|`none`). Default: use the plugin's settings.
+*   `$role` - (string) (*optional*) Override the selected user's role when used in *wildcard mode*. Specify one or more of the following, as a comma separated list (`administrator`|`editor`|`author`|`contributor`|`subscriber`). Default: none.
+*   `$type` - (string) (*optional*) Override the type of the biography text (`full`|`excerpt`). Default: use the plugin's settings.
+*   `$order` - (string) (*optional*) Override the sort order when used in *wildcard mode* (`account-name`|`first-name`|`last-name`|`nickname`|`display-name`|`login-id`). Default: `account-name`.
+
+= wpb_the_biography_box =
+
+*Description:* Displays the Biography Box. This template tags renders the Biography Box and displays it immediately. To get the current Biography Box as a string, use the `wpb_get_biography_box` template tag.
+
+*Usage:*
+
+`<?php wpb_the_biography_box ($mode, $user, $prefix, $name, $role, $type, $order); ?>`
+
+*Parameters:*
+
+*   `$mode` - (string) (*optional*) Override the Biography Box mode (`raw`|`configured`). Default: `raw`.
+*   `$user` - (string) (*optional*) Override the source user (`login-name`|`*`). Default: the current user's login name.
+*   `$prefix` - (string) (*optional*) Override the Biography Box title prefix. Default: use the plugin's settings.
+*   `$name` - (string) (*optional*) Override the selected user's name format (`account-name`|`first-last-name`|`nickname`|`display-name`|`none`). Default: use the plugin's settings.
+*   `$role` - (string) (*optional*) Override the selected user's role when used in *wildcard mode*. Specify one or more of the following, as a comma separated list (`administrator`|`editor`|`author`|`contributor`|`subscriber`). Default: none.
+*   `$type` - (string) (*optional*) Override the type of the biography text (`full`|`excerpt`). Default: use the plugin's settings.
+*   `$order` - (string) (*optional*) Override the sort order when used in *wildcard mode* (`account-name`|`first-name`|`last-name`|`nickname`|`display-name`|`login-id`). Default: `account-name`.
