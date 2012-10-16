@@ -1,7 +1,7 @@
 === WP Biographia ===
 Contributors: vicchi, wpsmith
 Donate link: http://www.vicchi.org/codeage/donate/
-Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, user, about author, user box, author box, contributors, author biography, user biography, avatar, gravatar
+Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, user, about author, user box, author box, contributors, author biography, user biography, avatar, gravatar, guest post, guest author
 Requires at least: 3.4
 Tested up to: 3.4.2
 Stable tag: 3.3.0
@@ -139,9 +139,11 @@ The HTML and CSS classes that the plugin emits follows a consistent structure an
 WP Biographia uses *minified* CSS files to improve the speed at which a page loads. If you make changes to the plugin's CSS in `/wp-content/plugins/wp-biographia/css/wp-biographia.css` the plugin will still load the minified version in `/wp-content/plugins/wp-biographia/css/wp-biographia.min.css`. So if you make any site specific changes to the plugin's CSS, which isn't recommended (see [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/2012/04/05/hacking-wp-biographias-appearance-with-css/)), you'll need to ensure you (re)minify the master CSS to get the changes to be picked up by the plugin.
 
 = WP Biographia doesn't support social network FOO; can you add this to the next version? =
+
 *Yes*. But also *no*. One of the wonderful things about today's web is the vast amount of ways we have to interact with each other. I can't keep up. No, really. In practical terms, this would mean that the plugin's settings and options panels would soon get out of hand, plus the overhead of adding, testing and releasing a new version of the plugin would get out of hand before the settings and options do. But ... see the next FAQ for the answer.
 
 = WP Biographia doesn't support social network or contact method BAR; how can I add this? =
+
 With the cunning use of the filters that WP Biographia supports, you can add support for as many social networks and/or contact methods as you like. You'll need to do two things for each link you want to add to the plugin.
 
 1. In your theme's `functions.php` add support for the new link to the user's profile by way of the `wp_biographia_contact_info` filter.
@@ -152,6 +154,27 @@ See the *Filter Support And Usage* section for a working example of these two fi
 = The "More Posts" link in the Biography Box links to my site's landing page and not an author's archive page; what's happening? =
 
 If you're using an SEO plugin, this might be optimising out the *More Posts* link. Specifically, [Yoast's WordPress SEO](http://wordpress.org/extend/plugins/wordpress-seo/) plugin has this side effect as this plugin allows you to enable/disable author archive pages. Thankfully, the SEO plugin has a setting called *Disable Author Archives* that, if disabled, allows WP Biographia to successfully link to an author's archive page.
+
+= The Biography Box is showing up in places it shouldn't; such as the footer or within widgets in the sidebar; why is this happening and how can I stop this? =
+
+*Why is this happening?* Some themes or plugins use the WordPress `the_content` and/or `the_excerpt` filters as part of a secondary query to select posts or pages to show as content in the theme's sidebars, footers or as part of a plugin's widget. As WP Biographia also uses these filters to add the Biography Box, this means that the Biography Box can sometimes show up unexpectedly, in places where it shouldn't be.
+
+*How can I stop this?* You can lock the plugin to run only in the context of the main WordPress Loop; in other words, WP Biographia will run when selecting posts or pages to be displayed on your site's landing page, archive pages or any other template, but not when run in the context of a secondary query loop in a sidebar or footer. From the Dashboard, navigate to *Settings* / *WP Biographia* / *Admin* / *Content And Excerpt Settings* and ensure that the *Lock Display Of The Biography Box To The Main Loop* setting is checked.
+
+= My site features guest posts; can I override my contributor account's biography for each of my guest authors? =
+
+Yes. Firstly you'll need to enable *post specific overrides* in the plugin. From the Dashboard, navigate to *Settings* / *WP Biographia* / *Admin* / *Biography Box Override Settings* and ensure that the *Enable Post Specific Overrides* setting is checked.
+
+Now edit a post or a page. In the Biography Box Post Options meta-box (for posts), or the Biography Box Page Options meta-box (for pages), you'll find that four new settings are now visible.
+
+*   *Override Biography Text For This Post* - checking this setting will show a text box, pre-populated with the currently logged in user's biography, which can be overriden. If you want to revert to the currently logged in user's biography, clicking on the *Reload Default Profile Biography* will reset your changes.
+*   *Override Biography Title For This Post* - checking this setting will show a text box that can be used to override the default Biography Box title.
+*   *Suppress Avatar For This Post* - checking this setting will stop the post or page's author's avatar from being displayed as part of the Biography Box.
+*   *Suppress Contact Links For This Post* - checking this setting will stop the contact links being displayed as part of the Biography Box.
+
+All of the above settings are post or page specific; in other words they will only override the post or page that is currently being edited.
+
+The thinking behind these settings is that if you have guest posts, you'll probably have one or more accounts with a *contributor* role. That account's biography text, avatar or contact links won't make much sense in the context of a guest post, so you can override them or suppress them in a way which does not impact the Biography Boxes produced for other users on your site.
 
 = WP Biographia isn't available in my language; can I submit a translation? =
 
