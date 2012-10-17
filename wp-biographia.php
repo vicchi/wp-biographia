@@ -2426,8 +2426,15 @@ if (!class_exists ('WP_Biographia')) {
 					case '330b5':
 					case '330':
 						$this->admin_upgrade_option ($settings, 'admin_post_overrides', '');
-						$this->admin_upgrade_option ($settings, 'admin_links', array ());
 
+						$admin_links = array ();
+						foreach ($this->defaults () as $key => $data) {
+							if (isset ($data['contactmethod']) && !empty ($data['contactmethod'])) {
+								$admin_links[$key] = 'on';
+							}
+						}	// end-foreach (...)
+
+						$this->admin_upgrade_option ($settings, 'admin_links', $admin_links);
 						$this->admin_upgrade_option ($settings, 'display_front_bio_posts', 'full');
 						$this->admin_upgrade_option ($settings, 'display_archives_bio_posts', 'full');
 						$this->admin_upgrade_option ($settings, 'display_author_archives_bio_posts', 'full');
