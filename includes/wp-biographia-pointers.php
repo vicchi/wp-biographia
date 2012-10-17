@@ -169,8 +169,14 @@ if (!class_exists ('WP_BiographiaPointers')) {
 						'content' => $tour[$tab]['content'],
 						'position' => array ('edge' => 'top', 'align' => 'left')
 						);
-					$button2 = $tour[$tab]['button2'];
-					$function = $tour[$tab]['function'];
+					$button2 = false;
+					$function = '';
+					if (isset ($tour[$tab]['button2'])) {
+						$button2 = $tour[$tab]['button2'];
+					}
+					if (isset ($tour[$tab]['function'])) {
+						$function = $tour[$tab]['function'];
+					}
 				}
 			}
 		
