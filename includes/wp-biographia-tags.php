@@ -44,7 +44,7 @@ if (!function_exists ('wpb_the_biography_box')) {
 	 * @param string prefix Optional; override the Biography Box title prefix
 	 * @param string name Optional; override the user's name format (account-name|first-last-name|nickname|display-name|none)
 	 * @param string role Optional; override the selected user's role when used in wildcard mode (administrator|editor|author|contributor|subscriber)
-	 * @param string type Optional; override the biography text (full|excerpt)
+	 * @param string type Optional; override the type of biography text (full|excerpt)
 	 * @param string order Optional; override the sort order when used in wildcard mode (account-name|first-name|last-name|nickname|display-name|login-id)
 	 */
 	function wpb_the_biography_box ($mode='raw', $user=NULL, $prefix=NULL, $name=NULL, $role=NULL, $type='full', $order='account-name') {
