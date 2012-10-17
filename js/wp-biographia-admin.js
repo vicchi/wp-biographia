@@ -148,23 +148,28 @@
 			return false;
 		});
 
+		var background_div = $('#wp-biographia-background-color-picker')[0];
+		var border_div = $('#wp-biographia-border-color-picker')[0];
 		var background_picker;
 		var border_picker;
 		
-		background_picker = $.farbtastic('#wp-biographia-background-color-picker', function(color){
-			color = color.toUpperCase ();
-			background_picker.setColor(color);
-			$('#wp-biographia-background-color').val(color);
-		});
+		if (background_div) {
+			background_picker = $.farbtastic('#wp-biographia-background-color-picker', function(color){
+				color = color.toUpperCase ();
+				background_picker.setColor(color);
+				$('#wp-biographia-background-color').val(color);
+			});
+			background_picker.setColor($('#wp-biographia-background-color').val());
+		}
 		
-		border_picker = $.farbtastic('#wp-biographia-border-color-picker', function(color){
-			color = color.toUpperCase ();
-			border_picker.setColor(color);
-			$('#wp-biographia-border-color').val(color);
-		});
-
-		border_picker.setColor($('#wp-biographia-border-color').val());
-		background_picker.setColor($('#wp-biographia-background-color').val());
+		if (border_div) {
+			border_picker = $.farbtastic('#wp-biographia-border-color-picker', function(color){
+				color = color.toUpperCase ();
+				border_picker.setColor(color);
+				$('#wp-biographia-border-color').val(color);
+			});
+			border_picker.setColor($('#wp-biographia-border-color').val());
+		}
 
 		$(document).mousedown(function() {
 			$('#wp-biographia-border-color-picker,#wp-biographia-background-color-picker').each(function () {
