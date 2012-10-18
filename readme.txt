@@ -195,10 +195,11 @@ WP Biographia is named after the etymology of the modern English word biography.
 == Screenshots ==
 
 1. Settings and Options: Display Tab
-1. Settings and Options: Admin Tab - New User and User Profile Settings
-1. Settings and Options: Admin Tab - Content and Excerpt Priority Settings
-1. Settings and Options: Exclusions Tab - Post, Page and Custom Post Type Exclusion Settings
-1. Settings and Options: Exclusions Tab - Category Exclusion Settings
+1. Settings and Options: Admin Tab - New User Settings
+1. Settings and Options: Admin Tab - User Profile Settings
+1. Settings and Options: Admin Tab - Content and Excerpt Settings
+1. Settings and Options: Admin Tab - Biography Box Override Settings
+1. Settings and Options: Exclusions Tab - Post, Page and Custom Post Type Exclusion and Category Exclusion Settings
 1. Settings and Options: Exclusions Tab - User Hiding Settings
 1. Settings and Options: Style Tab
 1. Settings and Options: Content Tab
@@ -206,18 +207,27 @@ WP Biographia is named after the etymology of the modern English word biography.
 1. Settings and Options: Defaults Tab
 1. Settings and Options: Colophon Tab - Colophon
 1. Settings and Options: Colophon Tab - Plugin Configuration Settings
-1. Settings and Options: Colophon Tab - User Configuration Settings
-1. Sample Biography Box; contact links shown as text
-1. Sample Biography Box; contact links shown as icons
+1. Post Install and Upgrade: What's New Pointer
+1. Plugin Tour Pointer: Display Tab
+1. Plugin Tour Pointer: Admin Tab
+1. Plugin Tour Pointer: Exclusions Tab
+1. Plugin Tour Pointer: Style Tab
+1. Plugin Tour Pointer: Content Tab
+1. Plugin Tour Pointer: Defaults Tab
+1. Plugin Tour Pointer: Colophon Tab
+1. Settings and Options: Contact link verification in a user's profile
+1. Edit Post: Biography Box Post Options meta-box
+1. Sample Biography Box; Contact links shown as text
+1. Sample Biography Box; Contact links shown as icons
 1. Widget Settings and Options
 1. Sample Widget Output
 
 == Changelog ==
 
-The current version is 3.3.0 (2012.07.31)
+The current version is 3.3.0 (2012.10.18)
 
 = 3.3 =
-* Released
+* Released 2012.10.18
 * Added: `wp_biographia_content_title` filter; allow the Biography Boxes's title to be changed.
 * Added: Support for sites using the Simple Local Avatars plugin. If installed/active use the `simple_local_avatars` filter to fixup the avatar's CSS; hook into both `simple_local_avatars` and `get_avatars` to support site with mixed Gravatars and locally hosted avatars.
 * Added: Support for the shortcode's `order` attribute; allow custom sort orders when in wildcard mode.

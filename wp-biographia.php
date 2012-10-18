@@ -2903,7 +2903,7 @@ if (!class_exists ('WP_Biographia')) {
 						<input type="radio" name="wp_biographia_content_name" id="wp-biographia-content-name" value="none" '
 						. checked ($settings['wp_biographia_content_name'], 'none', false)
 						. ' />&nbsp;' . __('Don\'t Show The Name', 'wp-biographia') . '<br />
-						<small>' . __('How you want to see the users\'s name displayed (if at all)', 'wp-biographia') . '</small></p>';
+						<small>' . __('How you want to see the user\'s name displayed (if at all)', 'wp-biographia') . '</small></p>';
 
 					$content_settings[] = '<p><strong>' . __('User\'s Name Link', 'wp-biographia') . '</strong><br/>
 						<input type="checkbox" name="wp_biographia_content_authorpage" '
