@@ -1968,6 +1968,7 @@ if (!class_exists ('WP_Biographia')) {
 				}	// end-foreach;
 			}
 
+			
 			$bio_excerpt = get_user_meta ($user->ID, 'wp_biographia_short_bio', true);
 			if (!isset ($bio_excerpt) || empty ($bio_excerpt)) {
 				$description = get_user_meta ($user->ID, 'description', true);
@@ -1978,7 +1979,7 @@ if (!class_exists ('WP_Biographia')) {
 					$bio_excerpt = '';
 				}
 			}
-			
+
 			$content[] = '<h3>' . __('Biography Options', 'wp-biographia') . '</h3>';
 			$content[] = '<table class="form-table">';
 			$content[] = '<tbody>';
@@ -1999,7 +2000,7 @@ if (!class_exists ('WP_Biographia')) {
 				$content[] = '<label for="wp_biographia_suppress_posts">' . __('Hide The Biography Box On Posts', 'wp-biographia') . '</label>';
 				$content[] = '</th>';
 				$content[] = '<td>';
-				$content[] = '<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" ' . checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on') . ' ' . disabled (current_user_can ('manage_options'), false) . ' />&nbsp;' . __('Don\'t show the Biography Box on your posts', 'wp-biographia');
+				$content[] = '<input type="checkbox" name="wp_biographia_suppress_posts" id="wp-biographia-suppress-posts" ' . checked (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true), 'on', false) . ' ' . disabled (current_user_can ('manage_options'), false, false) . ' />&nbsp;' . __('Don\'t show the Biography Box on your posts', 'wp-biographia');
 				$content[] = '</td>';
 				$content[] = '</tr>';
 				$content[] = '<tr>';
@@ -2007,7 +2008,7 @@ if (!class_exists ('WP_Biographia')) {
 				$content[] = '<label for="wp_biographia_suppress_pages">' . __('Hide The Biography Box On Pages', 'wp-biographia') . '</label>';
 				$content[] = '</th>';
 				$content[] = '<td>';
-				$content[] = '<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" ' . checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on') . ' ' . disabled (current_user_can ('manage_options'), false) . '/>&nbsp;' . __('Don\'t show the Biography Box on your pages', 'wp-biographia');
+				$content[] = '<input type="checkbox" name="wp_biographia_suppress_pages" id="wp-biographia-suppress-pages" ' . checked (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true), 'on', false) . ' ' . disabled (current_user_can ('manage_options'), false, false) . '/>&nbsp;' . __('Don\'t show the Biography Box on your pages', 'wp-biographia');
 				$content[] = '</td>';
 				$content[] = '</tr>';
 			}
