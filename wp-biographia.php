@@ -3949,7 +3949,7 @@ if (!class_exists ('WP_Biographia')) {
 			$content[] = '<p>';
 			$content[] =  __('For help and support with WP Biographia, here\'s what you can do:', 'wp-biographia');
 			$content[] = '<ul><li>';
-			$content[] = __('Ask a question on the <a href="http://wordpress.org/tags/wp-biographia?forum_id=10">WordPress support forum</a>; this is by far the best way so that other users can follow the conversation.', 'wp-biographia');
+			$content[] = __('Ask a question on the <a href="http://wordpress.org/support/plugin/wp-biographia">WordPress support forum</a>; this is by far the best way so that other users can follow the conversation.', 'wp-biographia');
 			$content[] = '</li><li>';
 			$content[] = __('Ask me a question on Twitter; I\'m <a href="http://twitter.com/vicchi">@vicchi</a>.', 'wp-biographia');
 			$content[] = '</li><li>';
@@ -3961,7 +3961,7 @@ if (!class_exists ('WP_Biographia')) {
 			$content[] = '</li><li>';
 			$content[] = __('Rate the plugin on the <a href="http://wordpress.org/extend/plugins/wp-biographia/">WordPress plugin repository</a>.', 'wp-biographia');
 			$content[] = '</li><li>';
-			$content[] = __('WP Biographia is both free as in speech and free as in beer. No donations are required; <a href="http://www.vicchi.org/codeage/donate/">here\'s why</a>.', 'wp-biographia');
+			$content[] = __('WP Biographia is free; no premium or light version, no ads. If you\'d like to support this plugin <a href="http://www.vicchi.org/codeage/donate/">here\'s how</a>.', 'wp-biographia');
 			$content[] = '</li></ul></p>';
 			$content[] = sprintf (__('<p>Find out what\'s new and get an overview of WP Biographia; <a href="%s">restart the plugin tour</a>.</p>', 'wp-biographia'), $restart_url);
 
