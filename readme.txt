@@ -50,7 +50,7 @@ The plugin also supports displaying a reduced version of the Biography Box via a
 
 = How do I get help or support for this plugin? =
 
-In short, very easily. But before you read any further, take a look at [Asking For WordPress Plugin Help And Support Without Tears](http://www.vicchi.org/2012/03/31/asking-for-wordpress-plugin-help-and-support-without-tears/) before firing off a question. In order of preference, you can ask a question on the [WordPress support forum](http://wordpress.org/tags/wp-biographia?forum_id=10); this is by far the best way so that other users can follow the conversation. You can ask me a question on Twitter; I'm [@vicchi](http://twitter.com/vicchi). Or you can drop me an email instead. I can't promise to answer your question but I do promise to answer and do my best to help.
+In short, very easily. But before you read any further, take a look at [Asking For WordPress Plugin Help And Support Without Tears](http://www.vicchi.org/codeage/asking-for-wordpress-plugin-help-and-support-without-tears/) before firing off a question. In order of preference, you can ask a question on the [WordPress support forum](http://wordpress.org/support/plugin/wp-biographia); this is by far the best way so that other users can follow the conversation. You can ask me a question on Twitter; I'm [@vicchi](http://twitter.com/vicchi). Or you can drop me an email instead. I can't promise to answer your question but I do promise to answer and do my best to help.
 
 = Is there a web site for this plugin? =
 
@@ -74,7 +74,7 @@ There's probably one of two things going on here. Firstly, you've already got an
 
 = I only want to show the Biography Box for certain users and not for others; can I do this? =
 
-As of v2.1, WP Biographia allows you to hide the Biography Box from being displayed on a per user basis. You can hide for posts only, for pages only or for both posts and pages. There's two ways of configuring this. If your user has the `manage_options` capability, you can choose the degree of hiding, if any, from your user profile or for any other user's profile; from the Dashboard, navigate to Users and check the *Hide From Posts* and/or *Hide From Pages* checkbox options. You can also configure this easily from the plugin's Settings And Options; from the Dashboard, navigate to the *Settings / WP Biographia* page, click on the *Exclusions* tab and under *User Hiding Settings*, add and/or remove the users to fit your model of who should have the Biography Box displayed.
+WP Biographia allows you to hide the Biography Box from being displayed on a per user basis. You can hide for posts only, for pages only or for both posts and pages. There's two ways of configuring this. If your user has the `manage_options` capability, you can choose the degree of hiding, if any, from your user profile or for any other user's profile; from the Dashboard, navigate to Users and check the *Hide From Posts* and/or *Hide From Pages* checkbox options. You can also configure this easily from the plugin's Settings And Options; from the Dashboard, navigate to the *Settings / WP Biographia* page, click on the *Exclusions* tab and under *User Hiding Settings*, add and/or remove the users to fit your model of who should have the Biography Box displayed.
 
 = I want to show the Biography Box for all users but only for certain categories; can I do this? =
 
@@ -97,8 +97,6 @@ add_filter('pre_user_description', 'convert_chars');
 add_filter('pre_user_description', 'balanceTags', 50);
 </code>
 
-This may be a configurable setting in a future version of the plugin to avoid the need to hack your theme's <code>functions.php</code> file.
-
 = How do I remove the bio on pages using page templates? =
 
 Add this code to your theme's <code>functions.php</code> file:
@@ -113,8 +111,6 @@ function remove_user_box_page_template() {
 function content_only_pattern($pattern) {
 	return '%1s';
 }</code>
-
-This may be a configurable setting in a future version of the plugin to avoid the need to hack your theme's <code>functions.php</code> file.
 
 = I want to use my own icon set for my user's contact links; how do I do this? =
 
@@ -132,11 +128,11 @@ See the *Filter Support And Usage* section for more information on the plugin's 
 
 = I want to change the CSS used to format the Biography Box; how do I do this? =
 
-The HTML and CSS classes that the plugin emits follows a consistent structure and naming convention. See [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/2012/04/05/hacking-wp-biographias-appearance-with-css/) for more information.
+The HTML and CSS classes that the plugin emits follows a consistent structure and naming convention. See [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/codeage/wp-biographia/hacking-wp-biographias-appearance-with-css/) for more information.
 
 = I've changed the Biography Box CSS but my changes aren't showing up; what's happening? =
 
-WP Biographia uses *minified* CSS files to improve the speed at which a page loads. If you make changes to the plugin's CSS in `/wp-content/plugins/wp-biographia/css/wp-biographia.css` the plugin will still load the minified version in `/wp-content/plugins/wp-biographia/css/wp-biographia.min.css`. So if you make any site specific changes to the plugin's CSS, which isn't recommended (see [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/2012/04/05/hacking-wp-biographias-appearance-with-css/)), you'll need to ensure you (re)minify the master CSS to get the changes to be picked up by the plugin.
+WP Biographia uses *minified* CSS files to improve the speed at which a page loads. If you make changes to the plugin's CSS in `/wp-content/plugins/wp-biographia/css/wp-biographia.css` the plugin will still load the minified version in `/wp-content/plugins/wp-biographia/css/wp-biographia.min.css`. So if you make any site specific changes to the plugin's CSS, which isn't recommended (see [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/codeage/wp-biographia/hacking-wp-biographias-appearance-with-css/)), you'll need to ensure you (re)minify the master CSS to get the changes to be picked up by the plugin.
 
 = WP Biographia doesn't support social network FOO; can you add this to the next version? =
 
@@ -182,7 +178,7 @@ WordPress and this plugin use the gettext tools to support internationalisation.
 
 = This plugin looks very much like the WP About Author; what's the connection? =
 
-WP Biographia is inspired by and based on the [WP About Author](http://wordpress.org/extend/plugins/wp-about-author/) plugin by [Jon Bishop](http://www.jonbishop.com/). Thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place. Jon's written [other WordPress plugins](http://profiles.wordpress.org/users/JonBishop/) as well; you should take a look.
+Version 1 of WP Biographia was inspired by and based on the [WP About Author](http://wordpress.org/extend/plugins/wp-about-author/) plugin by [Jon Bishop](http://www.jonbishop.com/). Thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place. Jon's written [other WordPress plugins](http://profiles.wordpress.org/users/JonBishop/) as well; you should take a look.
 
 = I want to amend/hack/augment this plugin; can I do the same? =
 
@@ -459,7 +455,7 @@ Or to put it another way, the plugin will honour the settings that you specify u
 
 In `configured` mode, specified as `[wp_biographia mode="configured"]`, the plugin inserts the Biography Box and will honour all the settings under *Dashboard / Settings / WP Biographia* with the exception of *Display On Front Page*, *Display On Individual Post*, *Display On Post Archives* and *Display On Individual Pages*, as well as their equivalents for any custom post types you may have created.
 
-The thinking behind this is that you probably want to honour post or page exclusions and per user exclusions, but by using the shortcode in your theme templates, you want to be in control of how and where the Biography Box is displayed.
+The thinking behind this is that you probably want to honour post or page exclusions and per user exclusions, but by using the shortcode in your posts, you want to be in control of how and where the Biography Box is displayed.
 
 = The "user" Attribute =
 
@@ -745,7 +741,7 @@ function replace_css_classes ($biography, $items) {
 
 == Template Tags ==
 
-WP Biographia supports two template tags that can be used in your theme's template files. These are described in more detail below; for a full description of the use of each tag's argument, see the *Shortcode Support And Usage* section. The plugin's tags allow you to:
+WP Biographia supports two [template tags](https://codex.wordpress.org/Template_Tags) that can be used in your theme's template files. These are described in more detail below; for a full description of the use of each tag's argument, see the *Shortcode Support And Usage* section. The plugin's tags allow you to:
 
 * produce the Biography Box and assign the HTML for the Biography Box to a string.
 * produce the Biography Box and echo the results immediately.
