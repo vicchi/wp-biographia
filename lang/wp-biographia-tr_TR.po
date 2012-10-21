@@ -5,18 +5,18 @@ msgstr ""
 "Project-Id-Version: wp-biographia\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-10-17 15:51+0100\n"
-"PO-Revision-Date: 2012-10-18 13:06+0100\n"
-"Last-Translator: Gary Gale <gary@vicchi.org>\n"
-"Language-Team: kazancexpert <kazancexpert@gmail.com>\n"
+"PO-Revision-Date: 2012-10-18 19:52+0200\n"
+"Last-Translator: HakanEr <hakanerwptr@gmail.com>\n"
+"Language-Team: hakaner <hakanerwptr@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: gettext;gettext_noop;__\n"
 "X-Poedit-Basepath: .\n"
-"X-Poedit-Language: Turkish\n"
-"X-Poedit-Country: TURKEY\n"
-"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Language: tr_TR\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: /Users/gary/Projects/wp-biographia\n"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:434
@@ -154,22 +154,27 @@ msgstr "WP Biographia"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1887
 #, php-format
 msgid "There is a problem with %d of your contact links!"
-msgstr "Iletişim bağlantıları %d ile ilgili bir sorun var!"
+msgstr "İletişim bağlantılarınız içinde %d ile ilgili bir sorun var!"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1903
 #, php-format
 msgid "There is a problem with %d of this user's contact links!"
-msgstr "Bu kullanıcının iletişim linkler %d ile ilgili bir sorun var!"
+msgstr ""
+"Bu kullanıcının iletişim bağlantıları içinde %d ile ilgili bir sorun var!"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1913
 #, php-format
-msgid "There is a problem with %d of your contact links; you probably want to <a href=\"%s\">edit your profile</a> to fix this"
-msgstr "Iletişim bağlantıları %d ile ilgili bir sorun vardır; muhtemelen <a href=\"%s\">için profilinizi düzenleyin istiyorum</a> Bu sorunu gidermek için"
+msgid ""
+"There is a problem with %d of your contact links; you probably want to <a "
+"href=\"%s\">edit your profile</a> to fix this"
+msgstr ""
+"İletişim bağlantılarınız içinde %d ile ilgili bir sorun var; <a href=\"%s"
+"\">profilinizi düzenleyerek</a> bu sorunu düzeltmek isteyebilirsiniz"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1929
 #, php-format
 msgid "The %s URL doesn't look right; it should look something like %s"
-msgstr "%s URL doğru görünmüyor, bu% s gibi görünmelidir"
+msgstr "%s URL'i doğru görünmüyor; bu %s gibi görünmelidir"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1982
 msgid "Biography Options"
@@ -180,40 +185,54 @@ msgid "Biographical Excerpt"
 msgstr "Biyografik Alıntı"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1992
-msgid "Share an excerpt of your biography which can be used by the WP Biographia shortcode, template tags, sidebar widget and configured to be used in place of the standard biography for differing template types."
-msgstr "WP Biographia Önizlemeyi, şablon etiketleri, widgetlerdede tarafından kullanılan ve şablon türleri farklı için standart biyografi yerine kullanılmak üzere konfigüre edilebilir senin biyografi bir alıntıyı paylaşmak."
+msgid ""
+"Share an excerpt of your biography which can be used by the WP Biographia "
+"shortcode, template tags, sidebar widget and configured to be used in place "
+"of the standard biography for differing template types."
+msgstr ""
+"WP Biographia kısakodu, şablon etiketleri, kenar çubuğu bileşenleri ve "
+"standart biyografi yerine kullanılmak üzere yapılandırılmış farklı şablon "
+"türleri tarafından kullanılabilecek biyografini paylaş ve alıntıla."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:1999
 msgid "Hide The Biography Box On Posts"
-msgstr "Mesajlar üzerinde Biyografi Box gizle"
+msgstr "Yazılarda Biyografi Kutusunu Gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2002
 msgid "Don't show the Biography Box on your posts"
-msgstr "Mesajınızı üzerindeki Biyografi Box gösterme"
+msgstr "Kendi yazılarında Biyografi Kutusunu gösterme"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2007
 msgid "Hide The Biography Box On Pages"
-msgstr "Sayfalar üzerinde Biyografi Box gizle"
+msgstr "Sayfalar üzerinde Biyografi Kutusunu gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2010
 msgid "Don't show the Biography Box on your pages"
-msgstr "Biyografi Kutusunu sayfalarınızda göstermeyin"
+msgstr "Kendi sayfalarında Biyografi Kutusunu gösterme"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2086
 msgid "Settings"
 msgstr "Ayarlar"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2509
-msgid "New User Settings allow you to configure globally whether a newly created user should have the Biography Box displayed under their posts or not. You can then control the display of the Biography Box on a per-user basis in the Exclusions tab."
-msgstr "Yeni Kullanıcı ayarları, yeni oluşturulmuş bir kullanıcının kendi mesajlarını veya altında görüntülenen Biyografi Box olması gerekmediğini küresel yapılandırmanıza izin verir. Daha sonra İstisnalar sekmesinde kullanıcı başına bazında Biyografi Box ekranı kontrol edebilirsiniz."
+msgid ""
+"New User Settings allow you to configure globally whether a newly created "
+"user should have the Biography Box displayed under their posts or not. You "
+"can then control the display of the Biography Box on a per-user basis in the "
+"Exclusions tab."
+msgstr ""
+"Yeni Kullanıcı Ayarları, yeni oluşturulmuş bir kullanıcıya ait Biyografi "
+"kutusunun yazılarında gösterilip gösterilmeyeceğini genel olarak "
+"düzenlemenizi sağlar. Sonra, Dışlamalar sekmesi içinde kullanıcı bazında "
+"Biyografi kutusu görüntülemeyi kontrol edebilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2526
 msgid "Automatically Exclude New Users By Role"
-msgstr "Otomatik Rolü By Kullanıcıları Dışlama"
+msgstr "Kullanıcıları Yetkiye Göre Otomatik Dışlama"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2528
 msgid "Enabled Roles"
-msgstr "Etkin Rol"
+msgstr "Etkin Yetkiler"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2536
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2582
@@ -225,7 +244,7 @@ msgstr "Ekle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2539
 msgid "Excluded Roles"
-msgstr "Hariç Roller"
+msgstr "Dışlanan Yetkiler"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2547
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2593
@@ -236,131 +255,271 @@ msgid "Remove"
 msgstr "Kaldır"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2550
-msgid "Select the roles for which new users should be automatically excluded from displaying the Biography Box. This setting only affects the creation of new users; individual users may be enabled to display the Biography Box on a per-user basis in the Exclusions Tab."
-msgstr "Yeni kullanıcılar otomatik Biyografi Box görüntüleme dışında tutulmalıdır hangi rolleri seçin. Bu ayar yalnızca yeni kullanıcı oluşturma etkiler; bireysel kullanıcılar İstisnalar Tab her kullanıcı temelinde Biyografi Kutu görüntülemek için etkin olabilir."
+msgid ""
+"Select the roles for which new users should be automatically excluded from "
+"displaying the Biography Box. This setting only affects the creation of new "
+"users; individual users may be enabled to display the Biography Box on a per-"
+"user basis in the Exclusions Tab."
+msgstr ""
+"Otomatik olarak Biyografi Kutusu görüntüleme dışında tutulacak yetkileri "
+"seçin. Bu ayar yalnızca oluşturulan yeni kullanıcıları etkiler; tekil "
+"kullanıcılar, bir sonraki Dışlamalar sekmesinde kullanıcı bazında Biyografi "
+"Kutusunun görüntülenmesi için etkinleştirilebilir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2556
-msgid "If you want to stop users having the ability to stop the Biography Box being displayed on their posts and pages, you can control this according to the user's role below. An Administrator can still control the display of the Biography Box on a per-user basis in the Exclusions tab."
-msgstr "Eğer Biyografi Box görevlerinden ve sayfalarında görüntülenen durdurma yeteneğine sahip kullanıcıların durdurmak istiyorsanız, aşağıdaki kullanıcının rolüne göre kontrol edebilirsiniz. Yönetici hala İstisnalar sekmesinde kullanıcı başına bazında Biyografi Box ekranı kontrol edebilirsiniz."
+msgid ""
+"If you want to stop users having the ability to stop the Biography Box being "
+"displayed on their posts and pages, you can control this according to the "
+"user's role below. An Administrator can still control the display of the "
+"Biography Box on a per-user basis in the Exclusions tab."
+msgstr ""
+"Eğer üyelerin kendi Biyografi Kutularını, kendi yazı ya da sayfalarında "
+"görüntüleyip görüntülememeyi seçebilme yetkisini kaldırmak istiyorsanız, "
+"yetkilere göre aşağıdan kontrol edebilirsiniz. Halen bir Yönetici, sonraki "
+"Dışlamalar sekmesinde Biyografi Kutusunun kullanıcı bazında nasıl "
+"görüntüleneceğini kontrol edebilir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2572
 msgid "Hide Biography Box Settings In User Profiles by Role"
-msgstr "Rol tarafından Kullanıcı Profilleri Biyografi Kutusu Ayarları gizle"
+msgstr "Yetkiye Göre Biyografi Kutusu Ayarlarını Profillerden Gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2574
 msgid "Visible In Profiles"
-msgstr "Profilleri Görünür"
+msgstr "Profillerde Görünür"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2585
 msgid "Hidden In Profiles"
-msgstr "Profilleri Gizli"
+msgstr "Profillerde Gizlenir"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2596
-msgid "Select the roles for users who should have the Biography Box hidden or visible in their user profile."
-msgstr "Kullanıcı profilinde Biyografi Kutusu gizli veya görünür olmalıdır kullanıcılar için roller seçin."
+msgid ""
+"Select the roles for users who should have the Biography Box hidden or "
+"visible in their user profile."
+msgstr ""
+"Biyografi Kutusunun profillerinde gizli veya görünür olacağı kullanıcılar "
+"için yetki seviyeleri seçin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2602
-msgid "If you want to remove contact links from a user's profile you can do so below. Disabling a contact link removes it from the user's profile, from the Content tab and from the link being displayed in the Biography Box."
-msgstr "Bir kullanıcı profilinden iletişim bağlantıları kaldırmak istiyorsanız bunu aşağıda yapabilirsiniz. Bir iletişim bağlantısı devre dışı bırakma İçerik sekmesini ve Biyografi Box görüntülenmekte olan bağlantısından, kullanıcı profilinden kaldırır."
+msgid ""
+"If you want to remove contact links from a user's profile you can do so "
+"below. Disabling a contact link removes it from the user's profile, from the "
+"Content tab and from the link being displayed in the Biography Box."
+msgstr ""
+"Eğer bir kullanıcının profilinden iletişim bağlantılarını kaldırmak "
+"istiyorsanız, bunu aşağıdan yapabilirsiniz. Bir iletişim bağlantısını devre "
+"dışı bırakmak onu kullanıcı profilinden, İçerik sekmesinden ve Biyografi "
+"Kutusunda görüntülenmekte olan bağlantısını kaldırır."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2608
 #, php-format
 msgid "Enable support for %s"
-msgstr "%s için desteğini etkinleştirme"
+msgstr "%s için desteği etkinleştir"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2624
-msgid "WP Biographia uses the WordPress <code>the_content</code> and <code>the_excerpt</code> filters to add the Biography Box to the start or the end of posts and excerpts. If another theme or plugin also adds content to the posts or excerpts, the Biography Box may not be displayed in the order you want. To prevent this happening, you can adjust the priority that WP Biographia uses when queuing the filters. A lower priority will cause the plugin's filters to fire earlier. A higher priority will cause the plugin's filters to fire later."
-msgstr "WP Biographia başlangıç veya mesaj ile alıntıları sonuna Biyografi Box eklemek için ve <code>the_excerpt </code> filtreleri WordPress <code>the_content</code> kullanır. Başka bir tema veya eklenti de mesaj veya alıntılar içerik ekler varsa, Biyografi Box istediğiniz sırayla gösterilir olmayabilir. Bu durumu önlemek için, kuyruk filtreleri WP Biographia kullandığı öncelik ayarlayabilirsiniz. Düşük öncelik eklenti süzgeçleri önceki ateşe neden olur. Daha yüksek bir öncelik plugin'in filtreler daha sonra ateşe neden olur."
+msgid ""
+"WP Biographia uses the WordPress <code>the_content</code> and "
+"<code>the_excerpt</code> filters to add the Biography Box to the start or "
+"the end of posts and excerpts. If another theme or plugin also adds content "
+"to the posts or excerpts, the Biography Box may not be displayed in the "
+"order you want. To prevent this happening, you can adjust the priority that "
+"WP Biographia uses when queuing the filters. A lower priority will cause the "
+"plugin's filters to fire earlier. A higher priority will cause the plugin's "
+"filters to fire later."
+msgstr ""
+"WP Biographia, Biyografi Kutusunu yazı ve alıntıların başına veya sonuna "
+"eklemek için <code>the_content</code> ve <code>the_excerpt</code> WordPress "
+"filtrelerini kullanır. Eğer başka bir tema veya eklenti de ayrıca yazı ya da "
+"alıntılara içerik eklerse, Biyografi Kutusu istediğiniz yerde "
+"görüntülenemeyebilir. Bu durumu önlemek için, WP Biographia tarafından "
+"kullanılan filtre kuyruğu önceliğini belirleyebilirsiniz. Düşük bir öncelik, "
+"eklenti filtrelerinin erken atılmasına sebep olur. Yüksek bir öncelik, "
+"eklenti filtrelerinin geç atılmasına sebep olur."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2626
 msgid "Content Filter Priority"
-msgstr "İçerik Filtreleme Öncelik"
+msgstr "İçerik Filtre Önceliği"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2628
-msgid "Enter the priority to be used to display the Biography Box for the full content for posts, pages and custom post types, e.g. 10."
-msgstr "Mesajlar, sayfalar ve özel mesaj türleri için tam içerik için Biyografi Box görüntülemek için kullanılan öncelik, örneğin girin 10."
+msgid ""
+"Enter the priority to be used to display the Biography Box for the full "
+"content for posts, pages and custom post types, e.g. 10."
+msgstr ""
+"Yazılar, sayfalar, ve tekil yazıların tamamı için Biyografi Kutusunun "
+"görüntülenmesinde kullanılacak önceliği girin, örn. 10."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2630
 msgid "Excerpt Filter Priority"
-msgstr "Alıntı Filtre Öncelik"
+msgstr "Alıntı Filtre Önceliği"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2632
-msgid "Enter the priority to be used to display the Biography Box for the excerpt for posts, pages and custom post types, e.g. 10"
-msgstr "Mesajlar, sayfalar ve özel mesaj türleri için bir bölüm Biyografi Box görüntülemek için kullanılan öncelik, örneğin girin 10"
+msgid ""
+"Enter the priority to be used to display the Biography Box for the excerpt "
+"for posts, pages and custom post types, e.g. 10"
+msgstr ""
+"Yazılar, sayfalar, ve tekil yazıların bir bölümündeki alıntı için Biyografi "
+"Kutusunun görüntülenmesinde kullanılacak önceliği girin, örn. 10."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2637
 #, php-format
-msgid "A default WordPress install runs an automatic paragraph formatter (<a href=\"%s\" target=\"_blank\"><code>wpautop</code></a>) via the <code>the_content</code> and <code>the_excerpt</code> at the default filter priority of 10. See the WordPress Codex post on <a href=\"%s\" target=\"_blank\">How WordPress Processes Post Content</a> for more information on why this happens."
-msgstr "Bir varsayılan WordPress kurulum otomatik paragraf biçimlendirici (<a href=\"%s\" target=\"_blank\"><code>wpautop</code></a>) <code>the_content</code> yoluyla kod çalışır ve <code>the_excerpt</code> 10 varsayılan filtre önceliği. WordPress Codex <a href=\"%s\" target=\"_blank\">WordPress Mesaj İçeriği Süreçleri Nasıl</a> Bu durumda neden ilgili daha fazla bilgi için Bkz."
+msgid ""
+"A default WordPress install runs an automatic paragraph formatter (<a href="
+"\"%s\" target=\"_blank\"><code>wpautop</code></a>) via the "
+"<code>the_content</code> and <code>the_excerpt</code> at the default filter "
+"priority of 10. See the WordPress Codex post on <a href=\"%s\" target="
+"\"_blank\">How WordPress Processes Post Content</a> for more information on "
+"why this happens."
+msgstr ""
+"Varsayılan bir WordPress kurulumu <code>the_content</code> ve "
+"<code>the_excerpt</code> ile ve 10 varsayılan filtre önceliğiyle bir (<a "
+"href=\"%s\" target=\"_blank\"><code>wpautop</code></a>) otomatik "
+"biçimlendirici çalıştırır. Bunun neden böyle olduğu hakkında daha fazla "
+"bilgi için <a href=\"%s\" target=\"_blank\">WordPress Yazı İçeriği Süreçleri "
+"Nasıldır</a> WordPress Kodeksine yazısına bakın."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2640
-msgid "Lowering either the Content Filter Priority or the Excerpt Filter Priority to be a value below the default of 10, may result in the Biography Box being formatted incorrectly. This is because <code>wpautop</code> is now running after the Biography Box has been added to a post or an excerpt and is now changing the Biography Box output. To prevent this happening, WP Biographia can synchronise and lower the priority of <code>wpautop</code> being run via the_content or the_excerpt on your behalf to ensure it is run before the Biography Box is produced."
-msgstr "Varsayılan 10 altında bir değer olması için İçerik Filtreleme Öncelik veya alıntı Filtre Öncelik ya düşürülmesi, hatalı biçimlendirilmiş olan Biyografi Box neden olabilir. Bunun nedeni <code>wpautop</code> Biyografi Box bir yazı veya bir alıntıdır eklendi ve şimdi Biyografi Box çıkış değişiyor sonra şimdi çalışıyor. Bu durumu önlemek için, WP Biographia <code>wpautop</code> önceliğini senkronize ve düşürebilirsiniz Bu Biyografi Box üretilmeden önce çalıştırmak emin olmak için sizin adınıza the_content veya the_excerpt aracılığıyla yürütülüyor."
+msgid ""
+"Lowering either the Content Filter Priority or the Excerpt Filter Priority "
+"to be a value below the default of 10, may result in the Biography Box being "
+"formatted incorrectly. This is because <code>wpautop</code> is now running "
+"after the Biography Box has been added to a post or an excerpt and is now "
+"changing the Biography Box output. To prevent this happening, WP Biographia "
+"can synchronise and lower the priority of <code>wpautop</code> being run via "
+"the_content or the_excerpt on your behalf to ensure it is run before the "
+"Biography Box is produced."
+msgstr ""
+"İçerik Filtre Önceliği veya Alıntı Filtre Önceliğinin varsayılan 10 "
+"değerinin altına düşürülmesi Biyografi Kutusunun hatalı biçimlendirilmesine "
+"neden olabilir. Bunun nedeni, Biyografi Kutusu bir yazıya eklendikten sonra "
+"<code>wpautop</code> veya bir alıntı çalışır ve Biyografi Kutusunun "
+"çıktısını değiştirir. Bu durumu önlemek için, WP Biographia bunu Biyografi "
+"Kutusu üretilmeden önce çalıştığından emin olmak için the_content veya "
+"the_excerpt ile sizin yerinize <code>wpautop</code> önceliğini eşitleyebilir "
+"ve düşürebilir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2643
-msgid "If you set the Content Filter Priority or the Excerpt Filter Priority to a value of 3 or lower, you may see unexpected formatting issues in your posts and pages caused by <code>wpautop</code> being run too early."
-msgstr "Eğer 3 veya daha düşük bir değere İçerik Filtreleme Öncelik veya alıntı Filtre Öncelik ayarlarsanız, <code>wpautop</code> yürütülüyor çok erken neden sizin mesaj ve sayfaları beklenmedik biçimlendirme sorunları görebilirsiniz."
+msgid ""
+"If you set the Content Filter Priority or the Excerpt Filter Priority to a "
+"value of 3 or lower, you may see unexpected formatting issues in your posts "
+"and pages caused by <code>wpautop</code> being run too early."
+msgstr ""
+"Eğer İçerik Filtre Önceliği veya Alıntı Filtre Önceliğini 3 veya daha düşük "
+"bir değere ayarlarsanız, <code>wpautop</code> çok erken çalıştığı için yazı "
+"ve sayfalarınızda beklenmedik biçimlendirme sorunları görebilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2647
 msgid "Synchronise Automatic Paragraph Formatting For Content"
-msgstr "İçerik için Otomatik Paragraf Biçimlendirme senkronize"
+msgstr "İçerik için Otomatik Paragraf Biçimlendirmeyi Eşitle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2649
-msgid "Ensure Automatic Paragraph Formatting runs before producing the Biography Box for the full content on posts, pages and custom post types."
-msgstr "Emin olun Otomatik Paragraf Biçimlendirme mesaj, sayfaları ve özel yazı tipleri üzerinde tam içerik Biyografi Box hazırlamadan önce çalışır."
+msgid ""
+"Ensure Automatic Paragraph Formatting runs before producing the Biography "
+"Box for the full content on posts, pages and custom post types."
+msgstr ""
+"Yazılardaki tam içerik, sayfalar ve kişisel yazı tipleri için Biyografi "
+"Kutusu üretilmeden önce Otomatik Paragraf Biçimlendirmenin çalıştığından "
+"emin olun."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2650
 msgid "Synchronise Automatic Paragraph Formatting For Excerpts"
-msgstr "Synchronise Automatic Paragraph Formatting For Excerpts"
+msgstr " Alıntılar için Otomatik Paragraf Biçimlendirmeyi Eşitle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2652
-msgid "Ensure Automatic Paragraph Formatting runs before producing the Biography Box for the excerpt on posts, pages and custom post types."
-msgstr "Emin olun Otomatik Paragraf Biçimlendirme mesaj, sayfaları ve özel yazı tipleri alıntı için Biyografi Box hazırlamadan önce çalışır."
+msgid ""
+"Ensure Automatic Paragraph Formatting runs before producing the Biography "
+"Box for the excerpt on posts, pages and custom post types."
+msgstr ""
+"Yazılar, sayfalar ve kişisel yazı tiplerindeki alıntılar için Biyografi "
+"Kutusu üretilmeden önce Otomatik Paragraf Biçimlendirmenin çalıştığından "
+"emin olun."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2656
-msgid "Some plugins and themes use the <code>the_content</code> or <code>the_excerpt</code> filters or secondary query loops to show content in the sidebar or in the footer. If you're seeing the Biography Box as part of a widget's output, in the footer or elsewhere, locking the plugin to operate within the context of the main WordPress Loop may stop this happening, depending on the specific set of plugins and theme being used."
-msgstr "Bazı eklentiler ve temalar <code>the_content</code> kullanın veya <code>the_excerpt</code> kenar çubuğunda veya altbilgi içeriği göstermek için filtreler veya sekonder sorgu döngüler. Eğer ana WordPress döngü çerçevesinde faaliyet eklenti kilitleme, altbilgi veya başka bir yerde, bir widget çıkış parçası olarak Biyografi Box görüyorsanız kullanılan eklentileri ve tema belirli bağlı olarak, bu olay vermeyebilir ."
+msgid ""
+"Some plugins and themes use the <code>the_content</code> or "
+"<code>the_excerpt</code> filters or secondary query loops to show content in "
+"the sidebar or in the footer. If you're seeing the Biography Box as part of "
+"a widget's output, in the footer or elsewhere, locking the plugin to operate "
+"within the context of the main WordPress Loop may stop this happening, "
+"depending on the specific set of plugins and theme being used."
+msgstr ""
+"Bazı eklentiler ve temalar içeriği kenar çubuğu veya alt bölümde göstermek "
+"için <code>the_content</code>, <code>the_excerpt</code> ya da ikincil sorgu "
+"döngüleri kullanır. Eğer alt bölüm veya başka bir yerdeki bir bileşenin "
+"çıktısında bir parçası olarak Biyografi Kutusunu görüyorsanız, kullanılan "
+"belirli bir dizi bileşen ve temaya bağlı olarak, ana WordPress döngüsü "
+"çerçevesinde eklenti faaliyetini kilitlemek bunun olmasını durabilir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2660
 msgid "Lock Display Of The Biography Box To The Main Loop"
-msgstr "Ana Döngü için Biyografi Box Of Ekran Kilidi"
+msgstr "Ana Döngü İçin Biyografi Kutusunun Görüntülenmesini Kilitle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2662
-msgid "Restrict the plugin to operating on the post content or post excerpt only when in the main WordPress Loop"
-msgstr "Mesaja içerik veya sonrası alıntılara işletim için eklenti sınırla yalnızca ana WordPress Loop"
+msgid ""
+"Restrict the plugin to operating on the post content or post excerpt only "
+"when in the main WordPress Loop"
+msgstr ""
+"Sadece ana WordPress Döngüsü içinde olduğunda yazı veya alıntı üzerindeki "
+"eklenti faaliyetini kısıtla"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2668
-msgid "WP Biographia can allow limited guest post support; allowing the biography text and elements of the Biography Box to be over-ridden on a per post, custom post and page basis."
-msgstr "WP Biographia sınırlı misafir sonrası destek sağlayabilir; biyografi metin ve Biyografi Box elemanları her bir ileti için, özel yazı ve sayfa bazında geçersiz kılınabilir için izin."
+msgid ""
+"WP Biographia can allow limited guest post support; allowing the biography "
+"text and elements of the Biography Box to be over-ridden on a per post, "
+"custom post and page basis."
+msgstr ""
+"WP Biographia sınırlı misafir yazısına destek verebilir; biyografi metin ve "
+"Biyografi Kutusu öğelerinin her yazı, kişisel yazı sayfa bazında "
+"geçersizliğine izin verildiğinde."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2670
 msgid "Enable Post Specific Overrides"
-msgstr "Belirli geçersiz Ver etkinleştir"
+msgstr "Yazıya Özgü Geçersiz Kılmayı Etkinleştir"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2672
-msgid "Allow users to override the biography and title elements of the Biography Box and to suppress the display of the user's avatar and contact links on a per post, per page or per custom post basis."
-msgstr "Kullanıcılar biyografi ve Biyografi Box başlık elemanlarını geçersiz kılmak ve her bir ileti, başına sayfa veya özel mesaja bazında kullanıcının avatar ve iletişim bağlantılarının görüntülenme bastırmak için izin ver."
+msgid ""
+"Allow users to override the biography and title elements of the Biography "
+"Box and to suppress the display of the user's avatar and contact links on a "
+"per post, per page or per custom post basis."
+msgstr ""
+"Her yazı, sayfa ya da kişisel yazı bazında kullanıcıların biyografi ve "
+"Biyografi Kutusu başlık öğelerini, avatar ve iletişim bağlantılarının "
+"görüntülenmesini geçersiz kılmalarına izin ver."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2684
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:77
-msgid "If you want to stop the Biography Box being displayed on a single post, page or custom post type, you can do this here."
-msgstr "ğer Biyografi Box tek bir mesaj, sayfa veya özel mesaj türüne bağlı olarak görüntülenen durdurmak isterseniz, buradan yapabilirsiniz."
+msgid ""
+"If you want to stop the Biography Box being displayed on a single post, page "
+"or custom post type, you can do this here."
+msgstr ""
+"Eğer Biyografi Kutusunu yazı, sayfa veya kişisel yazı türüne bağlı olarak "
+"durdurmak isterseniz, buradan yapabilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2686
 msgid "Exclude From Single Posts (via Post ID)"
 msgstr "Tekil Yazılardan Dışla (Yazı ID kimliğine göre)"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2688
-msgid "Hides the Biography Box when a post is displayed using the Single Post Template. Enter the Post IDs to hide, comma separated with no spaces, e.g. 54,33,55"
-msgstr "Bir post Tekil Mesaj Şablonu kullanılarak görüntülendiğinde Biyografi Kutu gizler. Gizlemek için Mesaj kimlikleri girin, virgül gibi, boşluk ile ayrılmış 54,33,55"
+msgid ""
+"Hides the Biography Box when a post is displayed using the Single Post "
+"Template. Enter the Post IDs to hide, comma separated with no spaces, e.g. "
+"54,33,55"
+msgstr ""
+"Tekil Yazı Şablonu kullanarak gösterlien yazılarda Biyografi kutusunu "
+"gizler. Engellemek için Yazı ID kimliklerini örn. 54,33,55 olarak boşluksuz "
+"girin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2690
 msgid "Globally Exclude From Posts (via Post ID)"
 msgstr "Yazılardan Genel Dışlama (Yazı ID kimliğine göre)"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2692
-msgid "Hides the Biography Box whenever a post is displayed; singly, on archive pages or on the front page. Enter the Post IDs to globally hide, comma separated with no spaces, e.g. 54,33,55."
-msgstr "Tek başına, arşiv sayfalarında veya ön sayfa üzerindeki yazılan her görüntülendiğinde Biyografi Kutu gizler. Küresel gizlemek için Mesaj kimlikleri girin, virgül gibi, boşluk ile ayrılmış 54,33,55."
+msgid ""
+"Hides the Biography Box whenever a post is displayed; singly, on archive "
+"pages or on the front page. Enter the Post IDs to globally hide, comma "
+"separated with no spaces, e.g. 54,33,55."
+msgstr ""
+"Tek başına, arşiv sayfalarında veya ön sayfada yazının gösterildiği her "
+"yerde Biyografi kutusunu gizler. Genel engelleme için Yazı ID kimliklerini "
+"örn. 54,33,55 olarak boşluksuz girin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2697
 #, php-format
@@ -369,8 +528,14 @@ msgstr "Tekil %1$s İçinden Dışla (%2$s ID kimliği ile)"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2699
 #, php-format
-msgid "Hides the Biography Box whenever a %1$s is displayed using the Single %1$s Template. Enter the %1$s IDs to hide, comma separated with no spaces, e.g. 54,33,55."
-msgstr "Bir %1$s Şablon Tek %1$s kullanılarak her görüntülendiğinde Biyografi Kutu gizler. Gizlemek için %1$s kimliklerini girin, virgül gibi, boşluk ile ayrılmış 54,33,55."
+msgid ""
+"Hides the Biography Box whenever a %1$s is displayed using the Single %1$s "
+"Template. Enter the %1$s IDs to hide, comma separated with no spaces, e.g. "
+"54,33,55."
+msgstr ""
+"Tekil %1$s şablonu kullanılarak %1$s gösterildiği her yerde Biyografi "
+"kutusunu gizler. Gizlemek için boşluk olmadan virgül ile ayırarak %1$s ID "
+"kimliğini girin, örn. 54,33,55."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2703
 #, php-format
@@ -379,24 +544,39 @@ msgstr "Genel %1$s İçinden Dışla (%2$s ID kimliği ile)"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2705
 #, php-format
-msgid "Hides the Biography Box whenever a %1$s is displayed; singly, on archives pages or on the front page. Enter the %1$s IDs to globally hide, comma separated with no spaces, e.g. 54,33,55."
-msgstr "Biyografi Box gizler her görüntülenen bir %1$s; tek başına, arşiv sayfalarında veya ön sayfada. Küresel gizlemek için %1$s kimliklerini girin, virgül gibi, boşluk ile ayrılmış 54,33,55."
+msgid ""
+"Hides the Biography Box whenever a %1$s is displayed; singly, on archives "
+"pages or on the front page. Enter the %1$s IDs to globally hide, comma "
+"separated with no spaces, e.g. 54,33,55."
+msgstr ""
+"%1$s gösterildiği her yerde Biyografi kutusunu gizler; tek başına, arşiv "
+"sayfalarında veya ön sayfada. Genel olarak gizlemek için boşluk olmadan "
+"virgül ile ayırarak %1$s ID kimliğini girin, örn. 54,33,55."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2708
 msgid "Exclude Pages (via Page ID)"
 msgstr "Sayfaları Dışla (Sayfa ID kimliğine göre)"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2710
-msgid "Hides the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to hide, comma separated with no spaces, e.g. 54,33,55."
-msgstr "Bir sayfa Sayfa Şablonu kullanılarak görüntülendiğinde Biyografi Kutu gizler. Gizlemek için Page kimliklerini girin, virgül gibi, boşluk ile ayrılmış 54,33,55."
+msgid ""
+"Hides the Biography Box when a page is displayed using the Page Template. "
+"Enter the Page IDs to hide, comma separated with no spaces, e.g. 54,33,55."
+msgstr ""
+"Sayfa Şablonu kullanarak gösterlien sayfalarda Biyografi kutusunu gizler. "
+"Engellemek için boşluksuz olarak virgül ile ayırarak Sayfa ID kimliklerini "
+"girin, örn. 54,33,55."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2716
-msgid "If you want to stop the Biography Box being displayed on a single post or custom post type on a per-user basis, you can do this here."
-msgstr "Eğer Biyografi Box kullanıcı başına tek bir mesaj veya özel mesaj türüne bağlı olarak görüntülenen durdurmak isterseniz, buradan yapabilirsiniz."
+msgid ""
+"If you want to stop the Biography Box being displayed on a single post or "
+"custom post type on a per-user basis, you can do this here."
+msgstr ""
+"Eğer kullanıcı bazında tekil veya özel yazı türüne bağlı olarak Biyografi "
+"Kutusunun görüntülenmesini durdurmak isterseniz, buradan yapabilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2743
 msgid "Hide The Biography Box On Posts For Specific Users"
-msgstr "Belirli Kullanıcılar İçin Mesajlar On Biyografi Box gizle"
+msgstr "Belirli Kullanıcılar İçin Yazılarda Biyografi Kutusunu Gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2745
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2771
@@ -406,24 +586,45 @@ msgstr "Etkin Kullanıcılar"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2756
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2782
 msgid "Hidden Users"
-msgstr "Gizli Kullanıcılar"
+msgstr "Gizlenmiş Kullanıcılar"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2767
-msgid "Select the users who should not display the Biography Box on their authored posts. Selecting a user for hiding of the Biography Box affects all posts and custom post types by that user, on single post display, on archive pages and on the front page. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile."
-msgstr "Kendi yazdığı mesajlar üzerine Biyografi Kutu görüntülemek olmamalıdır kullanıcıları seçin.Biyografi Box gizleme için bir kullanıcı seçme arşiv sayfalarında ve ön sayfasında, tek bir yazı ekranda, o kullanıcının gönderdiği tüm mesajları ve özel yazı tipleri etkiler. Bu ayar aşırı sürmek bireysel kullanıcı profil ayarları, kullanıcının kendi profilini düzenlemek için izniniz var sağlamak."
+msgid ""
+"Select the users who should not display the Biography Box on their authored "
+"posts. Selecting a user for hiding of the Biography Box affects all posts "
+"and custom post types by that user, on single post display, on archive pages "
+"and on the front page. This setting over-rides the individual user profile "
+"settings, providing the user has permission to edit their profile."
+msgstr ""
+"Yetkili oldukları yazılarda Biyografi kutusu gösterilmeyecek kullanıcıları "
+"seçin. Biyografi Kutusunu gizlemek için bir kullanıcı seçmek, bu "
+"kullanıcının tekil yazı görünümü, arşiv sayfaları ve ön sayfadaki tüm yazı "
+"ve kişisel yazı tiplerine etki eder. Bu ayar, bireysel kullanıcı profil "
+"ayarlarını geçersiz kılar, kullanıcının kendi profilini düzenlemek için "
+"izini vardır."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2769
 msgid "Hide The Biography Box On Pages For Specific Users"
-msgstr "Belirli kullanıcılar için Sayfalar üzerinde Biyografi Box gizle"
+msgstr "Sayfalarda Belirli Kullanıcılar İçin Biyografi Kutusunu Gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2793
-msgid "Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile."
-msgstr "Yetkili oldukları sayfalarda Biyografi Kutusu gösterilmeyecek kullanıcıları seçin. Bu ayar, bireysel kullanıcı profil ayarlarını geçersiz kılar, kullanıcının kendi profilini düzenlemek için izini vardır."
+msgid ""
+"Select the users who should not display the Biography Box on their authored "
+"pages. This setting over-rides the individual user profile settings, "
+"providing the user has permission to edit their profile."
+msgstr ""
+"Yetkili oldukları sayfalarda Biyografi Kutusu gösterilmeyecek kullanıcıları "
+"seçin. Bu ayar, bireysel kullanıcı profil ayarlarını geçersiz kılar, "
+"kullanıcının kendi profilini düzenlemek için izini vardır."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2799
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:79
-msgid "If you want to stop the Biography Box being displayed on a single post or custom post type by Category, you can do this here."
-msgstr "Eğer Biyografi Box Kategori tek bir mesaj veya özel mesaj türüne bağlı olarak görüntülenen durdurmak isterseniz, buradan yapabilirsiniz."
+msgid ""
+"If you want to stop the Biography Box being displayed on a single post or "
+"custom post type by Category, you can do this here."
+msgstr ""
+"Eğer kategoriye göre tekil veya özel yazılardan Biyografi Kutusunun "
+"görüntülenmesini durdurmak isterseniz, buradan yapabilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2817
 msgid "Exclude By Category On Posts"
@@ -438,12 +639,25 @@ msgid "Excluded Categories"
 msgstr "Dışlanmış Kategoriler"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2841
-msgid "Select the post categories that should not display the Biography Box. Selecting a category for exclusion of the Biography Box affects all posts of that category, on single post display, on archive pages and on the front page."
-msgstr "Yetkili oldukları yazılarda Biyografi Kutusu gösterilmeyecek kullanıcıları seçin. Seçilen kullanıcı için tekil yazı, arşiv sayfaları ve ön sayfadaki tüm yazı ve kişisel yazı biçimleri de dahil olmak üzere Biyografi Kutusundan dışlanır. Bu ayar, bireysel kullanıcı profil ayarlarını geçersiz kılar, kullanıcının kendi profilini düzenlemek için izini vardır."
+msgid ""
+"Select the post categories that should not display the Biography Box. "
+"Selecting a category for exclusion of the Biography Box affects all posts of "
+"that category, on single post display, on archive pages and on the front "
+"page."
+msgstr ""
+"Biyografi Kutusunun gösterilmeyeceği yazı kategorilerini seçin. Biyografi "
+"Kutusunun dışlanması için bir kategori seçildiğinde bu tüm kategorideki "
+"yazılarda, tekil yazılarda, arşiv sayfalarında ve ön sayfada etkili olur."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2853
-msgid "This tab contains broad level settings to control how the Biography Box is styled; its background colour and border. The Biography Box is fully style-able but this needs knowledge of how to write CSS."
-msgstr "Bu sekme Biyografi Kutusu tarz biçimini denetlemek için geniş düzeyde ayarları içerir; arka plan rengini ve kenarlık.Biyografi Box tam tarzı-yapabiliyor ama bu CSS yazmak nasıl bilgi gerektiriyor."
+msgid ""
+"This tab contains broad level settings to control how the Biography Box is "
+"styled; its background colour and border. The Biography Box is fully style-"
+"able but this needs knowledge of how to write CSS."
+msgstr ""
+"Bu sekme Biyografi Kutusunun; arkaplan rengi ve çerçeve stillerinin nasıl "
+"olacağını kontrol edebilmenizi sağlar. Biyografi Kutusu tamamen "
+"özelleştirilebilir fakat bu CSS yazabilme bilgisi gerektirir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2855
 msgid "Box Background Color"
@@ -455,7 +669,8 @@ msgid "Select a Color"
 msgstr "Bir Renk Seç"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2859
-msgid "By default, the background color of the Biography Box is a yellowish tone."
+msgid ""
+"By default, the background color of the Biography Box is a yellowish tone."
 msgstr "Biyografi Kutusu varsayılan arkaplan rengi sarımtırak bir tondur."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2860
@@ -476,7 +691,8 @@ msgstr "Çerçeve Yok"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2865
 msgid "By default, a thick black line is displayed above the Biography Box."
-msgstr "Biyografi Kutusundan önce varsayılan olarak kalın siyah çizgi gösterilir."
+msgstr ""
+"Biyografi Kutusundan önce varsayılan olarak kalın siyah çizgi gösterilir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2866
 msgid "Box Border Color"
@@ -484,11 +700,15 @@ msgstr "Kutu Çerçeve Rengi"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2870
 msgid "By default, the border color of the Biography Box is black."
-msgstr "Varsayılan olarak, Biyografi Box kenarlık rengi siyahtır."
+msgstr "Varsayılan olarak, Biyografi Kutusu çerçeve rengi siyahtır."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2882
-msgid "This tab contains settings that control what information is and is not displayed within the Biography Box."
-msgstr "Bu sekme bilgiler ne olduğunu ve Biyografi Kutu içinde gösterilmez kontrol ayarları içerir."
+msgid ""
+"This tab contains settings that control what information is and is not "
+"displayed within the Biography Box."
+msgstr ""
+"Bu sekme, Biyografi Kutusu içinde hangi bilgilerin gösterilip "
+"gösterilmeyeceğini kontrol edebileceğiniz ayarlar içerir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2884
 msgid "Biography Prefix"
@@ -496,7 +716,7 @@ msgstr "Biyografi Ünvanı"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2888
 msgid "Prefix text to be prepended to the user's name"
-msgstr "Öneki metin kullanıcı adının önüne edilecek"
+msgstr "Kullanıcı adının önüne gelecek ünvan metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2890
 msgid "User's Name"
@@ -524,45 +744,59 @@ msgstr "Adı Gösterme"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2906
 msgid "How you want to see the users's name displayed (if at all)"
-msgstr "Eğer kullanıcı adı (hiç değilse) görüntülenir görmek istiyorum nasıl"
+msgstr "Kullanıcı adının nasıl görüntülenmesini istersin (eğer varsa)"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2908
 msgid "User's Name Link"
-msgstr "Kullanıcı Adı Linki"
+msgstr "Kullanıcı Adı Bağlantısı"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2912
 msgid "Make user's name link to <em>More Posts By This User</em>"
-msgstr "Kullanıcı adı Bu Kullanıcı tarafından <em>fazla Mesajını link</em> yapın"
+msgstr ""
+"Kullanıcı adı bağlantısını <em>Bu Kullanıcının Diğer Yazıları</em> şeklinde "
+"yap"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2916
 #, php-format
-msgid "It looks like Avatars are not currently enabled; this means that the user's image won't be able to be displayed. If you want this to happen then go to <a href=\"%s\">Settings &rsaquo; Discussions</a> and set Avatar Display to Show Avatars."
-msgstr "Görseller şu anda etkin değil gibi görünüyor, bu kullanıcının görüntü ekrana mümkün olmayacak anlamına gelir. Eğer bunun olmasını istiyorsanız o Görseller göster <a href=\"%s\">Ayarlar Sohbet</a> ve ​​set görselini Ekran gidin."
+msgid ""
+"It looks like Avatars are not currently enabled; this means that the user's "
+"image won't be able to be displayed. If you want this to happen then go to "
+"<a href=\"%s\">Settings &rsaquo; Discussions</a> and set Avatar Display to "
+"Show Avatars."
+msgstr ""
+"Avatarlar etkin gözükmüyor; bu, kullanıcıların resimlerinin "
+"gösterilemeyeceği anlamına gelir. Eğer bunun çalışmasını istiyorsanız <a "
+"href=\"%s\">Tartışma Ayarlarına</a> giderek avatarları göstermek için "
+"Avatarları Göster seçeneğini işaretleyin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2919
 msgid "User's Image"
-msgstr "Kullanıcı Görüntü"
+msgstr "Kullanıcı Resmi"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2924
 msgid "Display the user's image?"
-msgstr "Kullanıcının görüntüyü ekrana?"
+msgstr "Kullanıcının resmi gösterilsin mi?"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2936
 msgid "Image Size"
 msgstr "Resim Boyutu"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2940
-msgid "Enter image size, e.g. 32 for a 32x32 image, 70 for a 70x70 image, etc. Defaults to a 100x100 size image."
-msgstr "Örn. 32 için 32x32 resim, 70 için 70x70 resim vb. resim boyutu girin. Varsayılan resim boyutu 100x100."
+msgid ""
+"Enter image size, e.g. 32 for a 32x32 image, 70 for a 70x70 image, etc. "
+"Defaults to a 100x100 size image."
+msgstr ""
+"Örn. 32 için 32x32 resim, 70 için 70x70 resim vb. resim boyutu girin. "
+"Varsayılan resim boyutu 100x100."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2941
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:147
 msgid "Show User's Biography"
-msgstr "Kullanıcı Biyografi göster"
+msgstr "Kullanıcının Biyografisini Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2945
 msgid "Display the user's biography?"
-msgstr "Kullanıcının biyografisi görüntülensin mi?"
+msgstr "Kullanıcının biyografisi gösterilsin mi?"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2947
 msgid "Show Contact Links As Icons"
@@ -570,7 +804,7 @@ msgstr "İletişim Bağlantılarını Simge olarak Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2951
 msgid "Show the user's contact links as icons?"
-msgstr "Simgeler gibi kullanıcı iletişim bağlantıları göster?"
+msgstr "Kullanıcı iletişim bağlantıları simge olarak gösterilsin mi?"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2957
 msgid "Use Alternate Icon Set"
@@ -586,7 +820,8 @@ msgstr "Alternatif Simge Seti Linki"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2968
 msgid "Enter the URL where the alternate contact links icon set is located"
-msgstr "İletişim bağlantıları alternatif simge setinin bulunduğu yerin linkini girin"
+msgstr ""
+"İletişim bağlantıları alternatif simge setinin bulunduğu yerin linkini girin"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2970
 msgid "Opening Contact Links"
@@ -626,25 +861,25 @@ msgstr "Kullanıcı E-posta Adresi Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2988
 msgid "Display the user's email address?"
-msgstr "Kullanıcının e-posta adresini gösterir?"
+msgstr "Kullanıcının eposta adresi gösterilsin mi?"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2990
 msgid "Show User's Website Link"
-msgstr "Kullanıcı Website Link göster"
+msgstr "Kullanıcı Website Bağlantısını Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:2994
 msgid "Display the user's website details?"
-msgstr "Kullanıcının web sitesini ayrıntıları görüntülensin mi?"
+msgstr "Kullanıcının website detayları gösterilsin mi?"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3002
 #, php-format
 msgid "Show User's %s Link"
-msgstr "Kullanıcı %s bağlantı göster"
+msgstr "Kullanıcı %s Bağlantısını Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3003
 #, php-format
 msgid "Display the user's %s details?"
-msgstr "Kullanıcı %s ayrıntıları görüntülensin mi?"
+msgstr "Kullanıcının %s detayları gösterilsin mi?"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3014
 msgid "Show More Posts Link"
@@ -663,12 +898,23 @@ msgid "Don't Show The More Posts Link"
 msgstr "Diğer Yazıları Gösterme"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3024
-msgid "How you want to display and format the <em>More Posts By This User</em> link"
-msgstr "Bu kullanıcı tarafından <em>bağlantısını fazla Mesajını görüntülemek ve</em> biçimlendirmek istiyorum nasıl"
+msgid ""
+"How you want to display and format the <em>More Posts By This User</em> link"
+msgstr ""
+"<em>Kullanıcının Diğer Yazıları</em> bağlantısını nasıl ve hangi formatta "
+"göstermek istersiniz"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3036
-msgid "<strong>Here Be Dragons</strong>. Please <strong>read</strong> the warning below before doing anything with this tab. The options in this tab with reset WP Biographia to a just installed state, clearing any configuration settings you may have made."
-msgstr "İşte <strong>Dragons</ strong> olun. <strong>Lütfen</ strong> okuma uyarı altında bu sekme ile bir şey yapmadan önce. Yaptığınız herhangi bir yapılandırma ayarlarını temizleyerek adil yüklü durumuna sıfırlandı WP Biographia bu sekmedeki seçenekleri."
+msgid ""
+"<strong>Here Be Dragons</strong>. Please <strong>read</strong> the warning "
+"below before doing anything with this tab. The options in this tab with "
+"reset WP Biographia to a just installed state, clearing any configuration "
+"settings you may have made."
+msgstr ""
+"<strong>Burada Ejderhalar Olabilir</strong>. Lütfen bu sekmede herhangi "
+"birşey yapmadan önce alttaki uyarıyı <strong>okuyun</strong>. Bu sayfadaki "
+"seçenekler WP Biographia ayarlarını yeni kurulduğu haline sıfırlar, "
+"yaptığınız bütün kişisel ayarları temizler."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3038
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3042
@@ -681,40 +927,116 @@ msgstr "Tüm WP Biographia ayar ve seçeneklerini varsayılan değerlere sıfır
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3042
 #, php-format
-msgid "<strong>WARNING!</strong> Checking <strong><em>%s</em></strong> and clicking on <strong><em>%s</em></strong> will erase <strong><em>all</em></strong> the current WP Biographia settings and options and will restore WP Biographia to a <em>just installed</em> state. This is the equivalent to deactivating, uninstalling and reinstalling the plugin. Only proceed if this is what you intend to do. This action is final and irreversable."
-msgstr "<strong>UYARI!</strong> <strong><em>%s</em></strong> işaretlemek ve <strong><em>%s</em></strong> tıklamak <strong><em>tüm</em></strong> geçerli WP Biographia ayar ve seçeneklerini silecektir ve <em>ilk kurulduğu</em> şekline geri getirecektir. Bu, eklentiyi etkisizleştirmek, kaldırmak ve yeniden kurmak ile eş değerdedir. Buna sadece eğer yapmak istediğiniz şey buysa devam edin. Bu eylem, nihai ve geri döndürülemez."
+msgid ""
+"<strong>WARNING!</strong> Checking <strong><em>%s</em></strong> and clicking "
+"on <strong><em>%s</em></strong> will erase <strong><em>all</em></strong> the "
+"current WP Biographia settings and options and will restore WP Biographia to "
+"a <em>just installed</em> state. This is the equivalent to deactivating, "
+"uninstalling and reinstalling the plugin. Only proceed if this is what you "
+"intend to do. This action is final and irreversable."
+msgstr ""
+"<strong>UYARI!</strong> <strong><em>%s</em></strong> işaretlemek ve "
+"<strong><em>%s</em></strong> tıklamak <strong><em>tüm</em></strong> geçerli "
+"WP Biographia ayar ve seçeneklerini silecektir ve <em>ilk kurulduğu</em> "
+"şekline geri getirecektir. Bu, eklentiyi etkisizleştirmek, kaldırmak ve "
+"yeniden kurmak ile eş değerdedir. Buna sadece eğer yapmak istediğiniz şey "
+"buysa devam edin. Bu eylem, nihai ve geri döndürülemez."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3042
 msgid "Save Changes"
 msgstr "Değişiklikleri Kaydet"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3055
-msgid "\"When it comes to software, I much prefer free software, because I have very seldom seen a program that has worked well enough for my needs and having sources available can be a life-saver\"</em>&nbsp;&hellip;&nbsp;Linus Torvalds"
-msgstr "\"Ben çok nadiren benim ihtiyaçları için yeterince iyi çalıştı ve kullanılabilir kaynakları olan bir yaşam koruyucu olabilir bir program gördük çünkü yazılım gelince, ben çok özgür yazılım tercih\"</em>&nbsp;&hellip;&nbsp;Linus Torvalds"
+msgid ""
+"\"When it comes to software, I much prefer free software, because I have "
+"very seldom seen a program that has worked well enough for my needs and "
+"having sources available can be a life-saver\"</em>&nbsp;&hellip;&nbsp;Linus "
+"Torvalds"
+msgstr ""
+"\"Sıra yazılıma gelince, daha çok özgür yazılımları tercih ederim, çünkü bir "
+"programın benim ihtiyaçlarımı yeterince karşılayacak şekilde çalıştığını ve "
+"hayat kurtarabilecek kaynaklara sahip olduğunu çok nadiren görebiliyorum\"</"
+"em>&nbsp;&hellip;&nbsp;Linus Torvalds"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3056
-msgid "For the inner nerd in you, the latest version of WP Biographia was written using <a href=\"http://macromates.com/\">TextMate</a> on a MacBook Pro running OS X 10.7.2 Lion and tested on the same machine running <a href=\"http://mamp.info/en/index.html\">MAMP</a> (Mac/Apache/MySQL/PHP) before being let loose on the author's <a href=\"http://www.vicchi.org/\">blog</a>."
-msgstr "İçinizdeki inek için, WP Biographia son sürümü <a href=\"http://macromates.com/\">TextMate</a> ile yazıldı ve yazarın <a href=\"http://www.vicchi.org/\">blog</a>'da serbest kalmadan önce OS X 10.7.2 Lion çalıştıran bir MacBook Pro ve aynı makinede çalıştırılan bir <a href=\"http://mamp.info/en/index.html\">MAMP</a> (Mac/Apache/MySQL/PHP) ile test edildi."
+msgid ""
+"For the inner nerd in you, the latest version of WP Biographia was written "
+"using <a href=\"http://macromates.com/\">TextMate</a> on a MacBook Pro "
+"running OS X 10.7.2 Lion and tested on the same machine running <a href="
+"\"http://mamp.info/en/index.html\">MAMP</a> (Mac/Apache/MySQL/PHP) before "
+"being let loose on the author's <a href=\"http://www.vicchi.org/\">blog</a>."
+msgstr ""
+"İçinizdeki inek için, WP Biographia son sürümü <a href=\"http://macromates."
+"com/\">TextMate</a> ile yazıldı ve yazarın <a href=\"http://www.vicchi.org/"
+"\">blog</a>'da serbest kalmadan önce OS X 10.7.2 Lion çalıştıran bir MacBook "
+"Pro ve aynı makinede çalıştırılan bir <a href=\"http://mamp.info/en/index."
+"html\">MAMP</a> (Mac/Apache/MySQL/PHP) ile test edildi."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3058
-msgid "The official home for WP Biographia is on <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">Gary's Codeage</a>; it's also available from the official <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">WordPress plugins repository</a>. If you're interested in what lies under the hood, the code is also on <a href=\"https://github.com/vicchi/wp-biographia\">GitHub</a> to download, fork and otherwise hack around."
-msgstr "WP Biographia için resmi ev <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">Gary's Codeage</a>; ayrıca <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">WordPress eklenti havuzunda</a> da mevcut. Eğer kaputun altında ne olduğuyla ilgileniyorsanız, ayrıca indirmek, bellemek ve olmazsa kesip biçmek için kodlar <a href=\"https://github.com/vicchi/wp-biographia\">GitHub</a> üzerinde."
+msgid ""
+"The official home for WP Biographia is on <a href=\"http://www.vicchi.org/"
+"codeage/wp-biographia/\">Gary's Codeage</a>; it's also available from the "
+"official <a href=\"http://wordpress.org/extend/plugins/wp-biographia/"
+"\">WordPress plugins repository</a>. If you're interested in what lies under "
+"the hood, the code is also on <a href=\"https://github.com/vicchi/wp-"
+"biographia\">GitHub</a> to download, fork and otherwise hack around."
+msgstr ""
+"WP Biographia için resmi ev <a href=\"http://www.vicchi.org/codeage/wp-"
+"biographia/\">Gary's Codeage</a>; ayrıca <a href=\"http://wordpress.org/"
+"extend/plugins/wp-biographia/\">WordPress eklenti havuzunda</a> da mevcut. "
+"Eğer kaputun altında ne olduğuyla ilgileniyorsanız, ayrıca indirmek, "
+"bellemek ve olmazsa kesip biçmek için kodlar <a href=\"https://github.com/"
+"vicchi/wp-biographia\">GitHub</a> üzerinde."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3060
-msgid "WP Biographia is named after the etymology of the modern English word <em>biography</em>. The word first appeared in the 1680s, probably from the latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, meaning \"life\" and <em>graphia</em>, meaning \"record\" or \"account\" which derived from <em>graphein</em>, \"to write\"."
-msgstr "WP Biographia adını modern İngiliz etimoloji sözcüğü olan <em>biography</em> den almıştır. Sözcük ilk olarak 1680'lerde büyük ihtimalle \"yaşam\" anlamına gelen Yunan <em>bio</em> türemesi ve \"kayıt\" anlamına gelen <em>graphia</em> yada \"hesap\" anlamına gelen <em>graphein</em> türevlerinden \"yazmak\" olarak <em>biographia</em> ortaya çıkmıştır."
+msgid ""
+"WP Biographia is named after the etymology of the modern English word "
+"<em>biography</em>. The word first appeared in the 1680s, probably from the "
+"latin <em>biographia</em> which itself derived from the Greek <em>bio</em>, "
+"meaning \"life\" and <em>graphia</em>, meaning \"record\" or \"account\" "
+"which derived from <em>graphein</em>, \"to write\"."
+msgstr ""
+"WP Biographia adını modern İngiliz etimoloji sözcüğü olan <em>biography</em> "
+"den almıştır. Sözcük ilk olarak 1680'lerde büyük ihtimalle \"yaşam\" "
+"anlamına gelen Yunan <em>bio</em> türemesi ve \"kayıt\" anlamına gelen "
+"<em>graphia</em> yada \"hesap\" anlamına gelen <em>graphein</em> "
+"türevlerinden \"yazmak\" olarak <em>biographia</em> ortaya çıkmıştır."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3068
-msgid "For those times when you need help and support with this plugin, one of the first things you'll probably be asked for is the plugin's current configuration. If this happens, just <em>copy-and-paste</em> the dump of the <em>WP Biographia Settings and Options</em> below into any support forum post or email."
-msgstr "Size yardımcı olacak ve bu eklenti ile desteklemek gerekir zamanlar için, muhtemelen sorulacak ilk şeylerden biri eklenti mevcut yapılandırma. Bu durumda, sadece <em> kopyalayıp yapıştırın </ em> <em> WP Biographia Ayarlar ve Seçenekler dökümü </ em> aşağıda herhangi bir destek forumuna mesaj veya e-posta içine."
+msgid ""
+"For those times when you need help and support with this plugin, one of the "
+"first things you'll probably be asked for is the plugin's current "
+"configuration. If this happens, just <em>copy-and-paste</em> the dump of the "
+"<em>WP Biographia Settings and Options</em> below into any support forum "
+"post or email."
+msgstr ""
+"Bu eklenti için ne zaman yardım ve desteğe ihtiyaç duyarsanız, size büyük "
+"ihtimalle ilk sorulacak şey eklentinin konfigürasyonu olur. Bu durumda, "
+"aşağıdaki <em>WP Biographia Ayar ve Seçenekleri</em> listesini destek "
+"forumununa yaz veya eposta ile göndermek için sadece <em>kopyala-ve-"
+"yapıştır</em>."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3098
-msgid "Almost all of WP Biographia's Settings and Options are maintained in the database in a single entry. But there's also some settings added to each user's account; you'll find these below."
-msgstr "Hemen hemen tüm WP Biographia Kullanıcı Ayarlar ve Seçenek tek bir girişi veritabanı tutulur. Ama aynı zamanda bazı ayarlar her kullanıcının hesabına orada eklenir; aşağıda bu bulacaksınız."
+msgid ""
+"Almost all of WP Biographia's Settings and Options are maintained in the "
+"database in a single entry. But there's also some settings added to each "
+"user's account; you'll find these below."
+msgstr ""
+"Hemen hemen tüm WP Biographia Kullanıcı Ayarları ve Seçenekleri tek bir "
+"veritabanı girişinde tutulur. Fakat ayrıca her kullanıcının hesabına "
+"eklenmiş bazı ayarlar vardır; bunları aşağıda bulacaksınız."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3118
-msgid "This tab contains broad level settings to control how the Biography Box is displayed and where. You can configure more specific display settings in the Exclusions tab and what is actually displayed in the Biography Box in the Content tab."
-msgstr "Bu sekme Biyografi Kutu görüntülenir ve nerede nasıl kontrol etmek için geniş düzeyde ayarları içerir. Sen İstisnalar sekmesinde daha özel görüntü ayarlarını konfigüre edebilir ve aslında İçerik sekmesini Biyografi Kutu ne görüntülenir."
+msgid ""
+"This tab contains broad level settings to control how the Biography Box is "
+"displayed and where. You can configure more specific display settings in the "
+"Exclusions tab and what is actually displayed in the Biography Box in the "
+"Content tab."
+msgstr ""
+"Bu sekme, Biyografi Kutusunun nasıl ve nerede görüntüleneceğini kontrol "
+"edebileceğiniz geniş seçenekler sunar. Sonraki Dışlanalar sekmesinde daha "
+"özel görüntüleme ayarlarını ve Biyografi Kutusu içinde tam olarak neyin "
+"görüntüleneceğini de İçerik sekmesinden düzenleyebilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3120
 msgid "Display On Front Page"
@@ -726,7 +1048,7 @@ msgstr "Ön sayfada her yazı için Biyografi Kutusu gösterir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3133
 msgid "Front Page Biography Text"
-msgstr "Ön Sayfa Biyografi Metin"
+msgstr "Ön Sayfa Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3136
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3158
@@ -740,7 +1062,7 @@ msgstr "Ön Sayfa Biyografi Metin"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3357
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3381
 msgid "Display the full text of the user's biography"
-msgstr "Kullanıcının biyografisi tam metnini görüntüleme"
+msgstr "Kullanıcı biyografisinin tam metnini görüntüle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3139
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3161
@@ -754,7 +1076,7 @@ msgstr "Kullanıcının biyografisi tam metnini görüntüleme"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3360
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3384
 msgid "Display the excerpt of the user's biography"
-msgstr "Kullanıcının biyografisini alıntı görüntüleme"
+msgstr "Kullanıcı biyografisinin alıntısını görüntüle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3142
 msgid "Display On Individual Posts"
@@ -766,67 +1088,71 @@ msgstr "Tekil yazılar için Biyografi Kutusu gösterir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3155
 msgid "Individual Posts Biography Text"
-msgstr "Bireysel Mesajlar Biyografi Metin"
+msgstr "Tekil Yazılar Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3164
 msgid "Display On All Post Archives"
-msgstr "Tüm Mesaj Arşivler Display On"
+msgstr "Tüm Yazı Arşivlerinde Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3166
-msgid "Displays the Biography Box for each post on <strong>all types</strong> of Archive page (Author, Category, Date and Tag)"
-msgstr "<strong>Her yazı için Biyografi Kutu görüntüler her türlü</strong> Arşiv sayfası (Yazar, Kategori, Tarih ve Tag)"
+msgid ""
+"Displays the Biography Box for each post on <strong>all types</strong> of "
+"Archive page (Author, Category, Date and Tag)"
+msgstr ""
+"Arşiv sayfasının <strong>tüm çeşitlerinde</strong> (Yazar, Kategori, Tarih "
+"ve Etiket) her yazı için Biyografi kutusunu gösterir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3177
 msgid "All Post Archives Biography Text"
-msgstr "Tüm Mesaj Arşivi Biyografi Metin"
+msgstr "Tüm Yazı Arşivi Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3192
 msgid "Display On Author Archives"
-msgstr "Yazar Arşivi Display On"
+msgstr "Yazar Arşivlerinde Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3194
 msgid "Displays the Biography Box for each post on Author Archive pages."
-msgstr "Yazar Arşivi sayfalarında her yazı için Biyografi Kutu görüntüler."
+msgstr "Yazar arşiv sayfalarındaki her yazı için Biyografi Kutusu gösterir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3205
 msgid "Author Archive Posts Biography Text"
-msgstr "Yazar Arşivi Mesajlar Biyografi Metin"
+msgstr "Yazar Arşiv Yazıları Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3214
 msgid "Display On Category Archives"
-msgstr "Kategori Archives Display On"
+msgstr "Kategori Arşivlerinde Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3216
 msgid "Displays the Biography Box for each post on Category Archive pages."
-msgstr "Kategori Arşivi sayfalarında her yazı için Biyografi Kutu görüntüler."
+msgstr "Kategori arşiv sayfalarında her yazı için Biyografi Kutusunu gösterir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3227
 msgid "Category Archive Posts Biography Text"
-msgstr "Kategori Arşivi Mesajlar Biyografi Metin"
+msgstr "Kategori Arşiv Yazıları Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3236
 msgid "Display On Date Archives"
-msgstr "Tarih Arşivleri Display On"
+msgstr "Tarih Arşivlerinde Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3238
 msgid "Displays the Biography Box for each post on Date Archive pages."
-msgstr "Tarihi Arşiv sayfalarında her yazı için Biyografi Kutu görüntüler."
+msgstr "Tarih arşiv sayfalarındaki her yazı için Biyografi Kutusu gösterir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3249
 msgid "Date Archive Posts Biography Text"
-msgstr "Tarihi Arşiv Mesajlar Biyografi Metin"
+msgstr "Tarihi Arşiv Yazıları Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3258
 msgid "Display On Tag Archives"
-msgstr "Tag Archives Display On"
+msgstr "Etiket Arşivlerinde Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3260
 msgid "Displays the Biography Box for each post on Tag Archive pages."
-msgstr "Tag Arşiv sayfalarında her yazı için Biyografi Kutu görüntüler."
+msgstr "Etiket arşiv sayfalarındaki her yazı için Biyografi Kutusunu gösterir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3271
 msgid "Tag Archive Posts Biography Text"
-msgstr "Tag Arşiv Mesajlar Biyografi Metin"
+msgstr "Etiket Arşiv Yazıları Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3282
 msgid "Display On Individual Pages"
@@ -838,7 +1164,7 @@ msgstr "Tekil sayfalar için Biyografi Kutusu gösterir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3295
 msgid "Individual Pages Biography Text"
-msgstr "Bireysel Sayfalar Biyografi Metin"
+msgstr "Tekil Sayfalar Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3309
 #, php-format
@@ -847,28 +1173,32 @@ msgstr "Tekil %s İçinde Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3311
 #, php-format
-msgid "Displays the Biography Box on individual instances of custom post type %s."
-msgstr "Kişisel yazı biçimlerinin tekil örnekleri %s için Biyografi Kutusunu gösterir."
+msgid ""
+"Displays the Biography Box on individual instances of custom post type %s."
+msgstr ""
+"Kişisel yazı biçimlerinin tekil örnekleri %s için Biyografi Kutusunu "
+"gösterir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3325
 #, php-format
 msgid "Individual %s Biography Text"
-msgstr "Bireysel %s Biyografi Metin"
+msgstr "Tekil %s Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3338
 #, php-format
 msgid "Display On %s Archives"
-msgstr "%s Arşivler Display On"
+msgstr "%s Aşivlerinde Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3340
 #, php-format
 msgid "Displays the Biography Box on Archive pages for custom post type %s."
-msgstr "Özel yazı tipi %s için Arşiv sayfalarında Biyografi Kutu görüntüler."
+msgstr ""
+"%s kişisel yazı biçimi için arşiv sayfalarında Biyografi Kutusunu gösterir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3354
 #, php-format
 msgid "%s Archives Biography Text"
-msgstr "%s Arşivleri Biyografi Metin"
+msgstr "%s Arşivleri Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3365
 msgid "Display In RSS Feeds"
@@ -880,15 +1210,15 @@ msgstr "Beslemelerde her giriş için Biyografi Kutusunu gösterir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3378
 msgid "RSS Feeds Biography Text"
-msgstr "RSS Biyografi Metin"
+msgstr "RSS Beslemeleri Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3392
 msgid "Display Location"
-msgstr "Gösterim Konumu"
+msgstr "Konumu Göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3395
 msgid "Display the Biography Box before the post or page content"
-msgstr "Yazı veya sayfa içeriğinden önce Biyografi Kutusunu gösterir"
+msgstr "Yazı veya sayfa içeriğinden önce Biyografi Kutusunu göster"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3398
 msgid "Display the Biography Box after the post or page content"
@@ -910,7 +1240,7 @@ msgstr "İçerik Ve Alıntı Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3434
 msgid "Biography Box Override Settings"
-msgstr "Biyografi Kutusu Ayarları geçersiz kılma"
+msgstr "Biyografi Kutusu Geçersiz Kılma Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3440
 msgid "Post, Page And Custom Post Type Exclusion Settings"
@@ -922,7 +1252,7 @@ msgstr "Kategori Dışlama Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3447
 msgid "User Hiding Settings"
-msgstr "Kullanıcı Saklanmak Ayarları"
+msgstr "Kullanıcı Gizleme Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3453
 msgid "Style Settings"
@@ -957,7 +1287,7 @@ msgstr "Görüntü Ayarları"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3490
 #, php-format
 msgid "WP Biographia %s - Settings And Options"
-msgstr "WP Biographia %s Ayarlar Ve Seçenekler"
+msgstr "WP Biographia %s - Ayarlar Ve Seçenekler"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3541
 msgid "Updated"
@@ -965,11 +1295,11 @@ msgstr "Güncellendi"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3739
 msgid "All"
-msgstr "tüm"
+msgstr "Tümü"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3740
 msgid "Reset To Default Values"
-msgstr "Varsayılan Değerler Sıfırlama"
+msgstr "Varsayılan Değerlere Sıfırla"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3820
 #, php-format
@@ -983,19 +1313,29 @@ msgstr "Geçiş için tıkla"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3923
 #, php-format
 msgid "Save %s Settings"
-msgstr "%s Ayarları Kaydet"
+msgstr "%s Ayarlarını Kaydet"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3949
 msgid "For help and support with WP Biographia, here's what you can do:"
 msgstr "WP Biographia'ya yardım ve destek için yapabilecekleriniz burada:"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3951
-msgid "Ask a question on the <a href=\"http://wordpress.org/tags/wp-biographia?forum_id=10\">WordPress support forum</a>; this is by far the best way so that other users can follow the conversation."
-msgstr "Sorularınızı <a href=\"http://wordpress.org/tags/wp-biographia?forum_id=10\">WordPress destek forumunda</a> sorun; diğer kullanıcılarında yorumları takip edebildiği bilinen en iyi yol budur."
+msgid ""
+"Ask a question on the <a href=\"http://wordpress.org/tags/wp-biographia?"
+"forum_id=10\">WordPress support forum</a>; this is by far the best way so "
+"that other users can follow the conversation."
+msgstr ""
+"Sorularınızı <a href=\"http://wordpress.org/tags/wp-biographia?"
+"forum_id=10\">WordPress destek forumunda</a> sorun; diğer kullanıcılarında "
+"yorumları takip edebildiği bilinen en iyi yol budur."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3953
-msgid "Ask me a question on Twitter; I'm <a href=\"http://twitter.com/vicchi\">@vicchi</a>."
-msgstr "Bana Twitter üzerinden sorun; Ben <a href=\"http://twitter.com/vicchi\">@vicchi</a>."
+msgid ""
+"Ask me a question on Twitter; I'm <a href=\"http://twitter.com/vicchi"
+"\">@vicchi</a>."
+msgstr ""
+"Bana Twitter üzerinden sorun; Ben <a href=\"http://twitter.com/vicchi"
+"\">@vicchi</a>."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3955
 #, php-format
@@ -1003,43 +1343,103 @@ msgid "Drop me an <a href=\"mailto:%s\">email </a>instead."
 msgstr "Ayrıca bana bir <a href=\"mailto:%s\">e-posta </a>atın."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3957
-msgid "But help and support is a two way street; here's what you might want to do:"
-msgstr "Fakat yardım ve destek iki yollu bir sokak, yapmak isteyecekleriniz burada:"
+msgid ""
+"But help and support is a two way street; here's what you might want to do:"
+msgstr ""
+"Fakat yardım ve destek iki yollu bir sokak, yapmak isteyecekleriniz burada:"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3959
 #, php-format
-msgid "If you like this plugin and use it on your WordPress site, or if you write about it online, <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">link to the plugin</a> and drop me an <a href=\"mailto:%s\">email</a> telling me about this."
-msgstr "Eğer eklentiyi beğendiniz ve WordPress sitenizde kullanıyorsanız yada hakkında çevrimiçi yazmak isterseniz <a href=\"http://www.vicchi.org/codeage/wp-biographia/\">eklenti bağlantısı</a> ve bana <a href=\"mailto:%s\">e-posta</a> atarak bunu söyleyin."
+msgid ""
+"If you like this plugin and use it on your WordPress site, or if you write "
+"about it online, <a href=\"http://www.vicchi.org/codeage/wp-biographia/"
+"\">link to the plugin</a> and drop me an <a href=\"mailto:%s\">email</a> "
+"telling me about this."
+msgstr ""
+"Eğer eklentiyi beğendiniz ve WordPress sitenizde kullanıyorsanız yada "
+"hakkında çevrimiçi yazmak isterseniz <a href=\"http://www.vicchi.org/codeage/"
+"wp-biographia/\">eklenti bağlantısı</a> ve bana <a href=\"mailto:%s\">e-"
+"posta</a> atarak bunu söyleyin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3961
-msgid "Rate the plugin on the <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">WordPress plugin repository</a>."
-msgstr "Eklenti için <a href=\"http://wordpress.org/extend/plugins/wp-biographia/\">WordPress eklenti havuzunda</a> oy verin."
+msgid ""
+"Rate the plugin on the <a href=\"http://wordpress.org/extend/plugins/wp-"
+"biographia/\">WordPress plugin repository</a>."
+msgstr ""
+"Eklenti için <a href=\"http://wordpress.org/extend/plugins/wp-biographia/"
+"\">WordPress eklenti havuzunda</a> oy verin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3963
-msgid "WP Biographia is both free as in speech and free as in beer. No donations are required; <a href=\"http://www.vicchi.org/codeage/donate/\">here's why</a>."
-msgstr "WP Biographia konuşma ve bira kadar özgürdür. Bağış gerektirmez; <a href=\"http://www.vicchi.org/codeage/donate/\">nedeni burada</a>."
+msgid ""
+"WP Biographia is both free as in speech and free as in beer. No donations "
+"are required; <a href=\"http://www.vicchi.org/codeage/donate/\">here's why</"
+"a>."
+msgstr ""
+"WP Biographia konuşma ve bira kadar özgürdür. Bağış gerektirmez; <a href="
+"\"http://www.vicchi.org/codeage/donate/\">nedeni burada</a>."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3965
 #, php-format
-msgid "<p>Find out what's new and get an overview of WP Biographia; <a href=\"%s\">restart the plugin tour</a>.</p>"
-msgstr "<p>Yenilikleri öğrenin ve WP Biographia genel bir bakış; <a href=\"%s\">eklenti turu yeniden başlatın</a>.</p>"
+msgid ""
+"<p>Find out what's new and get an overview of WP Biographia; <a href=\"%s"
+"\">restart the plugin tour</a>.</p>"
+msgstr ""
+"<p>WP Biographia yeniliklerini öğrenmek ve genel bir bakış için; <a href=\"%s"
+"\">eklenti turunu yeniden başlatın</a>.</p>"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3968
 msgid "Help &amp; Support"
 msgstr "Yardım &amp; Destek"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3982
-msgid "The fact that you're reading this wouldn't have been possible without the help, bug fixing, beta testing, gentle prodding and overall general warmth and continued support of <a href=\"https://twitter.com/#!/wp_smith\">Travis Smith</a> and <a href=\"https://twitter.com/#!/webendev\">Bruce Munson</a>. Travis and Bruce ... you're awesome. Thank you."
-msgstr "Bunu okuyorsanız gerçeği yardım, hata düzeltme, beta testi, nazik dürtüsüyle ve genel olarak sıcak ve <a href=\"https://twitter.com/#!/wp_smith\">Travis Smith</a> ve <a href=\"https://twitter.com/#!/webendev\">Bruce Munson</a> sürekli desteği olmadan mümkün olmazdı. Travis ve Bruce ... size harika konum. Teşekkür ederim."
+msgid ""
+"The fact that you're reading this wouldn't have been possible without the "
+"help, bug fixing, beta testing, gentle prodding and overall general warmth "
+"and continued support of <a href=\"https://twitter.com/#!/wp_smith\">Travis "
+"Smith</a> and <a href=\"https://twitter.com/#!/webendev\">Bruce Munson</a>. "
+"Travis and Bruce ... you're awesome. Thank you."
+msgstr ""
+"Aslında bunu okuyorsanız <a href=\"https://twitter.com/#!/wp_smith\">Travis "
+"Smith</a> ve <a href=\"https://twitter.com/#!/webendev\">Bruce Munson</a>'ın "
+"yardım, hata düzeltme, beta test, nazik uyarılar, genel olarak samimiyet ve "
+"desteklerinin devamı olmasaydı bu pek mümkün olmazdı. Travis ve Bruce ... "
+"sizler harikasınız. Teşekkür ederim."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3984
 #, php-format
-msgid "WP Biographia has supported translation and internationalisation for a while now. Thanks go out to <a href=\"https://twitter.com/#!/KazancExpert\">Hakan Er</a> for the Turkish translation and to <a href=\"http://wordpress.org/support/profile/kubitomakita\">Jakub Mikita</a> for the Polish translation. If you'd like to see WP Biographia translated into your language and want to help with the process, then please drop me an <a href=\"mailto:%s\">email</a>."
-msgstr "WP Biographia bir süre için şimdi çevirisi ve uluslararasılaşma desteklemiştir. Teşekkürler Türkçe çevirisi için <a href=\"https://twitter.com/#!/KazancExpert\">Hakan Er</a> çıkmak ve Lehçe çeviri için <a href=\"http://wordpress.org/support/profile/kubitomakita\">Jakub Mikita</a> için. Eğer WP Biographia kendi dillerine çevrildi ve sürecine yardım etmek istiyorum görmek isterseniz, o zaman bana bırak lütfen bir <a href=\"mailto:%s\">e-posta</a>."
+msgid ""
+"WP Biographia has supported translation and internationalisation for a while "
+"now. Thanks go out to <a href=\"https://twitter.com/#!/KazancExpert\">Hakan "
+"Er</a> for the Turkish translation and to <a href=\"http://wordpress.org/"
+"support/profile/kubitomakita\">Jakub Mikita</a> for the Polish translation. "
+"If you'd like to see WP Biographia translated into your language and want to "
+"help with the process, then please drop me an <a href=\"mailto:%s\">email</"
+"a>."
+msgstr ""
+"WP Biographia bir süredir tercüme ve uluslararası kullanım için "
+"desteklenmektedir. Türkçe tercüme için <a href=\"https://twitter.com/#!/"
+"hakaner_\">Hakan Er</a> ve Polonya dili için <a href=\"http://wordpress.org/"
+"support/profile/kubitomakita\">Jakub Mikita</a> teşekkürlerimi sunarım. Eğer "
+"WP Biographia eklentisini kendi dilinizde görmek ve bu süreçte yardım etmek "
+"isterseniz, o zaman bana bir <a href=\"mailto:%s\">eposta</a> gönderin."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3986
-msgid "The v1.x and v2.x releases of WP Biographia were inspired and based on <a href=\"http://www.jonbishop.com\">Jon Bishop's</a> <a href=\"http://wordpress.org/extend/plugins/wp-about-author/\">WP About Author</a> plugin. WP Biographia has come a long way since v1.0, including a total rewrite in v3.0, but thanks and kudos must go to Jon for writing a well structured, working WordPress plugin released under a software license that enables other plugins such as this one to be written or derived in the first place."
-msgstr "WP Biographia ve v1.x ve v2.x bültenleri ilham ve eklenti <a href=\"http://www.jonbishop.com\">Jon Bishop</a> <a href=\"http://wordpress.org/extend/plugins/wp-about-author/\">WP About Author</a> esas alınmıştır. WP Biographia v3.0 toplam yeniden dahil v1.0 yana uzun bir yol kat etti, ama teşekkür ve övgü bunun gibi diğer eklentileri sağlayan bir yazılım lisansı altında yayımlanmıştır, iyi yapılandırılmış bir çalışma WordPress eklentisi yazmak için Jon gitmek gerekir en başta, yazılı veya türetilebilir bir."
+msgid ""
+"The v1.x and v2.x releases of WP Biographia were inspired and based on <a "
+"href=\"http://www.jonbishop.com\">Jon Bishop's</a> <a href=\"http://"
+"wordpress.org/extend/plugins/wp-about-author/\">WP About Author</a> plugin. "
+"WP Biographia has come a long way since v1.0, including a total rewrite in "
+"v3.0, but thanks and kudos must go to Jon for writing a well structured, "
+"working WordPress plugin released under a software license that enables "
+"other plugins such as this one to be written or derived in the first place."
+msgstr ""
+"WP Biographia v1.x ve v2.x sürümleri <a href=\"http://www.jonbishop.com"
+"\">Jon Bishop</a> <a href=\"http://wordpress.org/extend/plugins/wp-about-"
+"author/\">WP About Author</a> eklentisinden esinlenmiş ve temel alınmıştır. "
+"WP Biographia v1.0 sürümünden bu zamana çok yol aldı, v3.0 ile bütünüyle "
+"yeniden yazıldı, fakat teşekkür ve övgüler bu eklentide de olduğu gibi diğer "
+"eklentilerin türetildiği veya yazıldığı bir yazılım lisansı altında çok iyi "
+"yapılandırılmış ve yazılmış çalışmanın yazarı Jon'a gitmelidir."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:3990
 msgid "Acknowledgements"
@@ -1048,106 +1448,139 @@ msgstr "Teşekkürler"
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4098
 #, php-format
 msgid "Biography Box %s Options"
-msgstr "Biyografi Box %s Seçenekleri"
+msgstr "Biyografi Kutusu %s Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4130
 msgid "Hide The Biography Box On This Page"
-msgstr "Bu Sayfada Biyografi Box gizle"
+msgstr "Biyografi Kutusunu Bu Sayfada Gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4132
 msgid "Hides the Biography Box each time this page is displayed."
-msgstr "Biyografi Box bu sayfada görüntülenen her zaman gizler."
+msgstr "Sayfa her görüntülendiğinde Biyografi Kutusunu gizler."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4144
 #, php-format
 msgid "Hide The Biography Box On Single %s"
-msgstr "Tek %s üzerinde Biyografi Box gizle"
+msgstr "Tekil %s Üzerinde Biyografi Kutusunu Gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4146
 #, php-format
-msgid "Hides the Biography Box each time this %1$s is displayed using the Single %2$s Template."
-msgstr "Biyografi Box Bu %1$s Tek %2$s Şablon kullanılarak görüntülenir her zaman gizler."
+msgid ""
+"Hides the Biography Box each time this %1$s is displayed using the Single "
+"%2$s Template."
+msgstr ""
+"Tekil %2$s Şablonu kullanılarak %1$s her görüntülendiğinde Biyografi "
+"kutusunu gizler."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4161
 #, php-format
 msgid "Globally Hide The Biography Box On %s"
-msgstr "Küresel %s On Biyografi Kutusu gizle"
+msgstr "%s Üzerinde Genel Olarak Biyografi Kutusunu Gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4163
 #, php-format
-msgid "Hides the Biography Box whenever this %s is displayed; singly, on archive pages or on the front page."
-msgstr "Tek başına, arşiv sayfalarında veya ön sayfasında, bu %s her görüntülendiğinde Biyografi Kutu gizler."
+msgid ""
+"Hides the Biography Box whenever this %s is displayed; singly, on archive "
+"pages or on the front page."
+msgstr ""
+"%s gösterildiği her yerde Biyografi Kutusunu gizler; tek tek, arşiv "
+"sayfalarında ya da ön sayfada."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4174
 #, php-format
 msgid "Override Biography Text For This %s"
-msgstr "Bu, %s için Biyografi Metin Override"
+msgstr "%s İçin Biyografi Metnini Geçersiz Kıl"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4178
 #, php-format
 msgid "Override the default biography whenever this %s is displayed."
-msgstr "Bu %s her görüntülendiğinde varsayılan biyografisi geçersiz kılın."
+msgstr "%s görüntülendiği zaman varsayılan biyografiyi geçersiz kıl."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4191
 #, php-format
 msgid "%s Specific Biography Text"
-msgstr "%s Spesifik Biyografi Metin"
+msgstr "%s Özgün Biyografi Metni"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4203
 msgid "Reload Default Profile Biography"
-msgstr "Varsayılan Profil Biyografi güncelle"
+msgstr "Varsayılan Profil Biyografisini Yenile"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4208
 #, php-format
 msgid "Override Biography Title For This %s"
-msgstr "Bu, %s için Biyografi Başlığı geçersiz"
+msgstr "%s İçin Biyografi Başlığını Geçersiz Kıl"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4212
 #, php-format
-msgid "Override the default title for the Biography Box whenever this %s is displayed."
-msgstr "Bu %s her görüntülendiğinde Biyografi Box için varsayılan başlık geçersiz."
+msgid ""
+"Override the default title for the Biography Box whenever this %s is "
+"displayed."
+msgstr ""
+"%s görüntülendiği zaman Biyografi Kutusu için varsayılan başlığı geçersiz "
+"kıl."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4219
 #, php-format
 msgid "%s Specific Biography Title"
-msgstr "%s Spesifik Biyografi Başlığı"
+msgstr "%s Özgün Biyografi Başlığı"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4234
 #, php-format
 msgid "Suppress Avatar For This %s"
-msgstr "Bu, %s için Avatar bastır"
+msgstr "Bu %s İçin Avatarı Gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4237
 #, php-format
-msgid "Suppress the display of the Avatar in the Biography Box whenever this %s is displayed."
-msgstr "Bu %s her görüntülendiğinde Biyografi Box Avatar ekran bastır."
+msgid ""
+"Suppress the display of the Avatar in the Biography Box whenever this %s is "
+"displayed."
+msgstr "%s görüntülendiği zaman Biyografi Kutusunda Avatar gösterimini gizler."
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4244
 #, php-format
 msgid "Suppress Contact Links For This %s"
-msgstr "Bu, %s için Linkler İletişim bastır"
+msgstr "Bu %s İçin İletişim Bağlantılarını Gizle"
 
 #: /Users/gary/Projects/wp-biographia/wp-biographia.php:4247
 #, php-format
-msgid "Suppress the display of the contact links in the Biography Box whenever this %s is displayed."
-msgstr "Bu %s her görüntülendiğinde Biyografi Box iletişim bağlantılarının görüntülenme bastır."
+msgid ""
+"Suppress the display of the contact links in the Biography Box whenever this "
+"%s is displayed."
+msgstr ""
+"Bu %s görüntülendiği zaman Biyografi Kutusunda iletişim bağlantıları "
+"gösterimini gizler."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:56
 msgid "The Display Tab"
-msgstr "Görüntü Sekmesi"
+msgstr "Görüntüleme Sekmesi"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:57
 msgid "First Steps"
-msgstr "ilk Adımlar"
+msgstr "İlk Adımlar"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:58
 #, php-format
-msgid "Before you do anything else; go to your <a href=\"%s\">user profile</a> and ensure your name, biography and contact links are set. Then go to <a href=\"%s\">Settings / Discussion</a> and ensure <em>Show Avatars</em> is checked."
-msgstr "Başka bir şey yapmadan önce; <a href=\"%s\">kullanıcı profiline gidin</a> ve adınız, biyografi ve iletişim bağlantıları ayarlandığından emin olmak. Ardından <a href=\"%s\">Ayarlar / Tartışma gidin</a> ve <em>göster Görseller sağlamak</em> kontrol edilir."
+msgid ""
+"Before you do anything else; go to your <a href=\"%s\">user profile</a> and "
+"ensure your name, biography and contact links are set. Then go to <a href="
+"\"%s\">Settings / Discussion</a> and ensure <em>Show Avatars</em> is checked."
+msgstr ""
+"Başka bir şey yapmadan önce; <a href=\"%s\">kullanıcı profiline</a> gidin ve "
+"adınız, biyografiniz ve iletişim bağlantılarınızın ayarlandığından emin "
+"olun. Ardından <a href=\"%s\">Ayarlar / Tartışma</a> ayarlarından "
+"<em>Avatarları Göster</em> seçeneğinin işaretli olduğundan emin olun."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:60
-msgid "Here you'll find broad level settings to control how the Biography Box is displayed and where. You can configure more specific display settings in the Exclusions tab and what is actually displayed in the Biography Box in the Content tab."
-msgstr "Burada Biyografi Kutu görüntülenir ve nerede nasıl kontrol etmek için geniş düzeyde ayarlar bulacaksınız. Sen İstisnalar sekmesinde daha özel ekran ayarları yapılandırabilirsiniz ve aslında İçerik sekmesinde Biyografi Box ne görüntülenir."
+msgid ""
+"Here you'll find broad level settings to control how the Biography Box is "
+"displayed and where. You can configure more specific display settings in the "
+"Exclusions tab and what is actually displayed in the Biography Box in the "
+"Content tab."
+msgstr ""
+"Burada Biyografi Kutusunun nasıl ve nerede görüntüleneceğini kontrol "
+"edebileceğiniz geniş seçenekler bulacaksınız. Sonraki Dışlanalar sekmesinde "
+"daha özel görüntüleme ayarları ve Biyografi Kutusu içinde tam olarak neyin "
+"görüntüleneceğini de İçerik sekmesinden düzenleyebilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:61
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:71
@@ -1156,43 +1589,57 @@ msgstr "Burada Biyografi Kutu görüntülenir ve nerede nasıl kontrol etmek iç
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:95
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:102
 msgid "Next"
-msgstr "sonraki"
+msgstr "Sonraki"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:65
 msgid "The Admin Tab"
-msgstr "Yönetici Tab"
+msgstr "Yönetici Sekmesi"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:67
-msgid "Here you can configure globally whether a newly created user should have the Biography Box displayed under their posts or not. You can then control the display of the Biography Box on a per-user basis in the Exclusions tab."
-msgstr "Burada yeni oluşturulan kullanıcı Biyografi Box görevlerinden veya altında görüntülenen olması gerekmediğini küresel yapılandırabilirsiniz. Daha sonra İstisnalar sekmesinde bir kullanıcı başına bazında Biyografi Box ekran kontrol edebilirsiniz."
+msgid ""
+"Here you can configure globally whether a newly created user should have the "
+"Biography Box displayed under their posts or not. You can then control the "
+"display of the Biography Box on a per-user basis in the Exclusions tab."
+msgstr ""
+"Burada yeni bir kullanıcının Biyografi kutusunun yazıları altında gösterilip "
+"gösterilmeyeceği gibi genel ayarları bulacaksınız. Daha sonra Dışlamalar "
+"sekmesi içinde kullanıcı bazında görüntülemeyi kontrol edebilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:69
 msgid ""
-"If you want to stop the Biography Box being displayed on posts and pages according to the user's role you can do this here. An Administrator can still control the display of the Biography Box on a per-user basis in the \n"
+"If you want to stop the Biography Box being displayed on posts and pages "
+"according to the user's role you can do this here. An Administrator can "
+"still control the display of the Biography Box on a per-user basis in the \n"
 "\t\t\t\t\tExclusions tab."
 msgstr ""
-"Eğer Biyografi Box kullanıcının rolüne göre mesaj ve sayfaları üzerinde görüntülenen durdurmak istiyorsanız buradan yapabilirsiniz. Yönetici hala kullanıcı başına temelinde Biyografi Box ekran kontrol edebilirsiniz\n"
-"\t\t\t\t\tExclusions sekmesi."
+"Eğer kullanıcı yetki seviyesine göre yazı veya sayfalarda Biyografi "
+"kutusunun gösterilmesini durdurmak isterseniz buradan yapabilirsiniz. Bir "
+"Yönetici her kullanıcı için Biyografi Kutusunun görüntülenmesini \n"
+"\t\t\t\tDışlamalar sekmesinden kontrol edebilir."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:75
 msgid "The Exclusions Tab"
-msgstr "İstisnalar Sekmesi"
+msgstr "Dışlamalar Sekmesi"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:76
 msgid "Post, Page and Custom Post Type Exclusions"
-msgstr "Mesaj, Sayfa ve Özel Post Tip İstisnalar"
+msgstr "Yazı, Sayfa ve Kişisel Yazı Tipi Dışlama Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:78
 msgid "Category Exclusions"
-msgstr "Kategori Hariç Tutma"
+msgstr "Kategori Dışlama Ayarları"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:80
 msgid "User Hiding"
-msgstr "Kullanıcı gizleme"
+msgstr "Kullanıcı Gizleme"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:81
-msgid "If you want to stop the Biography Box being displayed on a single post, page or custom post type on a per-user basis, you can do this here."
-msgstr "Eğer Biyografi Box tek bir yazı, sayfa veya kullanıcı başına temelinde özel yazı gösterilmesini durdurmak isterseniz, buradan yapabilirsiniz."
+msgid ""
+"If you want to stop the Biography Box being displayed on a single post, page "
+"or custom post type on a per-user basis, you can do this here."
+msgstr ""
+"Eğer Biyografi Kutusunu tekil yazı, sayfa veya kişisel yazı türüne bağlı "
+"olarak kullanıcı bazında durdurmak isterseniz, buradan yapabilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:85
 msgid "The Style Tab"
@@ -1200,11 +1647,18 @@ msgstr "Stil Sekmesi"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:86
 msgid "Controlling The Look Of the Biography Box"
-msgstr "Biyografi Box görünüyor nasıl kontrol"
+msgstr "Biyografi Kutusunun Görünümünü Kontrol Etme"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:87
-msgid "This tab contains broad level settings to control how the Biography Box is styled; its background colour and border. If you want more specific control over how the Biography Box looks, you can do this with custom CSS."
-msgstr "Bu sekme Biyografi Box tarz nasıl kontrol etmek için geniş düzeyde ayarları içerir; arkaplan rengini ve kenarlık. Eğer Biyografi Box nasıl göründüğü üzerinde daha fazla özel kontrol istiyorsanız, özel CSS ile yapabilirsiniz."
+msgid ""
+"This tab contains broad level settings to control how the Biography Box is "
+"styled; its background colour and border. If you want more specific control "
+"over how the Biography Box looks, you can do this with custom CSS."
+msgstr ""
+"Bu sekme Biyografi Kutusu stil biçimlerini kontrol etmek için geniş düzeyde "
+"ayarlar içerir; arka plan rengi ve çerçeve. Eğer Biyografi Kutusunun nasıl "
+"görüneceği hakkında daha belirgin bir kontrol isterseniz, bunu kişisel CSS "
+"ile yapabilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:92
 msgid "The Content Tab"
@@ -1212,49 +1666,90 @@ msgstr "İçerik Sekmesi"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:93
 msgid "Controlling The Biography Box Content"
-msgstr "Biyografi Kutu İçeriği Kontrolü"
+msgstr "Biyografi Kutusu İçerik Kontrolü"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:94
-msgid "This tab contains settings that control what information is and is not displayed within the Biography Box. Here you can add your name, your avatar, your contact links, a <em>more posts</em> link and control whether links are shown as text or as icons."
-msgstr "Bu sekme bilgiler ne olduğunu ve Biyografi Kutu içinde gösterilmez kontrol ayarları içerir. Burada kullanıcı adı, avatar, iletişim bağlantılar, daha fazla mesaj <em>ekleyebilirsiniz</em> bağlantı metni veya simgeler olarak gösterilir mi bağlantı ve kontrol."
+msgid ""
+"This tab contains settings that control what information is and is not "
+"displayed within the Biography Box. Here you can add your name, your avatar, "
+"your contact links, a <em>more posts</em> link and control whether links are "
+"shown as text or as icons."
+msgstr ""
+"Bu sekme, Biyografi Kutusu içinde hangi bilgilerin gösterilip "
+"gösterilmeyeceğini kontrol edebileceğiniz ayarlar içerir. Buradan adınızı, "
+"avatarınızı, iletişim bağlantılarınızı, bir <em>diğer yazılar</em> "
+"bağlantısı ya da görüntülemek istediğiniz herhangi bir bağlantıyı metin ya "
+"da ikon olarak ekleyebilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:99
 msgid "The Defaults Tab"
-msgstr "Varsayılanları Tab"
+msgstr "Varsayılanlar Sekmesi"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:101
-msgid "Reset the plugin back to a just installed state, clearing any configuration settings you may have made. This is the equivalent to deactivating, uninstalling and reinstalling the plugin. <strong><em>Use with care</em></strong>."
-msgstr "Yaptığınız herhangi bir yapılandırma ayarlarını temizleyerek, adil yüklü durumuna geri eklenti sıfırlayın. Bu, devreden kaldırıp eklentisini yeniden kurmanızı için eşdeğerdir. <strong><em>dikkatli kullan</em></strong>."
+msgid ""
+"Reset the plugin back to a just installed state, clearing any configuration "
+"settings you may have made. This is the equivalent to deactivating, "
+"uninstalling and reinstalling the plugin. <strong><em>Use with care</em></"
+"strong>."
+msgstr ""
+"Eklentideki tüm düzenlemelerinizi temizleyerek ilk yüklendiği zamana "
+"sıfırlayın. Bu, eklentiyi etkisizleştirmek, kaldırmak ve yeniden kurmak ile "
+"eş değerdedir. <strong><em>Dikkatli kullanın</em></strong>."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:106
 msgid "The Colophon Tab"
-msgstr "Kolophon Sekmesi"
+msgstr "Yayım Sekmesi"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:107
 msgid "About WP Biographia"
-msgstr "Hakkında WP Biographia"
+msgstr "WP Biographia Hakkında"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:108
-msgid "This tab contains the details on how this plugin was written and why it's called WP Biographia. You can also find a helpful display of the plugin's configuration settings which you can use when asking for support on the <a href=\"http://wordpress.org/tags/wp-biographia?forum_id=10\">WordPress forums</a>."
-msgstr "Bu sekmede bu eklenti yazılmıştır hakkında ayrıntılı bilgi ve neden WP Biographia denir içerir.<a href=\"http://wordpress.org/tags/wp-biographia?forum_id=10\">WordPress forumlarında destek isterken de kullanabileceğiniz eklenti yapılandırma ayarlarının yararlı bir görüntü bulabilirsiniz</a>."
+msgid ""
+"This tab contains the details on how this plugin was written and why it's "
+"called WP Biographia. You can also find a helpful display of the plugin's "
+"configuration settings which you can use when asking for support on the <a "
+"href=\"http://wordpress.org/tags/wp-biographia?forum_id=10\">WordPress "
+"forums</a>."
+msgstr ""
+"Bu sekme, WP Biographia'nın nasıl yazıldığı ve ismini nereden aldığıyla "
+"ilgili detayları içerir. Ayrıca eklentinin nasıl görüntüleneceği ile ilgili "
+"kullanabileceğiniz konfigürasyon ayarlarını <a href=\"http://wordpress.org/"
+"tags/wp-biographia?forum_id=10\">WordPress yardım forumunda</a> "
+"sorabilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:109
-msgid "This is the end of the tour. To see this again you can click on the \"<em>restart the plugin tour</em>\" link, found on the <em>Help &amp; Support</em> side box on any of the plugin's admin tabs."
-msgstr "Bu turun sonu. Bunu bir daha görmek için üzerine tıklayabilirsiniz \"<em>eklenti tur yeniden</em>\" <em>Yardım ve Destek bulunan link</em> eklentisi yoneticisinin sekmelerden herhangi bir yan kutusu."
+msgid ""
+"This is the end of the tour. To see this again you can click on the "
+"\"<em>restart the plugin tour</em>\" link, found on the <em>Help &amp; "
+"Support</em> side box on any of the plugin's admin tabs."
+msgstr ""
+"Turun sonu. Bunu bir daha görmek için eklentinin yönetici sekmeleri yan "
+"menüsündeki <em>Yardım &amp; Destek</em> içindeki \"<em>eklenti turunu "
+"yeniden başlat</em>\" bağlantısına tıklayabilirsiniz."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:139
 #, php-format
 msgid "What's New In WP Biographia %s?"
-msgstr "Ne WP Biographia %s Yeni?"
+msgstr "WP Biographia %s Yenilikleri Neler?"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:151
 #, php-format
-msgid "Something seems to be wrong with your WP Biographia installation; the file %s could not be found"
-msgstr "Bir şey WP Biographia yükleme ile yanlış gibi görünüyor;% s dosyası bulunamadı"
+msgid ""
+"Something seems to be wrong with your WP Biographia installation; the file "
+"%s could not be found"
+msgstr ""
+"WP Biographia kurulumunuz ile ilgili bir şeyler yanlış görünüyor; %s dosyası "
+"bulunamadı"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:154
-msgid "Want to know more? Look in the plugin's <code>readme.txt</code> or just click the <em>Find Out More</em> button below."
-msgstr "Daha fazla bilgi edinmek ister misiniz? Eklentinin <code>readme.txt</code> bakın ya da yalnızca <em>altında fazla</em> düğmesine Bul'u tıklatın."
+msgid ""
+"Want to know more? Look in the plugin's <code>readme.txt</code> or just "
+"click the <em>Find Out More</em> button below."
+msgstr ""
+"Daha fazla bilgi edinmek ister misiniz? Eklenti <code>readme.txt</code> "
+"dosyasına bakın veya sadece alttaki <em>Daha Fazla Bilgi</em> butonuna "
+"tıklayın."
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:160
 msgid "Find Out More"
@@ -1262,31 +1757,31 @@ msgstr "Daha Fazla Bilgi"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-pointers.php:184
 msgid "Close"
-msgstr "yakın"
+msgstr "Kapat"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:19
 msgid "Show Name As First/Last Name"
-msgstr "Son / Ad As Ad göster"
+msgstr "İsmi İlk/Soy İsim Olarak Göster"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:23
 msgid "Show Name As Account Name"
-msgstr "Hesap Adı gibi İsim göster"
+msgstr "İsmi Hesap Adı Olarak Göster"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:27
 msgid "Show Name As Nickname"
-msgstr "Kullanıcı adı olarak Adı göster"
+msgstr "İsmi Kullanıcı adı Olarak Göster"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:31
 msgid "Show Name As Display Name"
-msgstr "Görüntü Adı gibi Ad göster"
+msgstr "İsmi Görüntü Adı Olarak Göster"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:35
 msgid "Don't Show Name"
-msgstr "Adı Göster etmeyin"
+msgstr "İsim Gösterme"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:40
 msgid "Add the Biography Box to your sidebar"
-msgstr "Kenar çubuğunuza Biyografi Kutusu Ekle"
+msgstr "Kenar çubuğuna Biyografi Kutusu ekle"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:57
 msgid "Written By"
@@ -1294,43 +1789,43 @@ msgstr "Yazan"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:58
 msgid "Contributors"
-msgstr "Katkıda"
+msgstr "Katkıda Bulunanlar"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:75
 msgid "Show Widget Title"
-msgstr "Widget Başlığı göster"
+msgstr "Bileşen Başlığını Göster"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:80
 msgid "Single User Title:"
-msgstr "Tek Kullanıcı Adı:"
+msgstr "Tekil Kullanıcı Başlığı:"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:88
 msgid "Multiple User Title:"
-msgstr "Çoklu Kullanıcı Adı:"
+msgstr "Çoklu Kullanıcı Başlığı:"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:96
 msgid "Name Prefix:"
-msgstr "Adı Önek:"
+msgstr "İsim Öneki:"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:131
 msgid "Show User's Avatar"
-msgstr "Kullanıcı avatarı göster"
+msgstr "Kullanıcı Avatarını Göster"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:136
 msgid "User's Avatar Size:"
-msgstr "Kullanıcı avatarı Boyutu:"
+msgstr "Kullanıcı Avatar Boyutu:"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:155
 msgid "Use User's Short Biography"
-msgstr "Kullanıcı Kısa Özgeçmiş kullanın"
+msgstr "Kullanıcı Kısa Biyografisini Kullan"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:163
 msgid "Wrap Biography Around Avatar"
-msgstr "Avatar Çevresi Wrap Biyografi"
+msgstr "Biyografiyi Avatar Çevresinde Sar"
 
 #: /Users/gary/Projects/wp-biographia/includes/wp-biographia-widget.php:171
 msgid "Show \"About\" Link In User's Name"
-msgstr "Kullanıcı Adı göster \"Hakkında\" Bağlantı"
+msgstr "Kullanıcı Adında \"Hakkında\" Bağlantısı Göster"
 
 #, fuzzy
 #~ msgid ""
