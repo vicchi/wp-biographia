@@ -1968,33 +1968,32 @@ if (!class_exists ('WP_Biographia')) {
 				}	// end-foreach;
 			}
 
-			
-			$bio_excerpt = get_user_meta ($user->ID, 'wp_biographia_short_bio', true);
-			if (!isset ($bio_excerpt) || empty ($bio_excerpt)) {
-				$description = get_user_meta ($user->ID, 'description', true);
-				if (isset ($description) && !empty ($description)) {
-					$bio_excerpt = $description;
-				}
-				else {
-					$bio_excerpt = '';
-				}
-			}
-
-			$content[] = '<h3>' . __('Biography Options', 'wp-biographia') . '</h3>';
-			$content[] = '<table class="form-table">';
-			$content[] = '<tbody>';
-		
-			$content[] = '<tr>';
-			$content[] = '<th>';
-			$content[] = '<label for="wp_biographia_short_bio">' . __('Biographical Excerpt', 'wp-biographia') . '</label>';
-			$content[] = '</th>';
-			$content[] = '<td>';
-			$content[] = '<textarea name="wp_biographia_short_bio" id="description" rows="5" cols="30">' . $bio_excerpt . '</textarea><br>';
-			$content[] = '<span class="description">' . __('Share an excerpt of your biography which can be used by the WP Biographia shortcode, template tags, sidebar widget and configured to be used in place of the standard biography for differing template types.', 'wp-biographia') . '</span>';
-			$content[] = '</td>';
-			$content[] = '</tr>';
-		
 			if (!$hide_suppress_settings) {
+				$bio_excerpt = get_user_meta ($user->ID, 'wp_biographia_short_bio', true);
+				if (!isset ($bio_excerpt) || empty ($bio_excerpt)) {
+					$description = get_user_meta ($user->ID, 'description', true);
+					if (isset ($description) && !empty ($description)) {
+						$bio_excerpt = $description;
+					}
+					else {
+						$bio_excerpt = '';
+					}
+				}
+
+				$content[] = '<h3>' . __('Biography Options', 'wp-biographia') . '</h3>';
+				$content[] = '<table class="form-table">';
+				$content[] = '<tbody>';
+		
+				$content[] = '<tr>';
+				$content[] = '<th>';
+				$content[] = '<label for="wp_biographia_short_bio">' . __('Biographical Excerpt', 'wp-biographia') . '</label>';
+				$content[] = '</th>';
+				$content[] = '<td>';
+				$content[] = '<textarea name="wp_biographia_short_bio" id="description" rows="5" cols="30">' . $bio_excerpt . '</textarea><br>';
+				$content[] = '<span class="description">' . __('Share an excerpt of your biography which can be used by the WP Biographia shortcode, template tags, sidebar widget and configured to be used in place of the standard biography for differing template types.', 'wp-biographia') . '</span>';
+				$content[] = '</td>';
+				$content[] = '</tr>';
+		
 				$content[] = '<tr>';
 				$content[] = '<th>';
 				$content[] = '<label for="wp_biographia_suppress_posts">' . __('Hide The Biography Box On Posts', 'wp-biographia') . '</label>';
