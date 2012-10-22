@@ -237,6 +237,7 @@ The current version is 3.3.0 (2012.10.18)
 * Added: The display of the Biography Box can now be locked to the main WordPress Loop to prevent it being displayed in the sidebar or when `the_content` or `the_excerpt` are used as part of themes or other plugins.
 * Added: The colour of the Biography Box border can now be selected from the plugin's *Style* tab.
 * Added: `wp_biographia_link_item` filter; allow the constituent elements of each contact link to be overriden.
+* Added: The visibility of all user profile Biography Options (biography excerpt, hide on posts, hide on pages) are now controlled by the Admin User Profile Settings.
 * Fixed: The dismissed pointers flag is now removed for each user when the plugin is uninstalled.
 * Fixed: The Biography Box is now styled correctly when no avatar image is present.
 * Fixed: Shortcode and template tag roles are now validated against `$wp_roles` and not against a hard-coded roles list.
