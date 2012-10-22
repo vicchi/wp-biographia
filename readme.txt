@@ -220,10 +220,10 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 3.3.0 (2012.10.18)
+The current version is 3.3.0 (2012.10.25)
 
 = 3.3 =
-* Released 2012.10.18
+* Released 2012.10.25
 * Added: `wp_biographia_content_title` filter; allow the Biography Boxes's title to be changed.
 * Added: Support for sites using the Simple Local Avatars plugin. If installed/active use the `simple_local_avatars` filter to fixup the avatar's CSS; hook into both `simple_local_avatars` and `get_avatars` to support site with mixed Gravatars and locally hosted avatars.
 * Added: Support for the shortcode's `order` attribute; allow custom sort orders when in wildcard mode.
