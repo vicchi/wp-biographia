@@ -143,6 +143,10 @@ if (!class_exists ('WP_Biographia')) {
 			$this->excerpt_autop = new WP_BiographiaFilterPriority;
 		}
 	
+		/**
+		 * Class singleton factory helper
+		 */
+		
 		public static function get_instance () {
 			if (!isset (self::$instance)) {
 				$c = __CLASS__;
@@ -1160,6 +1164,11 @@ if (!class_exists ('WP_Biographia')) {
 			return apply_filters ('wp_biographia_shortcode', implode ('', $content), $params);
 		}
 	
+		/**
+		 * Biography Box marshalling helper; called by the shortcode and template tags
+		 * handlers.
+		 */
+		
 		function biography_box ($mode='raw', $user=NULL, $prefix=NULL, $name=NULL, $role=NULL, $type='full', $order='account-name') {
 			$this->override = array ();
 			$content = array ();
@@ -1491,7 +1500,6 @@ if (!class_exists ('WP_Biographia')) {
 			if (!empty ($settings['wp_biographia_content_bio']) || ($post_override && $post_bio_override)) {
 				$content[] = "<p>" . $author['bio'] . "</p>";
 			}
-
 
 			if (!$post_override || !$post_suppress_links) {
 				// If this Biography Box is for a feed, override/ignore the "display links as icons"
@@ -1873,7 +1881,11 @@ if (!class_exists ('WP_Biographia')) {
 			}
 		}
 
-
+		/**
+		 * "admin_notices" action hook; called to display a message near the top of admin
+		 * pages.
+		 */
+		
 		function admin_notices () {
 			global $pagenow;
 			global $current_user;
@@ -1921,6 +1933,11 @@ if (!class_exists ('WP_Biographia')) {
 			}
 		}
 
+		/**
+		 * Called from the "admin_notice" action hook handler; formats a message if one
+		 * of the contact links URLs is incorrect/invalid.
+		 */
+		
 		function admin_create_notice ($contacts, $user_id) {
 			$user = get_userdata ($user_id);
 			$notices = array ();
@@ -1933,6 +1950,11 @@ if (!class_exists ('WP_Biographia')) {
 			return $notices;
 		}
 
+		/**
+		 * Called from the "admin_notice" action hook handler; validates each contact link
+		 * URL.
+		 */
+		
 		function admin_validate_contacts ($user_id) {
 			$invalid = array ();
 			foreach ($this->defaults () as $key => $data) {
@@ -4360,6 +4382,10 @@ if (!class_exists ('WP_Biographia')) {
 			$this->admin_update_post_meta ($post_id, $field, $key);
 		}
 	
+		/**
+		 * Adds/updates a key/value pair to a post's metadata.
+		 */
+
 		function admin_update_post_meta ($post_id, $field, $key) {
 			$new_value = $this->admin_option ($field);
 			$meta_value = get_post_meta ($post_id, $key, true);
@@ -4468,6 +4494,10 @@ if (!class_exists ('WP_Biographia')) {
 			$this->set_option ($option, $optval);
 		}
 	
+		/**
+		 * Helper function to clear the plugin's tour pointer.
+		 */
+		
 		function admin_clear_pointer () {
 			$user_id = get_current_user_id ();
 			$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
@@ -4478,12 +4508,20 @@ if (!class_exists ('WP_Biographia')) {
 			}
 		}
 	
+		/**
+		 * Helper function to get the status of the plugin's tour pointer.
+		 */
+		
 		function admin_is_pointer_set () {
 			$user_id = get_current_user_id ();
 			$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
 			return in_array ('wp_biographia_pointer', $dismissed);
 		}
 	
+		/**
+		 * Helper function to get the plugin's Admin URL.
+		 */
+		
 		function admin_get_options_url ($tab=NULL) {
 			$url = array ();
 			$url[] = admin_url ('options-general.php');
