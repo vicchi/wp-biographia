@@ -23,6 +23,7 @@ if (defined('WP_UNINSTALL_PLUGIN')) {
 		delete_user_meta ($user->ID, 'vimeo');
 		delete_user_meta ($user->ID, 'youtube');
 		delete_user_meta ($user->ID, 'reddit');
+		delete_user_meta ($user->ID, 'wp_biographia_short_bio');
 		
 		// Remove the 'dismissed pointers' flag for each user
 		$dismissed = explode (',', get_user_meta ($user->ID, 'dismissed_wp_pointers', true));
