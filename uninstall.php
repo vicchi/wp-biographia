@@ -30,7 +30,7 @@ if (defined('WP_UNINSTALL_PLUGIN')) {
 		$key = array_search ('wp_biographia_pointer', $dismissed);
 		if ($key !== false) {
 			unset ($dismissed[$key]);
-			update_user_meta ($user_id, 'dismissed_wp_pointers', implode (',', $dismissed));
+			update_user_meta ($user->ID, 'dismissed_wp_pointers', implode (',', $dismissed));
 		}
 	}
 }
