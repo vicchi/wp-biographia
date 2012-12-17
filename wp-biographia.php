@@ -3,7 +3,7 @@
 Plugin Name: WP Biographia
 Plugin URI: http://www.vicchi.org/codeage/wp-biographia/
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page and much more.
-Version: 3.3.0
+Version: 3.3.1
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
@@ -780,7 +780,7 @@ if (!class_exists ('WP_Biographia')) {
 		 */
 
 		function style () {
-			if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
+			if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
 				$css_url = 'css/wp-biographia.css';
 			}
 			
@@ -1781,7 +1781,7 @@ if (!class_exists ('WP_Biographia')) {
 				wp_enqueue_script ('postbox');
 				wp_enqueue_script ('dashboard');
 				wp_enqueue_script ('farbtastic');
-				if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
+				if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
 					$js_url = 'js/wp-biographia-admin.js';
 				}
 				
@@ -1796,7 +1796,7 @@ if (!class_exists ('WP_Biographia')) {
 				if (isset ($post_override) && !empty ($post_override) && $post_override == 'on') {
 					// Only enqueue the admin edit JS if post overrides are enabled
 
-					if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
+					if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
 						$js_url = 'js/wp-biographia-edit.js';
 					}
 
@@ -1823,7 +1823,7 @@ if (!class_exists ('WP_Biographia')) {
 				wp_enqueue_style ('global');
 				wp_enqueue_style ('wp-admin');
 				wp_enqueue_style ('farbtastic');
-				if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
+				if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
 					$css_url = 'css/wp-biographia-admin.css';
 				}
 				
@@ -1838,7 +1838,7 @@ if (!class_exists ('WP_Biographia')) {
 				if (isset ($post_override) && !empty ($post_override) && $post_override == 'on') {
 					// Only enqueue the admin edit JS if post overrides are enabled
 			
-					if (WP_DEBUG || WPBIOGRAPHIA_DEBUG) {
+					if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
 						$css_url = 'css/wp-biographia-edit.css';
 					}
 
