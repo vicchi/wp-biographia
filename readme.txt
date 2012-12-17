@@ -3,8 +3,8 @@ Contributors: vicchi, wpsmith
 Donate link: http://www.vicchi.org/codeage/donate/
 Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, user, about author, user box, author box, contributors, author biography, user biography, avatar, gravatar, guest post, guest author
 Requires at least: 3.4
-Tested up to: 3.4.2
-Stable tag: 3.3.0
+Tested up to: 3.5.0
+Stable tag: 3.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -220,7 +220,12 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 3.3.0 (2012.10.25)
+The current version is 3.3.1 (2012.12.18)
+
+= 3.3.1 =
+* Released 2012.12.18
+* Fixed: Ensure the non-minified versions of the plugin's CSS and JS files are enqueued if `WP_DEBUG` or `WPBIOGRAPHIA_DEBUG` are defined and set to `true`.
+* Other: Updated and tested to ensure compatibility with WordPress v3.5 "Elvin Jones".
 
 = 3.3 =
 * Released 2012.10.25
@@ -381,6 +386,9 @@ The current version is 3.3.0 (2012.10.25)
 * First version of WP Biographia released
 
 == Upgrade Notice ==
+
+= 3.3.1 =
+This version ensures the minified versions of the plugin's CSS/JS files are loaded if in a production environment and supports WordPress v3.5.
 
 = 3.3 =
 This version fixes 5 bugs and adds 13 new features including new filters, template tags and per post overrides to support guest authors.
