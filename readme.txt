@@ -4,7 +4,7 @@ Donate link: http://www.vicchi.org/codeage/donate/
 Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, user, about author, user box, author box, contributors, author biography, user biography, avatar, gravatar, guest post, guest author
 Requires at least: 3.4
 Tested up to: 3.5.0
-Stable tag: 3.3.1
+Stable tag: 3.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
