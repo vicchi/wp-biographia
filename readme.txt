@@ -586,7 +586,7 @@ Applied to the default set of contact links that are added to the Biography Box 
 
 *Example:* Add Pinterest as a supported contact link in the Biography Box
 
-`add_filter ('wp_biographia_link_items', 'add_pinterest_link', 2);
+`add_filter ('wp_biographia_link_items', 'add_pinterest_link', 10, 2);
 
 function add_pinterest_link ($links, $icon_dir_url) {
 	// links = array (field => array (link_title => title, link_text => text, link_icon => URL)
