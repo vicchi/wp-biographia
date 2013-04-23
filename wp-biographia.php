@@ -3,7 +3,7 @@
 Plugin Name: WP Biographia
 Plugin URI: http://www.vicchi.org/codeage/wp-biographia/
 Description: Add and display a customizable author biography for individual posts, in RSS feeds, on pages, in archives and on each entry on the landing page and much more.
-Version: 3.3.1
+Version: 3.3.2
 Author: Gary Gale & Travis Smith
 Author URI: http://www.garygale.com/
 License: GPL2
@@ -105,8 +105,8 @@ if (!class_exists ('WP_Biographia')) {
 		private $is_sla_plugin_active = false;
 	
 		const OPTIONS = 'wp_biographia_settings';
-		const VERSION = '330';
-		const DISPLAY_VERSION = 'v3.3.0';
+		const VERSION = '332';
+		const DISPLAY_VERSION = 'v3.3.2';
 		const PRIORITY = 10;
 		const META_NONCE = 'wp-biographia-meta-nonce';
 		const DISPLAY_STUB = 'display';
@@ -198,20 +198,29 @@ if (!class_exists ('WP_Biographia')) {
 			}
 			else {
 				$hook_to_loop = false;
+				$display_type = null;
 
-				$this->hook ('the_content', 'insert', intval ($content_priority));
-				if ($content_priority < self::PRIORITY) {
-					if (isset ($settings['wp_biographia_sync_content_wpautop']) &&
+				if (isset ($settings['wp_biographia_display_type']) && !empty ($settings['wp_biographia_display_type'])) {
+					$display_type = $settings['wp_biographia_display_type'];
+				}
+				
+				if ($display_type === 'content' || $display_type === 'both') {
+					$this->hook ('the_content', 'insert', intval ($content_priority));
+					if ($content_priority < self::PRIORITY) {
+						if (isset ($settings['wp_biographia_sync_content_wpautop']) &&
 								($settings['wp_biographia_sync_content_wpautop'] == 'on')) {
-						$hook_to_loop = true;
+							$hook_to_loop = true;
+						}
 					}
 				}
 
-				$this->hook ('the_excerpt', 'insert', intval($excerpt_priority));
-				if ($excerpt_priority < self::PRIORITY) {
-					if (isset ($settings['wp_biographia_sync_excerpt_wpautop']) &&
+				if ($display_type === 'excerpt' || $display_type === 'both') {
+					$this->hook ('the_excerpt', 'insert', intval($excerpt_priority));
+					if ($excerpt_priority < self::PRIORITY) {
+						if (isset ($settings['wp_biographia_sync_excerpt_wpautop']) &&
 								($settings['wp_biographia_sync_excerpt_wpautop'] == 'on')) {
-						$hook_to_loop = true;
+							$hook_to_loop = true;
+						}
 					}
 				}
 
@@ -481,7 +490,8 @@ if (!class_exists ('WP_Biographia')) {
 						'wp_biographia_display_bio_pages' => 'full',
 						'wp_biographia_display_bio_feed' => 'full',
 						'wp_biographia_admin_lock_to_loop' => '',
-						'wp_biographia_style_border_color' => '#000000'
+						'wp_biographia_style_border_color' => '#000000',
+						'wp_biographia_display_type' => 'both'
 					) 
 				);
 				update_option (self::OPTIONS, $settings);
@@ -1255,7 +1265,7 @@ if (!class_exists ('WP_Biographia')) {
 						
 						$defined_roles = $wp_roles->get_names ();
 						$valid_role = false;
-						$role = strtolower ($role);
+						//$role = strtolower ($role);
 						
 						$supplied_roles = explode (',', $role);
 						foreach ($supplied_roles as $current_role) {
@@ -2319,6 +2329,11 @@ if (!class_exists ('WP_Biographia')) {
 				 *		wp_biographia_display_bio_feed = "full"
 				 *		wp_biographia_admin_lock_to_loop = ""
 				 *		wp_biographia_style_border_color = "#000000"
+				 *
+				 * v3.3.2 changed configuration settings ...
+				 *		wp_biographia_version = "332"
+				 * v3.3.2 added configuration settings ...
+				 *		wp_biographia_display_type = 'both'
 				 */
 
 				switch ($current_plugin_version) {
@@ -2468,6 +2483,10 @@ if (!class_exists ('WP_Biographia')) {
 						$this->admin_upgrade_option ($settings, 'display_bio_feed', 'full');
 						$this->admin_upgrade_option ($settings, 'admin_lock_to_loop', '');
 						$this->admin_upgrade_option ($settings, 'style_border_color', '#000000');
+
+					case '332':
+						$this->admin_upgrade_option ($settings, 'display_type', 'both');
+					
 						$settings['wp_biographia_version'] = self::VERSION;
 						$upgrade_settings = true;
 
@@ -3410,7 +3429,7 @@ if (!class_exists ('WP_Biographia')) {
 						isset($settings['wp_biographia_display_location'])) ?
 						$settings['wp_biographia_display_location'] : 'bottom';
 
-				// Add Display Location: Top/Bottom
+					// Add Display Location: Top/Bottom
 					$display_settings[] = '<p><strong>' . __("Display Location", 'wp-biographia') . '</strong><br />
 					<input type="radio" name="wp_biographia_display_location" id="wp-biographia-content-name" value="top" '
 					. checked ($settings['wp_biographia_display_location'], 'top', false)
@@ -3418,8 +3437,19 @@ if (!class_exists ('WP_Biographia')) {
 					<input type="radio" name="wp_biographia_display_location" id="wp-biographia-content-name" value="bottom" '
 					. checked ($settings['wp_biographia_display_location'], 'bottom', false)
 					. ' />&nbsp;<small>' . __('Display the Biography Box after the post or page content', 'wp-biographia') . '</small><br />';
+					
+					$display_settings[] = '<p><strong>' . __('Display Type', 'wp_biographia') . '</strong><br />
+					<input type="radio" name="wp_biographia_display_type" id="wp-biographia-display-type" value="content" '
+					. checked ($settings['wp_biographia_display_type'], 'content', false)
+					. ' />&nbsp;<small>' . __('Display the Biography Box only on the post or page content', 'wp-biographia') . '</small><br />
+					<input type="radio" name="wp_biographia_display_type" id="wp-biographia-display-type" value="excerpt" '
+					. checked ($settings['wp_biographia_display_type'], 'excerpt', false)
+					. ' />&nbsp;<small>' . __('Display the Biography Box only on the post or page excerpt', 'wp-biographia') . '</small><br />
+					<input type="radio" name="wp_biographia_display_type" id="wp-biographia-display-type" value="both" '
+					. checked ($settings['wp_biographia_display_type'], 'both', false)
+					. ' />&nbsp;<small>' . __('Display the Biography Box on both the post or page content and excerpt', 'wp-biographia') . '</small><br />';
 
-					/****************************************************************************
+					/*************************************************************************
 				 	 * End of Display tab content
 				 	 */
 					break;
@@ -3825,6 +3855,8 @@ if (!class_exists ('WP_Biographia')) {
 
 							$settings['wp_biographia_display_location'] =
 								$this->admin_option ('wp_biographia_display_location');
+							$settings['wp_biographia_display_type'] = 
+								$this->admin_option ('wp_biographia_display_type');
 							break;
 
 						case 'colophon':
