@@ -396,10 +396,10 @@ if (!class_exists ('WP_Biographia')) {
 			foreach ($this->defaults () as $key => $data) {
 				if (isset ($data['contactmethod']) && !empty ($data['contactmethod'])) {
 					if (isset ($links[$key]) && $links[$key] == 'on') {
-						$contactmethods[$key] = $data['contactmethod'];
+						$contactmethods[$data['field']] = $data['contactmethod'];
 					}
 					else {
-						unset ($contactmethods[$key]);
+						unset ($contactmethods[$data['field']]);
 					}
 				}
 			}	// end-foreach (...)
@@ -580,52 +580,52 @@ if (!class_exists ('WP_Biographia')) {
 			$contacts = array (
 				//option name => array (field => custom field , contactmethod => field name)
 				'twitter' => array (
-					'field' => 'twitter',
+					'field' => 'wpb_twitter',
 					'contactmethod' => __('Twitter', 'wp-biographia'),
 					'url' => 'http://twitter.com/%s'
 				),
 				'facebook' => array (
-					'field' => 'facebook',
+					'field' => 'wpb_facebook',
 					'contactmethod' => __('Facebook', 'wp-biographia'),
 					'url' => 'http://www.facebook.com/%s'
 				),
 				'linkedin' => array (
-					'field' => 'linkedin',
+					'field' => 'wpb_linkedin',
 					'contactmethod' => __('LinkedIn', 'wp-biographia'),
 					'url' => 'http://www.linkedin.com/in/%s'
 				),
 				'googleplus' => array (
-					'field' => 'googleplus',
+					'field' => 'wpb_googleplus',
 					'contactmethod' => __('Google+', 'wp-biographia'),
 					'url' => 'http://plus.google.com/%s'
 				),
 				'delicious' => array (
-					'field' => 'delicious',
+					'field' => 'wpb_delicious',
 					'contactmethod' => __('Delicious', 'wp-biographia'),
 					'url' => 'http://www.delicious.com/%s'
 				),
 				'flickr' => array (
-					'field' => 'flickr',
+					'field' => 'wpb_flickr',
 					'contactmethod' => __('Flickr', 'wp-biographia'),
 					'url' => 'http://www.flickr.com/photos/%s'
 				),
 				'picasa' => array (
-					'field' => 'picasa',
+					'field' => 'wpb_picasa',
 					'contactmethod' => __('Picasa', 'wp-biographia'),
 					'url' => 'http://picasaweb.google.com/%s'
 				),
 				'vimeo' => array (
-					'field' => 'vimeo',
+					'field' => 'wpb_vimeo',
 					'contactmethod' => __('Vimeo', 'wp-biographia'),
 					'url' => 'http://vimeo.com/%s'
 				),
 				'youtube' => array (
-					'field' => 'youtube',
+					'field' => 'wpb_youtube',
 					'contactmethod' => __('YouTube', 'wp-biographia'),
 					'url' => 'http://www.youtube.com/user/%s'
 				),
 				'reddit' => array (
-					'field' => 'reddit',
+					'field' => 'wpb_reddit',
 					'contactmethod' => __('Reddit', 'wp-biographia'),
 					'url' => 'http://www.reddit.com/user/%s'
 				),
@@ -2484,9 +2484,30 @@ if (!class_exists ('WP_Biographia')) {
 						$this->admin_upgrade_option ($settings, 'admin_lock_to_loop', '');
 						$this->admin_upgrade_option ($settings, 'style_border_color', '#000000');
 
+					case '331':
 					case '332':
 						$this->admin_upgrade_option ($settings, 'display_type', 'both');
-					
+
+						$fields = array(0 => 'ID');
+						$search = new WP_User_Query(array('fields' => $fields));
+						$users = $search->get_results();
+						$info = $this->supported_contact_info();
+						foreach ($users as $user) {
+							$meta = get_user_meta($user->ID);
+							
+							foreach ($info as $key => $fields) {
+								$method = $fields['field'];
+								$pos = strpos($method, 'wpb_');
+								if ($pos === 0) {
+									$old_method = substr($method, $pos + strlen('wpb_'));
+									$old_value = $meta[$old_method];
+									if (delete_user_meta($user->ID, $old_method)) {
+										add_user_meta($user->ID, $method, $old_value[0], true);
+									}
+								}
+							}
+						}
+
 						$settings['wp_biographia_version'] = self::VERSION;
 						$upgrade_settings = true;
 
