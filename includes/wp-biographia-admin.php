@@ -57,17 +57,14 @@ if (!class_exists('WP_BiographiaAdmin')) {
 		 */
 
 		function admin_menu () {
-			error_log('admin_menu++');
 			if (function_exists ('add_options_page')) {
 				$page_title = __('WP Biographia', 'wp-biographia');
 				$menu_title = __('WP Biographia', 'wp-biographia');
 				$capability = 'manage_options';
 				$menu_slug = __FILE__;
-				error_log('adding options page');
 				add_options_page ($page_title, $menu_title, $capability, $menu_slug,
 					array ($this, 'admin_display_settings'));
 			}
-			error_log('admin_menu--');
 		}
 
 		/**
@@ -668,7 +665,7 @@ if (!class_exists('WP_BiographiaAdmin')) {
 						$this->admin_upgrade_option ($settings, 'display_location', 'bottom');
 
 					case '20':
-						$users = $this->get_users ();
+						$users = WP_Biographia::get_users ();
 						foreach ($users as $user) {
 							if (!get_user_meta ($user->ID,
 									'wp_biographia_suppress_posts',
@@ -820,7 +817,6 @@ if (!class_exists('WP_BiographiaAdmin')) {
 		 */
 
 		function admin_display_settings () {
-			error_log('admin_display_settings++');
 			$settings = $this->admin_save_settings ();
 
 			$wrapped_content = array ();
@@ -1070,7 +1066,7 @@ if (!class_exists('WP_BiographiaAdmin')) {
 
 					$suppression_settings[] = '<p><em>' . __('If you want to stop the Biography Box being displayed on a single post or custom post type on a per-user basis, you can do this here.', 'wp-biographia') . '</em></p>';
 
-					$users = $this->get_users ();
+					$users = WP_Biographia::get_users ();
 
 					$post_enabled = array ();
 					$post_suppressed = array ();
@@ -1153,7 +1149,7 @@ if (!class_exists('WP_BiographiaAdmin')) {
 
 					$category_settings[] = '<p><em>' . __('If you want to stop the Biography Box being displayed on a single post or custom post type by Category, you can do this here.', 'wp-biographia') . '</em></p>';
 
-					$categories = $this->get_categories ();
+					$categories = WP_Biographia::get_categories ();
 
 					$categories_enabled = array ();
 					$categories_excluded = array ();
@@ -1427,7 +1423,7 @@ if (!class_exists('WP_BiographiaAdmin')) {
 					$config_settings[] = print_r ($settings, true);
 					$config_settings[] = '</pre>';
 
-					$users = $this->get_users ();
+					$users = WP_Biographia::get_users ();
 					$debug_users = array ();
 
 					foreach ($users as $user) {
@@ -1856,8 +1852,6 @@ if (!class_exists('WP_BiographiaAdmin')) {
 				sprintf (__('WP Biographia %s - Settings And Options',
 					'wp-biographia'), WP_Biographia::DISPLAY_VERSION),
 				implode ('', $wrapped_content));
-
-			error_log('admin_display_settings--');
 		}
 
 		/**
@@ -1892,7 +1886,6 @@ if (!class_exists('WP_BiographiaAdmin')) {
 		 */
 
 		function admin_save_settings () {
-			error_log('admin_save_settings++');
 			$settings = WP_Biographia::get_option ();
 
 			if (!empty ($_POST['wp_biographia_option_submitted'])) {
@@ -2198,8 +2191,6 @@ if (!class_exists('WP_BiographiaAdmin')) {
 			}
 
 			$settings = WP_Biographia::get_option ();
-
-			error_log('admin_save_settings--');
 			return $settings;
 		}
 
