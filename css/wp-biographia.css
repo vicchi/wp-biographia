@@ -1,4 +1,4 @@
-@charset "utf-8";
+@charset "UTF-8";
 /* CSS Document */
 
 .wp-biographia-container h3, .wp-biographia-container p {
@@ -46,6 +46,10 @@
 .wp-biographia-pic img {
 }
 
+.wp-biographia-pic-hidden {
+	display: none;
+}
+
 .wp-biographia-avatar {
 }
 
@@ -59,11 +63,49 @@
 	margin: 0 0 0 0;
 }
 
-ul.wp-biographia-list {
-	margin: 0 0 0 0;
+.wp-biographia-links-hidden {
+	display: none;
 }
 
-ul.wp-biographia-list-text li, ul.wp-biographia-list-icon li {
+.wp-biographia-list-hidden {
+	display: none;
+}
+
+/*ul.wp-biographia-list {
+	margin: 0 0 0 0;
+}*/
+
+.wp-biographia-links {
+	font-size: 80%;
+	padding-top: 10px;
+}
+
+.wp-biographia-list, .wp-biographia-list li {
+	margin: 0 0 0 0 !important;
+	padding: 0 0 0 0 !important;
+}
+
+.wp-biographia-list li {
+	display: inline-block;
+	list-style-type: none;
+}
+
+.wp-biographia-list-text li+li:before {
+	content: "| ";
+}	
+
+.wp-biographia-list-text a:link, .wp-biographia-list-text a:visited,
+.wp-biographia-list-icon a:link, .wp-biographia-list-icon a:visited  {
+	text-decoration: none;
+}
+
+.wp-biographia-item-icon {
+	height: 32px !important;
+	width: 32px !important;
+	box-shadow: none !important;
+}
+
+/*ul.wp-biographia-list-text li, ul.wp-biographia-list-icon li {
 	display: inline-block;
 	list-style-type: none;
 	background: none;
@@ -81,12 +123,8 @@ ul.wp-biographia-list-icon li {
 .wp-biographia-list-icon a:link, .wp-biographia-list-icon a:visited {
         text-decoration: none;
         border-bottom: none;
-}
+}*/
 
-.wp-biographia-item-icon {
-	height: 32px !important;
-	width: 32px !important;
-}
 
 .idevice .wp-biographia-container-top,
 .idevice .wp-biographia-container-around,
