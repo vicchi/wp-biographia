@@ -291,7 +291,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * omitted, an array containing all settings/options will be returned.
 		 */
 	
-		function get_option () {
+		static function get_option () {
 			$num_args = func_num_args ();
 			$options = get_option (self::OPTIONS);
 
@@ -317,7 +317,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * @param string value Value to be associated with the specified settings/option key
 		 */
 	
-		function set_option ($key , $value) {
+		static function set_option ($key , $value) {
 			$options = get_option (self::OPTIONS);
 			$options[$key] = $value;
 			update_option (self::OPTIONS , $options);
@@ -351,7 +351,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * @return array Array containing the users that the search returned.
 		 */
 	 
-		function get_users ($role='', $args=array (0 => 'ID', 1 => 'user_login')) {
+		static function get_users ($role='', $args=array (0 => 'ID', 1 => 'user_login')) {
 			$wp_user_search = new WP_User_Query (array ('role' => $role, 'fields' => $args));
 			$roles = $wp_user_search->get_results ();
 			return $roles;
@@ -363,7 +363,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * @return array Array containing the categories.
 		 */
 	
-		function get_categories () {
+		static function get_categories () {
 			$args = array (
 				'type' => 'post',
 				'orderby' => 'name',
@@ -1268,7 +1268,7 @@ if (!class_exists ('WP_Biographia')) {
 								// there's some clever plugin at work (note to self: test) then
 								// this code may break in strange and unexpected ways ...
 
-								$user_set = $this->get_users ($current_role);
+								$user_set = WP_Biographia::get_users ($current_role);
 								if (!empty ($user_set)) {
 									$users = array_merge ($users, $user_set);
 								}
@@ -1278,7 +1278,7 @@ if (!class_exists ('WP_Biographia')) {
 				
 					// No role filtering needed, just grab 'em all ...
 					else {
-						$users = $this->get_users ();
+						$users = WP_Biographia::get_users ();
 					}
 				
 					if (!empty ($users)) {
@@ -1377,341 +1377,152 @@ if (!class_exists ('WP_Biographia')) {
 		 */
 
 		function display () {
-			global $post;
+			$overrides = $this->get_overrides();
+			$meta = $this->get_user_meta($overrides);
+			$title = $this->make_wpb_title($meta, $overrides);
+			$border = $this->make_wpb_border();
+			$avatar = $this->make_wpb_avatar($meta, $overrides);
+			$text = $this->make_wpb_text($meta, $overrides);
+			$links = $this->make_wpb_links($meta, $overrides, $title);
 
-			$settings = $this->get_option ();
-			$post_bio_override = $post_title_override = $post_suppress_avatar = $post_suppress_links = false;
-			$post_bio_text = $post_title_text = '';
+			/*<div class="wp-biographia-container-top" style="background-color: #FFEAA8; border-top: 4px solid #000000;">
+				<div class="wp-biographia-pic" style="height:100px; width:100px;">
+					<img alt="" src="http://1.gravatar.com/avatar/d300ed1dcec487e20c8600570abeffab?s=100&amp;d=http%3A%2F%2F1.gravatar.com%2Favatar%2Fad516503a11cd5ca435acc9bb6523536%3Fs%3D100&amp;r=G" class="wp-biographia-avatar avatar-100 photo" height="100" width="100">
+				</div>
+				<div class="wp-biographia-text">
+					<h3>About <a href="http://localvicchi:8888/author/gary/" title="Gary Gale">Gary Gale</a></h3>
+					<p>Self professed ”geek with a life”, <a href="http://www.vicchi.org">geo-blogger</a>, <a href="http://www.vicchi.org/speaking/">geo-talker</a> and <a href="http://twitter.com/#!/vicchi">geo-tweeter</a>, Gary works in London and Berlin as Director of <a href="http://here.com">Global Community Programs for Nokia’s HERE Maps</a>; he’s a co-founder of <a href="http://wherecamp.eu">WhereCamp EU</a>, the chair of <a href="http://www.w3gconf.com">w3gconf</a> and sits on the W3C POI Working Group and the UK Location User Group. A <a href="https://github.com/vicchi">contributor</a> to the <a href="http://mapstraction.com/">Mapstraction</a> mapping API, Gary speaks and presents at a wide range of conferences and events including <a href="http://where2conf.com/">Where 2.0</a>, State of the Map, <a href="http://www.agigeocommunity.com/">AGI GeoCommunity</a>, <a href="http://geoloco.tv/">Geo-Loco</a>, <a href="http://socialloco.net/">Social-Loco</a>, <a href="http://geomobldn.org/">GeoMob</a>, the <a href="http://geospatial.bcs.org/web/">BCS GeoSpatial SG</a> and <a href="http://news.thewherebusiness.com/lbs">LocBiz</a>. Writing as regularly as possible on location, place, maps and other facets of geography, Gary blogs at <a href="http://www.vicchi.org">www.vicchi.org</a> and tweets as <a href="http://twitter.com/#!/vicchi">@vicchi</a>.</p>
+					<div class="wp-biographia-links">
+						<small>
+							<ul class="wp-biographia-list wp-biographia-list-text">
+								<li><a href="mailto:gary@vicchi.org" target="_self" title="Send Gary Gale Mail" class="wp-biographia-link-text">Mail</a></li>
+								 | 
+								<li><a href="http://www.garygale.com/" target="_self" title="Gary Gale On The Web" class="wp-biographia-link-text">Web</a></li>
+								 | 
+								<li><a href="https://twitter.com/#!/vicchi" target="_self" title="Gary Gale On Twitter" class="wp-biographia-link-text">Twitter</a></li>
+								 | 
+								<li><a href="https://www.facebook.com/vicchi" target="_self" title="Gary Gale On Facebook" class="wp-biographia-link-text">Facebook</a></li>
+								 | 
+								<li><a href="http://uk.linkedin.com/in/garygale" target="_self" title="Gary Gale On LinkedIn" class="wp-biographia-link-text">LinkedIn</a></li>
+								 | 
+								<li><a href="https://plus.google.com/112341509012024280765?rel=author" target="_self" title="Gary Gale On Google+" class="wp-biographia-link-text">Google+</a></li>
+								 | 
+								<li><a href="http://localvicchi:8888/author/gary/" target="_self" title="More Posts By Gary Gale" class="wp-biographia-link-text">More Posts (360)</a></li>
+							</ul>
+						</small>
+					</div>
+				</div>
+			</div>*/
 
-
-			if (!$this->author_id || $this->author_id == 0) {
-				$this->author_id = $post->post_author;
-			}
-
-			$content = $links = $author = $biography = array();
+			// CLASSIC LAYOUT
 			
-			foreach ($this->defaults () as $key => $data) {
-				if ($key != 'first-last-name') {
-					$author[$key] = get_the_author_meta ($data['field'], $this->author_id);
-				}
+			/*<div class="%WPB-CONTAINER-CLASS%" style="%WPB-CONTAINER-STYLE%">
+				<div class="%WPB-AVATAR-CLASS" style="%WPB-AVATAR-STYLE%">
+					%WPB-AVATAR%
+				</div>
+				<div class="%WPB-TEXT-CLASS%">
+					%WPB-TITLE%
+					%WPB-BIO%
+					<div class="%WPB-LINKS-CLASS%">
+						<ul class="%WPB-LINKS-LIST-CLASS">
+							%WPB-LINKS%
+						</ul>
+					</div>
+				</div>
+			</div>*/
 
-				else {
-					$author[$key] = get_the_author_meta('first_name', $this->author_id) . ' ' . get_the_author_meta ('last_name', $this->author_id);
-				}
-			}
+			// RESPONSIVE LAYOUT
+			/*<div class="%WPB-CONTAINER-CLASS%" style="%WPB-CONTAINER-STYLE%">
+				<div class="%WPB-AVATAR-CLASS" style="%WPB-AVATAR-STYLE%">
+					%WPB-AVATAR%
+				</div>
+				%WPB-TITLE%
+				<div class="%WPB-TEXT-CLASS%">
+					%WPB-BIO%
+				</div>
+				<div class="%WPB-LINKS-CLASS%">
+					<ul class="%WPB-LINKS-LIST-CLASS">
+						%WPB-LINKS%
+					</ul>
+				</div>
+			</div>*/
 
-			$post_override = ($settings['wp_biographia_admin_post_overrides'] == 'on');
-			if ($post_override) {
-				$post_bio_override = (get_post_meta ($post->ID, '_wp_biographia_bio_override', true) == 'on');
-				$post_bio_text = get_post_meta ($post->ID, '_wp_biographia_bio_text', true);
-				$post_title_override = (get_post_meta ($post->ID, '_wp_biographia_title_override', true) == 'on');
-				$post_title_text = get_post_meta ($post->ID, '_wp_biographia_title_text', true);
-				$post_suppress_avatar = (get_post_meta ($post->ID, '_wp_biographia_suppress_avatar', true) == 'on');
-				$post_suppress_links = (get_post_meta ($post->ID, '_wp_biographia_suppress_links', true) == 'on');
-			}
+			$layout = 
+			'<div class="%WPB-CONTAINER-CLASS%" style="%WPB-CONTAINER-STYLE%">' . PHP_EOL .
+			'<div class="%WPB-AVATAR-CLASS%" style="%WPB-AVATAR-STYLE%">' . PHP_EOL .
+			'%WPB-AVATAR%' . PHP_EOL .
+			'</div>' . PHP_EOL .
+			'<div class="%WPB-TEXT-CLASS%">' . PHP_EOL .
+			'%WPB-TITLE%' . PHP_EOL .
+			'%WPB-BIO%' . PHP_EOL .
+			'<div class="%WPB-LINKS-CLASS%">' . PHP_EOL .
+			'<ul class="%WPB-LINKS-LIST-CLASS%">' . PHP_EOL .
+			'%WPB-LINKS%' . PHP_EOL .
+			'</ul>' . PHP_EOL .
+			'</div>' . PHP_EOL .
+			'</div>' . PHP_EOL .
+			'</div>';
 
-			if ($post_override && $post_bio_override) {
-				$author['bio'] = $post_bio_text;
-			}
+			$search = array();
+			$replace = array();
 
-			elseif (!empty ($this->override) && !empty ($this->override['type']) && $this->override['type'] == 'excerpt') {
-				$excerpt = get_user_meta ($this->author_id, 'wp_biographia_short_bio', true);
-				if (!empty ($excerpt)) {
-					$author['bio'] = $excerpt;
-				}
+			$search[] = '%WPB-CONTAINER-CLASS%';
+			$replace[] = $border['class'];
+			
+			$search[] = '%WPB-CONTAINER-STYLE%';
+			$replace[] = $border['style'];
+			
+			$search[] = '%WPB-TITLE%';
+			if ($title['enabled']) {
+				$replace[] = implode('', $title['content']);
 			}
 			
-			$author['posts'] = (int)count_user_posts ($this->author_id);
-			$author['posts_url'] = get_author_posts_url ($this->author_id);
-
-			// Add Image Size Output
-			$author_pic_size =
-				 (isset ($settings['wp_biographia_content_image_size'])) ?
-					$this->get_option ('wp_biographia_content_image_size') : '100';
-
-			$this->sentry = true;
-			$author_pic = get_avatar ($author['email'], $author_pic_size);
-			$this->sentry = false;
-		
-			if ($post_override && $post_title_override) {
-				$content[] = '<h3>';
-				$content[] = $post_title_text;
-				$content[] = '</h3>';
+			$search[] = '%WPB-AVATAR-CLASS%';
+			$search[] = '%WPB-AVATAR-STYLE%';
+			$search[] = '%WPB-AVATAR%';
+			if ($avatar['enabled']) {
+				$replace[] = $avatar['class'];
+				$replace[] = $avatar['style'];
+				$replace[] = $avatar['avatar'];
 			}
-
-			elseif (!empty ($settings['wp_biographia_content_prefix']) ||
-				!empty ($settings['wp_biographia_content_name'])) {
-				$title = array ();
-			
-				$name_prefix = "";
-				if ((!empty ($this->override)) && (!empty ($this->override['prefix']))) {
-					$name_prefix = $this->override['prefix'];
-				}
-
-				elseif (!empty ($settings['wp_biographia_content_prefix'])) {
-					$name_prefix = $settings['wp_biographia_content_prefix'];
-				}
-
-				if (!empty ($name_prefix)) {
-					$title[] = $name_prefix . ' ';
-				}
-
-				$display_name = "";
-				if ((!empty ($this->override)) && (!empty ($this->override['name']))) {
-					$display_name = $this->override['name'];
-				}
-
-				elseif (!empty ($settings['wp_biographia_content_name'])) {
-					$display_name = $settings['wp_biographia_content_name'];
-				}
-
-				if (!empty ($display_name) && $display_name != 'none') {
-					switch ($display_name) {
-						case 'first-last-name':
-							$formatted_name = $author['first-last-name'];
-							break;
-
-						case 'account-name':
-							$formatted_name = $author['account-name'];
-							break;
-
-						case 'nickname':
-							$formatted_name = $author['nickname'];
-							break;
-
-						default:
-							$formatted_name = $author['display-name'];
-							break;
-					}
-				
-					if (!empty ($settings['wp_biographia_content_authorpage']) && ($settings['wp_biographia_content_authorpage'] == 'on')) {
-						$title[] = '<a href="' . $author['posts_url']	. '" title="' . $formatted_name . '">' . $formatted_name . '</a>';
-					}
-
-					else {
-						$title[] = $formatted_name;
-					}
-				}
-
-				$content[] = '<h3>';
-				$content[] = apply_filters ('wp_biographia_content_title', implode ('', $title), $name_prefix, $formatted_name);
-				$content[] = '</h3>';
-			}
-
-			if (!empty ($settings['wp_biographia_content_bio']) || ($post_override && $post_bio_override)) {
-				$content[] = "<p>" . $author['bio'] . "</p>";
-			}
-
-			if (!$post_override || !$post_suppress_links) {
-				// If this Biography Box is for a feed, override/ignore the "display links as icons"
-				// setting ...
-				if ($this->for_feed) {
-					$display_icons = false;
-				}
-		
-				else {
-					$display_icons = (!empty ($settings['wp_biographia_content_icons']) &&
-					 	($settings['wp_biographia_content_icons'] == 'on')) ? 'icon' : 'text';
-				}
-
-				if (($display_icons) && (!empty ($settings['wp_biographia_content_alt_icons']) && $settings['wp_biographia_content_alt_icons'] == 'on' && !empty ($settings['wp_biographia_content_icon_url']))) {
-					$this->icon_dir_url = $settings['wp_biographia_content_icon_url'];
-				}
-
-				$link_items = $this->link_items ();
-				if ($this->for_feed) {
-					$item_stub = '<a href="%s" %s title="%s" class="%s">%s</a>';
-				}
-				else {
-					$item_stub = ($display_icons == "icon") ? '<li><a href="%s" %s title="%s" class="%s"><img src="%s" class="%s" /></a></li>' : '<li><a href="%s" %s title="%s" class="%s">%s</a></li>';
-				}
-				$title_name_stub = __('%1$s On %2$s', 'wp-biographia');
-				$title_noname_stub = __('On %s', 'wp-biographia');
-		
-				$link_meta = 'target="' . $settings['wp_biographia_content_link_target']. '"';
-				if (!empty($settings['wp_biographia_content_link_nofollow']) &&
-				($settings['wp_biographia_content_link_nofollow'] == 'on')) {
-					$link_meta .= ' rel="nofollow"';
-				}
-		
-				// Deal with the email link first as a special case ...
-				if ((!empty ($settings['wp_biographia_content_email']) && ($settings['wp_biographia_content_email'] == 'on')) && (!empty ($author['email']))) {
-					if (!empty ($formatted_name)) {
-						$link_title = sprintf (__('Send %s Mail', 'wp-biographia'), $formatted_name);
-					}
-
-					else {
-						$link_title = __('Send Mail', 'wp-biographia');
-					}
-
-					$link_text = __('Mail', 'wp-biographia');
-			
-					$link_body = ($display_icons == "icon") ? $this->icon_dir_url . 'mail.png' : $link_text;
-					$links[] = $this->link_item ($display_icons, $item_stub, 'mailto:' . antispambot ($author['email']), $link_meta, $link_title, $link_body);
-				}
-		
-				// Now deal with the other links that follow the same format and can be "templatised" ...
-	
-				$supported_links = $this->supported_link_items ();
-				$config_links = $settings['wp_biographia_admin_links'];
-				foreach ($link_items as $link_key => $link_attrs) {
-					$display_link = false;
-					if (array_key_exists ($link_key, $supported_links)) {
-						$option_name = 'wp_biographia_content_' . $link_key;
-						if ($link_key == 'web') {
-							$display_link = (!empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key])));
-						}
-						
-						else {
-							$display_link = (isset ($config_links[$link_key]) && $config_links[$link_key] == 'on' && !empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key])));
-						}
-					}
-
-					else {
-						$display_link = (isset ($config_links[$link_key]) && $config_links[$link_key] == 'on' && !empty ($author[$link_key]));
-					}
-
-					if ($display_link) {
-						if (!empty ($formatted_name)) {
-							$link_title = sprintf ($title_name_stub, $formatted_name, $link_attrs['link_title']);
-						}
-
-						else {
-							$link_title = sprintf ($title_noname_stub, $link_attrs['link_title']);
-						}
-
-						$link_body = ($display_icons == "icon") ? $link_attrs['link_icon'] : $link_attrs['link_text'];
-
-						$links[] = $this->link_item ($display_icons, $item_stub, $author[$link_key], $link_meta, $link_title, $link_body);
-					}
-				}	// end-foreach (...)
-
-				// Finally, deal with the "More Posts" link
-				if (!empty ($settings['wp_biographia_content_posts']) && ($settings['wp_biographia_content_posts'] != 'none') && ($author['posts'] > 0)) {
-					if (!empty ($formatted_name)) {
-						$link_title = sprintf (__('More Posts By %s', 'wp-biographia'), $formatted_name);
-					}
-
-					else {
-						$link_title = __('More Posts', 'wp-biographia');
-					}
-
-					switch ($settings['wp_biographia_content_posts']) {
-						case 'extended':
-							$link_text = __('More Posts', 'wp-biographia') . ' ('
-								. $author['posts']
-								. ')';
-							break;
-
-						default:
-							$link_text = __('More Posts', 'wp-biographia');
-							break;
-					}
-			
-					$link_body = ($display_icons == "icon") ? $this->icon_dir_url . 'wordpress.png' : $link_text;
-					$links[] = $this->link_item ($display_icons, $item_stub, $author['posts_url'], $link_meta, $link_title, $link_body);
-				}
-		
-				$item_glue = ($display_icons == 'icon') ? "" : " | ";
-				$list_class = "wp-biographia-list-" . $display_icons;
-			}
-
-			if (!empty ($links)) {
-				if ($this->for_feed) {
-					$prefix = '<div class="wp-biographia-links"><small>';
-					$postfix = '</small></div>';
-				}
-			
-				else {
-					$prefix = '<div class="wp-biographia-links"><small><ul class="wp-biographia-list ' . $list_class . '">';
-					$postfix = '</ul></small></div>';
-				}
-			
-				$params = array (
-					'glue' => $item_glue,
-					'class' => $list_class,
-					'prefix' => $prefix,
-					'postfix' => $postfix);
-				
-				$content[] = apply_filters ('wp_biographia_links' ,
-				 	$prefix . implode ($item_glue, $links) . $postfix,
-					$links, $params);
-			}
-		
-			if (!$this->for_feed) {
-				$border_type = $settings['wp_biographia_style_border'];
-				$border_color = $settings['wp_biographia_style_border_color'];
-				$bg_color = $settings['wp_biographia_style_bg'];
-				$class = 'wp-biographia-container-' . $border_type;
-				$style = 'background-color: ' . $bg_color . ';';
-				
-				switch ($border_type) {
-					case 'top':
-						$style .= ' border-top: 4px solid ' . $border_color . ';';
-						break;
-					case 'around':
-						$style .= ' border: 1px solid ' . $border_color . ';';
-						break;
-					case 'none':
-					default:
-						break;
-				}	// end-switch ($border_type)
-				
-				$biography[] = '<div class="' . $class . '" style="' . $style . '">';
-
-				$display_avatar = (!empty ($settings['wp_biographia_content_image']) &&
-						 ($settings['wp_biographia_content_image'] == 'on'));
-				if ($display_avatar && $post_override && $post_suppress_avatar) {
-					$display_avatar = false;
-				}
-
-				if ($display_avatar) {
-					$biography[] = '<div class="wp-biographia-pic" style="height:'
-						. $author_pic_size
-						. 'px; width:'
-						. $author_pic_size
-						. 'px;">'
-						. $author_pic
-						. '</div>';
-				}
-
-				if ($display_avatar) {
-					$class = 'wp-biographia-text';
-				}
-				else {
-					$class = 'wp-biographia-text-no-pic';
-				}
-				$biography[] = '<div class="' . $class . '">'
-					. implode ('', $content)
-					. '</div></div>';
-			}
-		
 			else {
-				$display_avatar = (!empty ($settings['wp_biographia_content_image']) &&
-						 ($settings['wp_biographia_content_image'] == 'on'));
-				if ($display_avatar && $post_override && $post_suppress_avatar) {
-					$display_avatar = false;
-				}
+				$replace[] = 'wp-biographia-pic-hidden';
+				$replace[] = 'display: none;';
+				$replace[] = '';
+			}
 			
-				if ($display_avatar) {
-					$biography[] = '<p>' . $author_pic . '</p>';
-					$class = 'wp-biographia-text';
-				}
-
-				else {
-					$class = 'wp-biographia-text-no-pic';
-				}
-				$biography[] = apply_filters ('wp_biographia_feed' , '<div class="' . $class . '">'
-					. implode ('', $content)
-					. '</div>' , $content , $settings);
+			$search[] = '%WPB-TEXT-CLASS%';
+			$replace[] = $avatar['bio-class'];
+			
+			$search[] = '%WPB-BIO%';
+			if ($text['enabled']) {
+				$replace[] = $text['content'];
+			}
+			else {
+				$replace[] = '';
+			}
+			
+			$search[] = '%WPB-LINKS-CLASS%';
+			$search[] = '%WPB-LINKS-LIST-CLASS%';
+			$search[] = '%WPB-LINKS%';
+			if ($links['enabled']) {
+				$replace[] = $links['links-class'];
+				$replace[] = $links['links-list-class'];
+				$replace[] = implode(PHP_EOL, $links['content']);
+			}
+			else {
+				$replace[] = 'wp-biographia-links-hidden';
+				$replace[] = 'wp-biographia-list-hidden';
+				$replace[] = '';
 			}
 
-			$biography_box = array ();
-			$biography_box[] = '<!-- WP Biographia ' . self::DISPLAY_VERSION . ' -->' . PHP_EOL;
-			$biography_box[] = apply_filters ('wp_biographia_biography_box', implode ('', $biography), $biography);
-			$biography_box[] = '<!-- WP Biographia ' . self::DISPLAY_VERSION . ' -->' . PHP_EOL;
-
-			return (implode ('', $biography_box));
+			$biography_box = array();
+			$biography_box[] = '<!-- WP Biographia ' . self::DISPLAY_VERSION . ' -->';
+			$biography_box[] = '<!-- LAYOUT: classic -->';
+			$biography_box[] = str_replace($search, $replace, $layout);
+			$biography_box[] = '<!-- WP Biographia ' . self::DISPLAY_VERSION . ' -->';
+			
+			return implode(PHP_EOL, $biography_box);
 		}
 
 		/**
@@ -1776,6 +1587,338 @@ if (!class_exists ('WP_Biographia')) {
 		
 		static function make_settings_link_hook() {
 			return 'plugin_action_links_' . plugin_basename(__FILE__);
+		}
+
+		// REWORK STARTS HERE
+
+		private function get_overrides() {
+			global $post;
+			$options = $this->get_option();
+			$overrides = array();
+			
+			$overrides['enabled'] = ($options['wp_biographia_admin_post_overrides'] === 'on');
+			if ($overrides['enabled']) {
+				$overrides['bio_override'] = (get_post_meta($post->ID, '_wp_biographia_bio_override', true) === 'on');
+				$overrides['bio_text'] = get_post_meta ($post->ID, '_wp_biographia_bio_text', true);
+				$overrides['title_override'] = (get_post_meta ($post->ID, '_wp_biographia_title_override', true) === 'on');
+				$overrides['title_text'] = get_post_meta ($post->ID, '_wp_biographia_title_text', true);
+				$overrides['suppress_avatar'] = (get_post_meta ($post->ID, '_wp_biographia_suppress_avatar', true) === 'on');
+				$overrides['suppress_links'] = (get_post_meta ($post->ID, '_wp_biographia_suppress_links', true) === 'on');
+			}
+			
+			return $overrides;
+		}
+
+		
+		private function get_user_meta($overrides) {
+			global $post;
+			$options = $this->get_option();
+			$meta = array();
+
+			if (!$this->author_id || $this->author_id === 0) {
+				$meta['id'] = $post->post_author;
+			}
+			else {
+				$meta['id'] = $this->author_id;
+			}
+			
+			foreach($this->defaults() as $key => $info) {
+				if ($key !== 'first-last-name') {
+					$meta[$key] = get_the_author_meta($info['field'], $meta['id']);
+				}
+				else {
+					$meta[$key] = get_the_author_meta('first_name', $meta['id']) .
+						' ' .
+						get_the_author_meta('last_name', $meta['id']);
+				}
+			}
+			
+			if ($overrides['enabled'] && $overrides['bio_override']) {
+				$meta['bio'] = $overrides['bio_text'];
+			}
+			
+			elseif (!empty($this->override) && !empty($this->override['type']) && $this->override['type'] === 'excerpt') {
+				$excerpt = get_user_meta($meta['id'], 'wp_biographia_short_bio', true);
+				if (!empty($excerpt)) {
+					$meta['bio'] = $excerpt;
+				}
+			}
+
+			$meta['posts'] = (int)count_user_posts ($meta['id']);
+			$meta['posts_url'] = get_author_posts_url ($meta['id']);
+
+			$meta['pic_size'] =
+				 (isset ($options['wp_biographia_content_image_size'])) ?
+					$options['wp_biographia_content_image_size'] : '100';
+
+			$this->sentry = true;
+			$meta['pic'] = get_avatar($meta['email'], $meta['pic_size']);
+			$this->sentry = false;
+			
+			return $meta;
+		}
+		
+		private function make_wpb_title($meta, $overrides) {
+			$text = array();
+			$title = array('enabled' => false, 'name' => '', 'content' => array());
+			$options = $this->get_option();
+			
+			if ($overrides['enabled'] && $overrides['title_override']) {
+				$text[] = $overrides['title_text'];
+			}
+
+			else if (!empty($options['wp_biographia_content_prefix']) || !empty($options['wp_biographia_content_name'])) {
+				$prefix = '';
+				
+				if (!empty($this->override) && !empty($this->override['prefix'])) {
+					$prefix = $this->override['prefix'];
+				}
+				
+				elseif (!empty($options['wp_biographia_content_prefix'])) {
+					$prefix = $options['wp_biographia_content_prefix'];
+				}
+				
+				if (!empty($prefix)) {
+					$text[] = $prefix . ' ';
+				}
+				
+				$name_type = '';
+				if (!empty($this->override) && !empty($this->override['name'])) {
+					$name_type = $this->override['name'];
+				}
+				elseif (!empty($options['wp_biographia_content_name'])) {
+					$name_type = $options['wp_biographia_content_name'];
+				}
+				
+				if (!empty($name_type) && $name_type !== 'none') {
+					switch ($name_type) {
+						case 'first-last-name':
+						case 'account-name':
+						case 'nickname':
+							$title['name'] = $meta[$name_type];
+							break;
+						default:
+							$title['name'] = $meta['display-name'];
+							break;
+					}
+					
+					if (!empty($options['wp_biographia_content_authorpage']) && ($options['wp_biographia_content_authorpage'] === 'on')) {
+						$fmt = '<a href="%s" title="%s">%s</a>';
+						$text[] = sprintf($fmt, $meta['posts_url'], $title['name'], $title['name']);
+					}
+					else {
+						$text[] = $title['name'];
+					}
+				}
+				
+				error_log('text = ' . gettype($text));
+				$title['enabled'] = true;
+				$title['content'][] = '<h3>';
+				$title['content'][] = apply_filters('wp_biographia_content_title', implode('', $text));
+				$title['content'][] = '</h3>';
+			}
+			
+			return $title;
+		}
+		
+		private function make_wpb_border() {
+			$options = $this->get_option();
+			$type = $options['wp_biographia_style_border'];
+			$color = $options['wp_biographia_style_border_color'];
+			$background = $options['wp_biographia_style_bg'];
+			$class = 'wp-biographia-container-' . $type;
+			$style = 'background-color: ' . $background . ';';
+			
+			switch ($type) {
+				case 'top':
+					$style .= ' border-top: 4px solid ' . $color . ';';
+					break;
+				case 'around':
+					$style .= ' border: 1px solid ' . $color . ';';
+					break;
+				case 'none':
+				default:
+					break;
+			}
+			
+			return array('class' => $class, 'style' => $style);
+		}
+		
+		private function make_wpb_avatar($meta, $overrides) {
+			$options = $this->get_option();
+			$avatar = array('enabled' => false, 'class' => '', 'avatar' => '');
+			
+			$enabled = (!empty($options['wp_biographia_content_image']) && ($options['wp_biographia_content_image'] === 'on'));
+			if ($enabled && $overrides['enabled'] && $overrides['suppress_avatar']) {
+				$enabled = false;
+			}
+			
+			$avatar['enabled'] = $enabled;
+			if ($enabled) {
+				$avatar['bio-class'] = 'wp-biographia-text';
+				$avatar['class'] = 'wp-biographia-pic';
+
+				$fmt = 'height: %dpx; width: %dpx;';
+				$avatar['style'] = sprintf($fmt, $meta['pic_size'], $meta['pic_size']);
+				$avatar['avatar'] = $meta['pic'];
+			}
+			else {
+				$avatar['bio-class'] = 'wp-biographia-text-no-pic';
+			}
+			
+			return $avatar;
+		}
+		
+		private function make_wpb_text($meta, $overrides) {
+			$options = $this->get_option();
+			$text[] = array('enabled' => false, 'content' => '');
+			
+			if (!empty($options['wp_biographia_content_bio']) || ($overrides['enabled'] && $overrides['bio_override'])) {
+				$text['enabled'] = true;
+				$text['content'] = '<p>' . $meta['bio'] . '</p>';
+			}
+			
+			return $text;
+		}
+		
+		private function make_wpb_links($meta, $overrides, $title) {
+			$options = $this->get_option();
+			$links = array('enabled' => false, 'icons' => false, 'url' => '', 'content' => array());
+			
+			if (!$overrides['enabled'] || !$overrides['suppress_links']) {
+				if (!$this->for_feed) {
+					$links['icons'] = (!empty($options['wp_biographia_content_icons']) && ($options['wp_biographia_content_icons'] === 'on')) ? 'icon' : 'text';
+				}
+				
+				if ($links['icons'] && (!empty($options['wp_biographia_content_alt_icons']) && $options['wp_biographia_content_alt_icons'] === 'on' && !empty($options['wp_biographia_content_icon_url']))) {
+					$links['url'] = $options['wp_biographia_content_icon_url'];
+				}
+
+				$link_items = $this->link_items ();
+				if ($this->for_feed) {
+					$item_stub = '<a href="%s" %s title="%s" class="%s">%s</a>';
+				}
+				else {
+					$item_stub = ($links['icons'] == "icon") ? '<li><a href="%s" %s title="%s" class="%s"><img src="%s" class="%s" /></a></li>' : '<li><a href="%s" %s title="%s" class="%s">%s</a></li>';
+				}
+				$title_name_stub = __('%1$s On %2$s', 'wp-biographia');
+				$title_noname_stub = __('On %s', 'wp-biographia');
+
+				$link_meta = 'target="' . $options['wp_biographia_content_link_target']. '"';
+				if (!empty($options['wp_biographia_content_link_nofollow']) &&
+						($options['wp_biographia_content_link_nofollow'] == 'on')) {
+					$link_meta .= ' rel="nofollow"';
+				}
+
+				// Deal with the email link first as a special case ...
+				if ((!empty ($options['wp_biographia_content_email']) && ($options['wp_biographia_content_email'] == 'on')) && (!empty ($meta['email']))) {
+					if (!empty ($title['name'])) {
+						$link_title = sprintf (__('Send %s Mail', 'wp-biographia'), $title['name']);
+					}
+
+					else {
+						$link_title = __('Send Mail', 'wp-biographia');
+					}
+
+					$link_text = __('Mail', 'wp-biographia');
+
+					$link_body = ($links['icons'] == "icon") ? $this->icon_dir_url . 'mail.png' : $link_text;
+					$links['content'][] = $this->link_item ($links['icons'], $item_stub, 'mailto:' . antispambot ($meta['email']), $link_meta, $link_title, $link_body);
+				}
+
+				// Now deal with the other links that follow the same format and can be "templatised" ...
+
+				$supported_links = $this->supported_link_items ();
+				$config_links = $options['wp_biographia_admin_links'];
+				foreach ($link_items as $link_key => $link_attrs) {
+					$display_link = false;
+					if (array_key_exists ($link_key, $supported_links)) {
+						$option_name = 'wp_biographia_content_' . $link_key;
+						if ($link_key == 'web') {
+							$display_link = (!empty ($options[$option_name]) && ($options[$option_name] == 'on') && (!empty ($meta[$link_key])));
+						}
+
+						else {
+							$display_link = (isset ($config_links[$link_key]) && $config_links[$link_key] == 'on' && !empty ($options[$option_name]) && ($options[$option_name] == 'on') && (!empty ($meta[$link_key])));
+						}
+					}
+
+					else {
+						$display_link = (isset ($config_links[$link_key]) && $config_links[$link_key] == 'on' && !empty ($meta[$link_key]));
+					}
+
+					if ($display_link) {
+						if (!empty ($title['name'])) {
+							$link_title = sprintf ($title_name_stub, $title['name'], $link_attrs['link_title']);
+						}
+
+						else {
+							$link_title = sprintf ($title_noname_stub, $link_attrs['link_title']);
+						}
+
+						$link_body = ($links['icons'] == "icon") ? $link_attrs['link_icon'] : $link_attrs['link_text'];
+
+						$links['content'][] = $this->link_item ($links['icons'], $item_stub, $meta[$link_key], $link_meta, $link_title, $link_body);
+					}
+				}	// end-foreach (...)
+
+				// Finally, deal with the "More Posts" link
+				if (!empty ($options['wp_biographia_content_posts']) && ($options['wp_biographia_content_posts'] != 'none') && ($meta['posts'] > 0)) {
+					if (!empty ($title['name'])) {
+						$link_title = sprintf (__('More Posts By %s', 'wp-biographia'), $title['name']);
+					}
+
+					else {
+						$link_title = __('More Posts', 'wp-biographia');
+					}
+
+					switch ($options['wp_biographia_content_posts']) {
+						case 'extended':
+							$link_text = __('More Posts', 'wp-biographia') . ' ('
+								. $meta['posts']
+								. ')';
+							break;
+
+						default:
+							$link_text = __('More Posts', 'wp-biographia');
+							break;
+					}
+
+					$link_body = ($links['icons'] == "icon") ? $this->icon_dir_url . 'wordpress.png' : $link_text;
+					$links['content'][] = $this->link_item ($links['icons'], $item_stub, $meta['posts_url'], $link_meta, $link_title, $link_body);
+				}
+
+				$item_glue = ($links['icons'] == 'icon') ? "" : " | ";
+				$list_class = "wp-biographia-list-" . $links['icons'];
+			}
+
+			if (!empty ($links['content'])) {
+				$links['enabled'] = true;
+				$links['links-class'] = 'wp-biographia-links';
+				$links['links-list-class'] = 'wp-biographia-list wp-biographia-list-' . $links['icons'];
+
+				if ($this->for_feed) {
+					$prefix = '<div class="wp-biographia-links"><small>';
+					$postfix = '</small></div>';
+				}
+
+				else {
+					$prefix = '<div class="wp-biographia-links"><small><ul class="wp-biographia-list ' . $list_class . '">';
+					$postfix = '</ul></small></div>';
+				}
+
+				$params = array (
+					'glue' => $item_glue,
+					'class' => $list_class,
+					'prefix' => $prefix,
+					'postfix' => $postfix);
+
+				$content[] = apply_filters ('wp_biographia_links' ,
+				 	$prefix . implode ($item_glue, $links['content']) . $postfix,
+					$links, $params);
+			}
+			
+			return $links;
 		}
 	
 	}	// end-class WP_Biographia
