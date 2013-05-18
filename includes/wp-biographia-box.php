@@ -244,16 +244,27 @@ if (!class_exists('WP_BiographiaBox')) {
 		 */
 
 		function style () {
-			if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
-				$css_url = 'css/wp-biographia.css';
-			}
-			
-			else {
-				$css_url = 'css/wp-biographia.min.css';
-			}
-			wp_enqueue_style ('wp-biographia-bio', WPBIOGRAPHIA_URL . $css_url);
+			WP_BiographiaBox::enqueue_box_style();
 		}
-	
+
+		static public function enqueue_box_style() {
+			$src = WPBIOGRAPHIA_URL . 'css/wp-biographia';
+			$src = WP_Biographia::make_css_path($src);
+			$handle = 'wp-biographia-bio';
+			wp_enqueue_style ($handle, $src);
+			
+			$theme = wp_get_theme();
+			$css = 'css/wp-biographia-' . $theme->get_stylesheet() . '.css';
+			$path = WPBIOGRAPHIA_PATH . $css;
+			$src = WPBIOGRAPHIA_URL . $css;
+
+			if (is_file($path)) {
+				$deps = array('wp-biographia-bio');
+				$handle = 'wp-biographia-bio-' . $theme->get_stylesheet();
+				wp_enqueue_style($handle, $src, $deps);
+			}
+		}
+		
 		/**
 		 * "the_content" and "the_excerpt" action hook; adds the Biography Box to post or
 		 * page content according to the current set of plugin settings/options. The
@@ -925,13 +936,16 @@ if (!class_exists('WP_BiographiaBox')) {
 		 */
 
 		function display () {
+			$settings = WP_Biographia::get_option();
+			$design = $settings['wp_biographia_design_type'];
+			
 			$overrides = $this->get_overrides();
 			$meta = $this->get_user_meta($overrides);
-			$title = $this->make_wpb_title($meta, $overrides);
-			$border = $this->make_wpb_border();
-			$avatar = $this->make_wpb_avatar($meta, $overrides);
+			$title = $this->make_wpb_title($design, $meta, $overrides);
+			$border = $this->make_wpb_border($design);
+			$avatar = $this->make_wpb_avatar($design, $meta, $overrides);
 			$text = $this->make_wpb_text($meta, $overrides);
-			$links = $this->make_wpb_links($meta, $overrides, $title);
+			$links = $this->make_wpb_links($design, $meta, $overrides, $title);
 
 			/*<div class="wp-biographia-container-top" style="background-color: #FFEAA8; border-top: 4px solid #000000;">
 				<div class="wp-biographia-pic" style="height:100px; width:100px;">
@@ -995,21 +1009,47 @@ if (!class_exists('WP_BiographiaBox')) {
 				</div>
 			</div>*/
 
-			$layout = 
-			'<div class="%WPB-CONTAINER-CLASS%" style="%WPB-CONTAINER-STYLE%">' . PHP_EOL .
-			'<div class="%WPB-AVATAR-CLASS%" style="%WPB-AVATAR-STYLE%">' . PHP_EOL .
-			'%WPB-AVATAR%' . PHP_EOL .
-			'</div>' . PHP_EOL .
-			'<div class="%WPB-TEXT-CLASS%">' . PHP_EOL .
-			'%WPB-TITLE%' . PHP_EOL .
-			'%WPB-BIO%' . PHP_EOL .
-			'<div class="%WPB-LINKS-CLASS%">' . PHP_EOL .
-			'<ul class="%WPB-LINKS-LIST-CLASS%">' . PHP_EOL .
-			'%WPB-LINKS%' . PHP_EOL .
-			'</ul>' . PHP_EOL .
-			'</div>' . PHP_EOL .
-			'</div>' . PHP_EOL .
-			'</div>';
+			if ($design === 'classic') {
+				$layout = 
+				'<div class="%WPB-CONTAINER-CLASS%" style="%WPB-CONTAINER-STYLE%">' . PHP_EOL .
+				'<div class="%WPB-AVATAR-CLASS%" style="%WPB-AVATAR-STYLE%">' . PHP_EOL .
+				'%WPB-AVATAR%' . PHP_EOL .
+				'</div>' . PHP_EOL .
+				'<div class="%WPB-TEXT-CLASS%">' . PHP_EOL .
+				'%WPB-TITLE%' . PHP_EOL .
+				'%WPB-BIO%' . PHP_EOL .
+				'<div class="%WPB-LINKS-CLASS%">' . PHP_EOL .
+				'<ul class="%WPB-LINKS-LIST-CLASS%">' . PHP_EOL .
+				'%WPB-LINKS%' . PHP_EOL .
+				'</ul>' . PHP_EOL .
+				'</div>' . PHP_EOL .
+				'</div>' . PHP_EOL .
+				'</div>'. PHP_EOL;
+			}
+
+			else if ($design === 'responsive') {
+				$layout = 
+				'<div class="%WPB-CONTAINER-CLASS%" style="%WPB-CONTAINER-STYLE%">' . PHP_EOL .
+				'<div class="%WPB-AVATAR-CLASS%" style="%WPB-AVATAR-STYLE%">' . PHP_EOL .
+				'%WPB-AVATAR%' . PHP_EOL .
+				'</div>' . PHP_EOL .
+				'<div class="%WPB-TITLE-CLASS%">' . PHP_EOL .
+				'%WPB-TITLE%' . PHP_EOL .
+				'</div>' . PHP_EOL . 
+				'<div class="%WPB-TEXT-CLASS%">' . PHP_EOL .
+				'%WPB-BIO%' . PHP_EOL .
+				'</div>' . PHP_EOL .
+				'<div class="%WPB-LINKS-CLASS%">' . PHP_EOL .
+				'<ul class="%WPB-LINKS-LIST-CLASS%">' . PHP_EOL .
+				'%WPB-LINKS%' . PHP_EOL .
+				'</ul>' . PHP_EOL .
+				'</div>' . PHP_EOL .
+				'</div>' . PHP_EOL;
+			}
+
+			else {
+				
+			}
 
 			$search = array();
 			$replace = array();
@@ -1020,9 +1060,15 @@ if (!class_exists('WP_BiographiaBox')) {
 			$search[] = '%WPB-CONTAINER-STYLE%';
 			$replace[] = $border['style'];
 			
+			$search[] = '%WPB-TITLE-CLASS%';
+			$replace[] = $title['class'];
+			
 			$search[] = '%WPB-TITLE%';
 			if ($title['enabled']) {
 				$replace[] = implode('', $title['content']);
+			}
+			else {
+				$replace[] = '';
 			}
 			
 			$search[] = '%WPB-AVATAR-CLASS%';
@@ -1066,7 +1112,7 @@ if (!class_exists('WP_BiographiaBox')) {
 
 			$biography_box = array();
 			$biography_box[] = '<!-- WP Biographia ' . WP_Biographia::DISPLAY_VERSION . ' -->';
-			$biography_box[] = '<!-- LAYOUT: classic -->';
+			$biography_box[] = '<!-- LAYOUT: ' . $design . ' -->';
 			$biography_box[] = str_replace($search, $replace, $layout);
 			$biography_box[] = '<!-- WP Biographia ' . WP_Biographia::DISPLAY_VERSION . ' -->';
 			
@@ -1196,11 +1242,15 @@ if (!class_exists('WP_BiographiaBox')) {
 			return $meta;
 		}
 		
-		private function make_wpb_title($meta, $overrides) {
+		private function make_wpb_title($design, $meta, $overrides) {
 			$text = array();
 			$title = array('enabled' => false, 'name' => '', 'content' => array());
 			$options = WP_Biographia::get_option();
 			
+			$title['class'] = 'wp-biographia-' . $design . '-title';
+			if (!empty($options['wp_biographia_design_wrap']) && $options['wp_biographia_design_wrap'] === 'on') {
+				$title['class'] .= ' wp-biographia-' . $design . '-title-wrap';
+			}
 			if ($overrides['enabled'] && $overrides['title_override']) {
 				$text[] = $overrides['title_text'];
 			}
@@ -1258,12 +1308,12 @@ if (!class_exists('WP_BiographiaBox')) {
 			return $title;
 		}
 		
-		private function make_wpb_border() {
+		private function make_wpb_border($design) {
 			$options = WP_Biographia::get_option();
 			$type = $options['wp_biographia_style_border'];
 			$color = $options['wp_biographia_style_border_color'];
 			$background = $options['wp_biographia_style_bg'];
-			$class = 'wp-biographia-container-' . $type;
+			$class = 'wp-biographia-' . $design . '-container-' . $type;
 			$style = 'background-color: ' . $background . ';';
 			
 			switch ($type) {
@@ -1281,7 +1331,7 @@ if (!class_exists('WP_BiographiaBox')) {
 			return array('class' => $class, 'style' => $style);
 		}
 		
-		private function make_wpb_avatar($meta, $overrides) {
+		private function make_wpb_avatar($design, $meta, $overrides) {
 			$options = WP_Biographia::get_option();
 			$avatar = array('enabled' => false, 'class' => '', 'avatar' => '');
 			
@@ -1292,8 +1342,13 @@ if (!class_exists('WP_BiographiaBox')) {
 			
 			$avatar['enabled'] = $enabled;
 			if ($enabled) {
-				$avatar['bio-class'] = 'wp-biographia-text';
-				$avatar['class'] = 'wp-biographia-pic';
+				$avatar['bio-class'] = 'wp-biographia-' . $design . '-text';
+				$avatar['class'] = 'wp-biographia-' . $design . '-avatar';
+
+				if (!empty($options['wp_biographia_design_wrap']) && $options['wp_biographia_design_wrap'] === 'on') {
+					$avatar['bio-class'] .= ' wp-biographia-' . $design . '-text-wrap';
+					$avatar['class'] .= ' wp-biographia-' . $design . '-avatar-wrap';
+				}
 
 				$fmt = 'height: %dpx; width: %dpx;';
 				$avatar['style'] = sprintf($fmt, $meta['pic_size'], $meta['pic_size']);
@@ -1318,7 +1373,7 @@ if (!class_exists('WP_BiographiaBox')) {
 			return $text;
 		}
 		
-		private function make_wpb_links($meta, $overrides, $title) {
+		private function make_wpb_links($design, $meta, $overrides, $title) {
 			$options = WP_Biographia::get_option();
 			$links = array('enabled' => false, 'icons' => false, 'url' => '', 'content' => array());
 			
@@ -1431,8 +1486,8 @@ if (!class_exists('WP_BiographiaBox')) {
 
 			if (!empty ($links['content'])) {
 				$links['enabled'] = true;
-				$links['links-class'] = 'wp-biographia-links';
-				$links['links-list-class'] = 'wp-biographia-list wp-biographia-list-' . $links['icons'];
+				$links['links-class'] = 'wp-biographia-' . $design . '-links';
+				$links['links-list-class'] = 'wp-biographia-' . $design . '-list wp-biographia-' . $design . '-list-' . $links['icons'];
 
 				if ($this->for_feed) {
 					$prefix = '<div class="wp-biographia-links"><small>';

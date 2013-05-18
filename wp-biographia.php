@@ -348,7 +348,9 @@ if (!class_exists ('WP_Biographia')) {
 						'wp_biographia_display_bio_feed' => 'full',
 						'wp_biographia_admin_lock_to_loop' => '',
 						'wp_biographia_style_border_color' => '#000000',
-						'wp_biographia_display_type' => 'both'
+						'wp_biographia_display_type' => 'both',
+						'wp_biographia_design_type' => 'classic',
+						'wp_biographia_design_wrap' => ''
 					) 
 				);
 				update_option (self::OPTIONS, $settings);
@@ -497,7 +499,43 @@ if (!class_exists ('WP_Biographia')) {
 		static function make_settings_link_hook() {
 			return 'plugin_action_links_' . plugin_basename(__FILE__);
 		}
-	
+
+		/**
+		 * Helper function to determine if debugging is enabled in WordPress and/or
+		 * the plugin.
+		 */
+		
+		static function is_debug() {
+			return ((defined('WP_DEBUG') && WP_DEBUG == true) ||
+					(defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true));
+		}
+
+		/**
+		 * Helper function to make a style filename load debug or minimized CSS depending
+		 * on the setting of WP_DEBUG and/or WPBIOGRAPHIA_DEBUG.
+		 */
+		
+		static function make_css_path($stub) {
+			if (WP_Biographia::is_debug()) {
+				return $stub . '.css';
+			}
+			
+			return $stub . '.min.css';
+		}
+
+		/**
+		 * Helper function to make a script filename load debug or minimized JS depending
+		 * on the setting of WP_DEBUG and/or WPBIOGRAPHIA_DEBUG.
+		 */
+		
+		static function make_js_path($stub) {
+			if (WP_Biographia::is_debug()) {
+				return $stub . '.js';
+			}
+			
+			return $stub . '.min.js';
+		}
+
 	}	// end-class WP_Biographia
 }	// end-if (!class_exists ('WP_Biographia'))
 

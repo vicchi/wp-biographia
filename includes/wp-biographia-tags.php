@@ -23,7 +23,7 @@ if (!function_exists ('wpb_get_biography_box')) {
 	 * @return string The formatted HTML of the Biography Box.
 	 */
 	function wpb_get_biography_box ($mode='raw', $user=NULL, $prefix=NULL, $name=NULL, $role=NULL, $type='full', $order='account-name') {
-		$instance = WP_Biographia::get_instance ();
+		$instance = WP_BiographiaBox::get_instance ();
 		$ret = $instance->biography_box ($mode, $user, $prefix, $name, $role, $type, $order);
 		$content = $ret['content'];
 		return implode ('', $content);

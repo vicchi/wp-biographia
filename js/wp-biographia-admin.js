@@ -179,6 +179,26 @@
 				}
 			});
 		});
+		
+		function update_biography_preview() {
+			var data = {
+				action: WPBiographiaAdminPreview.action,
+				nonce: WPBiographiaAdminPreview.nonce,
+				wrap: $('input:checkbox[name=wp_biographia_design_wrap]').is(':checked'),
+				design: $('input:radio[name=wp_biographia_design_type]:checked').val()
+			};
+
+			$.post(ajaxurl, data, function(response) {
+				$('#wp-biographia-design-preview').html(response);
+			});
+		}
+		$('input:radio[name=wp_biographia_design_type]').click(function() {
+			update_biography_preview();
+		});
+		
+		$('input:checkbox[name=wp_biographia_design_wrap]').click(function() {
+			update_biography_preview();
+		});
 	});	
 })(jQuery);
 

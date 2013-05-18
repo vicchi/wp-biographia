@@ -236,7 +236,7 @@ if (!class_exists ('WP_BiographiaPointers')) {
 	
 		function get_tab_url ($tab) {
 			$url = admin_url ('options-general.php');
-			$url .= '?page=wp-biographia/wp-biographia.php&tab=' . $tab;
+			$url .= '?page=wp-biographia/includes/wp-biographia-admin.php&tab=' . $tab;
 		
 			return $url;
 		}

@@ -19,6 +19,7 @@ if (!class_exists('WP_BiographiaAdmin')) {
 				'exclude' => 'Exclusions',
 				'style' => 'Style',
 				'content' => 'Content',
+				'design' => 'Design',
 				'defaults' => 'Defaults',
 				'colophon' => 'Colophon'
 				);
@@ -36,6 +37,7 @@ if (!class_exists('WP_BiographiaAdmin')) {
 			$this->hook ('add_meta_boxes', 'admin_add_meta_boxes');
 			$this->hook ('save_post', 'admin_save_meta_boxes');
 			$this->hook ('before_delete_post', 'admin_before_delete_post');
+			$this->hook('wp_ajax_wp_biographia_admin_preview');
 		}
 		
 		/**
@@ -80,32 +82,65 @@ if (!class_exists('WP_BiographiaAdmin')) {
 				wp_enqueue_script ('postbox');
 				wp_enqueue_script ('dashboard');
 				wp_enqueue_script ('farbtastic');
-				if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
-					$js_url = 'js/wp-biographia-admin.js';
+				
+				$src = WPBIOGRAPHIA_URL . 'js/wp-biographia-admin';
+				$src = WP_Biographia::make_js_path($src);
+				$handle = 'wp-biographia-admin-script';
+				wp_enqueue_script($handle, $src);
+				
+				$tab = $this->admin_validate_tab();
+				if ($tab === 'design') {
+					$action = 'wp_biographia_admin_preview';
+					$nonce = 'wp-biographia-admin-preview-nonce';
+					$ajax_args = array(
+						'action' => $action,
+						'nonce' => wp_create_nonce($nonce)
+						);
+					$object_name = 'WPBiographiaAdminPreview';
+					wp_localize_script($handle, $object_name, $ajax_args);
 				}
-
-				else {
-					$js_url = 'js/wp-biographia-admin.min.js';
-				}
-				wp_enqueue_script ('wp-biographia-admin-script', WPBIOGRAPHIA_URL . $js_url);
 			}
 
 			elseif ($pagenow == 'post.php' || $pagenow == 'post-new.php') {
 				$post_override = WP_Biographia::get_option ('wp_biographia_admin_post_overrides');
+
+				// Only enqueue the admin edit JS if post overrides are enabled
 				if (isset ($post_override) && !empty ($post_override) && $post_override == 'on') {
-					// Only enqueue the admin edit JS if post overrides are enabled
-
-					if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
-						$js_url = 'js/wp-biographia-edit.js';
-					}
-
-					else {
-						$js_url = 'js/wp-biographia-edit.min.js';
-					}
-
-					wp_enqueue_script ('wp-biographia-edit-script', WPBIOGRAPHIA_URL . $js_url);
+					$src = WPBIOGRAPHIA_URL . 'js/wp-biographia-edit';
+					$src = WP_Biographia::make_js_path($src);
+					$handle = 'wp-biographia-edit-script';
+					wp_enqueue_script($handle, $src);
 				}
 			}
+		}
+
+		function wp_ajax_wp_biographia_admin_preview() {
+			check_ajax_referer('wp-biographia-admin-preview-nonce', 'nonce');
+
+			$design = $this->admin_option('design');
+			$wrap = $this->admin_option('wrap');
+
+			$options = WP_Biographia::get_option();
+			$saved_design = $options['wp_biographia_design_type'];
+			$saved_wrap = $options['wp_biographia_design_wrap'];
+
+			$options['wp_biographia_design_type'] = $design;
+			$options['wp_biographia_design_wrap'] = ($wrap === 'true' ? 'on' : '');
+			update_option (WP_Biographia::OPTIONS, $options);
+
+			global $current_user;
+			get_currentuserinfo();
+			$mode = 'raw';
+
+			require_once(WPBIOGRAPHIA_PATH . '/includes/wp-biographia-box.php');
+			wpb_the_biography_box($mode, $current_user->user_login);
+			
+			$options['wp_biographia_design_type'] = $saved_design;
+			$options['wp_biographia_design_wrap'] = $saved_wrap;
+
+			update_option (WP_Biographia::OPTIONS, $options);
+			
+			die();
 		}
 
 		/**
@@ -122,14 +157,21 @@ if (!class_exists('WP_BiographiaAdmin')) {
 				wp_enqueue_style ('global');
 				wp_enqueue_style ('wp-admin');
 				wp_enqueue_style ('farbtastic');
-				if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
-					$css_url = 'css/wp-biographia-admin.css';
+				
+				$src = WPBIOGRAPHIA_URL . 'css/wp-biographia-admin';
+				$src = WP_Biographia::make_css_path($src);
+				wp_enqueue_style ('wp-biographia-admin', $src);	
+				
+				$tab = $this->admin_validate_tab();
+				if ($tab === 'design') {
+					$src = WPBIOGRAPHIA_URL . 'css/wp-biographia-admin-preview';
+					$src = WP_Biographia::make_css_path($src);
+					$handle = 'wp-biographia-admin-preview';
+					wp_enqueue_style($handle, $src);
+					
+					require_once(WPBIOGRAPHIA_PATH . '/includes/wp-biographia-box.php');
+					WP_BiographiaBox::enqueue_box_style();
 				}
-
-				else {
-					$css_url = 'css/wp-biographia-admin.min.css';
-				}
-				wp_enqueue_style ('wp-biographia-admin', WPBIOGRAPHIA_URL . $css_url);	
 			}
 
 			elseif ($pagenow == 'post.php' || $pagenow == 'post-new.php') {
@@ -137,14 +179,10 @@ if (!class_exists('WP_BiographiaAdmin')) {
 				if (isset ($post_override) && !empty ($post_override) && $post_override == 'on') {
 					// Only enqueue the admin edit JS if post overrides are enabled
 
-					if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
-						$css_url = 'css/wp-biographia-edit.css';
-					}
-
-					else {
-						$css_url = 'css/wp-biographia-edit.min.css';
-					}
-					wp_enqueue_style ('wp-biographia-edit', WPBIOGRAPHIA_URL . $css_url);
+					$src = WPBIOGRAPHIA_URL . 'css/wp-biographia-edit';
+					$src = WP_Biographia::make_css_path($src);
+					$handle = 'wp-biographia-edt';
+					wp_enqueue_style($handle, $src);
 				}
 			}
 		}
@@ -623,6 +661,8 @@ if (!class_exists('WP_BiographiaAdmin')) {
 				 *		wp_biographia_version = "332"
 				 * v3.3.2 added configuration settings ...
 				 *		wp_biographia_display_type = 'both'
+				 *		wp_biographia_design_type = 'classic'
+				 *		wp_biographia_design_wrap = ''
 				 */
 
 				switch ($current_plugin_version) {
@@ -776,6 +816,8 @@ if (!class_exists('WP_BiographiaAdmin')) {
 					case '331':
 					case '332':
 						$this->admin_upgrade_option ($settings, 'display_type', 'both');
+						$this->admin_upgrade_option($settings, 'design_type', 'classic');
+						$this->admin_upgrade_option($settings, 'design_wrap', '');
 
 						$fields = array(0 => 'ID');
 						$search = new WP_User_Query(array('fields' => $fields));
@@ -830,6 +872,7 @@ if (!class_exists('WP_BiographiaAdmin')) {
 			$category_settings = array ();
 			$style_settings = array ();
 			$content_settings = array ();
+			$design_settings = array();
 			$defaults_settings = array ();
 			$colophon_content = array ();
 			$config_settings = array ();
@@ -847,6 +890,9 @@ if (!class_exists('WP_BiographiaAdmin')) {
 			$alt_icons = ($settings['wp_biographia_content_alt_icons'] == 'on' ? true : false);
 
 			$tab = $this->admin_validate_tab ();
+			if ($tab === 'design') {
+				require_once(WPBIOGRAPHIA_PATH . '/includes/wp-biographia-box.php');
+			}
 
 			// TODO: This function is getting out of hand; need to split the per tab content
 			//       formatting into individual functions ...
@@ -1379,6 +1425,44 @@ if (!class_exists('WP_BiographiaAdmin')) {
 			 	 	 */
 					break;
 
+				case 'design':
+					/****************************************************************************
+				 	 * Design settings tab content
+				 	 */
+
+					$design_settings[] = '<p><strong>' . __('Design Type', 'wp_biographia') . '</strong><br />
+					<input type="radio" name="wp_biographia_design_type" id="wp-biographia-design-type" value="classic" '
+					. checked ($settings['wp_biographia_design_type'], 'classic', false)
+					. ' />&nbsp;<small>' . __('Classic design type', 'wp-biographia') . '</small><br />
+					<input type="radio" name="wp_biographia_design_type" id="wp-biographia-design-type" value="responsive" '
+					. checked ($settings['wp_biographia_design_type'], 'responsive', false)
+					. ' />&nbsp;<small>' . __('Responsive design type', 'wp-biographia') . '</small><br />
+					<input type="radio" name="wp_biographia_design_type" id="wp-biographia-design-type" value="custom" '
+					. checked ($settings['wp_biographia_design_type'], 'custom', false)
+					. ' />&nbsp;<small>' . __('Custom design type', 'wp-biographia') . '</small><br />';
+
+					$design_settings[] = '<p><strong>' . __("Wrap Biography Text", 'wp-biographia') . '</strong><br />
+						<input type="checkbox" name="wp_biographia_design_wrap" '
+						. checked ($settings['wp_biographia_design_wrap'], 'on', false)
+						. '/>
+						<small>' . __('Wrap the biography text around the user\'s avatar?', 'wp-biographia') . '</small></p>';
+						
+					$design_settings[] = '<div id="wp-biographia-design-classic"></div>';
+					$design_settings[] = '<div id="wp-biographia-design-responsive"></div>';
+					$design_settings[] = '<div id="wp-biographia-design-custom"></div>';
+					
+					$design_settings[] = '<div id="wp-biographia-design-preview">';
+					global $current_user;
+					get_currentuserinfo();
+					$mode = 'raw';
+					$design_settings[] = wpb_get_biography_box($mode, $current_user->user_login);
+					$design_settings[] = '</div>';
+
+					/****************************************************************************
+			 	 	 * End of Design tab content
+			 	 	 */
+					break;
+
 				case 'defaults':
 					/****************************************************************************
 			 	 	 * Defaults settings tab content
@@ -1821,6 +1905,12 @@ if (!class_exists('WP_BiographiaAdmin')) {
 						__('Content Settings', 'wp-biographia'),
 						implode ('', $content_settings));
 					break;
+					
+				case 'design':
+					$wrapped_content[] = $this->admin_postbox('wp-biographia-design-settings',
+						__('Design Settings', 'wp-biographia'),
+						implode('', $design_settings));
+					break;
 
 				case 'defaults':
 					$wrapped_content[] = $this->admin_postbox ('wp-biographia-default-settings',
@@ -2092,6 +2182,13 @@ if (!class_exists('WP_BiographiaAdmin')) {
 								$this->admin_option ('wp_biographia_content_posts');
 							break;
 
+						case 'design':
+							$settings['wp_biographia_design_type'] = 
+								$this->admin_option ('wp_biographia_design_type');
+							$settings['wp_biographia_design_wrap'] = 
+								$this->admin_option ('wp_biographia_design_wrap');
+							break;
+							
 						case 'defaults':
 							$update_options = false;
 							if (isset ($_POST['wp_biographia_reset_defaults']) &&
@@ -2280,6 +2377,7 @@ if (!class_exists('WP_BiographiaAdmin')) {
 				case 'exclude':
 				case 'style':
 				case 'content':
+				case 'design':
 				case 'defaults':
 		        	$content[] = '<p class="submit">';
 					$content[] = '<input type="submit" name="wp_biographia_option_submitted" class="button-primary" value="';

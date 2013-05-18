@@ -1,12 +1,132 @@
 @charset "UTF-8";
 /* CSS Document */
 
-.wp-biographia-container h3, .wp-biographia-container p {
-	margin:0 0 10px 0;
+.wp-biographia-classic-container-top,
+.wp-biographia-classic-container-around,
+.wp-biographia-classic-container-none {
+	clear: both;
+	overflow: hidden;
+	margin: 10px 0 10px 0;
+}
+
+.wp-biographia-classic-avatar {
+	background: #FFFFFF;
+	border: 1px solid #E7E7E7;
+	float: left;
+	height: 100px;
+	width: 100px;
+	margin: 10px -122px 0 0;
+	padding: 10px;
+}
+
+.wp-biographia-classic-text {
+	float: left;
+	margin: 10px 0 0 140px;
+}
+
+.wp-biographia-classic-text h3 {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+
+.wp-biographia-classic-list {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+
+.wp-biographia-classic-list li {
+	display: inline-block;
+	list-style-type: none;
+	/* Need to define all margins as 0 for Twenty Twelve compatibility to override .entry-content li */
+	margin: 0 0 0 0 !important;
+}
+
+.wp-biographia-classic-list-text li+li:before {
+	content: "| ";
+}
+
+.wp-biographia-classic-links {
+	font-size: 80%;
+}
+
+.wp-biographia-item-icon {
+	height: 32px !important;
+	width: 32px !important;
+	/* Remove Twenty Twelve box-shadow */
+	box-shadow: none !important;
+}
+
+.wp-biographia-responsive-container-top,
+.wp-biographia-responsive-container-around,
+.wp-biographia-responsive-container-none {
+	clear: both;
+	overflow: hidden;
+	margin: 10px 0 10px 0;
+}
+
+.wp-biographia-responsive-avatar {
+	background: #FFFFFF;
+	border: 1px solid #E7E7E7;
+	height: 100px;
+	width: 100px;
+	padding: 10px;
+	margin: 10px 0 0 0;
+}
+
+.wp-biographia-responsive-avatar-wrap {
+	margin: 10px 10px 0 0;
+	float: left;
+}
+
+.wp-biographia-responsive-title {
+	clear: both;
+	margin: 10px 0 0 0;
+}
+
+.wp-biographia-responsive-title-wrap {
+	margin: 10px 0 0 0;
+	display: inline-block;
+}
+
+.wp-biographia-responsive-text {
+	clear: both;
+}
+
+.wp-biographia-responsive-text-wrap {
+	/*clear: both;*/
+	display: inline;
+}
+
+.wp-biographia-responsive-list {
+	margin: 0 0 0 0;
+	padding: 0 0 0 0;
+}
+
+.wp-biographia-responsive-list li {
+	display: inline-block;
+	list-style-type: none;
+	/* Need to define all margins as 0 for Twenty Twelve compatibility to override .entry-content li */
+	margin: 0 0 0 0 !important;
+}
+
+.wp-biographia-responsive-list-text li+li:before {
+	content: "| ";
+}
+
+.wp-biographia-responsive-links {
+	font-size: 80%;
+}
+
+
+/*.wp-biographia-classic-text h3,
+.wp-biographia-responsive-text h3,
+.wp-biographia-classic-text p,
+.wp-biographia-responsive-text p {
+	margin:0 0 10px 0 !important;
 	padding:0;
 }
 
-.wp-biographia-container-top {
+.wp-biographia-classic-container-top, .wp-biographia-responsive-container-top {
 	background: #f2f7fc;
 	border-top: 4px solid #000;
 	clear: both;
@@ -15,7 +135,7 @@
 	padding: 20px;
 }
 
-.wp-biographia-container-around {
+.wp-biographia-classic-container-around, .wp-biographia-responsive-container-around {
 	background: #f2f7fc;
 	border: 1px solid #000;
 	clear: both;
@@ -24,7 +144,7 @@
 	padding: 20px;
 }
 
-.wp-biographia-container-none {
+.wp-biographia-classic-container-none, .wp-biographia-responsive-container-none {
 	background: #f2f7fc;
 	border-top:none;
 	clear: both;
@@ -33,7 +153,7 @@
 	padding: 20px;
 }
 
-.wp-biographia-pic {
+.wp-biographia-classic-pic, .wp-biographia-responsive-pic {
 	background: #fff;
 	border: 1px solid #e7e7e7;
 	float: left;
@@ -53,7 +173,7 @@
 .wp-biographia-avatar {
 }
 
-.wp-biographia-text {
+.wp-biographia-classic-text, .wp-biographia-responsive-text {
 	float: left;
 	margin: 0 0 0 140px;
 }
@@ -69,33 +189,40 @@
 
 .wp-biographia-list-hidden {
 	display: none;
-}
+}*/
 
 /*ul.wp-biographia-list {
 	margin: 0 0 0 0;
 }*/
 
-.wp-biographia-links {
+/*.wp-biographia-classic-links, .wp-biographia-responsive-links {
 	font-size: 80%;
 	padding-top: 10px;
 }
 
-.wp-biographia-list, .wp-biographia-list li {
+.wp-biographia-classic-list, 
+.wp-biographia-responsive-list,
+.wp-biographia-classic-list li,
+.wp-biographia-responsive-list li {
 	margin: 0 0 0 0 !important;
 	padding: 0 0 0 0 !important;
 }
 
-.wp-biographia-list li {
+.wp-biographia-classic-list li,
+.wp-biographia-responsive-list li {
 	display: inline-block;
 	list-style-type: none;
 }
 
-.wp-biographia-list-text li+li:before {
+.wp-biographia-classic-list-text li+li:before,
+.wp-biographia-responsive-list-text li+li:before {
 	content: "| ";
 }	
 
-.wp-biographia-list-text a:link, .wp-biographia-list-text a:visited,
-.wp-biographia-list-icon a:link, .wp-biographia-list-icon a:visited  {
+.wp-biographia-classic-list-text a:link, .wp-biographia-classic-list-text a:visited,
+.wp-biographia-classic-list-icon a:link, .wp-biographia-classic-list-icon a:visited,
+.wp-biographia-responsive-list-text a:link, .wp-biographia-responsive-list-text a:visited,
+.wp-biographia-responsive-list-icon a:link, .wp-biographia-responsive-list-icon a:visited {
 	text-decoration: none;
 }
 
@@ -105,7 +232,7 @@
 	box-shadow: none !important;
 }
 
-/*ul.wp-biographia-list-text li, ul.wp-biographia-list-icon li {
+ul.wp-biographia-list-text li, ul.wp-biographia-list-icon li {
 	display: inline-block;
 	list-style-type: none;
 	background: none;
@@ -126,7 +253,7 @@ ul.wp-biographia-list-icon li {
 }*/
 
 
-.idevice .wp-biographia-container-top,
+/*.idevice .wp-biographia-container-top,
 .idevice .wp-biographia-container-around,
 .idevice .wp-biographia-container-none {
 	padding: 0;
@@ -151,4 +278,4 @@ ul.wp-biographia-list-icon li {
 	margin-left: auto;
 	margin-right: auto;
 	padding: 8px;
-}
+}*/
