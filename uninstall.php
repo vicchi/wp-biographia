@@ -13,16 +13,16 @@ if (defined('WP_UNINSTALL_PLUGIN')) {
 		
 		delete_user_meta ($user->ID, 'wp_biographia_suppress_posts');
 		delete_user_meta ($user->ID, 'wp_biographia_suppress_pages');
-		delete_user_meta ($user->ID, 'twitter');
-		delete_user_meta ($user->ID, 'facebook');
-		delete_user_meta ($user->ID, 'linkedin');
-		delete_user_meta ($user->ID, 'googleplus');
-		delete_user_meta ($user->ID, 'delicious');
-		delete_user_meta ($user->ID, 'flickr');
-		delete_user_meta ($user->ID, 'picasa');
-		delete_user_meta ($user->ID, 'vimeo');
-		delete_user_meta ($user->ID, 'youtube');
-		delete_user_meta ($user->ID, 'reddit');
+		delete_user_meta ($user->ID, 'wpb_twitter');
+		delete_user_meta ($user->ID, 'wpb_facebook');
+		delete_user_meta ($user->ID, 'wpb_linkedin');
+		delete_user_meta ($user->ID, 'wpb_googleplus');
+		delete_user_meta ($user->ID, 'wpb_delicious');
+		delete_user_meta ($user->ID, 'wpb_flickr');
+		delete_user_meta ($user->ID, 'wpb_picasa');
+		delete_user_meta ($user->ID, 'wpb_vimeo');
+		delete_user_meta ($user->ID, 'wpb_youtube');
+		delete_user_meta ($user->ID, 'wpb_reddit');
 		delete_user_meta ($user->ID, 'wp_biographia_short_bio');
 		
 		// Remove the 'dismissed pointers' flag for each user
