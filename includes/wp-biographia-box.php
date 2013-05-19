@@ -55,9 +55,9 @@ if (!class_exists('WP_BiographiaBox')) {
 
 
 			$settings = WP_Biographia::get_option ();
-			if (is_array ($settings) && isset ($settings['wp_biographia_version'])) {
-				$content_priority = $settings['wp_biographia_admin_content_priority'];
-				$excerpt_priority = $settings['wp_biographia_admin_excerpt_priority'];
+			if (is_array ($settings) && isset ($settings['version'])) {
+				$content_priority = $settings['admin_content_priority'];
+				$excerpt_priority = $settings['admin_excerpt_priority'];
 			}
 			else {
 				$content_priority = $excerpt_priority = self::PRIORITY;
@@ -66,15 +66,15 @@ if (!class_exists('WP_BiographiaBox')) {
 			$hook_to_loop = false;
 			$display_type = null;
 
-			if (isset ($settings['wp_biographia_display_type']) && !empty ($settings['wp_biographia_display_type'])) {
-				$display_type = $settings['wp_biographia_display_type'];
+			if (isset ($settings['display_type']) && !empty ($settings['display_type'])) {
+				$display_type = $settings['display_type'];
 			}
 			
 			if ($display_type === 'content' || $display_type === 'both') {
 				$this->hook ('the_content', 'insert', intval ($content_priority));
 				if ($content_priority < self::PRIORITY) {
-					if (isset ($settings['wp_biographia_sync_content_wpautop']) &&
-							($settings['wp_biographia_sync_content_wpautop'] == 'on')) {
+					if (isset ($settings['sync_content_wpautop']) &&
+							($settings['sync_content_wpautop'] == 'on')) {
 						$hook_to_loop = true;
 					}
 				}
@@ -83,8 +83,8 @@ if (!class_exists('WP_BiographiaBox')) {
 			if ($display_type === 'excerpt' || $display_type === 'both') {
 				$this->hook ('the_excerpt', 'insert', intval($excerpt_priority));
 				if ($excerpt_priority < self::PRIORITY) {
-					if (isset ($settings['wp_biographia_sync_excerpt_wpautop']) &&
-							($settings['wp_biographia_sync_excerpt_wpautop'] == 'on')) {
+					if (isset ($settings['sync_excerpt_wpautop']) &&
+							($settings['sync_excerpt_wpautop'] == 'on')) {
 						$hook_to_loop = true;
 					}
 				}
@@ -126,10 +126,10 @@ if (!class_exists('WP_BiographiaBox')) {
 
 		function loop_start () {
 			$settings = WP_Biographia::get_option ();
-			if (isset ($settings['wp_biographia_sync_content_wpautop']) && ($settings['wp_biographia_sync_content_wpautop'] == 'on')) {
+			if (isset ($settings['sync_content_wpautop']) && ($settings['sync_content_wpautop'] == 'on')) {
 				$priority = has_filter ('the_content', 'wpautop');
 				if ($priority !== false) {
-					$content_priority = $settings['wp_biographia_admin_content_priority'];
+					$content_priority = $settings['admin_content_priority'];
 					$this->content_autop->has_filter = true;
 					$this->content_autop->original = $priority;
 					$this->content_autop->new = --$content_priority;
@@ -138,10 +138,10 @@ if (!class_exists('WP_BiographiaBox')) {
 					add_filter ('the_content', 'wpautop', $this->content_autop->new);
 				}
 			}
-			if (isset ($settings['wp_biographia_sync_excerpt_wpautop']) && ($settings['wp_biographia_sync_excerpt_wpautop'] == 'on')) {
+			if (isset ($settings['sync_excerpt_wpautop']) && ($settings['sync_excerpt_wpautop'] == 'on')) {
 				$priority = has_filter ('the_excerpt', 'wpautop');
 				if ($priority !== false) {
-					$excerpt_priority = $settings['wp_biographia_admin_content_priority'];
+					$excerpt_priority = $settings['admin_content_priority'];
 					$this->excerpt_autop->has_filter = true;
 					$this->excerpt_autop->original = $priority;
 					$this->excerpt_autop->new = --$excerpt_priority;
@@ -277,7 +277,7 @@ if (!class_exists('WP_BiographiaBox')) {
 		 */
 
 		function insert ($content) {
-			$option = WP_Biographia::get_option ('wp_biographia_admin_lock_to_loop');
+			$option = WP_Biographia::get_option ('admin_lock_to_loop');
 			if ($option === 'on') {
 				if (!in_the_loop () || !is_main_query ()) {
 					return $content;
@@ -291,7 +291,7 @@ if (!class_exists('WP_BiographiaBox')) {
 				$this->author_id = $post->post_author;
 			}
 
-			$location = WP_Biographia::get_option ('wp_biographia_display_location');
+			$location = WP_Biographia::get_option ('display_location');
 			if ((isset ($location)) && ($location == 'top')) {
 				$pattern = apply_filters ('wp_biographia_pattern', '%2$s %1$s');
 			}
@@ -389,8 +389,8 @@ if (!class_exists('WP_BiographiaBox')) {
 						$bio_content = $this->display ();
 
 						// check exclusions
-						$post_option = 'wp_biographia_' . $post_type . '_exclusions';
-						$global_option = 'wp_biographia_global_' . $post_type . '_exclusions';
+						$post_option = $post_type . '_exclusions';
+						$global_option = 'global_' . $post_type . '_exclusions';
 					
 						if (WP_Biographia::get_option ($post_option) ||
 								WP_Biographia::get_option ($global_option)) {
@@ -545,7 +545,7 @@ if (!class_exists('WP_BiographiaBox')) {
 			}
 
 			if (!is_page ()) {
-				$categories = explode (',', $settings['wp_biographia_category_exclusions']);
+				$categories = explode (',', $settings['category_exclusions']);
 				if (!empty ($categories)) {
 					foreach ($categories as $category) {
 						if (in_category ($category, $post->ID)) {
@@ -558,10 +558,10 @@ if (!class_exists('WP_BiographiaBox')) {
 
 			switch ($context) {
 				case "front":
-					$option = 'wp_biographia_display_front_';
+					$option = 'display_front_';
 					if (!$excluded || $this->is_shortcode) {
-						$options[self::DISPLAY_STUB] = 'wp_biographia_display_front_';
-						$options[self::BIOGRAPHY_STUB] = 'wp_biographia_display_front_bio_';
+						$options[self::DISPLAY_STUB] = 'display_front_';
+						$options[self::BIOGRAPHY_STUB] = 'display_front_bio_';
 						$new_content = $this->post_types_cycle ($options, $content, $pattern);
 					}
 					else {
@@ -572,28 +572,28 @@ if (!class_exists('WP_BiographiaBox')) {
 				case "archive":
 					if (!$excluded || $this->is_shortcode) {
 						if (is_post_type_archive ()) {
-							$options[self::DISPLAY_STUB] = 'wp_biographia_display_archives_';
-							$options[self::BIOGRAPHY_STUB] = 'wp_biographia_display_archives_bio_';
+							$options[self::DISPLAY_STUB] = 'display_archives_';
+							$options[self::BIOGRAPHY_STUB] = 'display_archives_bio_';
 						}
 						else {
-							$options[self::DISPLAY_STUB] = 'wp_biographia_display_archives_';
-							$options[self::BIOGRAPHY_STUB] = 'wp_biographia_display_archives_bio_';
+							$options[self::DISPLAY_STUB] = 'display_archives_';
+							$options[self::BIOGRAPHY_STUB] = 'display_archives_bio_';
 
 							if (is_author ()) {
-								$options[self::ARCHIVE_STUB] = 'wp_biographia_display_author_archives_';
-								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'wp_biographia_display_author_archives_bio_';
+								$options[self::ARCHIVE_STUB] = 'display_author_archives_';
+								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'display_author_archives_bio_';
 							}
 							else if (is_category ()) {
-								$options[self::ARCHIVE_STUB] = 'wp_biographia_display_category_archives_';
-								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'wp_biographia_display_category_archives_bio_';
+								$options[self::ARCHIVE_STUB] = 'display_category_archives_';
+								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'display_category_archives_bio_';
 							}
 							else if (is_date ()) {
-								$options[self::ARCHIVE_STUB] = 'wp_biographia_display_date_archives_';
-								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'wp_biographia_display_date_archives_bio_';
+								$options[self::ARCHIVE_STUB] = 'display_date_archives_';
+								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'display_date_archives_bio_';
 							}
 							else if (is_tag ()) {
-								$options[self::ARCHIVE_STUB] = 'wp_biographia_display_tag_archives_';
-								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'wp_biographia_display_tag_archives_bio_';
+								$options[self::ARCHIVE_STUB] = 'display_tag_archives_';
+								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'display_tag_archives_bio_';
 							}
 						}
 						
@@ -605,7 +605,7 @@ if (!class_exists('WP_BiographiaBox')) {
 					break;
 
 				case "page":
-					$option = WP_Biographia::get_option ('wp_biographia_display_pages');
+					$option = WP_Biographia::get_option ('display_pages');
 					if ((isset ($option) &&	$option &&
 							get_user_meta ($this->author_id, 'wp_biographia_suppress_pages', true) !== 'on') ||
 							($this->is_shortcode && get_user_meta ($this->author_id, 'wp_biographia_suppress_pages', true) !== 'on')) {
@@ -613,14 +613,14 @@ if (!class_exists('WP_BiographiaBox')) {
 					}
 
 					if (!$excluded && $this->display_bio) {
-						if (WP_Biographia::get_option ('wp_biographia_page_exclusions')) {
-							$page_exclusions = explode (',', WP_Biographia::get_option ('wp_biographia_page_exclusions'));
+						if (WP_Biographia::get_option ('page_exclusions')) {
+							$page_exclusions = explode (',', WP_Biographia::get_option ('page_exclusions'));
 							$this->display_bio = (!in_array ($post->ID, $page_exclusions));
 						}
 					}
 
 					if (!$excluded && $this->display_bio) {
-						$option = WP_Biographia::get_option ('wp_biographia_display_bio_pages');
+						$option = WP_Biographia::get_option ('display_bio_pages');
 						if (!empty ($option) && $option === 'excerpt') {
 							$this->override['type'] = $option;
 						}
@@ -636,8 +636,8 @@ if (!class_exists('WP_BiographiaBox')) {
 				case "single":
 					// Cycle through Custom Post Types
 					if (!$excluded) {
-						$options[self::DISPLAY_STUB] = 'wp_biographia_display_';
-						$options[self::BIOGRAPHY_STUB] = 'wp_biographia_display_bio_';
+						$options[self::DISPLAY_STUB] = 'display_';
+						$options[self::BIOGRAPHY_STUB] = 'display_bio_';
 						$new_content = $this->post_types_cycle ($options, $content, $pattern);
 					}
 
@@ -647,7 +647,7 @@ if (!class_exists('WP_BiographiaBox')) {
 					break;
 				
 				case "feed":
-					$option = WP_Biographia::get_option ('wp_biographia_display_feed');
+					$option = WP_Biographia::get_option ('display_feed');
 					if (isset ($option) && $option) {
 						$this->display_bio = true;
 					}
@@ -658,7 +658,7 @@ if (!class_exists('WP_BiographiaBox')) {
 
 					if (!$excluded && $this->display_bio) {
 						$this->for_feed = true;
-						$option = WP_Biographia::get_option ('wp_biographia_display_bio_feed');
+						$option = WP_Biographia::get_option ('display_bio_feed');
 						if (!empty ($option) && $option === 'excerpt') {
 							$this->override['type'] = $option;
 						}
@@ -937,7 +937,7 @@ if (!class_exists('WP_BiographiaBox')) {
 
 		function display () {
 			$settings = WP_Biographia::get_option();
-			$design = $settings['wp_biographia_design_type'];
+			$design = $settings['design_type'];
 			
 			$overrides = $this->get_overrides();
 			$meta = $this->get_user_meta($overrides);
@@ -1168,7 +1168,7 @@ if (!class_exists('WP_BiographiaBox')) {
 		 * @return boolean Returns true if the setting exists and is not empty
 		 */
 	
-		function check_option (&$settings, $key) {
+		static function check_option (&$settings, $key) {
 			return (isset ($settings[$key]) && !empty ($settings[$key]));
 		}
 
@@ -1180,7 +1180,7 @@ if (!class_exists('WP_BiographiaBox')) {
 			$options = WP_Biographia::get_option();
 			$overrides = array();
 			
-			$overrides['enabled'] = ($options['wp_biographia_admin_post_overrides'] === 'on');
+			$overrides['enabled'] = ($options['admin_post_overrides'] === 'on');
 			if ($overrides['enabled']) {
 				$overrides['bio_override'] = (get_post_meta($post->ID, '_wp_biographia_bio_override', true) === 'on');
 				$overrides['bio_text'] = get_post_meta ($post->ID, '_wp_biographia_bio_text', true);
@@ -1232,8 +1232,8 @@ if (!class_exists('WP_BiographiaBox')) {
 			$meta['posts_url'] = get_author_posts_url ($meta['id']);
 
 			$meta['pic_size'] =
-				 (isset ($options['wp_biographia_content_image_size'])) ?
-					$options['wp_biographia_content_image_size'] : '100';
+				 (isset ($options['content_image_size'])) ?
+					$options['content_image_size'] : '100';
 
 			$this->sentry = true;
 			$meta['pic'] = get_avatar($meta['email'], $meta['pic_size']);
@@ -1248,22 +1248,22 @@ if (!class_exists('WP_BiographiaBox')) {
 			$options = WP_Biographia::get_option();
 			
 			$title['class'] = 'wp-biographia-' . $design . '-title';
-			if (!empty($options['wp_biographia_design_wrap']) && $options['wp_biographia_design_wrap'] === 'on') {
+			if (!empty($options['design_wrap']) && $options['design_wrap'] === 'on') {
 				$title['class'] .= ' wp-biographia-' . $design . '-title-wrap';
 			}
 			if ($overrides['enabled'] && $overrides['title_override']) {
 				$text[] = $overrides['title_text'];
 			}
 
-			else if (!empty($options['wp_biographia_content_prefix']) || !empty($options['wp_biographia_content_name'])) {
+			else if (!empty($options['content_prefix']) || !empty($options['content_name'])) {
 				$prefix = '';
 				
 				if (!empty($this->override) && !empty($this->override['prefix'])) {
 					$prefix = $this->override['prefix'];
 				}
 				
-				elseif (!empty($options['wp_biographia_content_prefix'])) {
-					$prefix = $options['wp_biographia_content_prefix'];
+				elseif (!empty($options['content_prefix'])) {
+					$prefix = $options['content_prefix'];
 				}
 				
 				if (!empty($prefix)) {
@@ -1274,8 +1274,8 @@ if (!class_exists('WP_BiographiaBox')) {
 				if (!empty($this->override) && !empty($this->override['name'])) {
 					$name_type = $this->override['name'];
 				}
-				elseif (!empty($options['wp_biographia_content_name'])) {
-					$name_type = $options['wp_biographia_content_name'];
+				elseif (!empty($options['content_name'])) {
+					$name_type = $options['content_name'];
 				}
 				
 				if (!empty($name_type) && $name_type !== 'none') {
@@ -1290,7 +1290,7 @@ if (!class_exists('WP_BiographiaBox')) {
 							break;
 					}
 					
-					if (!empty($options['wp_biographia_content_authorpage']) && ($options['wp_biographia_content_authorpage'] === 'on')) {
+					if (!empty($options['content_authorpage']) && ($options['content_authorpage'] === 'on')) {
 						$fmt = '<a href="%s" title="%s">%s</a>';
 						$text[] = sprintf($fmt, $meta['posts_url'], $title['name'], $title['name']);
 					}
@@ -1310,9 +1310,9 @@ if (!class_exists('WP_BiographiaBox')) {
 		
 		private function make_wpb_border($design) {
 			$options = WP_Biographia::get_option();
-			$type = $options['wp_biographia_style_border'];
-			$color = $options['wp_biographia_style_border_color'];
-			$background = $options['wp_biographia_style_bg'];
+			$type = $options['style_border'];
+			$color = $options['style_border_color'];
+			$background = $options['style_bg'];
 			$class = 'wp-biographia-' . $design . '-container-' . $type;
 			$style = 'background-color: ' . $background . ';';
 			
@@ -1335,7 +1335,7 @@ if (!class_exists('WP_BiographiaBox')) {
 			$options = WP_Biographia::get_option();
 			$avatar = array('enabled' => false, 'class' => '', 'avatar' => '');
 			
-			$enabled = (!empty($options['wp_biographia_content_image']) && ($options['wp_biographia_content_image'] === 'on'));
+			$enabled = (!empty($options['content_image']) && ($options['content_image'] === 'on'));
 			if ($enabled && $overrides['enabled'] && $overrides['suppress_avatar']) {
 				$enabled = false;
 			}
@@ -1345,7 +1345,7 @@ if (!class_exists('WP_BiographiaBox')) {
 				$avatar['bio-class'] = 'wp-biographia-' . $design . '-text';
 				$avatar['class'] = 'wp-biographia-' . $design . '-avatar';
 
-				if (!empty($options['wp_biographia_design_wrap']) && $options['wp_biographia_design_wrap'] === 'on') {
+				if (!empty($options['design_wrap']) && $options['design_wrap'] === 'on') {
 					$avatar['bio-class'] .= ' wp-biographia-' . $design . '-text-wrap';
 					$avatar['class'] .= ' wp-biographia-' . $design . '-avatar-wrap';
 				}
@@ -1365,7 +1365,7 @@ if (!class_exists('WP_BiographiaBox')) {
 			$options = WP_Biographia::get_option();
 			$text[] = array('enabled' => false, 'content' => '');
 			
-			if (!empty($options['wp_biographia_content_bio']) || ($overrides['enabled'] && $overrides['bio_override'])) {
+			if (!empty($options['content_bio']) || ($overrides['enabled'] && $overrides['bio_override'])) {
 				$text['enabled'] = true;
 				$text['content'] = '<p>' . $meta['bio'] . '</p>';
 			}
@@ -1379,11 +1379,11 @@ if (!class_exists('WP_BiographiaBox')) {
 			
 			if (!$overrides['enabled'] || !$overrides['suppress_links']) {
 				if (!$this->for_feed) {
-					$links['icons'] = (!empty($options['wp_biographia_content_icons']) && ($options['wp_biographia_content_icons'] === 'on')) ? 'icon' : 'text';
+					$links['icons'] = (!empty($options['content_icons']) && ($options['content_icons'] === 'on')) ? 'icon' : 'text';
 				}
 				
-				if ($links['icons'] && (!empty($options['wp_biographia_content_alt_icons']) && $options['wp_biographia_content_alt_icons'] === 'on' && !empty($options['wp_biographia_content_icon_url']))) {
-					$links['url'] = $options['wp_biographia_content_icon_url'];
+				if ($links['icons'] && (!empty($options['content_alt_icons']) && $options['content_alt_icons'] === 'on' && !empty($options['content_icon_url']))) {
+					$links['url'] = $options['content_icon_url'];
 				}
 
 				$link_items = $this->link_items ();
@@ -1396,14 +1396,14 @@ if (!class_exists('WP_BiographiaBox')) {
 				$title_name_stub = __('%1$s On %2$s', 'wp-biographia');
 				$title_noname_stub = __('On %s', 'wp-biographia');
 
-				$link_meta = 'target="' . $options['wp_biographia_content_link_target']. '"';
-				if (!empty($options['wp_biographia_content_link_nofollow']) &&
-						($options['wp_biographia_content_link_nofollow'] == 'on')) {
+				$link_meta = 'target="' . $options['content_link_target']. '"';
+				if (!empty($options['content_link_nofollow']) &&
+						($options['content_link_nofollow'] == 'on')) {
 					$link_meta .= ' rel="nofollow"';
 				}
 
 				// Deal with the email link first as a special case ...
-				if ((!empty ($options['wp_biographia_content_email']) && ($options['wp_biographia_content_email'] == 'on')) && (!empty ($meta['email']))) {
+				if ((!empty ($options['content_email']) && ($options['content_email'] == 'on')) && (!empty ($meta['email']))) {
 					if (!empty ($title['name'])) {
 						$link_title = sprintf (__('Send %s Mail', 'wp-biographia'), $title['name']);
 					}
@@ -1421,11 +1421,11 @@ if (!class_exists('WP_BiographiaBox')) {
 				// Now deal with the other links that follow the same format and can be "templatised" ...
 
 				$supported_links = $this->supported_link_items ();
-				$config_links = $options['wp_biographia_admin_links'];
+				$config_links = $options['admin_links'];
 				foreach ($link_items as $link_key => $link_attrs) {
 					$display_link = false;
 					if (array_key_exists ($link_key, $supported_links)) {
-						$option_name = 'wp_biographia_content_' . $link_key;
+						$option_name = 'content_' . $link_key;
 						if ($link_key == 'web') {
 							$display_link = (!empty ($options[$option_name]) && ($options[$option_name] == 'on') && (!empty ($meta[$link_key])));
 						}
@@ -1455,7 +1455,7 @@ if (!class_exists('WP_BiographiaBox')) {
 				}	// end-foreach (...)
 
 				// Finally, deal with the "More Posts" link
-				if (!empty ($options['wp_biographia_content_posts']) && ($options['wp_biographia_content_posts'] != 'none') && ($meta['posts'] > 0)) {
+				if (!empty ($options['content_posts']) && ($options['content_posts'] != 'none') && ($meta['posts'] > 0)) {
 					if (!empty ($title['name'])) {
 						$link_title = sprintf (__('More Posts By %s', 'wp-biographia'), $title['name']);
 					}
@@ -1464,7 +1464,7 @@ if (!class_exists('WP_BiographiaBox')) {
 						$link_title = __('More Posts', 'wp-biographia');
 					}
 
-					switch ($options['wp_biographia_content_posts']) {
+					switch ($options['content_posts']) {
 						case 'extended':
 							$link_text = __('More Posts', 'wp-biographia') . ' ('
 								. $meta['posts']
