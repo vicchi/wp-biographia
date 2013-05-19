@@ -5,7 +5,7 @@ if (!defined('WPBIOGRAPHIA_INCLUDE_SENTRY')) {
 }
 
 if (!class_exists ('WP_BiographiaPointers')) {
-	class WP_BiographiaPointers extends WP_PluginBase {
+	class WP_BiographiaPointers extends WP_PluginBase_v1_1 {
 	
 		private static $instance;
 		

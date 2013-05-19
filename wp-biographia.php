@@ -125,6 +125,7 @@ if (!class_exists ('WP_Biographia')) {
 
 			if (is_admin ()) {
 				require_once(WPBIOGRAPHIA_PATH . '/includes/wp-biographia-admin.php');
+				require_once(WPBIOGRAPHIA_PATH . '/includes/wp-biographia-upgrade.php');
 				
 				/*$this->hook ('admin_menu');
 				$this->hook ('admin_print_scripts');
@@ -249,7 +250,7 @@ if (!class_exists ('WP_Biographia')) {
 		 */
 	
 		function user_contactmethods ($contactmethods) {
-			$links = $this->get_option ('wp_biographia_admin_links');
+			$links = $this->get_option ('admin_links');
 			foreach ($this->defaults () as $key => $data) {
 				if (isset ($data['contactmethod']) && !empty ($data['contactmethod'])) {
 					if (isset ($links[$key]) && $links[$key] == 'on') {
@@ -268,8 +269,8 @@ if (!class_exists ('WP_Biographia')) {
 		 * plugin activation / "activate_pluginname" action hook; called when the plugin is
 		 * first activated.
 		 *
-		 * Defines and sets up the default settings and options for the plugin. The default set
-		 * of options are configurable, at activation time, via the
+		 * Defines and sets up the default settings and options for the plugin. The default
+		 * set of options are configurable, at activation time, via the
 		 * 'wp_biographia_default_settings' filter hook.
 		 */
 	
@@ -287,70 +288,70 @@ if (!class_exists ('WP_Biographia')) {
 				$settings = apply_filters ('wp_biographia_default_settings' , 
 					//option name => option value
 					array (
-						'wp_biographia_installed' => 'on',
-						'wp_biographia_version' => self::VERSION,
-						'wp_biographia_style_bg' => '#FFEAA8',
-						'wp_biographia_style_border' => 'top',
-						'wp_biographia_display_front_posts' => 'on',
-						'wp_biographia_display_archives_posts' => 'on',
-						'wp_biographia_display_author_archives_posts' => 'on',
-						'wp_biographia_display_category_archives_posts' => 'on',
-						'wp_biographia_display_date_archives_posts' => 'on',
-						'wp_biographia_display_tag_archives_posts' => 'on',
-						'wp_biographia_display_posts' => 'on',
-						'wp_biographia_display_pages' => 'on',
-						'wp_biographia_display_feed' => '',
-						'wp_biographia_display_location' => 'bottom',
-						'wp_biographia_content_prefix' => __('About', 'wp-biographia'),
-						'wp_biographia_content_name' => 'first-last-name',
-						'wp_biographia_content_authorpage' => 'on',
-						'wp_biographia_content_image' => 'on',
-						'wp_biographia_content_image_size' => '100',
-						'wp_biographia_content_bio' => 'on',
-						'wp_biographia_content_icons' => '',
-						'wp_biographia_content_alt_icons' => '',
-						'wp_biographia_content_icon_url' => '',
-						'wp_biographia_content_email' => 'on',
-						'wp_biographia_content_web' => 'on',
-						'wp_biographia_content_twitter' => 'on',
-						'wp_biographia_content_facebook' => 'on',
-						'wp_biographia_content_linkedin' => 'on',
-						'wp_biographia_content_googleplus' => 'on',
-						'wp_biographia_content_delicious' => '',
-						'wp_biographia_content_flickr' => '',
-						'wp_biographia_content_picasa' => '',
-						'wp_biographia_content_vimeo' => '',
-						'wp_biographia_content_youtube' => '',
-						'wp_biographia_content_reddit' => '',
-						'wp_biographia_content_posts' => 'extended',
-						'wp_biographia_content_link_target' => '_self',
-						'wp_biographia_content_link_nofollow' => '',
-						'wp_biographia_admin_new_users' => '',
-						'wp_biographia_admin_hide_profiles' => '',
-						'wp_biographia_category_exclusions' => '',
-						'wp_biographia_post_exclusions' => '',
-						'wp_biographia_global_post_exclusions' => '',
-						'wp_biographia_page_exclusions' => '',
-						'wp_biographia_admin_content_priority' => self::PRIORITY,
-						'wp_biographia_admin_excerpt_priority' => self::PRIORITY,
-						'wp_biographia_sync_content_wpautop' => '',
-						'wp_biographia_sync_excerpt_wpautop' => '',
-						'wp_biographia_admin_post_overrides' => '',
-						'wp_biographia_admin_links' => $admin_links,
-						'wp_biographia_display_front_bio_posts' => 'full',
-						'wp_biographia_display_archives_bio_posts' => 'full',
-						'wp_biographia_display_author_archives_bio_posts' => 'full',
-						'wp_biographia_display_category_archives_bio_posts' => 'full',
-						'wp_biographia_display_date_archives_bio_posts' => 'full',
-						'wp_biographia_display_tag_archives_bio_posts' => 'full',
-						'wp_biographia_display_bio_posts' => 'full',
-						'wp_biographia_display_bio_pages' => 'full',
-						'wp_biographia_display_bio_feed' => 'full',
-						'wp_biographia_admin_lock_to_loop' => '',
-						'wp_biographia_style_border_color' => '#000000',
-						'wp_biographia_display_type' => 'both',
-						'wp_biographia_design_type' => 'classic',
-						'wp_biographia_design_wrap' => ''
+						'installed' => 'on',
+						'version' => self::VERSION,
+						'style_bg' => '#FFEAA8',
+						'style_border' => 'top',
+						'display_front_posts' => 'on',
+						'display_archives_posts' => 'on',
+						'display_author_archives_posts' => 'on',
+						'display_category_archives_posts' => 'on',
+						'display_date_archives_posts' => 'on',
+						'display_tag_archives_posts' => 'on',
+						'display_posts' => 'on',
+						'display_pages' => 'on',
+						'display_feed' => '',
+						'display_location' => 'bottom',
+						'content_prefix' => __('About', 'wp-biographia'),
+						'content_name' => 'first-last-name',
+						'content_authorpage' => 'on',
+						'content_image' => 'on',
+						'content_image_size' => '100',
+						'content_bio' => 'on',
+						'content_icons' => '',
+						'content_alt_icons' => '',
+						'content_icon_url' => '',
+						'content_email' => 'on',
+						'content_web' => 'on',
+						'content_twitter' => 'on',
+						'content_facebook' => 'on',
+						'content_linkedin' => 'on',
+						'content_googleplus' => 'on',
+						'content_delicious' => '',
+						'content_flickr' => '',
+						'content_picasa' => '',
+						'content_vimeo' => '',
+						'content_youtube' => '',
+						'content_reddit' => '',
+						'content_posts' => 'extended',
+						'content_link_target' => '_self',
+						'content_link_nofollow' => '',
+						'admin_new_users' => '',
+						'admin_hide_profiles' => '',
+						'category_exclusions' => '',
+						'post_exclusions' => '',
+						'global_post_exclusions' => '',
+						'page_exclusions' => '',
+						'admin_content_priority' => self::PRIORITY,
+						'admin_excerpt_priority' => self::PRIORITY,
+						'sync_content_wpautop' => '',
+						'sync_excerpt_wpautop' => '',
+						'admin_post_overrides' => '',
+						'admin_links' => $admin_links,
+						'display_front_bio_posts' => 'full',
+						'display_archives_bio_posts' => 'full',
+						'display_author_archives_bio_posts' => 'full',
+						'display_category_archives_bio_posts' => 'full',
+						'display_date_archives_bio_posts' => 'full',
+						'display_tag_archives_bio_posts' => 'full',
+						'display_bio_posts' => 'full',
+						'display_bio_pages' => 'full',
+						'display_bio_feed' => 'full',
+						'admin_lock_to_loop' => '',
+						'style_border_color' => '#000000',
+						'display_type' => 'both',
+						'design_type' => 'classic',
+						'design_wrap' => ''
 					) 
 				);
 				update_option (self::OPTIONS, $settings);
