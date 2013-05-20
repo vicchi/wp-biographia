@@ -192,9 +192,7 @@ if (!class_exists('WP_BiographiaAdmin')) {
 		 */
 
 		function admin_init () {
-			error_log('admin_init++');
 			$upgrade = new WP_BiographiaUpgrade();
-			error_log('calling upgrade');
 			$upgrade->upgrade();
 
 			$skip_tour = $this->admin_is_pointer_set ();
