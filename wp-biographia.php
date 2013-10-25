@@ -985,14 +985,30 @@ if (!class_exists ('WP_Biographia')) {
 			}
 
 			if (!is_page ()) {
-				$categories = explode (',', $settings['wp_biographia_category_exclusions']);
-				if (!empty ($categories)) {
-					foreach ($categories as $category) {
-						if (in_category ($category, $post->ID)) {
-							$excluded = true;
-							break;
-						}
-					}	// end-foreach (...)
+				// It looks like the behaviour of in_category() has changed in WP 3.7. Prior
+				// to this release a call to in_category() with an empty $category argument
+				// returned false (due to explode returning an array with a single empty
+				// element if wp_biographia_category_exclusions was set to ''), but after
+				// upgrading to WP 3.7, in_category() now returns true in this case, which
+				// effectively means every single post is excluded from displaying the
+				// Biography Box. Not good. So now, check whether this option is empty and
+				// then only check for category exclusions if there's at least one category
+				// configured for exclusion.
+				//
+				// You could argue that this was a bug waiting to happen if you're being
+				// uncharitable. I'd tend to agree with you.
+				
+				if (isset($settings['wp_biographia_category_exclusions']) &&
+						!empty($settings['wp_biographia_category_exclusions'])) {
+					$categories = explode (',', $settings['wp_biographia_category_exclusions']);
+					if (!empty ($categories)) {
+						foreach ($categories as $category) {
+							if (in_category ($category, $post->ID)) {
+								$excluded = true;
+								break;
+							}
+						}	// end-foreach (...)
+					}
 				}
 			}
 
