@@ -105,8 +105,8 @@ if (!class_exists ('WP_Biographia')) {
 		private $is_sla_plugin_active = false;
 	
 		const OPTIONS = 'wp_biographia_settings';
-		const VERSION = '330';
-		const DISPLAY_VERSION = 'v3.3.0';
+		const VERSION = '332';
+		const DISPLAY_VERSION = 'v3.3.2';
 		const PRIORITY = 10;
 		const META_NONCE = 'wp-biographia-meta-nonce';
 		const DISPLAY_STUB = 'display';
@@ -2484,6 +2484,8 @@ if (!class_exists ('WP_Biographia')) {
 						$this->admin_upgrade_option ($settings, 'display_bio_feed', 'full');
 						$this->admin_upgrade_option ($settings, 'admin_lock_to_loop', '');
 						$this->admin_upgrade_option ($settings, 'style_border_color', '#000000');
+
+					case '332':
 						$settings['wp_biographia_version'] = self::VERSION;
 						$upgrade_settings = true;
 
