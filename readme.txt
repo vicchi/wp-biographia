@@ -2,9 +2,9 @@
 Contributors: vicchi, wpsmith
 Donate link: http://www.vicchi.org/codeage/donate/
 Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, user, about author, user box, author box, contributors, author biography, user biography, avatar, gravatar, guest post, guest author
-Requires at least: 3.4
-Tested up to: 3.5.0
-Stable tag: 3.3.1
+Requires at least: 3.7
+Tested up to: 3.7.0
+Stable tag: 3.3.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -220,7 +220,12 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 3.3.1 (2012.12.18)
+The current version is 3.3.2 (2013.10.25)
+
+= 3.3.2 =
+* Released 2013.10.25
+* Fixed: After upgrading to WordPress 3.7, all posts are considered to be excluded by category due to an apparent change in WP 3.7's handling of categories (exposed via the plugin's use of in_category). The plugin now checks for a non empty set of category exclusions before checking
+the post for a category.
 
 = 3.3.1 =
 * Released 2012.12.18
@@ -386,6 +391,8 @@ The current version is 3.3.1 (2012.12.18)
 * First version of WP Biographia released
 
 == Upgrade Notice ==
+= 3.3.2 =
+This version now supports changes in category behaviour introduced in WordPress v3.7 and which meant every post was considered to be excluded by category.
 
 = 3.3.1 =
 This version ensures the minified versions of the plugin's CSS/JS files are loaded if in a production environment and supports WordPress v3.5.
