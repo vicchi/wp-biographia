@@ -39,7 +39,7 @@ $this->insert_biographia ()
 		calls $this->post_types_cycle ()
 	for feed
 		checks display via 'wp_biographia_display_feed'
-		
+
 $this->post_types_cycle ()
 	calls $this->display ()
 	for-each post type
@@ -84,7 +84,7 @@ if (!class_exists ('WP_BiographiaFilterPriority')) {
 }	// end-if (!class_exists ('WP_BiographiaFilterPriority'))
 
 if (!class_exists ('WP_Biographia')) {
-	class WP_Biographia extends WP_PluginBase { 
+	class WP_Biographia extends WP_PluginBase {
 
 		private static $instance;
 		static $admin_tab_names;
@@ -94,31 +94,31 @@ if (!class_exists ('WP_Biographia')) {
 		public $for_feed = false;
 		public $is_shortcode = false;
 		public $icon_dir_url = '';
-	
+
 		private $has_hacked_content_autop_prio = false;
 		private $original_content_autop_prio = 10;
 		private $hacked_content_autop_prio = 10;
-	
+
 		private $content_autop;
 		private $excerpt_autop;
 		private $sentry = false;
 		private $is_sla_plugin_active = false;
-	
+
 		const OPTIONS = 'wp_biographia_settings';
-		const VERSION = '332';
-		const DISPLAY_VERSION = 'v3.3.2';
+		const VERSION = '400b1';
+		const DISPLAY_VERSION = 'v4.0.0';
 		const PRIORITY = 10;
 		const META_NONCE = 'wp-biographia-meta-nonce';
 		const DISPLAY_STUB = 'display';
 		const ARCHIVE_STUB = 'archive';
 		const BIOGRAPHY_STUB = 'biography';
 		const ARCHIVE_BIOGRAPHY_STUB = 'archive-biography';
-	
+
 		/**
 		 * Class constructor
 		 */
-	
-		private function __construct () { 
+
+		private function __construct () {
 			self::$admin_tab_names = array (
 				'display' => 'Display',
 				'admin' => 'Admin',
@@ -130,7 +130,7 @@ if (!class_exists ('WP_Biographia')) {
 				);
 			$this->author_id = NULL;
 			$this->override = NULL;
-		
+
 			$this->is_sla_plugin_active = in_array (
 					'simple-local-avatars/simple-local-avatars.php',
 					apply_filters ('active_plugins', get_option ('active_plugins' )));
@@ -142,11 +142,11 @@ if (!class_exists ('WP_Biographia')) {
 			$this->content_autop = new WP_BiographiaFilterPriority;
 			$this->excerpt_autop = new WP_BiographiaFilterPriority;
 		}
-	
+
 		/**
 		 * Class singleton factory helper
 		 */
-		
+
 		public static function get_instance () {
 			if (!isset (self::$instance)) {
 				$c = __CLASS__;
@@ -155,14 +155,14 @@ if (!class_exists ('WP_Biographia')) {
 
 			return self::$instance;
 		}
-	
+
 		/**
 		 * "plugins_loaded" action hook; called after all active plugins and pluggable functions
 		 * are loaded.
 		 *
 		 * Adds front-end display actions, shortcode support and admin actions.
 		 */
-	
+
 		function plugins_loaded () {
 			//register_activation_hook (__FILE__, array ($this, 'add_settings'));
 
@@ -174,7 +174,7 @@ if (!class_exists ('WP_Biographia')) {
 			else {
 				$content_priority = $excerpt_priority = self::PRIORITY;
 			}
-		
+
 			$this->hook ('wp_enqueue_scripts', 'style');
 			$this->hook ('init');
 			$this->hook ('widgets_init');
@@ -223,7 +223,7 @@ if (!class_exists ('WP_Biographia')) {
 				// If the Simple Local Avatars plugin is installed and active, hook into that
 				// plugin's 'simple_local_avatar' filter to fix up the Avatar's IMG tag's CSS,
 				// if not already fixed up by the 'get_avatar' filter.
-			
+
 				if ($this->is_sla_plugin_active) {
 					$this->hook ('simple_local_avatar');
 				}
@@ -232,7 +232,7 @@ if (!class_exists ('WP_Biographia')) {
 				add_shortcode ('wp_biographia', array ($this, 'shortcode'));
 			}
 		}
-	
+
 		/**
 		 * "loop_start" action hook; called before the start of the Loop.
 		 */
@@ -264,7 +264,7 @@ if (!class_exists ('WP_Biographia')) {
 				}
 			}
 		}
-	
+
 		/**
 		 * "loop_end" action hook; called after the end of the Loop.
 		 */
@@ -279,18 +279,18 @@ if (!class_exists ('WP_Biographia')) {
 				add_filter ('the_excerpt', 'wpautop', $this->excerpt_autop->original);
 			}
 		}
-	
+
 		/**
 		 * Queries the back-end database for WP Biographia settings and options.
 		 *
 		 * @param string $key Optional settings/options key name; if specified only the value
 		 * for the key will be returned, if the key exists, if omitted all settings/options
 		 * will be returned.
-		 * @return mixed If $key is specified, a string containing the key's settings/option 
+		 * @return mixed If $key is specified, a string containing the key's settings/option
 		 * value is returned, if the key exists, else an empty string is returned. If $key is
 		 * omitted, an array containing all settings/options will be returned.
 		 */
-	
+
 		function get_option () {
 			$num_args = func_num_args ();
 			$options = get_option (self::OPTIONS);
@@ -304,7 +304,7 @@ if (!class_exists ('WP_Biographia')) {
 				}
 				return $value;
 			}
-		
+
 			else {
 				return $options;
 			}
@@ -316,30 +316,30 @@ if (!class_exists ('WP_Biographia')) {
 		 * @param string key Settings/option key to be created/updated.
 		 * @param string value Value to be associated with the specified settings/option key
 		 */
-	
+
 		function set_option ($key , $value) {
 			$options = get_option (self::OPTIONS);
 			$options[$key] = $value;
 			update_option (self::OPTIONS , $options);
 		}
-	
+
 		/**
 		 * "init" action hook; called to initialise the plugin
 		 */
-	
+
 		function init () {
 			$lang_dir = basename (dirname (__FILE__)) . DIRECTORY_SEPARATOR . 'lang';
 			load_plugin_textdomain ('wp-biographia', false, $lang_dir);
 		}
-	
+
 		/**
 		 * "widgets_init" action hook; called to initialise the plugin's widget(s)
 		 */
-	
+
 		function widgets_init () {
 			return register_widget ('WP_BiographiaWidget');
 		}
-	
+
 		/**
 		 * Wrapper function for the WP_User_Query class. Queries the back-end database and
 		 * returns a list of users.
@@ -350,19 +350,19 @@ if (!class_exists ('WP_Biographia')) {
 		 * omitted the ID and user_login fields will be returned.
 		 * @return array Array containing the users that the search returned.
 		 */
-	 
+
 		function get_users ($role='', $args=array (0 => 'ID', 1 => 'user_login')) {
 			$wp_user_search = new WP_User_Query (array ('role' => $role, 'fields' => $args));
 			$roles = $wp_user_search->get_results ();
 			return $roles;
 		}
-	
+
 		/**
 		 * Returns the currently defined set of post categories.
 		 *
 		 * @return array Array containing the categories.
 		 */
-	
+
 		function get_categories () {
 			$args = array (
 				'type' => 'post',
@@ -370,10 +370,10 @@ if (!class_exists ('WP_Biographia')) {
 				'order' => 'asc',
 				'hide_empty' => '0'
 				);
-		
+
 			return get_categories ($args);
 		}
-	
+
 		/**
 		 * "user_contactmethods" filter hook; Sanitizes, filters and augments the user's
 		 * profile contact information.
@@ -381,7 +381,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * @param array contactmethods Array containing the current set of contact methods.
 		 * @return array Array containing the modified set of contact methods.
 		 */
-	
+
 		function user_contactmethods ($contactmethods) {
 			$links = $this->get_option ('wp_biographia_admin_links');
 			foreach ($this->defaults () as $key => $data) {
@@ -397,7 +397,7 @@ if (!class_exists ('WP_Biographia')) {
 
 			return $contactmethods;
 		}
-	
+
 		/**
 		 * plugin activation / "activate_pluginname" action hook; called when the plugin is
 		 * first activated.
@@ -406,10 +406,10 @@ if (!class_exists ('WP_Biographia')) {
 		 * of options are configurable, at activation time, via the
 		 * 'wp_biographia_default_settings' filter hook.
 		 */
-	
+
 		function add_settings () {
 			$settings = $this->get_option ();
-		
+
 			if (!is_array ($settings)) {
 				$admin_links = array ();
 				foreach ($this->defaults () as $key => $data) {
@@ -418,7 +418,7 @@ if (!class_exists ('WP_Biographia')) {
 					}
 				}	// end-foreach (...)
 
-				$settings = apply_filters ('wp_biographia_default_settings' , 
+				$settings = apply_filters ('wp_biographia_default_settings' ,
 					//option name => option value
 					array (
 						'wp_biographia_installed' => 'on',
@@ -449,10 +449,7 @@ if (!class_exists ('WP_Biographia')) {
 						'wp_biographia_content_twitter' => 'on',
 						'wp_biographia_content_facebook' => 'on',
 						'wp_biographia_content_linkedin' => 'on',
-						'wp_biographia_content_googleplus' => 'on',
-						'wp_biographia_content_delicious' => '',
 						'wp_biographia_content_flickr' => '',
-						'wp_biographia_content_picasa' => '',
 						'wp_biographia_content_vimeo' => '',
 						'wp_biographia_content_youtube' => '',
 						'wp_biographia_content_reddit' => '',
@@ -482,12 +479,12 @@ if (!class_exists ('WP_Biographia')) {
 						'wp_biographia_display_bio_feed' => 'full',
 						'wp_biographia_admin_lock_to_loop' => '',
 						'wp_biographia_style_border_color' => '#000000'
-					) 
+					)
 				);
 				update_option (self::OPTIONS, $settings);
 			}
 		}
-	
+
 		/**
 		 * "get_avatar" filter hook; filters and augments the return from get_avatar().
 		 *
@@ -517,7 +514,7 @@ if (!class_exists ('WP_Biographia')) {
 			}
 			return $avatar;
 		}
-	
+
 		/**
 		 * Called from the "get_avatar" or "simple_local_avatar" filter hooks; fixes up the
 		 * IMG tag returned by get_avatar() to use WP Biographia's avatar image placement CSS.
@@ -534,7 +531,7 @@ if (!class_exists ('WP_Biographia')) {
 					$avatar = str_replace ("class='avatar ", "class='wp-biographia-avatar ", $avatar, $count);
 				}
 			}
-		
+
 			return $avatar;
 		}
 
@@ -544,7 +541,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * @return boolean Returns true if the current page is the last page, otherwise returns
 		 * false.
 		 */
-	
+
 		function is_last_page () {
 			global $page;
 			global $numpages;
@@ -558,10 +555,10 @@ if (!class_exists ('WP_Biographia')) {
 				return true;
 			}
 		}
-	
+
 		/**
 		 * Defines the default set of user's contact methods that the plugin natively
-		 * supports. 
+		 * supports.
 		 *
 		 * @return array Array of contact methods.
 		 */
@@ -584,25 +581,10 @@ if (!class_exists ('WP_Biographia')) {
 					'contactmethod' => __('LinkedIn', 'wp-biographia'),
 					'url' => 'http://www.linkedin.com/in/%s'
 				),
-				'googleplus' => array (
-					'field' => 'googleplus',
-					'contactmethod' => __('Google+', 'wp-biographia'),
-					'url' => 'http://plus.google.com/%s'
-				),
-				'delicious' => array (
-					'field' => 'delicious',
-					'contactmethod' => __('Delicious', 'wp-biographia'),
-					'url' => 'http://www.delicious.com/%s'
-				),
 				'flickr' => array (
 					'field' => 'flickr',
 					'contactmethod' => __('Flickr', 'wp-biographia'),
 					'url' => 'http://www.flickr.com/photos/%s'
-				),
-				'picasa' => array (
-					'field' => 'picasa',
-					'contactmethod' => __('Picasa', 'wp-biographia'),
-					'url' => 'http://picasaweb.google.com/%s'
 				),
 				'vimeo' => array (
 					'field' => 'vimeo',
@@ -618,29 +600,12 @@ if (!class_exists ('WP_Biographia')) {
 					'field' => 'reddit',
 					'contactmethod' => __('Reddit', 'wp-biographia'),
 					'url' => 'http://www.reddit.com/user/%s'
-				),
-				'yim' => array (
-					'field' => 'yim',
-					'contactmethod' => __('Yahoo IM', 'wp-biographia'),
-					'url' => 'http://profiles.yahoo.com/%s'
-				),
-				'aim' => array (
-					'field' => 'aim',
-					'contactmethod' => __('AIM', 'wp-biographia'),
-				),
-				'msn' => array (
-					'field' => 'msn',
-					'contactmethod' => __('Windows Live Messenger', 'wp-biographia'),
-				),
-				'jabber' => array (
-					'field' => 'jabber',
-					'contactmethod' => __('Jabber / Google Talk', 'wp-biographia'),
 				)
 			);
 
 			return $contacts;
 		}
-	
+
 		/**
 		 * Defines the default set of user's contact information. The default set of contact
 		 * links are filterable via the 'wp_biographia_contact_info' filter hook. Used by the
@@ -676,7 +641,7 @@ if (!class_exists ('WP_Biographia')) {
 					'field' => 'url'
 				)
 			);
-		
+
 			$supported_contact_info = $this->supported_contact_info ();
 			if ($filter) {
 				$filtered_contact_info = apply_filters ('wp_biographia_contact_info',
@@ -684,12 +649,12 @@ if (!class_exists ('WP_Biographia')) {
 
 				return array_merge ($non_contact_defaults, $filtered_contact_info);
 			}
-		
+
 			else {
 				return array_merge ($non_contact_defaults, $supported_contact_info);
 			}
 		}
-	
+
 		/**
 		 * Defines the default set of contact link items for the Biography Box that the plugin
 		 * natively supports.
@@ -719,25 +684,10 @@ if (!class_exists ('WP_Biographia')) {
 					"link_text" => __('LinkedIn', 'wp-biographia'),
 					"link_icon" => $this->icon_dir_url . 'linkedin.png'
 					),
-				"googleplus" => array (
-					"link_title" => __('Google+', 'wp-biographia'),
-					"link_text" => __('Google+', 'wp-biographia'),
-					"link_icon" => $this->icon_dir_url . 'google.png'
-					),
-				"delicious" => array (
-					"link_title" => __('Delicous', 'wp-biographia'),
-					"link_text" => __('Delicous', 'wp-biographia'),
-					"link_icon" => $this->icon_dir_url . 'delicious.png'
-					),
 				"flickr" => array (
 					"link_title" => __('Flickr', 'wp-biographia'),
 					"link_text" => __('Flickr', 'wp-biographia'),
 					"link_icon" => $this->icon_dir_url . 'flickr.png'
-					),
-				"picasa" => array (
-					"link_title" => __('Picasa', 'wp-biographia'),
-					"link_text" => __('Picasa', 'wp-biographia'),
-					"link_icon" => $this->icon_dir_url . 'picasa.png'
 					),
 				"vimeo" => array (
 					"link_title" => __('Vimeo', 'wp-biographia'),
@@ -755,7 +705,7 @@ if (!class_exists ('WP_Biographia')) {
 					"link_icon" => $this->icon_dir_url . 'reddit.png'
 					)
 			);
-		
+
 			return $link_items;
 		}
 
@@ -783,13 +733,13 @@ if (!class_exists ('WP_Biographia')) {
 			if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
 				$css_url = 'css/wp-biographia.css';
 			}
-			
+
 			else {
 				$css_url = 'css/wp-biographia.min.css';
 			}
 			wp_enqueue_style ('wp-biographia-bio', WPBIOGRAPHIA_URL . $css_url);
 		}
-	
+
 		/**
 		 * "the_content" and "the_excerpt" action hook; adds the Biography Box to post or
 		 * page content according to the current set of plugin settings/options. The
@@ -811,7 +761,7 @@ if (!class_exists ('WP_Biographia')) {
 
 			global $post;
 			$new_content = $content;
-		
+
 			if (!$this->is_shortcode) {
 				$this->author_id = $post->post_author;
 			}
@@ -820,7 +770,7 @@ if (!class_exists ('WP_Biographia')) {
 			if ((isset ($location)) && ($location == 'top')) {
 				$pattern = apply_filters ('wp_biographia_pattern', '%2$s %1$s');
 			}
-			
+
 			else {
 				$pattern = apply_filters ('wp_biographia_pattern', '%1$s %2$s');
 			}
@@ -839,7 +789,7 @@ if (!class_exists ('WP_Biographia')) {
 			elseif (is_archive () || is_post_type_archive ()) {
 				$new_content = $this->insert_biographia ('archive', $content, $pattern);
 			}
-		
+
 			elseif (is_page ()) {
 				$new_content = $this->insert_biographia ('page', $content, $pattern);
 			}
@@ -854,7 +804,7 @@ if (!class_exists ('WP_Biographia')) {
 
 			return $new_content;
 		}
-	
+
 		/**
 		 * Cycles through all default and currently defined custom post types
 		 *
@@ -885,14 +835,14 @@ if (!class_exists ('WP_Biographia')) {
 				if ($post->post_type == $post_type) {
 					$do_display = false;
 					$bio_stub = NULL;
-					
+
 					$optname = $options[self::DISPLAY_STUB] . $post_type_name;
 					$optval = $this->get_option ($optname);
 					if (!empty ($optval) && $optval === 'on') {
 						$do_display = true;
 						$bio_stub = self::BIOGRAPHY_STUB;
 					}
-					
+
 					elseif (isset ($options[self::ARCHIVE_STUB])) {
 						$optname = $options[self::ARCHIVE_STUB] . $post_type_name;
 						$optval = $this->get_option ($optname);
@@ -916,11 +866,11 @@ if (!class_exists ('WP_Biographia')) {
 						// check exclusions
 						$post_option = 'wp_biographia_' . $post_type . '_exclusions';
 						$global_option = 'wp_biographia_global_' . $post_type . '_exclusions';
-					
+
 						if ($this->get_option ($post_option) ||
 								$this->get_option ($global_option)) {
 							$post_exclusions = $global_exclusions = array ();
-						
+
 							if ($this->get_option ($post_option)) {
 								$post_exclusions = explode (',',
 															$this->get_option ($post_option));
@@ -929,7 +879,7 @@ if (!class_exists ('WP_Biographia')) {
 								$global_exclusions = explode (',',
 															$this->get_option ($global_option));
 							}
-						
+
 							if (!in_array ($post->ID, $post_exclusions) &&
 									!in_array ($post->ID, $global_exclusions) &&
 								 	$this->is_last_page ()) {
@@ -958,7 +908,7 @@ if (!class_exists ('WP_Biographia')) {
 
 			return $new_content;
 		}
-	
+
 		/**
 		 * Emits the Biography Box according to the current page content and settings/options.
 		 *
@@ -969,7 +919,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * of the content parameter string if the current page context and/or settings/options
 		 * require that no Biography Box is displayed.
 		 */
-	
+
 		function insert_biographia ($context, $content, $pattern) {
 			global $post;
 			$this->display_bio = false;
@@ -997,7 +947,7 @@ if (!class_exists ('WP_Biographia')) {
 				//
 				// You could argue that this was a bug waiting to happen if you're being
 				// uncharitable. I'd tend to agree with you.
-				
+
 				if (isset($settings['wp_biographia_category_exclusions']) &&
 						!empty($settings['wp_biographia_category_exclusions'])) {
 					$categories = explode (',', $settings['wp_biographia_category_exclusions']);
@@ -1052,7 +1002,7 @@ if (!class_exists ('WP_Biographia')) {
 								$options[self::ARCHIVE_BIOGRAPHY_STUB] = 'wp_biographia_display_tag_archives_bio_';
 							}
 						}
-						
+
 						$new_content = $this->post_types_cycle ($options, $content, $pattern);
 					}
 					else {
@@ -1101,7 +1051,7 @@ if (!class_exists ('WP_Biographia')) {
 						$new_content = $content;
 					}
 					break;
-				
+
 				case "feed":
 					$option = $this->get_option ('wp_biographia_display_feed');
 					if (isset ($option) && $option) {
@@ -1130,10 +1080,10 @@ if (!class_exists ('WP_Biographia')) {
 					$new_content = $content;
 					break;
 			}
-		
+
 			return $new_content;
 		}
-	
+
 		/**
 		 * Shortcode handler for the [wp_biographia] shortcode; expands the shortcode to the
 		 * Biography Box according to the current set of plugin settings/options. The
@@ -1147,10 +1097,10 @@ if (!class_exists ('WP_Biographia')) {
 		 * @return string String containing the Biography Box, providing that the current set
 		 * of settings/options permit this.
 		 */
-	
+
 		function shortcode ($atts, $content=NULL) {
 			$this->for_feed = false;
-		
+
 			extract (shortcode_atts (array (
 				'mode' => 'raw',
 				'user' => '',
@@ -1165,30 +1115,30 @@ if (!class_exists ('WP_Biographia')) {
 			// Handle legacy shortcode useage (before the introduction of the user attribute);
 			// if the 'author' attribute is present but no 'user' attribute exists, treat the
 			// 'author' attribute *as* the 'user' attribute.
-		
+
 			if (empty ($user) && !empty ($author)) {
 				$user = $author;
 			}
-		
+
 			$this->is_shortcode = true;
 			$ret = $this->biography_box ($mode, $user, $prefix, $name, $role, $type, $order);
 			$this->is_shortcode = false;
-		
+
 			$content = $ret['content'];
 			$params = $ret['params'];
-		
+
 			return apply_filters ('wp_biographia_shortcode', implode ('', $content), $params);
 		}
-	
+
 		/**
 		 * Biography Box marshalling helper; called by the shortcode and template tags
 		 * handlers.
 		 */
-		
+
 		function biography_box ($mode='raw', $user=NULL, $prefix=NULL, $name=NULL, $role=NULL, $type='full', $order='account-name') {
 			$this->override = array ();
 			$content = array ();
-		
+
 			// Check and validate the Biography Box display mode (raw/configured)
 			switch ($mode) {
 				case 'raw':
@@ -1198,7 +1148,7 @@ if (!class_exists ('WP_Biographia')) {
 					$mode = 'raw';
 					break;
 			}	// end-switch ($mode)
-		
+
 			if (isset ($prefix) && !empty ($prefix)) {
 				$this->override['prefix'] = $prefix;
 			}
@@ -1215,7 +1165,7 @@ if (!class_exists ('WP_Biographia')) {
 						break;
 				}
 			}	// end-switch ($type)
-		
+
 			// Check and validate the name display, if present ...
 			if (isset ($name) && !empty ($name)) {
 				switch ($name) {
@@ -1230,7 +1180,7 @@ if (!class_exists ('WP_Biographia')) {
 						break;
 				}	// end-switch ($name)
 			}
-		
+
 			// Check and validate the name (sort) order , if present ...
 			if (isset ($order) && !empty ($order)) {
 				switch ($order) {
@@ -1246,10 +1196,10 @@ if (!class_exists ('WP_Biographia')) {
 						break;
 				}	// end-switch ($order)
 			}
-		
+
 			// Setup the array of validated arguments to be passed to either the template tag
 			// or shortcode filter
-		
+
 			$params = array ('mode' => $mode,
 				'user' => $user,
 				'author' => $user,
@@ -1264,15 +1214,15 @@ if (!class_exists ('WP_Biographia')) {
 				// Wildcard user ... ?
 				if ($user === '*') {
 					$users = $contribs = array ();
-				
+
 					// Do we need to filter the users by role ... ?
 					if (isset ($role) && !empty ($role)) {
 						global $wp_roles;
-						
+
 						$defined_roles = $wp_roles->get_names ();
 						$valid_role = false;
 						$role = strtolower ($role);
-						
+
 						$supplied_roles = explode (',', $role);
 						foreach ($supplied_roles as $current_role) {
 							$valid_role = array_key_exists ($current_role, $defined_roles);
@@ -1290,12 +1240,12 @@ if (!class_exists ('WP_Biographia')) {
 							}
 						}	// end-foreach ($role ...)
 					}
-				
+
 					// No role filtering needed, just grab 'em all ...
 					else {
 						$users = $this->get_users ();
 					}
-				
+
 					if (!empty ($users)) {
 						$order_fields = array (
 							// order attribute value => meta value
@@ -1318,7 +1268,7 @@ if (!class_exists ('WP_Biographia')) {
 						}	// end-foreach ($users as $uo)
 						natcasesort ($contribs);
 					}
-				
+
 					if (!empty ($contribs)) {
 						$content[] = '<div class="wp-biographia-contributors">';
 						foreach ($contribs as $uid => $uval) {
@@ -1327,7 +1277,7 @@ if (!class_exists ('WP_Biographia')) {
 							if ($mode === 'raw') {
 								$content[] = $this->display ();
 							}
-						
+
 							// 'configured' mode ...
 							else {
 								$placeholder = '';
@@ -1337,18 +1287,18 @@ if (!class_exists ('WP_Biographia')) {
 						$content[] = '</div>';
 					}
 				}
-			
+
 				// Specific user ... ?
 				else {
 					$uo = get_user_by ('login', $user);
 					if ($uo) {
 						$this->author_id = $uo->ID;
-					
+
 						// 'raw' mode ...
 						if ($mode === 'raw') {
 							$content[] = $this->display ();
 						}
-					
+
 						// 'configured' mode ...
 						else {
 							$placeholder = '';
@@ -1357,8 +1307,8 @@ if (!class_exists ('WP_Biographia')) {
 					}
 				}
 			}
-		
-			// If there's no specific user or all users in wilcard mode ($user='*') then 
+
+			// If there's no specific user or all users in wilcard mode ($user='*') then
 			// queue the first post, so we have the $post global properly populated so,
 			// in turn, we can pluck out the user ID we need to display the Biography Box for ...
 
@@ -1367,12 +1317,12 @@ if (!class_exists ('WP_Biographia')) {
 
 				global $post;
 				$this->author_id = $post->post_author;
-			
+
 				// 'raw' mode ...
 				if ($mode === 'raw') {
 					$content[] = $this->display ();
 				}
-			
+
 				// 'configured' mode ...
 				else {
 					$placeholder = '';
@@ -1383,10 +1333,10 @@ if (!class_exists ('WP_Biographia')) {
 				// template, The Loop can be run properly, in full ...
 				rewind_posts ();
 			}
-		
+
 			return array ('content' => $content, 'params' => $params);
 		}
-	
+
 		/**
 		 * Emits the Biography Box according to current settings/options.
 		 */
@@ -1404,7 +1354,7 @@ if (!class_exists ('WP_Biographia')) {
 			}
 
 			$content = $links = $author = $biography = array();
-			
+
 			foreach ($this->defaults () as $key => $data) {
 				if ($key != 'first-last-name') {
 					$author[$key] = get_the_author_meta ($data['field'], $this->author_id);
@@ -1435,7 +1385,7 @@ if (!class_exists ('WP_Biographia')) {
 					$author['bio'] = $excerpt;
 				}
 			}
-			
+
 			$author['posts'] = (int)count_user_posts ($this->author_id);
 			$author['posts_url'] = get_author_posts_url ($this->author_id);
 
@@ -1447,7 +1397,7 @@ if (!class_exists ('WP_Biographia')) {
 			$this->sentry = true;
 			$author_pic = get_avatar ($author['email'], $author_pic_size);
 			$this->sentry = false;
-		
+
 			if ($post_override && $post_title_override) {
 				$content[] = '<h3>';
 				$content[] = $post_title_text;
@@ -1457,7 +1407,7 @@ if (!class_exists ('WP_Biographia')) {
 			elseif (!empty ($settings['wp_biographia_content_prefix']) ||
 				!empty ($settings['wp_biographia_content_name'])) {
 				$title = array ();
-			
+
 				$name_prefix = "";
 				if ((!empty ($this->override)) && (!empty ($this->override['prefix']))) {
 					$name_prefix = $this->override['prefix'];
@@ -1498,7 +1448,7 @@ if (!class_exists ('WP_Biographia')) {
 							$formatted_name = $author['display-name'];
 							break;
 					}
-				
+
 					if (!empty ($settings['wp_biographia_content_authorpage']) && ($settings['wp_biographia_content_authorpage'] == 'on')) {
 						$title[] = '<a href="' . $author['posts_url']	. '" title="' . $formatted_name . '">' . $formatted_name . '</a>';
 					}
@@ -1523,7 +1473,7 @@ if (!class_exists ('WP_Biographia')) {
 				if ($this->for_feed) {
 					$display_icons = false;
 				}
-		
+
 				else {
 					$display_icons = (!empty ($settings['wp_biographia_content_icons']) &&
 					 	($settings['wp_biographia_content_icons'] == 'on')) ? 'icon' : 'text';
@@ -1542,13 +1492,13 @@ if (!class_exists ('WP_Biographia')) {
 				}
 				$title_name_stub = __('%1$s On %2$s', 'wp-biographia');
 				$title_noname_stub = __('On %s', 'wp-biographia');
-		
+
 				$link_meta = 'target="' . $settings['wp_biographia_content_link_target']. '"';
 				if (!empty($settings['wp_biographia_content_link_nofollow']) &&
 				($settings['wp_biographia_content_link_nofollow'] == 'on')) {
 					$link_meta .= ' rel="nofollow"';
 				}
-		
+
 				// Deal with the email link first as a special case ...
 				if ((!empty ($settings['wp_biographia_content_email']) && ($settings['wp_biographia_content_email'] == 'on')) && (!empty ($author['email']))) {
 					if (!empty ($formatted_name)) {
@@ -1560,13 +1510,13 @@ if (!class_exists ('WP_Biographia')) {
 					}
 
 					$link_text = __('Mail', 'wp-biographia');
-			
+
 					$link_body = ($display_icons == "icon") ? $this->icon_dir_url . 'mail.png' : $link_text;
 					$links[] = $this->link_item ($display_icons, $item_stub, 'mailto:' . antispambot ($author['email']), $link_meta, $link_title, $link_body);
 				}
-		
+
 				// Now deal with the other links that follow the same format and can be "templatised" ...
-	
+
 				$supported_links = $this->supported_link_items ();
 				$config_links = $settings['wp_biographia_admin_links'];
 				foreach ($link_items as $link_key => $link_attrs) {
@@ -1576,7 +1526,7 @@ if (!class_exists ('WP_Biographia')) {
 						if ($link_key == 'web') {
 							$display_link = (!empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key])));
 						}
-						
+
 						else {
 							$display_link = (isset ($config_links[$link_key]) && $config_links[$link_key] == 'on' && !empty ($settings[$option_name]) && ($settings[$option_name] == 'on') && (!empty ($author[$link_key])));
 						}
@@ -1622,11 +1572,11 @@ if (!class_exists ('WP_Biographia')) {
 							$link_text = __('More Posts', 'wp-biographia');
 							break;
 					}
-			
+
 					$link_body = ($display_icons == "icon") ? $this->icon_dir_url . 'wordpress.png' : $link_text;
 					$links[] = $this->link_item ($display_icons, $item_stub, $author['posts_url'], $link_meta, $link_title, $link_body);
 				}
-		
+
 				$item_glue = ($display_icons == 'icon') ? "" : " | ";
 				$list_class = "wp-biographia-list-" . $display_icons;
 			}
@@ -1636,30 +1586,30 @@ if (!class_exists ('WP_Biographia')) {
 					$prefix = '<div class="wp-biographia-links"><small>';
 					$postfix = '</small></div>';
 				}
-			
+
 				else {
 					$prefix = '<div class="wp-biographia-links"><small><ul class="wp-biographia-list ' . $list_class . '">';
 					$postfix = '</ul></small></div>';
 				}
-			
+
 				$params = array (
 					'glue' => $item_glue,
 					'class' => $list_class,
 					'prefix' => $prefix,
 					'postfix' => $postfix);
-				
+
 				$content[] = apply_filters ('wp_biographia_links' ,
 				 	$prefix . implode ($item_glue, $links) . $postfix,
 					$links, $params);
 			}
-		
+
 			if (!$this->for_feed) {
 				$border_type = $settings['wp_biographia_style_border'];
 				$border_color = $settings['wp_biographia_style_border_color'];
 				$bg_color = $settings['wp_biographia_style_bg'];
 				$class = 'wp-biographia-container-' . $border_type;
 				$style = 'background-color: ' . $bg_color . ';';
-				
+
 				switch ($border_type) {
 					case 'top':
 						$style .= ' border-top: 4px solid ' . $border_color . ';';
@@ -1671,7 +1621,7 @@ if (!class_exists ('WP_Biographia')) {
 					default:
 						break;
 				}	// end-switch ($border_type)
-				
+
 				$biography[] = '<div class="' . $class . '" style="' . $style . '">';
 
 				$display_avatar = (!empty ($settings['wp_biographia_content_image']) &&
@@ -1700,14 +1650,14 @@ if (!class_exists ('WP_Biographia')) {
 					. implode ('', $content)
 					. '</div></div>';
 			}
-		
+
 			else {
 				$display_avatar = (!empty ($settings['wp_biographia_content_image']) &&
 						 ($settings['wp_biographia_content_image'] == 'on'));
 				if ($display_avatar && $post_override && $post_suppress_avatar) {
 					$display_avatar = false;
 				}
-			
+
 				if ($display_avatar) {
 					$biography[] = '<p>' . $author_pic . '</p>';
 					$class = 'wp-biographia-text';
@@ -1757,19 +1707,19 @@ if (!class_exists ('WP_Biographia')) {
 
 			if ($display_icons == 'icon') {
 				$params['item-class'] = $item_class;
-				
-				return apply_filters ('wp_biographia_link_item', 
+
+				return apply_filters ('wp_biographia_link_item',
 					sprintf ($format, $link_key, $link_meta, $link_title, $link_class, $link_body, $item_class),
 					$params);
 			}
-		
+
 			else {
 				return apply_filters ('wp_biographia_link_item',
 					sprintf ($format, $link_key, $link_meta, $link_title, $link_class, $link_body),
 					$params);
 			}
 		}
-	
+
 		/**
 		 * "admin_menu" action hook; called after the basic admin panel menu structure is in
 		 * place.
@@ -1783,14 +1733,14 @@ if (!class_exists ('WP_Biographia')) {
 					array ($this, 'admin_display_settings'));
 			}
 		}
-	
+
 		/**
 		 * "admin_print_scripts" action hook; called to enqueue admin specific scripts.
 		 */
 
 		function admin_print_scripts () {
 			global $pagenow;
-		
+
 			if ($pagenow == 'options-general.php' &&
 					isset ($_GET['page']) &&
 					strstr ($_GET['page'], "wp-biographia")) {
@@ -1800,13 +1750,13 @@ if (!class_exists ('WP_Biographia')) {
 				if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
 					$js_url = 'js/wp-biographia-admin.js';
 				}
-				
+
 				else {
 					$js_url = 'js/wp-biographia-admin.min.js';
 				}
 				wp_enqueue_script ('wp-biographia-admin-script', WPBIOGRAPHIA_URL . $js_url);
 			}
-		
+
 			elseif ($pagenow == 'post.php' || $pagenow == 'post-new.php') {
 				$post_override = $this->get_option ('wp_biographia_admin_post_overrides');
 				if (isset ($post_override) && !empty ($post_override) && $post_override == 'on') {
@@ -1824,7 +1774,7 @@ if (!class_exists ('WP_Biographia')) {
 				}
 			}
 		}
-	
+
 		/**
 		 * "admin_print_styles" action hook; called to enqueue admin specific CSS.
 		 */
@@ -1842,18 +1792,18 @@ if (!class_exists ('WP_Biographia')) {
 				if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
 					$css_url = 'css/wp-biographia-admin.css';
 				}
-				
+
 				else {
 					$css_url = 'css/wp-biographia-admin.min.css';
 				}
-				wp_enqueue_style ('wp-biographia-admin', WPBIOGRAPHIA_URL . $css_url);	
+				wp_enqueue_style ('wp-biographia-admin', WPBIOGRAPHIA_URL . $css_url);
 			}
-		
+
 			elseif ($pagenow == 'post.php' || $pagenow == 'post-new.php') {
 				$post_override = $this->get_option ('wp_biographia_admin_post_overrides');
 				if (isset ($post_override) && !empty ($post_override) && $post_override == 'on') {
 					// Only enqueue the admin edit JS if post overrides are enabled
-			
+
 					if ((defined('WP_DEBUG') && WP_DEBUG == true) || (defined('WPBIOGRAPHIA_DEBUG') && WPBIOGRAPHIA_DEBUG == true)) {
 						$css_url = 'css/wp-biographia-edit.css';
 					}
@@ -1865,16 +1815,16 @@ if (!class_exists ('WP_Biographia')) {
 				}
 			}
 		}
-	
+
 		/**
 		 * "admin_init" action hook; called after the admin panel is initialised.
 		 */
 
 		function admin_init () {
 			$this->admin_upgrade ();
-		
+
 			$skip_tour = $this->admin_is_pointer_set ();
-		
+
 			if (isset ($_GET['wp_biographia_restart_tour'])) {
 				if (check_admin_referer ('wp-biographia-restart-tour')) {
 					$this->admin_clear_pointer ();
@@ -1885,9 +1835,9 @@ if (!class_exists ('WP_Biographia')) {
 			if (!$skip_tour) {
 				require (WPBIOGRAPHIA_PATH . 'includes/wp-biographia-pointers.php');
 			}
-			
+
 			global $pagenow;
-			
+
 			if ($pagenow == 'profile.php' ||
 					$pagenow == 'user-edit.php' ||
 					($pagenow == 'options-general.php' &&
@@ -1901,13 +1851,13 @@ if (!class_exists ('WP_Biographia')) {
 		 * "admin_notices" action hook; called to display a message near the top of admin
 		 * pages.
 		 */
-		
+
 		function admin_notices () {
 			global $pagenow;
 			global $current_user;
 			$user_id = NULL;
 			$notices = array ();
-			
+
 			if ($pagenow == 'profile.php') {
 				$user_id = $current_user->ID;
 				$invalid = $this->admin_validate_contacts ($user_id);
@@ -1917,7 +1867,7 @@ if (!class_exists ('WP_Biographia')) {
 					$notices = array_merge ($notices, $notice);
 				}
 			}
-			
+
 			elseif ($pagenow == 'user-edit.php') {
 				if (isset ($_GET['user_id']) && !empty ($_GET['user_id'])) {
 					$user_id = $_GET['user_id'];
@@ -1933,7 +1883,7 @@ if (!class_exists ('WP_Biographia')) {
 					$notices = array_merge ($notices, $notice);
 				}
 			}
-			
+
 			elseif ($pagenow == 'options-general.php' && isset ($_GET['page']) && strstr ($_GET['page'], 'wp-biographia')) {
 				$user_id = $current_user->ID;
 				$invalid = $this->admin_validate_contacts ($user_id);
@@ -1953,7 +1903,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * Called from the "admin_notice" action hook handler; formats a message if one
 		 * of the contact links URLs is incorrect/invalid.
 		 */
-		
+
 		function admin_create_notice ($contacts, $user_id) {
 			$user = get_userdata ($user_id);
 			$notices = array ();
@@ -1962,7 +1912,7 @@ if (!class_exists ('WP_Biographia')) {
 				$notices[] = sprintf (__('The %s URL doesn\'t look right; it should look something like %s', 'wp-biographia'),
 					$data['contactmethod'], $url);
 			}
-			
+
 			return $notices;
 		}
 
@@ -1970,7 +1920,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * Called from the "admin_notice" action hook handler; validates each contact link
 		 * URL.
 		 */
-		
+
 		function admin_validate_contacts ($user_id) {
 			$invalid = array ();
 			foreach ($this->defaults () as $key => $data) {
@@ -1986,7 +1936,7 @@ if (!class_exists ('WP_Biographia')) {
 			}
 			return $invalid;
 		}
-		
+
 		/**
 		 * "show_user_profile" and "edit_user_profile" action hooks; called to add fields to
 		 * the admin user profile screen.
@@ -2021,7 +1971,7 @@ if (!class_exists ('WP_Biographia')) {
 				$content[] = '<h3>' . __('Biography Options', 'wp-biographia') . '</h3>';
 				$content[] = '<table class="form-table">';
 				$content[] = '<tbody>';
-		
+
 				$content[] = '<tr>';
 				$content[] = '<th>';
 				$content[] = '<label for="wp_biographia_short_bio">' . __('Biographical Excerpt', 'wp-biographia') . '</label>';
@@ -2031,7 +1981,7 @@ if (!class_exists ('WP_Biographia')) {
 				$content[] = '<span class="description">' . __('Share an excerpt of your biography which can be used by the WP Biographia shortcode, template tags, sidebar widget and configured to be used in place of the standard biography for differing template types.', 'wp-biographia') . '</span>';
 				$content[] = '</td>';
 				$content[] = '</tr>';
-		
+
 				$content[] = '<tr>';
 				$content[] = '<th>';
 				$content[] = '<label for="wp_biographia_suppress_posts">' . __('Hide The Biography Box On Posts', 'wp-biographia') . '</label>';
@@ -2049,10 +1999,10 @@ if (!class_exists ('WP_Biographia')) {
 				$content[] = '</td>';
 				$content[] = '</tr>';
 			}
-		
+
 			$content[] = '</tbody>';
 			$content[] = '</table>';
-		
+
 			echo implode (PHP_EOL, $content);
 		}
 
@@ -2085,7 +2035,7 @@ if (!class_exists ('WP_Biographia')) {
 					$this->admin_option ('wp_biographia_suppress_pages'));
 			}
 		}
-	
+
 		/**
 		 * "user_register" action hook; called immediately after a new user is registered and
 		 * added to the database. If the user's role is in the list of excluded new user roles
@@ -2147,7 +2097,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * Called in response to the "admin_init" action hook; checks the current set of
 		 * settings/options and upgrades them according to the new version of the plugin.
 		 */
-	
+
 		function admin_upgrade () {
 			$settings = NULL;
 			$upgrade_settings = false;
@@ -2335,6 +2285,21 @@ if (!class_exists ('WP_Biographia')) {
 				 *		wp_biographia_display_bio_feed = "full"
 				 *		wp_biographia_admin_lock_to_loop = ""
 				 *		wp_biographia_style_border_color = "#000000"
+				 *
+				 * v4.0.0 changed ...
+				 * v4.0.0 removed ...
+				 *		wp_biographia_content_googleplus
+				 *		wp_biographia_content_delicious
+				 *		wp_biographia_content_picasa
+				 *		wp_biographia_admin_links['googleplus']
+				 *		wp_biographia_admin_links['delicious']
+				 *		wp_biographia_admin_links['picasa']
+				 *		wp_biographia_admin_links['yim']
+				 *		wp_biographia_admin_links['aim']
+				 *		wp_biographia_admin_links['msn']
+				 *		wp_biographia_admin_links['jabber']
+				 * v4.0.0 added ...
+				 *
 				 */
 
 				switch ($current_plugin_version) {
@@ -2437,7 +2402,7 @@ if (!class_exists ('WP_Biographia')) {
 						 	self::PRIORITY);
 						$this->admin_upgrade_option ($settings, 'admin_excerpt_priority',
 							self::PRIORITY);
-						
+
 					case '320':
 						if (isset ($settings['wp_biographia_display_front'])) {
 							$this->admin_upgrade_option ($settings, 'display_front_posts',
@@ -2455,7 +2420,7 @@ if (!class_exists ('WP_Biographia')) {
 						}
 						$this->admin_upgrade_option ($settings, 'sync_content_wpautop', '');
 						$this->admin_upgrade_option ($settings, 'sync_excerpt_wpautop', '');
-					
+
 					case '321':
 					case '330b1':
 					case '330b2':
@@ -2486,7 +2451,35 @@ if (!class_exists ('WP_Biographia')) {
 						$this->admin_upgrade_option ($settings, 'style_border_color', '#000000');
 
 					case '332':
-						$settings['wp_biographia_version'] = self::VERSION;
+					case '400b1':
+						if (isset ($settings['wp_biographia_content_googleplus'])) {
+							unset ($settings['wp_biographia_content_googleplus']);
+						}
+						if (isset ($settings['wp_biographia_content_delicious'])) {
+							unset ($settings['wp_biographia_content_delicious']);
+						}
+						if (isset ($settings['wp_biographia_content_picasa'])) {
+							unset ($settings['wp_biographia_content_picasa']);
+						}
+						$admin_links = $settings['wp_biographia_admin_links'];
+						foreach ($admin_links as $key => $value) {
+							switch ($key) {
+								case 'googleplus':
+								case 'delicious':
+								case 'picasa':
+								case 'yim':
+								case 'aim':
+								case 'msn':
+								case 'jabber':
+									unset($admin_links[$key]);
+									break;
+								default:
+									break;
+							}
+						}
+						$settings['wp_biographia_admin_links'] = $admin_links;
+
+						// $settings['wp_biographia_version'] = self::VERSION;
 						$upgrade_settings = true;
 
 					default:
@@ -2495,6 +2488,7 @@ if (!class_exists ('WP_Biographia')) {
 
 				if ($upgrade_settings) {
 					$this->admin_clear_pointer ();
+					error_log(var_export($settings, true));
 					update_option (self::OPTIONS, $settings);
 				}
 			}
@@ -2504,7 +2498,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * add_options_page() callback function; called to emit the plugin's settings/options
 		 * page.
 		 */
-	
+
 		function admin_display_settings () {
 			$settings = $this->admin_save_settings ();
 
@@ -2523,7 +2517,7 @@ if (!class_exists ('WP_Biographia')) {
 			$colophon_content = array ();
 			$config_settings = array ();
 			$config_users = array ();
-		
+
 			$args = array (
 				'public' => true,
 				'_builtin' => false
@@ -2539,7 +2533,7 @@ if (!class_exists ('WP_Biographia')) {
 
 			// TODO: This function is getting out of hand; need to split the per tab content
 			//       formatting into individual functions ...
-		
+
 			switch ($tab) {
 				case 'admin':
 					/****************************************************************************
@@ -2634,7 +2628,7 @@ if (!class_exists ('WP_Biographia')) {
 					$profile_settings[] = '</span>';
 					$profile_settings[] = '<br />';
 					$profile_settings[] = '<div style="clear: both";><small>' . __('Select the roles for users who should have the Biography Box hidden or visible in their user profile.', 'wp-biographia') . '</small></div></p>';
-					
+
 					/****************************************************************************
 				 	 * Admin tab content - 2.2) Enable/Disable Contact Links
 				 	 */
@@ -2656,7 +2650,7 @@ if (!class_exists ('WP_Biographia')) {
 								<small>' . $text . '</small></p>';
 						}
 					}	// end-foreach (...)
-					
+
 					/****************************************************************************
 				 	 * Admin tab content - 3) Set Post Content And Excerpt Priority
 				 	 */
@@ -2683,20 +2677,20 @@ if (!class_exists ('WP_Biographia')) {
 						. __('If you set the Content Filter Priority or the Excerpt Filter Priority to a value of 3 or lower, you may see unexpected formatting issues in your posts and pages caused by <code>wpautop</code> being run too early.', 'wp-biographia')
 						. '</p>';
 					$priority_settings[] = '</div>';
-				
-					$priority_settings[] = '<p><strong>' . __("Synchronise Automatic Paragraph Formatting For Content", 'wp-biographia') . '</strong><br /> 
+
+					$priority_settings[] = '<p><strong>' . __("Synchronise Automatic Paragraph Formatting For Content", 'wp-biographia') . '</strong><br />
 							<input type="checkbox" name="wp_biographia_sync_content_wpautop" ' . checked ($settings['wp_biographia_sync_content_wpautop'], 'on', false) . ' />
 							<small>' . __('Ensure Automatic Paragraph Formatting runs before producing the Biography Box for the full content on posts, pages and custom post types.', 'wp-biographia') . '</small></p>';
-					$priority_settings[] = '<p><strong>' . __("Synchronise Automatic Paragraph Formatting For Excerpts", 'wp-biographia') . '</strong><br /> 
+					$priority_settings[] = '<p><strong>' . __("Synchronise Automatic Paragraph Formatting For Excerpts", 'wp-biographia') . '</strong><br />
 							<input type="checkbox" name="wp_biographia_sync_excerpt_wpautop" ' . checked ($settings['wp_biographia_sync_excerpt_wpautop'], 'on', false) . ' />
 							<small>' . __('Ensure Automatic Paragraph Formatting runs before producing the Biography Box for the excerpt on posts, pages and custom post types.', 'wp-biographia') . '</small></p>';
-							
+
 					$priority_settings[] = '<div class="wp-biographia-warning">';
 					$priority_settings[] = '<p>'
 						. __('Some plugins and themes use the <code>the_content</code> or <code>the_excerpt</code> filters or secondary query loops to show content in the sidebar or in the footer. If you\'re seeing the Biography Box as part of a widget\'s output, in the footer or elsewhere, locking the plugin to operate within the context of the main WordPress Loop may stop this happening, depending on the specific set of plugins and theme being used.', 'wp-biographia')
 						. '</p>';
 					$priority_settings[] = '</div>';
-					
+
 					$priority_settings[] = '<p><strong>' . __('Lock Display Of The Biography Box To The Main Loop', 'wp-biographia') . '</strong><br />
 						<input type="checkbox" name="wp_biographia_admin_lock_to_loop" ' . checked($settings['wp_biographia_admin_lock_to_loop'], 'on', false) . ' />
 						<small>' . __('Restrict the plugin to operating on the post content or post excerpt only when in the main WordPress Loop', 'wp-biographia') . '</small></p>';
@@ -2707,7 +2701,7 @@ if (!class_exists ('WP_Biographia')) {
 
 					$bio_settings[] = '<p><em>' . __('WP Biographia can allow limited guest post support; allowing the biography text and elements of the Biography Box to be over-ridden on a per post, custom post and page basis.', 'wp-biographia') . '</em></p>';
 
-					$bio_settings[] = '<p><strong>' . __("Enable Post Specific Overrides", 'wp-biographia') . '</strong><br /> 
+					$bio_settings[] = '<p><strong>' . __("Enable Post Specific Overrides", 'wp-biographia') . '</strong><br />
 							<input type="checkbox" name="wp_biographia_admin_post_overrides" ' . checked ($settings['wp_biographia_admin_post_overrides'], 'on', false) . ' />
 							<small>' . __('Allow users to override the biography and title elements of the Biography Box and to suppress the display of the user\'s avatar and contact links on a per post, per page or per custom post basis.', 'wp-biographia') . '</small></p>';
 
@@ -2748,7 +2742,7 @@ if (!class_exists ('WP_Biographia')) {
 					$exclusion_settings[] = '<p><strong>' . __("Exclude Pages (via Page ID)", 'wp-biographia') . '</strong><br />
 						<input type="text" name="wp_biographia_page_exclusions" id="wp_biographia_page_exclusions" class="wp-biographia-exclusions-input" value="' . $settings['wp_biographia_page_exclusions'] . '" /><br />
 						<small>' . __('Hides the Biography Box when a page is displayed using the Page Template. Enter the Page IDs to hide, comma separated with no spaces, e.g. 54,33,55.', 'wp-biographia') . '</small></p>';
-					
+
 					/****************************************************************************
 				 	 * Exclusions tab content - 2) User Suppression Settings
 				 	 */
@@ -2831,7 +2825,7 @@ if (!class_exists ('WP_Biographia')) {
 					</span>';
 					$suppression_settings[] = '<br />';
 					$suppression_settings[] = '<div style="clear: both";><small>' . __('Select the users who should not display the Biography Box on their authored pages. This setting over-rides the individual user profile settings, providing the user has permission to edit their profile.', 'wp-biographia') . '</small></div></p>';
-				
+
 					/****************************************************************************
 				 	 * Exclusions tab content - 3) Category Suppression Settings
 				 	 */
@@ -2879,7 +2873,7 @@ if (!class_exists ('WP_Biographia')) {
 					$category_settings[] = '</span>';
 					$category_settings[] = '<br />';
 					$category_settings[] = '<div style="clear: both";><small>' . __('Select the post categories that should not display the Biography Box. Selecting a category for exclusion of the Biography Box affects all posts of that category, on single post display, on archive pages and on the front page.', 'wp-biographia') . '</small></div></p>';
-				
+
 					/****************************************************************************
 			 	 	 * End of Exclusions tab content
 			 	 	 */
@@ -2892,28 +2886,28 @@ if (!class_exists ('WP_Biographia')) {
 
 					$style_settings[] = '<p><em>' . __('This tab contains broad level settings to control how the Biography Box is styled; its background colour and border. The Biography Box is fully style-able but this needs knowledge of how to write CSS.', 'wp-biographia') . '</em></p>';
 
-					$style_settings[] = '<p><strong>' . __("Box Background Color", 'wp-biographia') . '</strong><br /> 
+					$style_settings[] = '<p><strong>' . __("Box Background Color", 'wp-biographia') . '</strong><br />
 								<input type="text" name="wp_biographia_style_bg" id="wp-biographia-background-color" value="' . $settings['wp_biographia_style_bg'] . '" />
 								<a class="hide-if-no-js" href="#" id="wp-biographia-pick-background-color">' . __('Select a Color', 'wp-biographia') . '</a>
 								<div id="wp-biographia-background-color-picker" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div>
 								<small>' . __('By default, the background color of the Biography Box is a yellowish tone.', 'wp-biographia') . '</small></p>';
-					$style_settings[] = '<p><strong>' . __("Box Border", 'wp-biographia') . '</strong><br /> 
+					$style_settings[] = '<p><strong>' . __("Box Border", 'wp-biographia') . '</strong><br />
 				                <select name="wp_biographia_style_border">
 				                  <option value="top" ' .selected ($settings['wp_biographia_style_border'], 'top', false) . '>' . __('Thick Top Border', 'wp-biographia') . '</option>
 				                  <option value="around" ' .selected ($settings['wp_biographia_style_border'], 'around', false) . '>' . __('Thin Surrounding Border', 'wp-biographia') . '</option>
 				                  <option value="none" ' .selected ($settings['wp_biographia_style_border'], 'none', false) . '>' . __('No Border', 'wp-biographia') . '</option>
 				                </select><br /><small>' . __('By default, a thick black line is displayed above the Biography Box.', 'wp-biographia') . '</small></p>';
-					$style_settings[] = '<p><strong>' . __("Box Border Color", 'wp-biographia') . '</strong><br /> 
+					$style_settings[] = '<p><strong>' . __("Box Border Color", 'wp-biographia') . '</strong><br />
 								<input type="text" name="wp_biographia_style_border_color" id="wp-biographia-border-color" value="' . $settings['wp_biographia_style_border_color'] . '" />
 								<a class="hide-if-no-js" href="#" id="wp-biographia-pick-border-color">' . __('Select a Color', 'wp-biographia') . '</a>
 								<div id="wp-biographia-border-color-picker" style="z-index: 100; background:#eee; border:1px solid #ccc; position:absolute; display:none;"></div>
 								<small>' . __('By default, the border color of the Biography Box is black.', 'wp-biographia') . '</small></p>';
-				
+
 					/****************************************************************************
 			 	 	* End of Style tab content
 			 	 	*/
 					break;
-				
+
 				case 'content':
 					/****************************************************************************
 				 	 * Content settings tab content
@@ -3062,12 +3056,12 @@ if (!class_exists ('WP_Biographia')) {
 						. checked ($settings['wp_biographia_content_posts'], 'none', false)
 						. ' />&nbsp;' . __('Don\'t Show The More Posts Link', 'wp-biographia') . '<br />
 						<small>' . __('How you want to display and format the <em>More Posts By This User</em> link', 'wp-biographia') . '</small></p>';
-				
+
 					/****************************************************************************
 			 	 	 * End of Content tab content
 			 	 	 */
 					break;
-				
+
 				case 'defaults':
 					/****************************************************************************
 			 	 	 * Defaults settings tab content
@@ -3081,12 +3075,12 @@ if (!class_exists ('WP_Biographia')) {
 					$defaults_settings[] = '<p>';
 					$defaults_settings[] = sprintf (__('<strong>WARNING!</strong> Checking <strong><em>%s</em></strong> and clicking on <strong><em>%s</em></strong> will erase <strong><em>all</em></strong> the current WP Biographia settings and options and will restore WP Biographia to a <em>just installed</em> state. This is the equivalent to deactivating, uninstalling and reinstalling the plugin. Only proceed if this is what you intend to do. This action is final and irreversable.', 'wp-biographia'), __('Reset WP Biographia To Defaults', 'wp-biographia'), __('Save Changes', 'wp-biographia'));
 					$defaults_settingsp[] = '</p>';
-				
+
 					/****************************************************************************
 				 	 * End of Defaults tab content
 				 	 */
 					break;
-				
+
 				case 'colophon':
 					/****************************************************************************
 				 	 * Colophon tab content - 1) Colophon Display
@@ -3141,12 +3135,12 @@ if (!class_exists ('WP_Biographia')) {
 					$config_users[] = '<pre>';
 					$config_users[] = print_r ($debug_users, true);
 					$config_users[] = '</pre>';
-				
+
 					/****************************************************************************
 				 	 * End of Colophon tab content
 				 	 */
 					break;
-				
+
 				case 'display':
 				default:
 					/****************************************************************************
@@ -3157,7 +3151,7 @@ if (!class_exists ('WP_Biographia')) {
 
 					$display_settings[] = '<p><em>' . __('This tab contains broad level settings to control how the Biography Box is displayed and where. You can configure more specific display settings in the Exclusions tab and what is actually displayed in the Biography Box in the Content tab.', 'wp-biographia') . '</em></p>';
 
-					$display_settings[] = '<p><strong>' . __("Display On Front Page", 'wp-biographia') . '</strong><br /> 
+					$display_settings[] = '<p><strong>' . __("Display On Front Page", 'wp-biographia') . '</strong><br />
 						<input type="checkbox" name="wp_biographia_display_front_posts" ' . checked ($settings['wp_biographia_display_front_posts'], 'on', false) . ' id="wp-biographia-display-front-posts" />
 						<small>' . __('Displays the Biography Box for each post on the front page.', 'wp-biographia') . '</small></p>';
 
@@ -3179,7 +3173,7 @@ if (!class_exists ('WP_Biographia')) {
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
 
-					$display_settings[] = '<p><strong>' . __("Display On Individual Posts", 'wp-biographia') . '</strong><br /> 
+					$display_settings[] = '<p><strong>' . __("Display On Individual Posts", 'wp-biographia') . '</strong><br />
 							<input type="checkbox" name="wp_biographia_display_posts" ' . checked ($settings['wp_biographia_display_posts'], 'on', false) . ' id="wp-biographia-display-posts" />
 							<small>' . __('Displays the Biography Box for individual posts.', 'wp-biographia') . '</small></p>';
 
@@ -3188,10 +3182,10 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
-					
+
 					$full_id = 'wp-biographia-display-posts-bio-full';
 					$excerpt_id = 'wp-biographia-display-posts-bio-excerpt';
-					
+
 					$display_settings[] = '<p><strong>' . __("Individual Posts Biography Text", 'wp-biographia') . '</strong><br />
 						<input type="radio" name="wp_biographia_display_bio_posts" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_bio_posts'], 'full', false)
@@ -3201,19 +3195,19 @@ if (!class_exists ('WP_Biographia')) {
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
 
-					$display_settings[] = '<p><strong>' . __("Display On All Post Archives", 'wp-biographia') . '</strong><br /> 
+					$display_settings[] = '<p><strong>' . __("Display On All Post Archives", 'wp-biographia') . '</strong><br />
 							<input type="checkbox" name="wp_biographia_display_archives_posts" ' . checked ($settings['wp_biographia_display_archives_posts'], 'on', false) . ' id="wp-biographia-display-archives-posts" />
 							<small>' . __('Displays the Biography Box for each post on <strong>all types</strong> of Archive page (Author, Category, Date and Tag)', 'wp-biographia') . '</small></p>';
-							
+
 					$display_settings[] = '<div id="wp-biographia-archives-bio-wrapper"';
 					if (!$archives_enabled) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
-					
+
 					$full_id = 'wp-biographia-display-archives-bio-full';
 					$excerpt_id = 'wp-biographia-display-archives-bio-excerpt';
-					
+
 					$display_settings[] = '<p><strong>' . __("All Post Archives Biography Text", 'wp-biographia') . '</strong><br />
 						<input type="radio" name="wp_biographia_display_archives_bio_posts" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_archives_bio_posts'], 'full', false)
@@ -3229,7 +3223,7 @@ if (!class_exists ('WP_Biographia')) {
 					}
 					$display_settings[] = '>';
 
-					$display_settings[] = '<p><strong>' . __("Display On Author Archives", 'wp-biographia') . '</strong><br /> 
+					$display_settings[] = '<p><strong>' . __("Display On Author Archives", 'wp-biographia') . '</strong><br />
 							<input type="checkbox" name="wp_biographia_display_author_archives_posts" ' . checked ($settings['wp_biographia_display_author_archives_posts'], 'on', false) . ' id="wp-biographia-display-author-archives-posts" />
 							<small>' . __('Displays the Biography Box for each post on Author Archive pages.', 'wp-biographia') . '</small></p>';
 
@@ -3238,10 +3232,10 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
-					
+
 					$full_id = 'wp-biographia-display-author-archives-bio-full';
 					$excerpt_id = 'wp-biographia-display-author-archives-bio-excerpt';
-					
+
 					$display_settings[] = '<p><strong>' . __("Author Archive Posts Biography Text", 'wp-biographia') . '</strong><br />
 						<input type="radio" name="wp_biographia_display_author_archives_bio_posts" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_author_archives_bio_posts'], 'full', false)
@@ -3251,7 +3245,7 @@ if (!class_exists ('WP_Biographia')) {
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
 
-					$display_settings[] = '<p><strong>' . __("Display On Category Archives", 'wp-biographia') . '</strong><br /> 
+					$display_settings[] = '<p><strong>' . __("Display On Category Archives", 'wp-biographia') . '</strong><br />
 							<input type="checkbox" name="wp_biographia_display_category_archives_posts" ' . checked ($settings['wp_biographia_display_category_archives_posts'], 'on', false) . ' id="wp-biographia-display-category-archives-posts" />
 							<small>' . __('Displays the Biography Box for each post on Category Archive pages.', 'wp-biographia') . '</small></p>';
 
@@ -3260,10 +3254,10 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
-					
+
 					$full_id = 'wp-biographia-display-category-archives-bio-full';
 					$excerpt_id = 'wp-biographia-display-category-archives-bio-excerpt';
-					
+
 					$display_settings[] = '<p><strong>' . __("Category Archive Posts Biography Text", 'wp-biographia') . '</strong><br />
 						<input type="radio" name="wp_biographia_display_category_archives_bio_posts" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_category_archives_bio_posts'], 'full', false)
@@ -3273,7 +3267,7 @@ if (!class_exists ('WP_Biographia')) {
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
 
-					$display_settings[] = '<p><strong>' . __("Display On Date Archives", 'wp-biographia') . '</strong><br /> 
+					$display_settings[] = '<p><strong>' . __("Display On Date Archives", 'wp-biographia') . '</strong><br />
 							<input type="checkbox" name="wp_biographia_display_date_archives_posts" ' . checked ($settings['wp_biographia_display_date_archives_posts'], 'on', false) . ' id="wp-biographia-display-date-archives-posts" />
 							<small>' . __('Displays the Biography Box for each post on Date Archive pages.', 'wp-biographia') . '</small></p>';
 
@@ -3282,10 +3276,10 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
-					
+
 					$full_id = 'wp-biographia-display-date-archives-bio-full';
 					$excerpt_id = 'wp-biographia-display-date-archives-bio-excerpt';
-					
+
 					$display_settings[] = '<p><strong>' . __("Date Archive Posts Biography Text", 'wp-biographia') . '</strong><br />
 						<input type="radio" name="wp_biographia_display_date_archives_bio_posts" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_date_archives_bio_posts'], 'full', false)
@@ -3295,7 +3289,7 @@ if (!class_exists ('WP_Biographia')) {
 						. ' />&nbsp;<small>' . __('Display the excerpt of the user\'s biography', 'wp-biographia') . '</small></p>';
 					$display_settings[] = '</div>';
 
-					$display_settings[] = '<p><strong>' . __("Display On Tag Archives", 'wp-biographia') . '</strong><br /> 
+					$display_settings[] = '<p><strong>' . __("Display On Tag Archives", 'wp-biographia') . '</strong><br />
 							<input type="checkbox" name="wp_biographia_display_tag_archives_posts" ' . checked ($settings['wp_biographia_display_tag_archives_posts'], 'on', false) . ' id="wp-biographia-display-tag-archives-posts" />
 							<small>' . __('Displays the Biography Box for each post on Tag Archive pages.', 'wp-biographia') . '</small></p>';
 
@@ -3304,10 +3298,10 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
-					
+
 					$full_id = 'wp-biographia-display-tag-archives-bio-full';
 					$excerpt_id = 'wp-biographia-display-tag-archives-bio-excerpt';
-					
+
 					$display_settings[] = '<p><strong>' . __("Tag Archive Posts Biography Text", 'wp-biographia') . '</strong><br />
 						<input type="radio" name="wp_biographia_display_tag_archives_bio_posts" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_tag_archives_bio_posts'], 'full', false)
@@ -3319,7 +3313,7 @@ if (!class_exists ('WP_Biographia')) {
 
 					$display_settings[] = '</div>';
 
-					$display_settings[] = '<p><strong>' . __("Display On Individual Pages", 'wp-biographia') . '</strong><br /> 
+					$display_settings[] = '<p><strong>' . __("Display On Individual Pages", 'wp-biographia') . '</strong><br />
 							<input type="checkbox" name="wp_biographia_display_pages" ' . checked ($settings['wp_biographia_display_pages'], 'on', false) . ' id="wp-biographia-display-pages" />
 							<small>' . __('Displays the Biography Box for individual pages.', 'wp-biographia') . '</small></p>';
 
@@ -3328,10 +3322,10 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
-					
+
 					$full_id = 'wp-biographia-display-pages-bio-full';
 					$excerpt_id = 'wp-biographia-display-pages-bio-excerpt';
-					
+
 					$display_settings[] = '<p><strong>' . __("Individual Pages Biography Text", 'wp-biographia') . '</strong><br />
 						<input type="radio" name="wp_biographia_display_bio_pages" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_bio_pages'], 'full', false)
@@ -3346,7 +3340,7 @@ if (!class_exists ('WP_Biographia')) {
 						$id = 'wp-biographia-custom-display-' . $pt->name;
 						$value = ($this->check_option ($settings, $name) ? $settings[$name] : '');
 
-						$display_settings[] = '<p><strong>' . sprintf (__('Display On Individual %s', 'wp-biographia'), $pt->labels->name) . '</strong><br /> 
+						$display_settings[] = '<p><strong>' . sprintf (__('Display On Individual %s', 'wp-biographia'), $pt->labels->name) . '</strong><br />
 								<input type="checkbox" name="' . $name . '" ' . checked ($value, 'on', false) . ' id="' . $id . '" />
 								<small>' . sprintf (__('Displays the Biography Box on individual instances of custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';
 
@@ -3375,9 +3369,9 @@ if (!class_exists ('WP_Biographia')) {
 						$id = 'wp-biographia-custom-display-archives-' . $pt->name;
 						$value = ($this->check_option ($settings, $name) ? $settings[$name] : '');
 
-						$display_settings[] = '<p><strong>' . sprintf (__('Display On %s Archives', 'wp-biographia'), $pt->labels->singular_name) . '</strong><br /> 
+						$display_settings[] = '<p><strong>' . sprintf (__('Display On %s Archives', 'wp-biographia'), $pt->labels->singular_name) . '</strong><br />
 								<input type="checkbox" name="' . $name . '" ' . checked ($value, 'on', false) . ' id="' . $id . '" />
-								<small>' . sprintf (__('Displays the Biography Box on Archive pages for custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';	
+								<small>' . sprintf (__('Displays the Biography Box on Archive pages for custom post type %s.', 'wp-biographia'), $pt->labels->name) . '</small></p>';
 
 						$id = 'wp-biographia-custom-archives-' . $pt->name . '-bio-wrapper';
 						$display_settings[] = '<div id="' . $id . '"';
@@ -3411,10 +3405,10 @@ if (!class_exists ('WP_Biographia')) {
 						$display_settings[] = ' style="display:none;"';
 					}
 					$display_settings[] = '>';
-					
+
 					$full_id = 'wp-biographia-display-feed-bio-full';
 					$excerpt_id = 'wp-biographia-display-feed-bio-excerpt';
-					
+
 					$display_settings[] = '<p><strong>' . __("RSS Feeds Biography Text", 'wp-biographia') . '</strong><br />
 						<input type="radio" name="wp_biographia_display_bio_feed" id="' . $full_id . '" value="full" '
 						. checked ($settings['wp_biographia_display_bio_feed'], 'full', false)
@@ -3442,14 +3436,14 @@ if (!class_exists ('WP_Biographia')) {
 				 	 */
 					break;
 			}	// end-switch ($tab)
-			
+
 
 			/********************************************************************************
 		 	 * Put it all together ...
 			 * TODO: Yes, I know it's another switch statement immediately following the previous
 			 *       one.
 		 	 */
-		
+
 			if (function_exists ('wp_nonce_field')) {
 				$wrapped_content[] = wp_nonce_field (
 					'wp-biographia-update-options',
@@ -3474,7 +3468,7 @@ if (!class_exists ('WP_Biographia')) {
 						__('Biography Box Override Settings', 'wp-biographia'),
 						implode ('', $bio_settings));
 					break;
-			
+
 				case 'exclude':
 					$wrapped_content[] = $this->admin_postbox ('wp-biographia-exclusion-settings',
 						__('Post, Page And Custom Post Type Exclusion Settings', 'wp-biographia'),
@@ -3517,7 +3511,7 @@ if (!class_exists ('WP_Biographia')) {
 						__('User Configuration Settings', 'wp-biographia'),
 						implode ('', $config_users));
 					break;
-			
+
 				case 'display':
 				default:
 					$wrapped_content[] = $this->admin_postbox ('wp-biographia-display-settings',
@@ -3525,7 +3519,7 @@ if (!class_exists ('WP_Biographia')) {
 						implode ('', $display_settings));
 					break;
 			}	// end-switch ($tab)
-		
+
 			$this->admin_wrap ($tab,
 				sprintf (__('WP Biographia %s - Settings And Options',
 					'wp-biographia'), self::DISPLAY_VERSION),
@@ -3550,7 +3544,7 @@ if (!class_exists ('WP_Biographia')) {
 		 * @param string meta_key Key for the user_meta option to be updated/added.
 		 * @param string meta_value Value for the user_meta option to be updated/added.
 		 */
-	
+
 		function admin_meta_option ($user_array, $meta_key, $meta_value) {
 			if ($user_array) {
 				foreach ($user_array as $id) {
@@ -3562,7 +3556,7 @@ if (!class_exists ('WP_Biographia')) {
 		/**
 		 * Verifies and saves the plugin's settings/options to the back-end database.
 		 */
-	
+
 		function admin_save_settings () {
 			$settings = $this->get_option ();
 
@@ -3609,7 +3603,7 @@ if (!class_exists ('WP_Biographia')) {
 								}
 							}	// end-foreach ($this->defaults () ... )
 							$settings['wp_biographia_admin_links'] = $links;
-							
+
 							$value = $this->admin_option ('wp_biographia_content_priority');
 							if (is_numeric ($value)) {
 								$settings['wp_biographia_admin_content_priority'] = $value;
@@ -3624,7 +3618,7 @@ if (!class_exists ('WP_Biographia')) {
 							$settings['wp_biographia_admin_post_overrides'] = $this->admin_option ('wp_biographia_admin_post_overrides');
 							$settings['wp_biographia_admin_lock_to_loop'] = $this->admin_option ('wp_biographia_admin_lock_to_loop');
 							break;
-					
+
 						case 'exclude':
 							foreach ($pts as $pt) {
 								$settings['wp_biographia_' . $pt->name . '_exclusions'] =
@@ -3633,8 +3627,8 @@ if (!class_exists ('WP_Biographia')) {
 								$settings['wp_biographia_global_' . $pt->name . '_exclusions'] =
 									$this->admin_option ('wp_biographia_global_' . $pt->name . '_exclusions');
 							}
-						
-							// Post exclusions 
+
+							// Post exclusions
 							$settings['wp_biographia_post_exclusions'] =
 								$this->admin_option ('wp_biographia_post_exclusions');
 
@@ -3645,7 +3639,7 @@ if (!class_exists ('WP_Biographia')) {
 								$this->admin_option ('wp_biographia_page_exclusions');
 
 							// Category exclusions
-						
+
 							$categories = $this->admin_option (
 								'wp-biographia-excluded-categories');
 							if (!empty ($categories)) {
@@ -3655,7 +3649,7 @@ if (!class_exists ('WP_Biographia')) {
 							else {
 								$settings['wp_biographia_category_exclusions'] = '';
 							}
-						
+
 							// Per user suppression of the Biography Box on posts and on pages
 
 							$enabled_post_users = $this->admin_option ('wp-biographia-enabled-post-users');
@@ -3686,7 +3680,7 @@ if (!class_exists ('WP_Biographia')) {
 										$_POST['wp_biographia_style_bg'];
 							}
 
-							$settings['wp_biographia_style_border'] = 
+							$settings['wp_biographia_style_border'] =
 								$this->admin_option ('wp_biographia_style_border');
 
 							$field = 'wp_biographia_style_border_color';
@@ -3697,28 +3691,28 @@ if (!class_exists ('WP_Biographia')) {
 							break;
 
 						case 'content':
-							$settings['wp_biographia_content_prefix'] = 
+							$settings['wp_biographia_content_prefix'] =
 								$this->admin_option ('wp_biographia_content_prefix');
 
-							$settings['wp_biographia_content_name'] = 
+							$settings['wp_biographia_content_name'] =
 								$this->admin_option ('wp_biographia_content_name');
 
 							$settings['wp_biographia_content_authorpage'] =
 								$this->admin_option ('wp_biographia_content_authorpage');
 
-							$settings['wp_biographia_content_image'] = 
+							$settings['wp_biographia_content_image'] =
 								$this->admin_option ('wp_biographia_content_image');
 
-							$settings['wp_biographia_content_image_size'] = 
+							$settings['wp_biographia_content_image_size'] =
 								$this->admin_option ('wp_biographia_content_image_size');
 
-							$settings['wp_biographia_content_bio'] = 
+							$settings['wp_biographia_content_bio'] =
 								$this->admin_option ('wp_biographia_content_bio');
 
-							$settings['wp_biographia_content_icons'] = 
+							$settings['wp_biographia_content_icons'] =
 								$this->admin_option ('wp_biographia_content_icons');
 
-							$settings['wp_biographia_content_alt_icons'] = 
+							$settings['wp_biographia_content_alt_icons'] =
 								$this->admin_option ('wp_biographia_content_alt_icons');
 
 							$settings['wp_biographia_content_icon_url'] =
@@ -3729,33 +3723,24 @@ if (!class_exists ('WP_Biographia')) {
 
 							$settings['wp_biographia_content_link_nofollow'] =
 								$this->admin_option ('wp_biographia_content_link_nofollow');
-							
-							$settings['wp_biographia_content_email'] = 
+
+							$settings['wp_biographia_content_email'] =
 								$this->admin_option ('wp_biographia_content_email');
 
-							$settings['wp_biographia_content_web'] = 
+							$settings['wp_biographia_content_web'] =
 								$this->admin_option ('wp_biographia_content_web');
 
-							$settings['wp_biographia_content_twitter'] = 
+							$settings['wp_biographia_content_twitter'] =
 								$this->admin_option ('wp_biographia_content_twitter');
 
-							$settings['wp_biographia_content_facebook'] = 
+							$settings['wp_biographia_content_facebook'] =
 								$this->admin_option ('wp_biographia_content_facebook');
 
-							$settings['wp_biographia_content_linkedin'] = 
+							$settings['wp_biographia_content_linkedin'] =
 								$this->admin_option ('wp_biographia_content_linkedin');
-
-							$settings['wp_biographia_content_googleplus'] = 
-								$this->admin_option ('wp_biographia_content_googleplus');
-
-							$settings['wp_biographia_content_delicious'] =
-								$this->admin_option ('wp_biographia_content_delicious');
 
 							$settings['wp_biographia_content_flickr'] =
 								$this->admin_option ('wp_biographia_content_flickr');
-
-							$settings['wp_biographia_content_picasa'] =
-								$this->admin_option ('wp_biographia_content_picasa');
 
 							$settings['wp_biographia_content_vimeo'] =
 								$this->admin_option ('wp_biographia_content_vimeo');
@@ -3766,7 +3751,7 @@ if (!class_exists ('WP_Biographia')) {
 							$settings['wp_biographia_content_reddit'] =
 								$this->admin_option ('wp_biographia_content_reddit');
 
-							$settings['wp_biographia_content_posts'] = 
+							$settings['wp_biographia_content_posts'] =
 								$this->admin_option ('wp_biographia_content_posts');
 							break;
 
@@ -3784,51 +3769,51 @@ if (!class_exists ('WP_Biographia')) {
 						case 'display':
 							$settings['wp_biographia_display_front_posts'] =
 								$this->admin_option ('wp_biographia_display_front_posts');
-							$settings['wp_biographia_display_front_bio_posts'] = 
+							$settings['wp_biographia_display_front_bio_posts'] =
 								$this->admin_option ('wp_biographia_display_front_bio_posts');
-								
+
 							$settings['wp_biographia_display_posts'] =
 								$this->admin_option ('wp_biographia_display_posts');
-							$settings['wp_biographia_display_bio_posts'] = 
+							$settings['wp_biographia_display_bio_posts'] =
 								$this->admin_option ('wp_biographia_display_bio_posts');
-								
+
 							$settings['wp_biographia_display_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_archives_posts');
-							$settings['wp_biographia_display_archives_bio_posts'] = 
+							$settings['wp_biographia_display_archives_bio_posts'] =
 								$this->admin_option ('wp_biographia_display_archives_bio_posts');
-								
+
 							$settings['wp_biographia_display_author_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_author_archives_posts');
-							$settings['wp_biographia_display_author_archives_bio_posts'] = 
+							$settings['wp_biographia_display_author_archives_bio_posts'] =
 								$this->admin_option ('wp_biographia_display_author_archives_bio_posts');
-								
+
 							$settings['wp_biographia_display_category_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_category_archives_posts');
-							$settings['wp_biographia_display_category_archives_bio_posts'] = 
+							$settings['wp_biographia_display_category_archives_bio_posts'] =
 								$this->admin_option ('wp_biographia_display_category_archives_bio_posts');
-								
+
 							$settings['wp_biographia_display_date_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_date_archives_posts');
-							$settings['wp_biographia_display_date_archives_bio_posts'] = 
+							$settings['wp_biographia_display_date_archives_bio_posts'] =
 								$this->admin_option ('wp_biographia_display_date_archives_bio_posts');
-								
+
 							$settings['wp_biographia_display_tag_archives_posts'] =
 								$this->admin_option ('wp_biographia_display_tag_archives_posts');
-							$settings['wp_biographia_display_tag_archives_bio_posts'] = 
+							$settings['wp_biographia_display_tag_archives_bio_posts'] =
 								$this->admin_option ('wp_biographia_display_tag_archives_bio_posts');
-								
+
 							$settings['wp_biographia_display_pages'] =
 								$this->admin_option ('wp_biographia_display_pages');
-							$settings['wp_biographia_display_bio_pages'] = 
+							$settings['wp_biographia_display_bio_pages'] =
 								$this->admin_option ('wp_biographia_display_bio_pages');
 
 							foreach ($pts as $pt) {
 								$name = 'wp_biographia_display_' . $pt->name;
 								$settings[$name] = $this->admin_option ($name);
-								
+
 								$name = 'wp_biographia_display_bio_' . $pt->name;
 								$settings[$name] = $this->admin_option ($name);
-								
+
 								$name = 'wp_biographia_display_archives_' . $pt->name;
 								$settings[$name] = $this->admin_option ($name);
 
@@ -3854,14 +3839,14 @@ if (!class_exists ('WP_Biographia')) {
 					if ($update_options) {
 						update_option (self::OPTIONS, $settings);
 					}
-				
+
 					if ($update_options || $reset_options) {
 						echo "<div id=\"updatemessage\" class=\"updated fade\"><p>";
 						echo sprintf (__('%s Settings And Options %s', 'wp-biographia'),
 							$update_msg, $action_msg);
 						echo "</p></div>\n";
-						echo "<script 	type=\"text/javascript\">setTimeout(function(){jQuery('#updatemessage').hide('slow');}, 3000);</script>";	
-					
+						echo "<script 	type=\"text/javascript\">setTimeout(function(){jQuery('#updatemessage').hide('slow');}, 3000);</script>";
+
 					}
 				}
 			}
@@ -3879,11 +3864,11 @@ if (!class_exists ('WP_Biographia')) {
 		 * @param string content HTML content for this postbox
 		 * @return string Wrapped postbox content.
 		 */
-	
+
 		function admin_postbox ($id, $title, $content) {
 			$handle_title = __('Click to toggle', 'wp-biographia');
 			$wrapper = array ();
-		
+
 			$wrapper[] = '<div id="' . $id . '" class="postbox">';
 			$wrapper[] = '<div class="handlediv" title="'
 				. $handle_title
@@ -3892,7 +3877,7 @@ if (!class_exists ('WP_Biographia')) {
 			$wrapper[] = '<div class="inside">' . $content . '</div></div>';
 
 			return implode ('', $wrapper);
-		}	
+		}
 
 		/**
 		 * Wrap up all the constituent components of the plugin's admin settings/options page.
@@ -3910,11 +3895,11 @@ if (!class_exists ('WP_Biographia')) {
 		        <h2><?php echo $title; ?></h2>
 				<?php
 				echo $this->admin_tabs ($tab);
-			
+
 				?>
 		        <form method="post" action="<?php echo $action; ?>">
 		            <div class="postbox-container wp-biographia-postbox-settings">
-		                <div class="metabox-holder">	
+		                <div class="metabox-holder">
 		                    <div class="meta-box-sortables">
 		                    <?php
 		                        echo $content;
@@ -3925,7 +3910,7 @@ if (!class_exists ('WP_Biographia')) {
 		                  </div>
 		                </div>
 		                <div class="postbox-container wp-biographia-postbox-sidebar">
-		                  <div class="metabox-holder">	
+		                  <div class="metabox-holder">
 		                    <div class="meta-box-sortables">
 		                    <?php
 								echo $this->admin_help_and_support ();
@@ -3947,10 +3932,10 @@ if (!class_exists ('WP_Biographia')) {
 		 * @param string tab Settings/options tab context name
 		 * @return string Submit button HTML
 		 */
-	
+
 		function admin_submit ($tab) {
 			$content = array ();
-		
+
 			switch ($tab) {
 				case 'admin':
 				case 'display':
@@ -3972,7 +3957,7 @@ if (!class_exists ('WP_Biographia')) {
 					break;
 			}	// end-switch ($tab)
 		}
-	
+
 		/**
 		 * Emits the plugin's help/support side-box for the plugin's admin settings/options page.
 		 */
@@ -3982,7 +3967,7 @@ if (!class_exists ('WP_Biographia')) {
 			$restart_url = $this->admin_get_options_url ('display');
 			$restart_url .= '&wp_biographia_restart_tour';
 			$restart_url = wp_nonce_url ($restart_url, 'wp-biographia-restart-tour');
-		
+
 			$content = array ();
 
 			$content[] = '<p>';
@@ -4041,10 +4026,10 @@ if (!class_exists ('WP_Biographia')) {
 
 		function admin_tabs ($current='display') {
 			$content = array ();
-		
+
 			$content[] = '<div id="icon-tools" class="icon32"><br /></div>';
 			$content[] = '<h2 class="nav-tab-wrapper">';
-		
+
 			foreach (self::$admin_tab_names as $tab => $name) {
 				$class = ($tab == $current) ? ' nav-tab-active' : '';
 				$content[] = sprintf ('<a class="nav-tab%s" id="wp-biographia-tab-%s" href="%s">%s</a>',
@@ -4053,12 +4038,12 @@ if (!class_exists ('WP_Biographia')) {
 								$this->admin_get_options_url ($tab),
 								$name);
 			}	// end-foreach (...)
-		
+
 			$content[] = '</h2>';
-		
+
 			return implode ('', $content);
 		}
-	
+
 		/**
 		 * Check and validate the tab parameter passed as part of the settings/options URL.
 		 */
@@ -4078,16 +4063,16 @@ if (!class_exists ('WP_Biographia')) {
 		/**
 		 * Reset the plugin's settings/options back to the default values.
 		 */
-	
+
 		function admin_reset_plugin () {
 			$filter = false;
 			$defaults = $this->defaults ($filter);
 			$fields = array (0 => 'ID');
 			$search = new WP_User_Query (array ('fields' => $fields));
 			$users = $search->get_results ();
-		
+
 			delete_option (self::OPTIONS);
-		
+
 			foreach ($users as $user) {
 				update_user_meta ($user->ID, 'wp_biographia_suppress_posts', '');
 				update_user_meta ($user->ID, 'wp_biographia_suppress_pages', '');
@@ -4095,7 +4080,7 @@ if (!class_exists ('WP_Biographia')) {
 
 			$this->add_settings ();
 		}
-	
+
 		/**
 		 * "add_meta_boxes" action hook; adds a meta box to hide the Biography Box for a page,
 		 * and to hide the Biography Box on posts and custom post types to the admin edit
@@ -4122,25 +4107,25 @@ if (!class_exists ('WP_Biographia')) {
 
 			$hide_page = (get_user_meta ($user->ID, 'wp_biographia_suppress_pages', true) == 'on');
 			$hide_post = (get_user_meta ($user->ID, 'wp_biographia_suppress_posts', true) == 'on');
-		
+
 			$pts = get_post_types (array (), 'objects');
 
 			foreach ($pts as $pt) {
 				if ($pt->name == 'page' && $hide_page) {
 					continue;
 				}
-			
+
 				elseif ($pt->name == 'post' && $hide_post) {
 					continue;
 				}
-			
+
 				$id = sprintf ('wp-biographia-%s-meta', $pt->name);
 				$title = sprintf (__('Biography Box %s Options', 'wp-biographia'), $pt->labels->singular_name);
-			
+
 				add_meta_box ($id, $title, array ($this, 'admin_display_meta_box'), $pt->name);
 			}	// end-foreach
 		}
-	
+
 		/**
 		 * "add_meta_box" callback; adds a meta box to hide the Biography Box for a page,
 		 * and to hide the Biography Box on posts and custom post types to the admin edit
@@ -4151,12 +4136,12 @@ if (!class_exists ('WP_Biographia')) {
 
 		function admin_display_meta_box ($post) {
 			$content = array ();
-		
+
 			$pt = get_post_type ();
 			$pto = get_post_type_object ($pt);
 
 			$content[] = wp_nonce_field (basename (__FILE__), self::META_NONCE);
-		
+
 			switch ($pt) {
 				case 'page':
 					$checked = false;
@@ -4164,14 +4149,14 @@ if (!class_exists ('WP_Biographia')) {
 					if (isset ($exclusions)) {
 						$page_exclusions = explode (',', $exclusions);
 						$checked = (in_array ($post->ID, $page_exclusions));
-					
+
 					}
 
-					$content[] = '<p><strong>' . __("Hide The Biography Box On This Page", 'wp-biographia') . '</strong><br /> 
+					$content[] = '<p><strong>' . __("Hide The Biography Box On This Page", 'wp-biographia') . '</strong><br />
 						<input type="checkbox" name="wp_biographia_admin_meta_page_hide" ' . checked ($checked, true, false) . ' />
 						<small>' . __('Hides the Biography Box each time this page is displayed.', 'wp-biographia') . '</small></p>';
 					break;
-				
+
 				default:
 					$checked = false;
 					$opt = 'wp_biographia_' . $pt . '_exclusions';
@@ -4186,10 +4171,10 @@ if (!class_exists ('WP_Biographia')) {
 					$text = sprintf (__('Hides the Biography Box each time this %1$s is displayed using the Single %2$s Template.', 'wp_biographia'),
 						$pto->labels->singular_name, $pto->labels->singular_name);
 
-					$content[] = '<p><strong>' . $title . '</strong><br /> 
+					$content[] = '<p><strong>' . $title . '</strong><br />
 						<input type="checkbox" name="' . $control . '" ' . checked ($checked, true, false) . ' />
 						<small>' . $text . '</small></p>';
-				
+
 					$checked = false;
 					$opt = 'wp_biographia_global_' . $pt . '_exclusions';
 					$exclusions = $this->get_option ($opt);
@@ -4203,7 +4188,7 @@ if (!class_exists ('WP_Biographia')) {
 					$text = sprintf (__('Hides the Biography Box whenever this %s is displayed; singly, on archive pages or on the front page.', 'wp_biographia'),
 						$pto->labels->singular_name);
 
-					$content[] = '<p><strong>' . $title . '</strong><br /> 
+					$content[] = '<p><strong>' . $title . '</strong><br />
 						<input type="checkbox" name="' . $control . '" ' . checked ($checked, true, false) . ' />
 						<small>' . $text . '</small></p>';
 					break;
@@ -4217,8 +4202,8 @@ if (!class_exists ('WP_Biographia')) {
 				$key = '_wp_biographia_bio_override';
 				$text = sprintf (__('Override the default biography whenever this %s is displayed.', 'wp_biographia'), $pto->labels->singular_name);
 				$checked = get_post_meta ($post->ID, $key, true);
-			
-				$content[] = '<p><strong>' . $title . '</strong><br /> 
+
+				$content[] = '<p><strong>' . $title . '</strong><br />
 					<input type="checkbox" name="' . $control . '" id="' . $id . '" ' . checked ($checked, 'on', false) . ' />
 					<small>' . $text . '</small></p>';
 
@@ -4244,7 +4229,7 @@ if (!class_exists ('WP_Biographia')) {
 
 				$content[] = '<textarea name="wp_biographia_admin_meta_profile_bio" id="wp-biographia-admin-meta-profile-bio" style="display:none;">' . $profile_bio . '</textarea>';
 				$content[] = '</div>';
-			
+
 				$title = sprintf (__('Override Biography Title For This %s', 'wp_biographia'), $pto->labels->singular_name);
 				$control = 'wp_biographia_admin_meta_title_override';
 				$id = 'wp-biographia-admin-meta-title-override';
@@ -4252,7 +4237,7 @@ if (!class_exists ('WP_Biographia')) {
 				$text = sprintf (__('Override the default title for the Biography Box whenever this %s is displayed.', 'wp_biographia'), $pto->labels->singular_name);
 				$checked = get_post_meta ($post->ID, $key, true);
 
-				$content[] = '<p><strong>' . $title . '</strong><br /> 
+				$content[] = '<p><strong>' . $title . '</strong><br />
 					<input type="checkbox" name="' . $control . '" id="' . $id . '" ' . checked ($checked, 'on', false) . ' />
 					<small>' . $text . '</small></p>';
 
@@ -4265,19 +4250,19 @@ if (!class_exists ('WP_Biographia')) {
 				if ($checked !== 'on') {
 					$style = 'style="display:none;"';
 				}
-			
+
 				$content[] = '<div name="wp_biographia_admin_title_override" id="wp-biographia-admin-title-override" ' . $style . '>';
 				$content[] = '<p><strong>' . $title . '</strong><br />
 					<input type="text" name="' . $control . '" id="' . $id . '" value="' . $title_text . '" />';
 				$content[] = '</div>';
-			
+
 				$title = sprintf (__('Suppress Avatar For This %s', 'wp_biographia'), $pto->labels->singular_name);
 				$control = 'wp_biographia_admin_meta_avatar_suppress';
 				$key = '_wp_biographia_suppress_avatar';
 				$text = sprintf (__('Suppress the display of the Avatar in the Biography Box whenever this %s is displayed.', 'wp_biographia'), $pto->labels->singular_name);
 				$checked = get_post_meta ($post->ID, $key, true);
 
-				$content[] = '<p><strong>' . $title . '</strong><br /> 
+				$content[] = '<p><strong>' . $title . '</strong><br />
 					<input type="checkbox" name="' . $control . '" ' . checked ($checked, 'on', false) . ' />
 					<small>' . $text . '</small></p>';
 
@@ -4286,8 +4271,8 @@ if (!class_exists ('WP_Biographia')) {
 				$key = '_wp_biographia_suppress_links';
 				$text = sprintf (__('Suppress the display of the contact links in the Biography Box whenever this %s is displayed.', 'wp_biographia'), $pto->labels->singular_name);
 				$checked = get_post_meta ($post->ID, $key, true);
-			
-				$content[] = '<p><strong>' . $title . '</strong><br /> 
+
+				$content[] = '<p><strong>' . $title . '</strong><br />
 					<input type="checkbox" name="' . $control . '" ' . checked ($checked, 'on', false) . ' />
 					<small>' . $text . '</small></p>';
 			}
@@ -4296,7 +4281,7 @@ if (!class_exists ('WP_Biographia')) {
 				echo implode (PHP_EOL, $content);
 			}
 		}
-	
+
 		/**
 		 * "save_post" action hook; save the post/page/custom post Biography Box hiding options
 		 * (if shown)
@@ -4312,31 +4297,31 @@ if (!class_exists ('WP_Biographia')) {
 			// a revision, in fact during anything that changes the disposition of the post.
 			// Which is why there's a whole lot of checking and validation going on here before
 			// we even look at the custom meta box options.
-		
+
 			if (defined ('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-				return $post_id; 
+				return $post_id;
 			}
 
 			if ($parent_id = wp_is_post_revision ($post_id)) {
 				return $post_id;
 			}
-		
-		
+
+
 			$post_type = get_post_type_object ($post->post_type);
 			if (!current_user_can ($post_type->cap->edit_post, $post_id)) {
 				return $post_id;
 			}
-		
+
 			switch ($post->post_status) {
 				case 'draft':
 				case 'pending':
 				case 'publish':
 					break;
-				
+
 				default:
 					return $post_id;
 			}
-		
+
 			if (!isset ($_POST[self::META_NONCE]) || !check_admin_referer (basename (__FILE__), self::META_NONCE)) {
 				return $post_id;
 			}
@@ -4352,7 +4337,7 @@ if (!class_exists ('WP_Biographia')) {
 					$this->admin_clear_exclusion ($stub, $post_id);
 				}
 			}
-		
+
 			else {
 				$stub = $post_type->name;
 				$field = 'wp_biographia_admin_meta_single_hide';
@@ -4374,32 +4359,32 @@ if (!class_exists ('WP_Biographia')) {
 					$this->admin_clear_exclusion ($stub, $post_id);
 				}
 			}
-		
+
 			$field = 'wp_biographia_admin_meta_biography_override';
 			$key = '_wp_biographia_bio_override';
 			$this->admin_update_post_meta ($post_id, $field, $key);
-		
+
 			$field = 'wp_biographia_admin_meta_biography_text';
 			$key = '_wp_biographia_bio_text';
 			$this->admin_update_post_meta ($post_id, $field, $key);
-		
+
 			$field = 'wp_biographia_admin_meta_title_override';
 			$key = '_wp_biographia_title_override';
 			$this->admin_update_post_meta ($post_id, $field, $key);
-		
+
 			$field = 'wp_biographia_admin_meta_title';
 			$key = '_wp_biographia_title_text';
 			$this->admin_update_post_meta ($post_id, $field, $key);
-		
+
 			$field = 'wp_biographia_admin_meta_avatar_suppress';
 			$key = '_wp_biographia_suppress_avatar';
 			$this->admin_update_post_meta ($post_id, $field, $key);
-		
+
 			$field = 'wp_biographia_admin_meta_links_suppress';
 			$key = '_wp_biographia_suppress_links';
 			$this->admin_update_post_meta ($post_id, $field, $key);
 		}
-	
+
 		/**
 		 * Adds/updates a key/value pair to a post's metadata.
 		 */
@@ -4407,20 +4392,20 @@ if (!class_exists ('WP_Biographia')) {
 		function admin_update_post_meta ($post_id, $field, $key) {
 			$new_value = $this->admin_option ($field);
 			$meta_value = get_post_meta ($post_id, $key, true);
-		
+
 			if ($new_value && '' == $meta_value) {
 				add_post_meta ($post_id, $key, $new_value, true);
 			}
-		
+
 			elseif ($new_value && $new_value != $meta_value) {
 				update_post_meta ($post_id, $key, $new_value);
 			}
-		
+
 			elseif ('' == $new_value && $meta_value) {
 				delete_post_meta ($post_id, $key, $meta_value);
 			}
 		}
-	
+
 		/**
 		 * "before_delete_post" action hook; called just prior to a post being deleted.
 		 *
@@ -4431,7 +4416,7 @@ if (!class_exists ('WP_Biographia')) {
 			if ($parent_id = wp_is_post_revision ($post_id)) {
 				return;
 			}
-		
+
 			$post = get_post ($post_id);
 			$stub = $post->post_type;
 			$this->admin_clear_exclusion ($stub, $post_id);
@@ -4441,13 +4426,13 @@ if (!class_exists ('WP_Biographia')) {
 				$this->admin_clear_exclusion ($stub, $post_id);
 			}
 		}
-	
+
 		/**
 		 * Helper function to get the current set of post/page/custom post type exclusions
 		 *
 		 * @param string $stub Stub settings/option name
 		 */
-	
+
 		function admin_get_exclusions ($stub) {
 			$option = 'wp_biographia_' . $stub . '_exclusions';
 			$optval = $this->get_option ($option);
@@ -4458,7 +4443,7 @@ if (!class_exists ('WP_Biographia')) {
 
 			return $excl;
 		}
-	
+
 		/**
 		 * Helper function to determine if the current post/page/custom post is excluded/hidden
 		 *
@@ -4474,7 +4459,7 @@ if (!class_exists ('WP_Biographia')) {
 			else
 				return false;
 		}
-	
+
 		/**
 		 * Helper function to flag the current post/page/custom post as excluded/hidden
 		 *
@@ -4492,7 +4477,7 @@ if (!class_exists ('WP_Biographia')) {
 			$option = 'wp_biographia_' . $stub . '_exclusions';
 			$this->set_option ($option, $optval);
 		}
-	
+
 		/**
 		 * Helper function to clear the current post/page/custom post as excluded/hidden
 		 *
@@ -4511,11 +4496,11 @@ if (!class_exists ('WP_Biographia')) {
 			$option = 'wp_biographia_' . $stub . '_exclusions';
 			$this->set_option ($option, $optval);
 		}
-	
+
 		/**
 		 * Helper function to clear the plugin's tour pointer.
 		 */
-		
+
 		function admin_clear_pointer () {
 			$user_id = get_current_user_id ();
 			$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
@@ -4525,21 +4510,21 @@ if (!class_exists ('WP_Biographia')) {
 				update_user_meta ($user_id, 'dismissed_wp_pointers', implode (',', $dismissed));
 			}
 		}
-	
+
 		/**
 		 * Helper function to get the status of the plugin's tour pointer.
 		 */
-		
+
 		function admin_is_pointer_set () {
 			$user_id = get_current_user_id ();
 			$dismissed = explode (',', get_user_meta ($user_id, 'dismissed_wp_pointers', true));
 			return in_array ('wp_biographia_pointer', $dismissed);
 		}
-	
+
 		/**
 		 * Helper function to get the plugin's Admin URL.
 		 */
-		
+
 		function admin_get_options_url ($tab=NULL) {
 			$url = array ();
 			$url[] = admin_url ('options-general.php');
@@ -4547,7 +4532,7 @@ if (!class_exists ('WP_Biographia')) {
 			if (isset ($tab) && !empty ($tab)) {
 				$url[] = '&tab=' . $tab;
 			}
-			
+
 			return implode ('', $url);
 		}
 
@@ -4558,11 +4543,11 @@ if (!class_exists ('WP_Biographia')) {
 		 * @param string $key Name of setting to check
 		 * @return boolean Returns true if the setting exists and is not empty
 		 */
-	
+
 		function check_option (&$settings, $key) {
 			return (isset ($settings[$key]) && !empty ($settings[$key]));
 		}
-	
+
 	}	// end-class WP_Biographia
 }	// end-if (!class_exists ('WP_Biographia'))
 
