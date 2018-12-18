@@ -6,12 +6,12 @@ if (!defined('WPBIOGRAPHIA_INCLUDE_SENTRY')) {
 
 if (!class_exists ('WP_BiographiaWidget')) {
 	class WP_BiographiaWidget extends WP_Widget {
-	
+
 		static $name_options;
-	
+
 		private $widget_sem = false;
 		private $wrap_bio = false;
-	
+
 		function __construct () {
 			self::$name_options = array (
 				'first-last-name' => array (
@@ -39,17 +39,17 @@ if (!class_exists ('WP_BiographiaWidget')) {
 			$widget_ops = array (
 				'description' => __('Add the Biography Box to your sidebar')
 			);
-			parent::WP_Widget ('WP_BiographiaWidget', __('WP Biographia'), $widget_ops);
-		
+			parent::__construct ('WP_BiographiaWidget', __('WP Biographia'), $widget_ops);
+
 			add_filter ('get_avatar', array ($this, 'change_avatar_css'));
 		}
-	
+
 		function form ($instance) {
 			$text_stub = '<p><label for="%s">%s</label><input type="text" id="%s" name="%s" value="%s" class="widefat" /></p>';
 			$check_stub = '<p><input type="checkbox" id="%s" name="%s" %s />&nbsp;<label for="%s">%s</label></p>';
 			$radio_stub = '<input type="radio" id="%s" name="%s" value="%s" %s />&nbsp;<label for="%s">%s</label><br />';
 			$content = array ();
-		
+
 			$instance = wp_parse_args (
 				(array)$instance,
 				array (
@@ -98,7 +98,7 @@ if (!class_exists ('WP_BiographiaWidget')) {
 				$this->get_field_name ('name_prefix'),
 				esc_attr ($instance['name_prefix'])
 				);
-			
+
 			$content[] = '<p>';
 			foreach (self::$name_options as $key => $data) {
 				$content[] = sprintf ($radio_stub,
@@ -110,7 +110,7 @@ if (!class_exists ('WP_BiographiaWidget')) {
 					$data['text']
 				);
 			}
-		
+
 			/*foreach (self::$name_options as $option => $descr) {
 				$content[] = sprintf ($radio_stub,
 					$this->get_field_id ('name_options'),
@@ -122,7 +122,7 @@ if (!class_exists ('WP_BiographiaWidget')) {
 				);
 			}*/
 			$content[] = '</p>';
-		
+
 			$content[] = sprintf ($check_stub,
 				$this->get_field_id ('show_avatar'),
 				$this->get_field_name ('show_avatar'),
@@ -173,7 +173,7 @@ if (!class_exists ('WP_BiographiaWidget')) {
 
 			echo (implode ('', $content));
 		}
-	
+
 		function update ($new_instance, $old_instance) {
 			$instance = $old_instance;
 
@@ -191,30 +191,30 @@ if (!class_exists ('WP_BiographiaWidget')) {
 
 			return $instance;
 		}
-	
+
 		function update_arg (&$src, $key) {
 			if (isset ($src[$key]) && !empty ($src[$key])) {
 				return strip_tags ($src[$key]);
 			}
 			return '';
 		}
-	
+
 		function widget ($args, $instance) {
 			global $wp_query;
 			global $post;
 
 			extract ($args, EXTR_SKIP);
-		
+
 			if (!is_main_query ()) {
 				wp_reset_query ();
 			}
-	
+
 			if ($wp_query->post_count > 0) {
 				$content = array ();
 				$users = array ();
-			
+
 				$content[] = $before_widget;
-			
+
 				while (have_posts ()) : the_post ();
 					$user = $post->post_author;
 					if (!in_array ($user, $users)) {
@@ -228,33 +228,33 @@ if (!class_exists ('WP_BiographiaWidget')) {
 						$title = $instance['single_title'];
 					}
 				}
-			
+
 				elseif ($instance['show_title']) {
 					if ($instance['multi_title']) {
 						$title = $instance['multi_title'];
 					}
-				
+
 				}
 
 				if (!empty ($title)) {
 					$content[] = $before_title . $title . $after_title;
 				}
-			
+
 				foreach ($users as $user) {
 					$widget_bio = $this->display ($user, $args, $instance);
 					$content = array_merge ($content, $widget_bio);
 				}
-			
+
 				$content[] = $after_widget;
 				echo implode ('', $content);
 			}
 		}
-	
+
 		function display ($user_id, $args, $instance) {
 			extract ($args, EXTR_SKIP);
 
 			$author = $content = array ();
-		
+
 			foreach (self::$name_options as $key => $data) {
 				if ($key != 'first-last-name'  && $key != 'none') {
 					$author[$key] = get_the_author_meta ($data['field'], $user_id);
@@ -270,7 +270,7 @@ if (!class_exists ('WP_BiographiaWidget')) {
 			$author['bio'] = get_the_author_meta ('description', $user_id);
 			$author['short_bio'] = get_the_author_meta ('wp_biographia_short_bio', $user_id);
 			$author['email'] = get_the_author_meta ('email', $user_id);
-		
+
 			if ($instance['name_options'] != 'none') {
 				$content[] = $before_title;
 				if (!empty($instance['name_prefix'])) {
@@ -284,7 +284,7 @@ if (!class_exists ('WP_BiographiaWidget')) {
 				}
 				$content[] = $after_title;
 			}
-		
+
 			if ($instance['show_avatar'] || $instance['show_bio']) {
 				$content[] = '<div class="wp-biographia-widget textwidget">';
 
@@ -307,10 +307,10 @@ if (!class_exists ('WP_BiographiaWidget')) {
 
 				$content[] = '</div>';
 			}
-		
+
 			return $content;
 		}
-	
+
 		function change_avatar_css ($class) {
 			if ($this->widget_sem) {
 				$css = 'class=\'wp-biographia-avatar wp-biographia-avatar-' . ($this->wrap_bio ? 'wrap' : 'nowrap');
@@ -318,7 +318,7 @@ if (!class_exists ('WP_BiographiaWidget')) {
 			}
 			return $class;
 		}
-	
+
 	}	// end-class WP_BiographiaWidget
 }	// end-if (!class_exists ('WP_BiographiaWidget'))
 
