@@ -423,7 +423,7 @@ if (!class_exists ('WP_Biographia')) {
 					array (
 						'wp_biographia_installed' => 'on',
 						'wp_biographia_version' => self::VERSION,
-						'wp_biographia_style_bg' => '#FFEAA8',
+						'wp_biographia_style_bg' => '#FFFFFF',
 						'wp_biographia_style_border' => 'top',
 						'wp_biographia_display_front_posts' => 'on',
 						'wp_biographia_display_archives_posts' => 'on',
