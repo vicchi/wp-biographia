@@ -453,6 +453,7 @@ if (!class_exists ('WP_Biographia')) {
 						'wp_biographia_content_vimeo' => '',
 						'wp_biographia_content_youtube' => '',
 						'wp_biographia_content_reddit' => '',
+						'wp_biographia_content_github' => '',
 						'wp_biographia_content_instagram' => '',
 						'wp_biographia_content_posts' => 'extended',
 						'wp_biographia_content_link_target' => '_self',
@@ -606,7 +607,12 @@ if (!class_exists ('WP_Biographia')) {
 					'field' => 'instagram',
 					'contactmethod' => __('Instagram', 'wp-biographia'),
 					'url' => 'https://www.instagram.com/%s'
-				)
+				),
+				'github' => [
+					'field' => 'github',
+					'contactmethod' => __('GitHub', 'wp-biographia'),
+					'url' => 'https://github.com/%s'
+				]
 			);
 
 			return $contacts;
@@ -714,7 +720,12 @@ if (!class_exists ('WP_Biographia')) {
 					"link_title" => __('Instagram', 'wp-biographia'),
 					"link_text" => __('Instagram', 'wp-biographia'),
 					"link_icon" => $this->icon_dir_url . 'instagram.png'
-					)
+				),
+				"github" => [
+					"link_title" => __('GitHub', 'wp-biographia'),
+					"link_text" => __('GitHub', 'wp-biographia'),
+					"link_icon" => $this->icon_dir_url . 'github.png'
+				]
 			);
 
 			return $link_items;
@@ -2312,7 +2323,7 @@ if (!class_exists ('WP_Biographia')) {
 				 *		wp_biographia_admin_links['jabber']
 				 * v4.0.0 added ...
 				 *		wp_biographia_content_instagram
-				 *
+				 *		wp_biographia_content_github				 *
 				 */
 
 				switch ($current_plugin_version) {
@@ -2498,6 +2509,7 @@ if (!class_exists ('WP_Biographia')) {
 
 						$settings['wp_biographia_admin_links'] = $admin_links;
 						$this->admin_upgrade_option ($settings, 'content_instagram', '');
+						$this->admin_upgrade_option ($settings, 'content_github', '');
 
 						// $settings['wp_biographia_version'] = self::VERSION;
 						$upgrade_settings = true;
@@ -3773,6 +3785,9 @@ if (!class_exists ('WP_Biographia')) {
 
 							$settings['wp_biographia_content_instagram'] =
 								$this->admin_option ('wp_biographia_content_instagram');
+
+							$settings['wp_biographia_content_github'] =
+								$this->admin_option ('wp_biographia_content_github');
 
 							$settings['wp_biographia_content_posts'] =
 								$this->admin_option ('wp_biographia_content_posts');
