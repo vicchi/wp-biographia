@@ -138,7 +138,7 @@ if (!class_exists ('WP_Biographia')) {
 			register_activation_hook (__FILE__, array ($this, 'add_settings'));
 
 			$this->hook ('plugins_loaded');
-			$this->icon_dir_url = WPBIOGRAPHIA_URL . 'images/';
+			$this->icon_dir_url = WPBIOGRAPHIA_URL . 'public/icons/square/';
 			$this->content_autop = new WP_BiographiaFilterPriority;
 			$this->excerpt_autop = new WP_BiographiaFilterPriority;
 		}
