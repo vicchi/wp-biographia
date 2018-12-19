@@ -453,6 +453,7 @@ if (!class_exists ('WP_Biographia')) {
 						'wp_biographia_content_vimeo' => '',
 						'wp_biographia_content_youtube' => '',
 						'wp_biographia_content_reddit' => '',
+						'wp_biographia_content_instagram' => '',
 						'wp_biographia_content_posts' => 'extended',
 						'wp_biographia_content_link_target' => '_self',
 						'wp_biographia_content_link_nofollow' => '',
@@ -600,6 +601,11 @@ if (!class_exists ('WP_Biographia')) {
 					'field' => 'reddit',
 					'contactmethod' => __('Reddit', 'wp-biographia'),
 					'url' => 'http://www.reddit.com/user/%s'
+				),
+				'instagram' => array (
+					'field' => 'instagram',
+					'contactmethod' => __('Instagram', 'wp-biographia'),
+					'url' => 'https://www.instagram.com/%s'
 				)
 			);
 
@@ -703,6 +709,11 @@ if (!class_exists ('WP_Biographia')) {
 					"link_title" => __('Reddit', 'wp-biographia'),
 					"link_text" => __('Reddit', 'wp-biographia'),
 					"link_icon" => $this->icon_dir_url . 'reddit.png'
+				),
+				"instagram" => array (
+					"link_title" => __('Instagram', 'wp-biographia'),
+					"link_text" => __('Instagram', 'wp-biographia'),
+					"link_icon" => $this->icon_dir_url . 'instagram.png'
 					)
 			);
 
@@ -2287,6 +2298,7 @@ if (!class_exists ('WP_Biographia')) {
 				 *		wp_biographia_style_border_color = "#000000"
 				 *
 				 * v4.0.0 changed ...
+				 *		wp_biographia_version = "400"
 				 * v4.0.0 removed ...
 				 *		wp_biographia_content_googleplus
 				 *		wp_biographia_content_delicious
@@ -2299,6 +2311,7 @@ if (!class_exists ('WP_Biographia')) {
 				 *		wp_biographia_admin_links['msn']
 				 *		wp_biographia_admin_links['jabber']
 				 * v4.0.0 added ...
+				 *		wp_biographia_content_instagram
 				 *
 				 */
 
@@ -2477,7 +2490,14 @@ if (!class_exists ('WP_Biographia')) {
 									break;
 							}
 						}
+						foreach ($this->defaults () as $key => $data) {
+							if (isset ($data['contactmethod']) && !empty ($data['contactmethod'])) {
+								$admin_links[$key] = 'on';
+							}
+						}	// end-foreach (...)
+
 						$settings['wp_biographia_admin_links'] = $admin_links;
+						$this->admin_upgrade_option ($settings, 'content_instagram', '');
 
 						// $settings['wp_biographia_version'] = self::VERSION;
 						$upgrade_settings = true;
@@ -3750,6 +3770,9 @@ if (!class_exists ('WP_Biographia')) {
 
 							$settings['wp_biographia_content_reddit'] =
 								$this->admin_option ('wp_biographia_content_reddit');
+
+							$settings['wp_biographia_content_instagram'] =
+								$this->admin_option ('wp_biographia_content_instagram');
 
 							$settings['wp_biographia_content_posts'] =
 								$this->admin_option ('wp_biographia_content_posts');
