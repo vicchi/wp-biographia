@@ -1,10 +1,9 @@
 === WP Biographia ===
 Contributors: vicchi, wpsmith
-Donate link: http://www.vicchi.org/codeage/donate/
 Tags: wp-biographia, wp biographia, biographia, bio, biography, bio box, biography box, twitter, facebook, linkedin, googleplus, google+, delicious, flickr, picasa, vimeo, youtube, reddit, website, about, author, user, about author, user box, author box, contributors, author biography, user biography, avatar, gravatar, guest post, guest author
-Requires at least: 3.7
-Tested up to: 3.7.0
-Stable tag: 3.3.2
+Requires at least: 5.0
+Tested up to: 5.0.2
+Stable tag: 4.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -50,11 +49,11 @@ The plugin also supports displaying a reduced version of the Biography Box via a
 
 = How do I get help or support for this plugin? =
 
-In short, very easily. But before you read any further, take a look at [Asking For WordPress Plugin Help And Support Without Tears](http://www.vicchi.org/codeage/asking-for-wordpress-plugin-help-and-support-without-tears/) before firing off a question. In order of preference, you can ask a question on the [WordPress support forum](http://wordpress.org/support/plugin/wp-biographia); this is by far the best way so that other users can follow the conversation. You can ask me a question on Twitter; I'm [@vicchi](http://twitter.com/vicchi). Or you can drop me an email instead. I can't promise to answer your question but I do promise to answer and do my best to help.
+In short, very easily. But before you read any further, take a look at [Asking For WordPress Plugin Help And Support Without Tears](https://www.vicchi.org/2012/03/31/asking-for-wordpress-plugin-help-and-support-without-tears/) before firing off a question. In order of preference, you can ask a question on the [WordPress support forum](http://wordpress.org/support/plugin/wp-biographia); this is by far the best way so that other users can follow the conversation. You can ask me a question on Twitter; I'm [@vicchi](http://twitter.com/vicchi). Or you can drop me an email instead. I can't promise to answer your question but I do promise to answer and do my best to help.
 
 = Is there a web site for this plugin? =
 
-Absolutely. Go to the [WP Biographia home page](http://www.vicchi.org/codeage/wp-biographia/) for the latest information. There's also the official [WordPress plugin repository page](http://wordpress.org/extend/plugins/wp-biographia/) and the [source for the plugin is on GitHub](http://vicchi.github.com/wp-biographia/) as well.
+Absolutely. Go to the [WP Biographia home page](https://www.vicchi.org/wp-biographia/) for the latest information. There's also the official [WordPress plugin repository page](http://wordpress.org/extend/plugins/wp-biographia/) and the [source for the plugin is on GitHub](http://vicchi.github.com/wp-biographia/) as well.
 
 = I've configured WP Biographia to display the user's image but it's not working; what's happening here? =
 
@@ -128,11 +127,11 @@ See the *Filter Support And Usage* section for more information on the plugin's 
 
 = I want to change the CSS used to format the Biography Box; how do I do this? =
 
-The HTML and CSS classes that the plugin emits follows a consistent structure and naming convention. See [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/codeage/wp-biographia/hacking-wp-biographias-appearance-with-css/) for more information.
+The HTML and CSS classes that the plugin emits follows a consistent structure and naming convention. See [Hacking WP Biographia’s Appearance With CSS](https://www.vicchi.org/2012/04/05/hacking-wp-biographias-appearance-with-css/) for more information.
 
 = I've changed the Biography Box CSS but my changes aren't showing up; what's happening? =
 
-WP Biographia uses *minified* CSS files to improve the speed at which a page loads. If you make changes to the plugin's CSS in `/wp-content/plugins/wp-biographia/css/wp-biographia.css` the plugin will still load the minified version in `/wp-content/plugins/wp-biographia/css/wp-biographia.min.css`. So if you make any site specific changes to the plugin's CSS, which isn't recommended (see [Hacking WP Biographia’s Appearance With CSS](http://www.vicchi.org/codeage/wp-biographia/hacking-wp-biographias-appearance-with-css/)), you'll need to ensure you (re)minify the master CSS to get the changes to be picked up by the plugin.
+WP Biographia uses *minified* CSS files to improve the speed at which a page loads. If you make changes to the plugin's CSS in `/wp-content/plugins/wp-biographia/css/wp-biographia.css` the plugin will still load the minified version in `/wp-content/plugins/wp-biographia/css/wp-biographia.min.css`. So if you make any site specific changes to the plugin's CSS, which isn't recommended (see [Hacking WP Biographia’s Appearance With CSS](https://www.vicchi.org/2012/04/05/hacking-wp-biographias-appearance-with-css/)), you'll need to ensure you (re)minify the master CSS to get the changes to be picked up by the plugin.
 
 = WP Biographia doesn't support social network FOO; can you add this to the next version? =
 
@@ -220,7 +219,17 @@ WP Biographia is named after the etymology of the modern English word biography.
 
 == Changelog ==
 
-The current version is 3.3.2 (2013.10.25)
+The current version is 4.0.0 b1 (2018.12.20)
+
+= 4.0.0 b1 =
+* Released 2018.12.20
+* Fixed: Updated plugin widget to use the correct base class constructor.
+* Added: Support for Instagram and GitHub profile links.
+* Added: New updated icon set.
+* Other: Updated plugin to support WordPress 5.0 (Bebo Valdés) including the Gutenberg editor.
+* Other: Remove support for obsoleted services; Google+, Delicious, Picasa, Yahoo! IM, AIM, MSN Messenger and Jabber.
+* Other: Changed default biographt box background color to white.
+* Other: Refactored plugin directory layout to reflect WordPress best practice (https://developer.wordpress.org/plugins/the-basics/best-practices/)
 
 = 3.3.2 =
 * Released 2013.10.25
@@ -565,7 +574,7 @@ Applied to the default set of plugin settings and options. Note that this filter
 function add_activation_timestamp ($options) {
 	// options = array (option name => option value)
 	$options['plugin_activation_timestamp'] = date (DATE_ATOM);
-	
+
 	return $options;
 }`
 
@@ -583,7 +592,7 @@ function add_pinterest_support ($contacts) {
 		'field' => 'pinterest',
 		'contactmethod' => __('Pinterest')
 	);
-	
+
 	return $contacts;
 }`
 
@@ -668,7 +677,7 @@ function replace_link_separator ($content, $links, $params) {
 	// links = array (link-item)
 	// params = array (glue => separator-string, class => link-item-css-class-name,
 	//					prefix => links-prefix-html, postfix => links-postfix-html)
-	
+
 	return str_replace ($params['glue'], ' - ', $content);
 }`
 
@@ -680,10 +689,10 @@ function wrap_links ($content, $links, $params) {
 	// links = array (link-item)
 	// params = array (glue => separator-string, class => link-item-css-class-name,
 	//					prefix => links-prefix-html, postfix => links-postfix-html)
-	
+
 	$new_prefix = '<div class="custom-link-class">' . $params['prefix'];
 	$new_postfix = $params['postfix'] . '</div>';
-	
+
 	return $new_prefix . implode ($params['glue'], $links) . $new_postfix;
 }`
 
@@ -706,17 +715,17 @@ function filter_link_item ($content, $params) {
 	//		'link-class' => 'link CSS class name',
 	//		'item-class' => 'link item CSS class name (icons only)'
 	//	);
-	
+
 	$site_url = site_url ();
 	$pos = strpos ($params['url'], $site_url);
 	if ($pos !== false) {
 		$params['meta'] = 'target="_blank"';
 	}
-	
+
 	if ($params['type'] === 'icon') {
 		$content = sprintf ($params['format'], $params['url'], $params['meta'], $params['title'], $params['link-class'], $params['body'], $params['item-class']);
 	}
-	
+
 	else {
 		$content = sprintf ($params['format'], $params['url'], $params['meta'], $params['title'], $params['link-class'], $params['body']);
 	}
@@ -747,11 +756,11 @@ Applied to the entire content of the current instance of the Biography Box.
 
 function replace_css_classes ($biography, $items) {
 	$new_content = array ();
-	
+
 	foreach ($items as $item) {
 		$new_content[] = str_replace ('wp-biographia-', 'custom-', $item);
 	}
-	
+
 	return implode ('', $new_content);
 }`
 
